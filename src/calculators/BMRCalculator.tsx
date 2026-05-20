@@ -30,23 +30,23 @@ export function BMRCalculator() {
         { q: "Does BMR change?", a: "Yes — it shifts with age, weight, muscle mass and hormones. Recalculate every few months as your weight changes." },
       ]}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-4">
+      <div className="calc-layout-grid">
+        <div className="calc-input-column">
           <div className="inline-flex rounded-lg bg-muted p-1">
             {(["male","female"] as const).map((s) => (
               <button key={s} onClick={() => setSex(s)}
                 className={`px-4 py-1.5 text-sm font-medium rounded-md capitalize ${sex===s?"bg-background shadow-sm":"text-muted-foreground"}`}>{s}</button>
             ))}
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <F label="Age" value={age} set={setAge} />
             <F label="Height (cm)" value={heightCm} set={setHeightCm} />
             <F label="Weight (kg)" value={weightKg} set={setWeightKg} />
           </div>
         </div>
-        <div className="rounded-xl bg-muted/40 p-5">
+        <div className="calc-result-panel select-copy">
           <div className="text-sm text-muted-foreground">Your BMR</div>
-          <div className="text-4xl font-bold mt-1 text-gradient">{Math.round(bmr)} kcal/day</div>
+          <div className="calc-result-hero text-gradient">{Math.round(bmr)} kcal/day</div>
         </div>
       </div>
     </CalculatorPageLayout>

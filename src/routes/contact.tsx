@@ -47,9 +47,9 @@ function Contact() {
 
   return (
     <PageShell>
-      <div className="mx-auto max-w-2xl px-4 py-16">
-        <h1 className="text-4xl font-bold tracking-tight">Contact us</h1>
-        <p className="mt-2 text-muted-foreground">Have a calculator request or feedback? Drop us a line.</p>
+      <div className="page-container max-w-2xl py-10 sm:py-16 min-w-0">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-balance">Contact us</h1>
+        <p className="mt-2 text-sm sm:text-base text-muted-foreground">Have a calculator request or feedback? Drop us a line.</p>
         {sent ? (
           <div className="mt-8 rounded-2xl border border-success/30 bg-success/10 p-6 text-success-foreground">
             Thanks for reaching out — we'll reply within 48 hours.
@@ -71,7 +71,7 @@ function Contact() {
               <Textarea name="message" rows={5} className="mt-1" />
               {errors.message && <p className="text-xs text-destructive mt-1">{errors.message}</p>}
             </div>
-            <Button type="submit" className="bg-gradient-accent">Send message</Button>
+            <Button type="submit" className="w-full sm:w-auto bg-gradient-accent min-h-11">Send message</Button>
           </form>
         )}
       </div>

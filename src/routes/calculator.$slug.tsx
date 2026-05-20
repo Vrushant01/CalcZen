@@ -34,10 +34,10 @@ export const Route = createFileRoute("/calculator/$slug")({
   component: CalcPage,
   notFoundComponent: () => (
     <PageShell>
-      <div className="mx-auto max-w-3xl px-4 py-24 text-center">
-        <h1 className="text-3xl font-bold">Calculator not found</h1>
-        <p className="mt-3 text-muted-foreground">We couldn't find that calculator. Browse all of them instead.</p>
-        <Link to="/calculators" className="mt-6 inline-block rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">All calculators</Link>
+      <div className="page-container max-w-3xl py-16 sm:py-24 text-center">
+        <h1 className="text-2xl sm:text-3xl font-bold">Calculator not found</h1>
+        <p className="mt-3 text-sm sm:text-base text-muted-foreground">We couldn't find that calculator. Browse all of them instead.</p>
+        <Link to="/calculators" className="mt-6 inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">All calculators</Link>
       </div>
     </PageShell>
   ),
@@ -50,13 +50,13 @@ function CalcPage() {
   return (
     <PageShell>
       {Component ? (
-        <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-20"><div className="h-96 rounded-2xl bg-muted/40 animate-pulse" /></div>}>
+        <Suspense fallback={<div className="page-container py-12 sm:py-20"><div className="h-64 sm:h-96 rounded-xl sm:rounded-2xl bg-muted/25 animate-pulse" /></div>}>
           <Component />
         </Suspense>
       ) : (
-        <div className="mx-auto max-w-3xl px-4 py-24 text-center">
-          <h1 className="text-2xl font-bold">{calc.name}</h1>
-          <p className="mt-3 text-muted-foreground">This calculator is coming soon.</p>
+        <div className="page-container max-w-3xl py-16 sm:py-24 text-center">
+          <h1 className="text-2xl sm:text-3xl font-bold">{calc.name}</h1>
+          <p className="mt-3 text-sm sm:text-base text-muted-foreground">This calculator is coming soon.</p>
         </div>
       )}
     </PageShell>

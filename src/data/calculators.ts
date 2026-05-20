@@ -9,14 +9,45 @@ export type Category = {
   name: string;
   description: string;
   icon: LucideIcon;
-  color: string; // tailwind text color class on accent bg
+  /** Homepage tile background + border */
+  color: string;
+  /** Homepage tile icon tint */
+  iconColor: string;
 };
 
 export const categories: Category[] = [
-  { slug: "finance",    name: "Finance",    description: "Loans, investments, savings & more", icon: Coins,    color: "from-secondary/20 to-accent/20" },
-  { slug: "health",     name: "Health",     description: "BMI, calories, fitness metrics",     icon: Heart,    color: "from-accent/20 to-success/20" },
-  { slug: "math",       name: "Math",       description: "Percentages, ratios, age & GPA",     icon: Calculator, color: "from-secondary/20 to-secondary/10" },
-  { slug: "everyday",   name: "Everyday",   description: "Tips, dates, fuel, lifestyle",       icon: Receipt,  color: "from-accent/20 to-secondary/20" },
+  {
+    slug: "finance",
+    name: "Finance",
+    description: "Loans, investments, savings & more",
+    icon: Coins,
+    color: "from-sky-100 to-blue-50 border-sky-200/80 dark:from-sky-950/70 dark:to-blue-950/50 dark:border-sky-500/25",
+    iconColor: "text-sky-600 dark:text-sky-400",
+  },
+  {
+    slug: "health",
+    name: "Health",
+    description: "BMI, calories, fitness metrics",
+    icon: Heart,
+    color: "from-emerald-100 to-teal-50 border-emerald-200/80 dark:from-emerald-950/70 dark:to-teal-950/50 dark:border-emerald-500/25",
+    iconColor: "text-emerald-600 dark:text-emerald-400",
+  },
+  {
+    slug: "math",
+    name: "Math",
+    description: "Percentages, ratios, age & GPA",
+    icon: Calculator,
+    color: "from-violet-100 to-indigo-50 border-violet-200/80 dark:from-violet-950/70 dark:to-indigo-950/50 dark:border-violet-500/25",
+    iconColor: "text-violet-600 dark:text-violet-400",
+  },
+  {
+    slug: "everyday",
+    name: "Everyday",
+    description: "Tips, dates, fuel, lifestyle",
+    icon: Receipt,
+    color: "from-amber-100 to-orange-50 border-amber-200/80 dark:from-amber-950/65 dark:to-orange-950/45 dark:border-amber-500/25",
+    iconColor: "text-amber-600 dark:text-amber-400",
+  },
 ];
 
 export type CalculatorMeta = {

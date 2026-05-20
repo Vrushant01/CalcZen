@@ -28,14 +28,14 @@ export function WaterIntakeCalculator() {
         { q: "Should I drink more in hot weather?", a: "Yes. Add 500–1000 ml on hot days or when sweating heavily." },
       ]}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-4">
+      <div className="calc-layout-grid">
+        <div className="calc-input-column">
           <F label="Weight (kg)" value={weightKg} set={setWeightKg} />
           <F label="Daily exercise (minutes)" value={activityMin} set={setActivityMin} />
         </div>
-        <div className="rounded-xl bg-muted/40 p-5">
+        <div className="calc-result-panel select-copy">
           <div className="text-sm text-muted-foreground">Recommended intake</div>
-          <div className="text-4xl font-bold mt-1 text-gradient">{liters.toFixed(2)} L</div>
+          <div className="calc-result-hero text-gradient">{liters.toFixed(2)} L</div>
           <p className="text-sm text-muted-foreground mt-2">≈ {cups.toFixed(1)} cups (240 ml each)</p>
         </div>
       </div>

@@ -33,7 +33,7 @@ From 100 to 125 = +25% change`}
         { q: "Can I use negative numbers?", a: "Yes — negative or fractional values work in all three calculators." },
       ]}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 min-w-0">
         <Box title="What is X% of Y?" result={`${r1.toLocaleString()}`}>
           <div className="grid grid-cols-2 gap-2">
             <F label="X (%)" value={a} set={setA} />
@@ -62,7 +62,7 @@ function Box({ title, result, children }: { title: string; result: string; child
     <div className="rounded-xl border border-border bg-muted/30 p-4">
       <h3 className="text-sm font-semibold mb-3">{title}</h3>
       {children}
-      <div className="mt-4 pt-3 border-t border-border">
+      <div className="select-copy mt-4 pt-3 border-t border-border">
         <div className="text-xs text-muted-foreground">Result</div>
         <div className="text-2xl font-bold text-gradient">{result}</div>
       </div>

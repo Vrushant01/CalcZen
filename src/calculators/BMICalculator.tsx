@@ -45,8 +45,8 @@ BMI = 72 / (1.75)² ≈ 23.5 — Normal weight.`}
         { q: "Should I see a doctor about my BMI?", a: "BMI is a screening tool, not a diagnosis. Talk to a healthcare provider before changing your diet or activity level." },
       ]}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-4">
+      <div className="calc-layout-grid">
+        <div className="calc-input-column">
           <div className="inline-flex rounded-lg bg-muted p-1">
             {(["metric","imperial"] as const).map((u) => (
               <button key={u} onClick={() => setUnit(u)}
@@ -57,21 +57,21 @@ BMI = 72 / (1.75)² ≈ 23.5 — Normal weight.`}
           </div>
 
           {unit === "metric" ? (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="calc-field-grid-2">
               <Field label="Height (cm)" value={heightCm} onChange={setHeightCm} />
               <Field label="Weight (kg)" value={weightKg} onChange={setWeightKg} />
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="calc-field-grid-2">
               <Field label="Height (in)" value={heightIn} onChange={setHeightIn} />
               <Field label="Weight (lb)" value={weightLb} onChange={setWeightLb} />
             </div>
           )}
           <Button variant="ghost" size="sm" onClick={() => { setHeightCm(175); setWeightKg(72); setHeightIn(69); setWeightLb(160); }}>Reset</Button>
         </div>
-        <div className="rounded-xl bg-muted/40 p-5">
+        <div className="calc-result-panel select-copy">
           <div className="text-sm text-muted-foreground">Your BMI</div>
-          <div className="text-5xl font-bold mt-1 text-gradient">{bmi.toFixed(1)}</div>
+          <div className="calc-result-hero text-gradient">{bmi.toFixed(1)}</div>
           <div className={`mt-2 text-lg font-semibold ${color}`}>{category}</div>
           <div className="mt-6 h-3 w-full rounded-full bg-gradient-to-r from-secondary via-success via-chart-4 to-destructive relative">
             <div className="absolute -top-1.5 -ml-2 h-6 w-1 bg-foreground rounded"

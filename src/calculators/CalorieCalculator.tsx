@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
+import { CalculatorSelect } from "@/components/CalculatorSelect";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -39,8 +40,8 @@ BMR ≈ 1,679 kcal · TDEE ≈ 2,602 kcal/day to maintain.`}
         { q: "What activity level should I pick?", a: "Sedentary = desk job, no exercise. Moderate = workouts 3–5 days/week. Very active = physical job or daily intense training." },
       ]}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-4">
+      <div className="calc-layout-grid">
+        <div className="calc-input-column">
           <div className="inline-flex rounded-lg bg-muted p-1">
             {(["male","female"] as const).map((s) => (
               <button key={s} onClick={() => setSex(s)}
@@ -49,22 +50,24 @@ BMR ≈ 1,679 kcal · TDEE ≈ 2,602 kcal/day to maintain.`}
               </button>
             ))}
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             <F label="Age" value={age} set={setAge} />
             <F label="Height (cm)" value={heightCm} set={setHeightCm} />
             <F label="Weight (kg)" value={weightKg} set={setWeightKg} />
           </div>
-          <div>
-            <Label className="text-xs font-medium text-muted-foreground">Activity level</Label>
-            <select value={activity} onChange={(e) => setActivity(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-              <option value={1.2}>Sedentary (little/no exercise)</option>
-              <option value={1.375}>Light (1–3 days/week)</option>
-              <option value={1.55}>Moderate (3–5 days/week)</option>
-              <option value={1.725}>Very active (6–7 days/week)</option>
-              <option value={1.9}>Extra active (athlete / physical job)</option>
-            </select>
-          </div>
+          <CalculatorSelect
+            label="Activity level"
+            value={activity}
+            onValueChange={(v) => setActivity(Number(v))}
+            placeholder="Select activity level"
+            options={[
+              { value: "1.2", label: "Sedentary (little/no exercise)" },
+              { value: "1.375", label: "Light (1–3 days/week)" },
+              { value: "1.55", label: "Moderate (3–5 days/week)" },
+              { value: "1.725", label: "Very active (6–7 days/week)" },
+              { value: "1.9", label: "Extra active (athlete / physical job)" },
+            ]}
+          />
           <div>
             <Label className="text-xs font-medium text-muted-foreground">Goal</Label>
             <div className="mt-1 grid grid-cols-3 gap-2">
@@ -78,10 +81,10 @@ BMR ≈ 1,679 kcal · TDEE ≈ 2,602 kcal/day to maintain.`}
           </div>
           <Button variant="ghost" size="sm" onClick={() => { setSex("male"); setAge(30); setHeightCm(175); setWeightKg(72); setActivity(1.55); setGoal("maintain"); }}>Reset</Button>
         </div>
-        <div className="rounded-xl bg-muted/40 p-5">
+        <div className="calc-result-panel select-copy">
           <div className="text-sm text-muted-foreground">Daily calorie target</div>
-          <div className="text-4xl font-bold mt-1 text-gradient">{Math.round(target)} kcal</div>
-          <dl className="grid grid-cols-2 gap-3 mt-4 text-sm">
+          <div className="calc-result-hero text-gradient">{Math.round(target)} kcal</div>
+          <dl className="grid grid-cols-1 min-[360px]:grid-cols-2 gap-2.5 text-sm">
             <div><dt className="text-muted-foreground">BMR</dt><dd className="font-semibold">{Math.round(bmr)} kcal</dd></div>
             <div><dt className="text-muted-foreground">TDEE</dt><dd className="font-semibold">{Math.round(tdee)} kcal</dd></div>
           </dl>

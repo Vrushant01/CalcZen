@@ -31,21 +31,21 @@ export function PregnancyDueDateCalculator() {
         { q: "Can I plan based on this date?", a: "Use it as a guideline. Your provider may revise the due date during prenatal visits." },
       ]}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-4">
+      <div className="calc-layout-grid">
+        <div className="calc-input-column">
           <div>
             <Label className="text-xs font-medium text-muted-foreground">First day of last period</Label>
             <Input type="date" value={lmp} onChange={(e) => setLmp(e.target.value)} className="mt-1" />
           </div>
         </div>
-        <div className="rounded-xl bg-muted/40 p-5">
+        <div className="calc-result-panel select-copy">
           {r ? (
             <>
               <div className="text-sm text-muted-foreground">Estimated due date</div>
               <div className="text-3xl font-bold mt-1 text-gradient">
                 {r.due.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
               </div>
-              <dl className="grid grid-cols-2 gap-3 mt-4 text-sm">
+              <dl className="grid grid-cols-1 min-[360px]:grid-cols-2 gap-2.5 text-sm">
                 <div><dt className="text-muted-foreground">Current week</dt><dd className="font-semibold">{r.week}</dd></div>
                 <div><dt className="text-muted-foreground">Trimester</dt><dd className="font-semibold">{r.trimester}</dd></div>
               </dl>

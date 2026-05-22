@@ -1,9 +1,15 @@
 import { Link } from "@tanstack/react-router";
+<<<<<<< HEAD
 import { Calculator, Menu, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+=======
+import { Calculator, Menu, X, Search } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -15,6 +21,7 @@ export function Header() {
     { to: "/about", label: "About" },
   ];
 
+<<<<<<< HEAD
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -47,21 +54,42 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 min-w-0">
+=======
+  return (
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-lg">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+        <Link to="/" className="flex items-center gap-2 group">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-accent shadow-glow transition-transform group-hover:scale-105">
+            <Calculator className="h-5 w-5 text-primary-foreground" />
+          </div>
+          <span className="text-lg font-bold tracking-tight">
+            Calc<span className="text-gradient">Verse</span>
+          </span>
+        </Link>
+
+        <nav className="hidden md:flex items-center gap-1">
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
           {nav.map((n) => (
             <Link
               key={n.to}
               to={n.to}
+<<<<<<< HEAD
               className="px-2.5 lg:px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 ease-out rounded-lg hover:bg-muted/70 whitespace-nowrap"
               activeProps={{
                 className:
                   "px-2.5 lg:px-3 py-2 text-sm font-semibold text-foreground rounded-lg bg-muted/90 shadow-soft whitespace-nowrap",
               }}
+=======
+              className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted"
+              activeProps={{ className: "px-3 py-2 text-sm font-semibold text-foreground rounded-md bg-muted" }}
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
             >
               {n.label}
             </Link>
           ))}
         </nav>
 
+<<<<<<< HEAD
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <ThemeToggle className="scale-90 sm:scale-100" />
           <Link to="/calculators" className="hidden sm:inline-flex">
@@ -81,12 +109,25 @@ export function Header() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
+=======
+        <div className="flex items-center gap-2">
+          <Link to="/calculators" className="hidden sm:inline-flex">
+            <Button variant="outline" size="sm" className="gap-2">
+              <Search className="h-4 w-4" /> Search
+            </Button>
+          </Link>
+          <button
+            className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-muted"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
+<<<<<<< HEAD
       <div
         id="mobile-nav"
         className={cn(
@@ -116,6 +157,24 @@ export function Header() {
           ))}
         </nav>
       </div>
+=======
+      {open && (
+        <div className="md:hidden border-t border-border bg-background">
+          <nav className="mx-auto max-w-7xl px-4 py-3 flex flex-col gap-1">
+            {nav.map((n) => (
+              <Link
+                key={n.to}
+                to={n.to}
+                onClick={() => setOpen(false)}
+                className="px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
+              >
+                {n.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      )}
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
     </header>
   );
 }

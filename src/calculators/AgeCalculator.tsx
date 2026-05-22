@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
+<<<<<<< HEAD
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { blogContent } from "@/data/blogContent";
@@ -12,6 +13,14 @@ import { useHasCalculated } from "@/hooks/use-has-calculated";
 export function AgeCalculator() {
   const calc = getCalculator("age-calculator")!;
   const { hasResult, markCalculated } = useHasCalculated();
+=======
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { getCalculator } from "@/data/calculators";
+
+export function AgeCalculator() {
+  const calc = getCalculator("age-calculator")!;
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
   const today = new Date().toISOString().slice(0, 10);
   const [dob, setDob] = useState("1995-06-15");
   const [on, setOn] = useState(today);
@@ -28,6 +37,7 @@ export function AgeCalculator() {
     return { years, months, days, totalDays, totalHours: totalDays * 24, totalMinutes: totalDays * 24 * 60 };
   }, [dob, on]);
 
+<<<<<<< HEAD
   const formatDate = (iso: string) =>
     new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
@@ -56,20 +66,30 @@ export function AgeCalculator() {
         }
       : null;
 
+=======
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
   return (
     <CalculatorPageLayout
       calc={calc}
       intro="Find your exact age in years, months and days, plus total days, hours and minutes you've been alive — calculated as of any date you choose."
+<<<<<<< HEAD
       formula={`Age = target date − date of birth
 Years, months, and days are adjusted using calendar borrowing`}
       example={`Born June 15, 1995 — calculated as of January 10, 2025.
 Age = 29 years, 6 months, 26 days.`}
+=======
+      formula={`Age = (target date) − (date of birth)
+Borrow days from the previous month and months from the previous year as needed.`}
+      example={`Born 1995-06-15, today 2025-01-10:
+29 years, 6 months, 26 days lived.`}
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
       faqs={[
         { q: "Does it count leap years?", a: "Yes — calculations use real calendar dates so leap years are handled automatically." },
         { q: "Can I check age on a future date?", a: "Yes. Set the 'as of' date to any date in the future to find someone's age then." },
         { q: "Why does the day count look off by one sometimes?", a: "We use the date difference. Time zones and the same calendar day can shift the count by one — switch the 'as of' date to verify." },
       ]}
     >
+<<<<<<< HEAD
       <div className="calc-layout-grid">
         <div className="calc-input-column">
           <div>
@@ -105,18 +125,43 @@ Age = 29 years, 6 months, 26 days.`}
                 {r.years} years, {r.months} months, {r.days} days
               </div>
               <dl className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-sm">
+=======
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-4">
+          <div>
+            <Label className="text-xs font-medium text-muted-foreground">Date of birth</Label>
+            <Input type="date" value={dob} onChange={(e) => setDob(e.target.value)} className="mt-1" />
+          </div>
+          <div>
+            <Label className="text-xs font-medium text-muted-foreground">As of</Label>
+            <Input type="date" value={on} onChange={(e) => setOn(e.target.value)} className="mt-1" />
+          </div>
+        </div>
+        <div className="rounded-xl bg-muted/40 p-5">
+          {r ? (
+            <>
+              <div className="text-sm text-muted-foreground">Your age</div>
+              <div className="text-3xl font-bold mt-1 text-gradient">{r.years} years, {r.months} months, {r.days} days</div>
+              <dl className="grid grid-cols-3 gap-3 mt-5 text-sm">
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
                 <div><dt className="text-muted-foreground">Days</dt><dd className="font-semibold">{r.totalDays.toLocaleString()}</dd></div>
                 <div><dt className="text-muted-foreground">Hours</dt><dd className="font-semibold">{r.totalHours.toLocaleString()}</dd></div>
                 <div><dt className="text-muted-foreground">Minutes</dt><dd className="font-semibold">{r.totalMinutes.toLocaleString()}</dd></div>
               </dl>
+<<<<<<< HEAD
               <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
+=======
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
             </>
           ) : (
             <p className="text-sm text-destructive">Please enter a valid birth date before the target date.</p>
           )}
         </div>
       </div>
+<<<<<<< HEAD
       <CalculatorBlog content={blogContent.age} />
+=======
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
     </CalculatorPageLayout>
   );
 }

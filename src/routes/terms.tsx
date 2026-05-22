@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "@/components/layout/PageShell";
 import { LegalArticle } from "@/components/LegalArticle";
 import { LegalSection } from "@/components/LegalSection";
+=======
+import { createFileRoute } from "@tanstack/react-router";
+import { PageShell } from "@/components/layout/PageShell";
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
+<<<<<<< HEAD
       { title: "Terms of Service — Using CalcZen Calculators" },
       {
         name: "description",
@@ -17,10 +23,15 @@ export const Route = createFileRoute("/terms")({
         property: "og:description",
         content: "Terms governing your use of CalcZen free finance, health, and math calculator tools.",
       },
+=======
+      { title: "Terms of Service | CalcVerse" },
+      { name: "description", content: "The terms governing your use of CalcVerse calculators." },
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
       { property: "og:url", content: "/terms" },
     ],
     links: [{ rel: "canonical", href: "/terms" }],
   }),
+<<<<<<< HEAD
   component: TermsPage,
 });
 
@@ -153,3 +164,18 @@ function TermsPage() {
     </PageShell>
   );
 }
+=======
+  component: () => (
+    <PageShell>
+      <div className="mx-auto max-w-3xl px-4 py-16">
+        <h1 className="text-3xl font-bold tracking-tight">Terms of Service</h1>
+        <div className="mt-6 space-y-4 text-sm text-muted-foreground leading-relaxed">
+          <p>By using CalcVerse you agree to use our calculators responsibly. Results are estimates intended for informational purposes; they are not financial, medical or legal advice.</p>
+          <p>You may not scrape, redistribute, or republish CalcVerse content without permission. The CalcVerse name, logo and design are owned by CalcVerse.</p>
+          <p>We may update these terms from time to time. Continued use of the site after changes means you accept the new terms.</p>
+        </div>
+      </div>
+    </PageShell>
+  ),
+});
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3

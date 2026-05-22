@@ -9,7 +9,10 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+<<<<<<< HEAD
 import { themeInitScript } from "@/lib/theme";
+=======
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
 
 function NotFoundComponent() {
   return (
@@ -72,6 +75,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
+<<<<<<< HEAD
       {
         name: "viewport",
         content: "width=device-width, initial-scale=1, viewport-fit=cover",
@@ -81,6 +85,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: "CalcZen" },
       { name: "theme-color", content: "#0F172A" },
       { property: "og:site_name", content: "CalcZen" },
+=======
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "CalcVerse — Smart Online Calculators" },
+      { name: "description", content: "Free online calculators for finance, health, math and everyday life." },
+      { name: "author", content: "CalcVerse" },
+      { name: "theme-color", content: "#0F172A" },
+      { property: "og:site_name", content: "CalcVerse" },
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -99,9 +111,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
+<<<<<<< HEAD
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+=======
+    <html lang="en">
+      <head>
+>>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
         <HeadContent />
       </head>
       <body>

@@ -5,6 +5,7 @@ import cors from "cors";
 import express, { type Express } from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
+import { createCorsOptions } from "./config/cors.js";
 import { env, hasDbConfig } from "./config/env.js";
 import { verifySupabaseConnection } from "./config/supabase.js";
 import { mongoSanitize } from "./middleware/sanitize.js";
@@ -51,11 +52,14 @@ export async function createApp(): Promise<Express> {
     app.set("trust proxy", 1);
   }
 
-  app.use(helmet({ contentSecurityPolicy: false }));
+  // CORS must run before helmet, rate limit, and routes (preflight OPTIONS)
+  app.use(cors(createCorsOptions()));
+  app.options(/.*/, cors(createCorsOptions()));
+
   app.use(
-    cors({
-      origin: env.corsOrigin.split(",").map((o) => o.trim()),
-      credentials: true,
+    helmet({
+      contentSecurityPolicy: false,
+      crossOriginResourcePolicy: { policy: "cross-origin" },
     }),
   );
 
@@ -65,6 +69,7 @@ export async function createApp(): Promise<Express> {
       max: 300,
       standardHeaders: true,
       legacyHeaders: false,
+      skip: (req) => req.method === "OPTIONS",
     }),
   );
 

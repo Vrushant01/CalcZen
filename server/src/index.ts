@@ -1,4 +1,5 @@
 import { assertProductionEnv, env, hasDbConfig, hasEmailConfig } from "./config/env.js";
+import { getAllowedOrigins } from "./config/cors.js";
 import { createApp } from "./app.js";
 
 async function main() {
@@ -14,6 +15,7 @@ async function main() {
 
   app.listen(env.port, host, () => {
     console.log(`Server running on http://${host}:${env.port}`);
+    console.log(`CORS allowed origins: ${getAllowedOrigins().join(", ")}`);
     console.log(`Admin panel: http://localhost:${env.port}/admin`);
     console.log(`API: http://localhost:${env.port}/api`);
     console.log(hasDbConfig() ? "Database: Supabase PostgreSQL" : "Database: NOT configured");

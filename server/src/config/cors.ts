@@ -20,9 +20,9 @@ export const EXPLICIT_ALLOWED_ORIGINS = [
   "http://127.0.0.1:5173",
 ] as const;
 
-const CORS_METHODS_HEADER = CORS_METHODS.join(",");
-const CORS_HEADERS_HEADER = CORS_ALLOWED_HEADERS.join(",");
-const CORS_MAX_AGE = "86400";
+export const CORS_METHODS_HEADER = CORS_METHODS.join(",");
+export const CORS_HEADERS_HEADER = CORS_ALLOWED_HEADERS.join(",");
+export const CORS_MAX_AGE = "86400";
 
 const explicitSet = new Set<string>(EXPLICIT_ALLOWED_ORIGINS);
 

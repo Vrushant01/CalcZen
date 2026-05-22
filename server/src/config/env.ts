@@ -27,9 +27,8 @@ export const env = {
   supabaseAnonKey: process.env.SUPABASE_ANON_KEY ?? "",
   jwtSecret: process.env.JWT_SECRET ?? "change-me-in-production",
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "7d",
-  corsOrigin:
-    process.env.CORS_ORIGIN ??
-    "http://localhost:8080,http://localhost:5173,http://localhost:3000,https://calc-zen-git-main-vrushant01s-projects.vercel.app",
+  /** Optional comma-separated extra exact origins (patterns are built-in). */
+  corsOrigin: process.env.CORS_ORIGIN ?? "",
   siteUrl: process.env.SITE_URL ?? "http://localhost:5173",
   siteName: process.env.SITE_NAME ?? "CalcZen",
   resendApiKey: process.env.RESEND_API_KEY ?? "",

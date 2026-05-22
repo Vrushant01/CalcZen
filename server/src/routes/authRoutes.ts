@@ -1,5 +1,5 @@
 import { Router } from "express";
-import rateLimit from "express-rate-limit";
+import { createRateLimiter } from "../middleware/rate-limit.js";
 import { z } from "zod";
 import { login, me } from "../controllers/authController.js";
 import { attachAdmin, requireAuth } from "../middleware/auth.js";
@@ -10,11 +10,9 @@ const loginSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-const loginLimiter = rateLimit({
+const loginLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
   max: 20,
-  standardHeaders: true,
-  legacyHeaders: false,
   message: { success: false, message: "Too many login attempts. Please try again later." },
 });
 

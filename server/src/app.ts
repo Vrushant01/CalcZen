@@ -1,13 +1,18 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import cors from "cors";
-import express, { type Express } from "express";
-import rateLimit from "express-rate-limit";
+import express, { type Express, type NextFunction, type Request, type Response } from "express";
 import helmet from "helmet";
-import { createCorsOptions } from "./config/cors.js";
+import { configureTrustProxy } from "./config/trust-proxy.js";
+import { applyCorsHeaders } from "./config/cors.js";
 import { env, hasDbConfig } from "./config/env.js";
 import { verifySupabaseConnection } from "./config/supabase.js";
+import {
+  corsHeadersMiddleware,
+  corsMiddleware,
+  corsPreflightMiddleware,
+} from "./middleware/cors.js";
+import { globalApiLimiter } from "./middleware/rate-limit.js";
 import { mongoSanitize } from "./middleware/sanitize.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -42,39 +47,41 @@ async function ensureDb(): Promise<void> {
   }
 }
 
-/** Create Express app (Vercel serverless + local dev) */
+/**
+ * Express app — production order:
+ * 1. trust proxy (Render / rate-limit)
+ * 2. CORS preflight + cors + header backup
+ * 3. security (helmet)
+ * 4. rate limit (after trust proxy)
+ * 5. body parser
+ * 6. routes
+ * 7. 404 + error handler (with CORS on errors)
+ */
 export async function createApp(): Promise<Express> {
-  await ensureDb();
-
   const app = express();
 
-  if (env.nodeEnv === "production") {
-    app.set("trust proxy", 1);
-  }
+  // MUST be first: Render sets X-Forwarded-For; rate-limit throws without this.
+  configureTrustProxy(app);
 
-  // CORS must run before helmet, rate limit, and routes (preflight OPTIONS)
-  app.use(cors(createCorsOptions()));
-  app.options(/.*/, cors(createCorsOptions()));
+  app.use(corsPreflightMiddleware);
+  app.use(corsMiddleware);
+  app.use(corsHeadersMiddleware);
 
   app.use(
     helmet({
       contentSecurityPolicy: false,
       crossOriginResourcePolicy: { policy: "cross-origin" },
+      crossOriginEmbedderPolicy: false,
+      crossOriginOpenerPolicy: false,
     }),
   );
 
-  app.use(
-    rateLimit({
-      windowMs: 15 * 60 * 1000,
-      max: 300,
-      standardHeaders: true,
-      legacyHeaders: false,
-      skip: (req) => req.method === "OPTIONS",
-    }),
-  );
+  app.use(globalApiLimiter);
 
   app.use(express.json({ limit: "1mb" }));
   app.use(mongoSanitize);
+
+  void ensureDb();
 
   app.get("/", (_req, res) => {
     res.json({
@@ -139,8 +146,9 @@ export async function createApp(): Promise<Express> {
   });
 
   app.use(
-    (err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    (err: unknown, req: Request, res: Response, _next: NextFunction) => {
       console.error(err);
+      applyCorsHeaders(req, res);
       const { status, message } = formatDbError(err);
       res.status(status).json({ success: false, message });
     },

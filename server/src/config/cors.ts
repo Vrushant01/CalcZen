@@ -1,24 +1,10 @@
 import type { CorsOptions } from "cors";
+import type { Request, Response } from "express";
 import { env } from "./env.js";
 
-/** Always allowed (merged with CORS_ORIGIN on Render). */
-const DEFAULT_ALLOWED_ORIGINS = [
-  "https://calc-zen-git-main-vrushant01s-projects.vercel.app",
-  "https://www.calczen.com",
-  "https://calczen.vercel.app",
-  "http://localhost:3000",
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://localhost:8080",
-  "http://127.0.0.1:3000",
-  "http://127.0.0.1:5173",
-  "http://127.0.0.1:5174",
-  "http://127.0.0.1:8080",
-] as const;
+export const CORS_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const;
 
-const CORS_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const;
-
-const CORS_ALLOWED_HEADERS = [
+export const CORS_ALLOWED_HEADERS = [
   "Content-Type",
   "Authorization",
   "X-Requested-With",
@@ -26,49 +12,104 @@ const CORS_ALLOWED_HEADERS = [
   "Origin",
 ] as const;
 
+/** Required production + dev origins (always allowed). */
+export const EXPLICIT_ALLOWED_ORIGINS = [
+  "https://calczen.in",
+  "https://www.calczen.in",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+] as const;
+
+const CORS_METHODS_HEADER = CORS_METHODS.join(",");
+const CORS_HEADERS_HEADER = CORS_ALLOWED_HEADERS.join(",");
+const CORS_MAX_AGE = "86400";
+
+const explicitSet = new Set<string>(EXPLICIT_ALLOWED_ORIGINS);
+
+function getEnvOrigins(): Set<string> {
+  const set = new Set<string>();
+  for (const part of env.corsOrigin.split(",")) {
+    const o = part.trim().replace(/\/$/, "");
+    if (o) set.add(o);
+  }
+  return set;
+}
+
 function normalizeOrigin(origin: string): string {
   return origin.trim().replace(/\/$/, "");
 }
 
-export function getAllowedOrigins(): string[] {
-  const fromEnv = env.corsOrigin
-    .split(",")
-    .map(normalizeOrigin)
-    .filter(Boolean);
+/**
+ * Production origin policy:
+ * - Explicit: calczen.in, www.calczen.in, localhost:5173
+ * - Any https://*.vercel.app
+ * - http://localhost:* and http://127.0.0.1:*
+ * - https://calczen.in and https://*.calczen.in (subdomains)
+ * - CORS_ORIGIN env extras
+ */
+export function isOriginAllowed(origin: string | undefined): boolean {
+  if (!origin) {
+    return true;
+  }
 
-  return [...new Set([...DEFAULT_ALLOWED_ORIGINS, ...fromEnv])];
-}
+  const normalized = normalizeOrigin(origin);
 
-/** Vercel preview/production deployments (*.vercel.app). */
-function isVercelAppOrigin(origin: string): boolean {
+  if (explicitSet.has(normalized) || getEnvOrigins().has(normalized)) {
+    return true;
+  }
+
+  let url: URL;
   try {
-    const { hostname, protocol } = new URL(origin);
-    return protocol === "https:" && hostname.endsWith(".vercel.app");
+    url = new URL(normalized);
   } catch {
     return false;
   }
+
+  const { protocol, hostname } = url;
+
+  if (protocol === "https:" && hostname.endsWith(".vercel.app")) {
+    return true;
+  }
+
+  if (
+    protocol === "http:" &&
+    (hostname === "localhost" || hostname === "127.0.0.1")
+  ) {
+    return true;
+  }
+
+  if (
+    protocol === "https:" &&
+    (hostname === "calczen.in" || hostname.endsWith(".calczen.in"))
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+export function applyCorsHeaders(req: Request, res: Response): void {
+  const origin = req.headers.origin;
+
+  if (!origin || !isOriginAllowed(origin)) {
+    return;
+  }
+
+  res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Vary", "Origin");
 }
 
 export function createCorsOptions(): CorsOptions {
-  const allowed = new Set(getAllowedOrigins());
-
   return {
     origin(origin, callback) {
-      // Server-to-server, curl, same-origin — no Origin header
       if (!origin) {
         callback(null, true);
         return;
       }
 
-      const normalized = normalizeOrigin(origin);
-
-      if (allowed.has(normalized)) {
-        callback(null, true);
-        return;
-      }
-
-      if (isVercelAppOrigin(normalized)) {
-        callback(null, true);
+      if (isOriginAllowed(origin)) {
+        callback(null, origin);
         return;
       }
 
@@ -81,5 +122,17 @@ export function createCorsOptions(): CorsOptions {
     credentials: true,
     optionsSuccessStatus: 204,
     maxAge: 86400,
+    preflightContinue: false,
   };
+}
+
+export function getCorsPolicySummary(): string {
+  return [
+    ...EXPLICIT_ALLOWED_ORIGINS,
+    "https://*.vercel.app",
+    "http://localhost:*",
+    "http://127.0.0.1:*",
+    "https://*.calczen.in",
+    ...getEnvOrigins(),
+  ].join(", ");
 }

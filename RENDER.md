@@ -47,19 +47,29 @@ Add under **Environment**:
 | `RESEND_API_KEY` | Yes | `re_...` |
 | `EMAIL_FROM` | Yes | `hello@calczen.in` |
 | `SITE_URL` | Yes | `https://www.calczen.com` |
-| `CORS_ORIGIN` | Yes | see below |
+| `CORS_ORIGIN` | Optional | extra exact origins only (see below) |
 | `ADMIN_EMAIL` | For seed only | used locally with `npm run seed:admin` |
 | `ADMIN_PASSWORD` | For seed only | used locally with `npm run seed:admin` |
 
-### `CORS_ORIGIN` (important)
+### CORS (built-in — `CORS_ORIGIN` optional)
 
-Comma-separated list of every URL that calls your API (no trailing slash):
+The API allows cross-origin requests from:
+
+- **Any** `https://*.vercel.app` preview or production deploy (no need to list each preview URL)
+- `http://localhost:*` and `http://127.0.0.1:*` for local dev
+- `https://calczen.in` and `https://*.calczen.in` (custom domain)
+
+Set `CORS_ORIGIN` only when you need **additional** exact origins (comma-separated, no trailing slash), for example:
 
 ```env
-CORS_ORIGIN=https://www.calczen.com,https://calczen.vercel.app,https://calczen-git-main-you.vercel.app
+CORS_ORIGIN=https://www.calczen.com
 ```
 
-Include your real **Vercel production URL** and preview URLs if you use them.
+After changing server CORS code, **Manual Deploy** on Render so preflight and POST responses include `Access-Control-Allow-Origin`.
+
+### Trust proxy (Render logs)
+
+If you see `ERR_ERL_UNEXPECTED_X_FORWARDED_FOR`, set **`NODE_ENV=production`** on Render (the app enables `trust proxy` when `RENDER` or production mode is detected). Without it, `express-rate-limit` throws before CORS headers are sent, which looks like a CORS failure in the browser.
 
 ## 4. Deploy
 

@@ -1,5 +1,6 @@
 /**
- * Production entry point (Node.js).
- * Run: npm run build && node server.js
+ * CalcZen API — production entry (Render: node server.js)
+ * Loads TypeScript from src/ at runtime (no dist/ compile step).
  */
-import "./dist/index.js";
+import "tsx/esm";
+await import("./src/index.ts");

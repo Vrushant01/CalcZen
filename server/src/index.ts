@@ -10,8 +10,10 @@ async function main() {
 
   const app = await createApp();
 
-  app.listen(env.port, () => {
-    console.log(`Server running on http://localhost:${env.port}`);
+  const host = process.env.RENDER || process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost";
+
+  app.listen(env.port, host, () => {
+    console.log(`Server running on http://${host}:${env.port}`);
     console.log(`Admin panel: http://localhost:${env.port}/admin`);
     console.log(`API: http://localhost:${env.port}/api`);
     console.log(hasDbConfig() ? "Database: Supabase PostgreSQL" : "Database: NOT configured");

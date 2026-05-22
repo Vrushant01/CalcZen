@@ -32,7 +32,9 @@ CORS_ORIGIN=https://www.calczen.com,https://YOUR_PROJECT.vercel.app
 
 Optional: `SITE_URL` is used when generating `public/sitemap.xml` at build time.
 
-Do **not** set `VITE_API_URL` (same-origin `/api`).
+**Same-origin API (default):** do **not** set `VITE_API_URL`.
+
+**API on Render:** set `VITE_API_URL=https://your-service.onrender.com` and see [RENDER.md](./RENDER.md).
 
 ## Deploy
 

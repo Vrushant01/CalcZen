@@ -47,6 +47,10 @@ export async function createApp(): Promise<Express> {
 
   const app = express();
 
+  if (env.nodeEnv === "production") {
+    app.set("trust proxy", 1);
+  }
+
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(
     cors({

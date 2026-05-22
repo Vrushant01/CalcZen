@@ -13,7 +13,7 @@
     "build": "vite build",
     "build:admin": "npm run build --prefix admin",
     "build:all": "npm run build:admin && npm run build",
-    "build:vercel": "npm run build:admin && npm --prefix server run build && node scripts/generate-sitemap.mjs && vite build",
+    "build:vercel": "npm run build:admin && npm --prefix server run build:vercel && node scripts/generate-sitemap.mjs && vite build",
     "vercel-build": "npm run build:vercel",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",

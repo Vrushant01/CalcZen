@@ -3,10 +3,7 @@ import { createApp } from "../server/dist/app.js";
 
 let appPromise: ReturnType<typeof createApp> | null = null;
 
-/**
- * Legacy standalone API handler (optional).
- * Production Vercel deploy uses plugins/express-api.ts inside the Nitro server function.
- */
+/** Vercel serverless handler for /api/* and /admin (see vercel.json rewrites). */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (!appPromise) {

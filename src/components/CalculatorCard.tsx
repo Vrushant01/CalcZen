@@ -15,17 +15,10 @@ export function CalculatorCard({ calc, index = 0 }: { calc: CalculatorMeta; inde
       <Link
         to="/calculator/$slug"
         params={{ slug: calc.slug }}
-<<<<<<< HEAD
         className="group surface-card block h-full rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:-translate-y-0.5 min-w-0 active:scale-[0.99] transition-transform"
       >
         <div className="flex items-start justify-between mb-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-accent text-primary-foreground shadow-glow transition-shadow duration-300 group-hover:shadow-glow-lg">
-=======
-        className="group block h-full rounded-2xl border border-border bg-card p-5 shadow-soft hover:shadow-glow hover:border-accent/40 hover:-translate-y-0.5 transition-all"
-      >
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-accent text-primary-foreground">
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
             <Icon className="h-5 w-5" />
           </div>
           <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-accent group-hover:translate-x-0.5 transition-all" />

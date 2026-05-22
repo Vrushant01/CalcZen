@@ -9,7 +9,6 @@ export type Category = {
   name: string;
   description: string;
   icon: LucideIcon;
-<<<<<<< HEAD
   /** Homepage tile background + border */
   color: string;
   /** Homepage tile icon tint */
@@ -49,16 +48,6 @@ export const categories: Category[] = [
     color: "from-amber-100 to-orange-50 border-amber-200/80 dark:from-amber-950/65 dark:to-orange-950/45 dark:border-amber-500/25",
     iconColor: "text-amber-600 dark:text-amber-400",
   },
-=======
-  color: string; // tailwind text color class on accent bg
-};
-
-export const categories: Category[] = [
-  { slug: "finance",    name: "Finance",    description: "Loans, investments, savings & more", icon: Coins,    color: "from-secondary/20 to-accent/20" },
-  { slug: "health",     name: "Health",     description: "BMI, calories, fitness metrics",     icon: Heart,    color: "from-accent/20 to-success/20" },
-  { slug: "math",       name: "Math",       description: "Percentages, ratios, age & GPA",     icon: Calculator, color: "from-secondary/20 to-secondary/10" },
-  { slug: "everyday",   name: "Everyday",   description: "Tips, dates, fuel, lifestyle",       icon: Receipt,  color: "from-accent/20 to-secondary/20" },
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
 ];
 
 export type CalculatorMeta = {

@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
-<<<<<<< HEAD
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { blogContent } from "@/data/blogContent";
@@ -23,21 +22,11 @@ const ACTIVITY_LABELS: Record<string, string> = {
 export function CalorieCalculator() {
   const calc = getCalculator("calorie-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-=======
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { getCalculator } from "@/data/calculators";
-
-export function CalorieCalculator() {
-  const calc = getCalculator("calorie-calculator")!;
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
   const [sex, setSex] = useState<"male" | "female">("male");
   const [age, setAge] = useState(30);
   const [heightCm, setHeightCm] = useState(175);
   const [weightKg, setWeightKg] = useState(72);
   const [activity, setActivity] = useState(1.55);
-<<<<<<< HEAD
   const [goal, setGoal] = useState<"maintain" | "lose" | "gain">("maintain");
 
   const { bmr, tdee, target } = useMemo(() => {
@@ -45,20 +34,11 @@ export function CalorieCalculator() {
       sex === "male"
         ? 10 * weightKg + 6.25 * heightCm - 5 * age + 5
         : 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
-=======
-  const [goal, setGoal] = useState<"maintain"|"lose"|"gain">("maintain");
-
-  const { bmr, tdee, target } = useMemo(() => {
-    const bmr = sex === "male"
-      ? 10 * weightKg + 6.25 * heightCm - 5 * age + 5
-      : 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
     const tdee = bmr * activity;
     const target = goal === "maintain" ? tdee : goal === "lose" ? tdee - 500 : tdee + 300;
     return { bmr, tdee, target };
   }, [sex, age, heightCm, weightKg, activity, goal]);
 
-<<<<<<< HEAD
   const activityLabel = ACTIVITY_LABELS[String(activity)] ?? "Custom";
 
   const pdfData = hasResult
@@ -89,34 +69,22 @@ export function CalorieCalculator() {
       }
     : null;
 
-=======
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
   return (
     <CalculatorPageLayout
       calc={calc}
       intro="Estimate the calories you need each day to maintain, lose or gain weight. Uses the Mifflin-St Jeor equation, the most accurate formula recommended by dietitians."
-<<<<<<< HEAD
       formula={`Male BMR: 10×kg + 6.25×cm − 5×age + 5
 Female BMR: 10×kg + 6.25×cm − 5×age − 161
 TDEE = BMR × activity multiplier`}
       example={`30-year-old male, 175 cm, 72 kg, moderate activity (×1.55).
 BMR ≈ 1,679 kcal/day.
 TDEE ≈ 2,602 kcal/day to maintain weight.`}
-=======
-      formula={`BMR (Mifflin-St Jeor):
-  Male:   10×kg + 6.25×cm − 5×age + 5
-  Female: 10×kg + 6.25×cm − 5×age − 161
-TDEE = BMR × activity multiplier`}
-      example={`30-year-old male, 175 cm, 72 kg, moderate activity (1.55):
-BMR ≈ 1,679 kcal · TDEE ≈ 2,602 kcal/day to maintain.`}
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
       faqs={[
         { q: "Why a 500-calorie deficit for weight loss?", a: "A daily 500-calorie deficit creates roughly a 0.5 kg (≈1 lb) loss per week, a sustainable rate recommended by most health authorities." },
         { q: "Are these numbers exact?", a: "They're a strong starting point. Track your weight for two to three weeks and adjust by 100–200 calories if results are too fast or too slow." },
         { q: "What activity level should I pick?", a: "Sedentary = desk job, no exercise. Moderate = workouts 3–5 days/week. Very active = physical job or daily intense training." },
       ]}
     >
-<<<<<<< HEAD
       <div className="calc-layout-grid">
         <div className="calc-input-column">
           <div className="inline-flex rounded-lg bg-muted p-1">
@@ -130,19 +98,10 @@ BMR ≈ 1,679 kcal · TDEE ≈ 2,602 kcal/day to maintain.`}
                 }}
                 className={`px-4 py-1.5 text-sm font-medium rounded-md capitalize ${sex === s ? "bg-background shadow-sm" : "text-muted-foreground"}`}
               >
-=======
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-4">
-          <div className="inline-flex rounded-lg bg-muted p-1">
-            {(["male","female"] as const).map((s) => (
-              <button key={s} onClick={() => setSex(s)}
-                className={`px-4 py-1.5 text-sm font-medium rounded-md capitalize ${sex===s?"bg-background shadow-sm":"text-muted-foreground"}`}>
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
                 {s}
               </button>
             ))}
           </div>
-<<<<<<< HEAD
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             <F label="Age" value={age} set={(v) => { setAge(v); markCalculated(); }} />
             <F label="Height (cm)" value={heightCm} set={(v) => { setHeightCm(v); markCalculated(); }} />
@@ -177,36 +136,11 @@ BMR ≈ 1,679 kcal · TDEE ≈ 2,602 kcal/day to maintain.`}
                   }}
                   className={`px-3 py-2 rounded-md text-sm font-medium border capitalize ${goal === g ? "bg-accent text-accent-foreground border-accent" : "border-border hover:bg-muted"}`}
                 >
-=======
-          <div className="grid grid-cols-3 gap-4">
-            <F label="Age" value={age} set={setAge} />
-            <F label="Height (cm)" value={heightCm} set={setHeightCm} />
-            <F label="Weight (kg)" value={weightKg} set={setWeightKg} />
-          </div>
-          <div>
-            <Label className="text-xs font-medium text-muted-foreground">Activity level</Label>
-            <select value={activity} onChange={(e) => setActivity(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-              <option value={1.2}>Sedentary (little/no exercise)</option>
-              <option value={1.375}>Light (1–3 days/week)</option>
-              <option value={1.55}>Moderate (3–5 days/week)</option>
-              <option value={1.725}>Very active (6–7 days/week)</option>
-              <option value={1.9}>Extra active (athlete / physical job)</option>
-            </select>
-          </div>
-          <div>
-            <Label className="text-xs font-medium text-muted-foreground">Goal</Label>
-            <div className="mt-1 grid grid-cols-3 gap-2">
-              {(["lose","maintain","gain"] as const).map((g) => (
-                <button key={g} onClick={() => setGoal(g)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium border capitalize ${goal===g?"bg-accent text-accent-foreground border-accent":"border-border hover:bg-muted"}`}>
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
                   {g} weight
                 </button>
               ))}
             </div>
           </div>
-<<<<<<< HEAD
           <Button
             variant="ghost"
             size="sm"
@@ -234,19 +168,6 @@ BMR ≈ 1,679 kcal · TDEE ≈ 2,602 kcal/day to maintain.`}
         </div>
       </div>
       <CalculatorBlog content={blogContent.calorie} />
-=======
-          <Button variant="ghost" size="sm" onClick={() => { setSex("male"); setAge(30); setHeightCm(175); setWeightKg(72); setActivity(1.55); setGoal("maintain"); }}>Reset</Button>
-        </div>
-        <div className="rounded-xl bg-muted/40 p-5">
-          <div className="text-sm text-muted-foreground">Daily calorie target</div>
-          <div className="text-4xl font-bold mt-1 text-gradient">{Math.round(target)} kcal</div>
-          <dl className="grid grid-cols-2 gap-3 mt-4 text-sm">
-            <div><dt className="text-muted-foreground">BMR</dt><dd className="font-semibold">{Math.round(bmr)} kcal</dd></div>
-            <div><dt className="text-muted-foreground">TDEE</dt><dd className="font-semibold">{Math.round(tdee)} kcal</dd></div>
-          </dl>
-        </div>
-      </div>
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
     </CalculatorPageLayout>
   );
 }

@@ -1,61 +1,57 @@
-# Deploy CalcZen to Vercel
+# CalcZen — Vercel deployment (Vite SPA)
 
-Single Vercel project serves the **TanStack Start site** (Nitro), **Express API** (`/api/*`), and **admin panel** (`/admin`) in one serverless function via `plugins/express-api.ts`.
+## Stack on Vercel
 
-## Prerequisites
+| Part | Technology |
+|------|----------------|
+| Frontend | **Vite** + React + TanStack Router (SPA, `dist/`) |
+| API | Express serverless (`api/index.ts`) |
+| Admin | Vite SPA at `/admin` |
 
-1. Run `server/supabase/schema.sql` in Supabase SQL Editor.
-2. Resend domain verified for `EMAIL_FROM`.
-3. GitHub repo connected to Vercel (or deploy via CLI).
+## Vercel dashboard
+
+| Setting | Value |
+|---------|--------|
+| Framework Preset | **Vite** |
+| Root Directory | `.` |
+| Build Command | `npm run vercel-build` |
+| Output Directory | `dist` |
+| Install Command | `npm install && npm install --prefix server && npm install --prefix admin` |
 
 ## Environment variables
 
-Add these in **Vercel → Project → Settings → Environment Variables** (Production + Preview):
+```env
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+JWT_SECRET=
+RESEND_API_KEY=
+EMAIL_FROM=hello@calczen.in
+SITE_URL=https://www.calczen.com
+CORS_ORIGIN=https://www.calczen.com,https://YOUR_PROJECT.vercel.app
+```
 
-| Variable | Required | Notes |
-|----------|----------|--------|
-| `SUPABASE_URL` | Yes | Supabase project URL |
-| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Server-side key |
-| `JWT_SECRET` | Yes | Strong random string |
-| `RESEND_API_KEY` | Yes | For welcome + newsletter emails |
-| `EMAIL_FROM` | Yes | e.g. `hello@calczen.in` |
-| `CORS_ORIGIN` | Yes | Your site URL(s), comma-separated, e.g. `https://www.calczen.com,https://calczen.vercel.app` |
-| `SITE_URL` | Yes | Public site URL |
-| `SITE_NAME` | No | Default `CalcZen` |
-| `ADMIN_EMAIL` | For seed | Used by `npm run seed:admin` locally |
-| `ADMIN_PASSWORD` | For seed | Used by `npm run seed:admin` locally |
-| `NODE_ENV` | Auto | Vercel sets `production` |
+Optional: `SITE_URL` is used when generating `public/sitemap.xml` at build time.
 
-Do **not** set `VITE_API_URL` on Vercel unless the API is on a different domain.
+Do **not** set `VITE_API_URL` (same-origin `/api`).
 
 ## Deploy
 
-1. Import the repo in [vercel.com/new](https://vercel.com/new).
-2. Framework preset: **TanStack Start** (or leave auto-detect).
-3. Root directory: repository root.
-4. Build command: `npm run vercel-build` (default from `vercel.json`).
-5. Deploy.
-
-After first deploy:
-
-```bash
-# Seed admin (run locally with production Supabase creds in server/.env)
-npm run seed:admin
-```
+1. Push to GitHub.
+2. Import on Vercel → Framework: **Vite**.
+3. Add env vars → Deploy.
+4. `npm run seed:admin` locally after Supabase tables exist.
 
 ## Verify
 
-- Site: `https://your-project.vercel.app`
-- API health: `https://your-project.vercel.app/api/health`
-- Admin: `https://your-project.vercel.app/admin`
+- `/` — calculator site  
+- `/api/health` — API  
+- `/admin` — admin panel  
+- `/sitemap.xml` — static sitemap  
 
-## Local Vercel-style build
+## Local dev
 
-```powershell
-$env:VERCEL = "1"
-npm run build:vercel
+```bash
+npm run dev          # Vite :8080
+npm run dev:server   # API :3001
+npm run dev:admin    # admin
 ```
-
-## Cloudflare (Lovable default)
-
-Local dev and Cloudflare deploy still use the Cloudflare plugin (`VERCEL` unset). Use `wrangler deploy` for Workers hosting.

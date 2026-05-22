@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
-<<<<<<< HEAD
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { blogContent } from "@/data/blogContent";
@@ -20,18 +19,6 @@ export function LoanEMICalculator() {
   const calc = getCalculator("loan-emi-calculator")!;
   const { format } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-=======
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { getCalculator } from "@/data/calculators";
-
-const fmt = (n: number) =>
-  n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 });
-
-export function LoanEMICalculator() {
-  const calc = getCalculator("loan-emi-calculator")!;
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
   const [amount, setAmount] = useState(20000);
   const [rate, setRate] = useState(9);
   const [months, setMonths] = useState(60);
@@ -44,7 +31,6 @@ export function LoanEMICalculator() {
     return { emi, totalPay, totalInterest: totalPay - amount };
   }, [amount, rate, months]);
 
-<<<<<<< HEAD
   const interestPct = amount > 0 ? ((totalInterest / amount) * 100).toFixed(1) : "0";
   const extraPrincipal = emi > 0 ? formatPdfUsd(emi * 0.1) : formatPdfUsd(0);
 
@@ -75,13 +61,10 @@ export function LoanEMICalculator() {
     { name: "Interest", value: Math.round(totalInterest) },
   ].filter((d) => d.value > 0);
 
-=======
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
   return (
     <CalculatorPageLayout
       calc={calc}
       intro="Calculate your Equated Monthly Installment (EMI) for any loan. See exactly how much you'll pay each month and how much you'll pay in interest over the life of the loan."
-<<<<<<< HEAD
       formula={`EMI = P × r × (1 + r)^n / ((1 + r)^n − 1)
 where
 P = loan principal
@@ -90,19 +73,12 @@ n = loan term in months`}
       example={`Loan of $20,000 at 9% APR for 60 months.
 Monthly EMI ≈ $415.17.
 Total interest paid ≈ $4,910.`}
-=======
-      formula={`EMI = P × r × (1+r)^n / ((1+r)^n − 1)
-P = principal, r = monthly rate, n = months`}
-      example={`Loan of $20,000 at 9% for 60 months.
-EMI ≈ $415.17. Total interest ≈ $4,910.`}
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
       faqs={[
         { q: "What is EMI?", a: "EMI stands for Equated Monthly Installment — a fixed payment that includes both principal and interest, paid every month until the loan is repaid." },
         { q: "Does prepayment reduce EMI?", a: "Prepayments typically reduce the loan tenure or principal. Many lenders let you choose; reducing tenure usually saves more interest." },
         { q: "Are EMI calculations exact?", a: "EMI is exact for the inputs given. Real loans may include processing fees, insurance, or variable rates that change the actual payment." },
       ]}
     >
-<<<<<<< HEAD
       <CalculatorCurrencyBar />
       <div className="calc-layout-grid">
         <div className="calc-input-column">
@@ -149,48 +125,18 @@ EMI ≈ $415.17. Total interest ≈ $4,910.`}
         </div>
       </div>
       <CalculatorBlog content={blogContent.loan} />
-=======
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-4">
-          <Field label="Loan amount" value={amount} onChange={setAmount} prefix="$" />
-          <div className="grid grid-cols-2 gap-4">
-            <Field label="Interest rate" value={rate} onChange={setRate} suffix="%" step={0.1} />
-            <Field label="Tenure (months)" value={months} onChange={setMonths} />
-          </div>
-          <Button variant="ghost" size="sm" onClick={() => { setAmount(20000); setRate(9); setMonths(60); }}>Reset</Button>
-        </div>
-        <div className="rounded-xl bg-muted/40 p-5">
-          <div className="text-sm text-muted-foreground">Monthly EMI</div>
-          <div className="text-4xl font-bold mt-1 text-gradient">{fmt(emi)}</div>
-          <dl className="grid grid-cols-2 gap-3 mt-4 text-sm">
-            <div><dt className="text-muted-foreground">Total interest</dt><dd className="font-semibold">{fmt(totalInterest)}</dd></div>
-            <div><dt className="text-muted-foreground">Total payment</dt><dd className="font-semibold">{fmt(totalPay)}</dd></div>
-          </dl>
-        </div>
-      </div>
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
     </CalculatorPageLayout>
   );
 }
 
-<<<<<<< HEAD
 function Field({ label, value, onChange, suffix, step = 1 }: {
   label: string; value: number; onChange: (n: number) => void; suffix?: string; step?: number;
-=======
-function Field({ label, value, onChange, prefix, suffix, step = 1 }: {
-  label: string; value: number; onChange: (n: number) => void; prefix?: string; suffix?: string; step?: number;
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
 }) {
   return (
     <div>
       <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
       <div className="mt-1 relative">
-<<<<<<< HEAD
         <Input type="number" step={step} value={value} onChange={(e) => onChange(Number(e.target.value) || 0)} className={suffix ? "pr-10" : ""} />
-=======
-        {prefix && <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">{prefix}</span>}
-        <Input type="number" step={step} value={value} onChange={(e) => onChange(Number(e.target.value) || 0)} className={prefix ? "pl-7" : suffix ? "pr-10" : ""} />
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
         {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">{suffix}</span>}
       </div>
     </div>

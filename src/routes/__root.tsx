@@ -1,18 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  Outlet,
-  Link,
-  createRootRouteWithContext,
-  useRouter,
-  HeadContent,
-  Scripts,
-} from "@tanstack/react-router";
-
-import appCss from "../styles.css?url";
-<<<<<<< HEAD
-import { themeInitScript } from "@/lib/theme";
-=======
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
+import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
 
 function NotFoundComponent() {
   return (
@@ -43,9 +30,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">This page didn't load</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
@@ -75,59 +60,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-<<<<<<< HEAD
       {
         name: "viewport",
         content: "width=device-width, initial-scale=1, viewport-fit=cover",
       },
       { title: "CalcZen — Smart Online Calculators" },
-      { name: "description", content: "Free online calculators for finance, health, math and everyday life." },
+      {
+        name: "description",
+        content: "Free online calculators for finance, health, math and everyday life.",
+      },
       { name: "author", content: "CalcZen" },
       { name: "theme-color", content: "#0F172A" },
       { property: "og:site_name", content: "CalcZen" },
-=======
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "CalcVerse — Smart Online Calculators" },
-      { name: "description", content: "Free online calculators for finance, health, math and everyday life." },
-      { name: "author", content: "CalcVerse" },
-      { name: "theme-color", content: "#0F172A" },
-      { property: "og:site_name", content: "CalcVerse" },
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" },
-    ],
   }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
-
-function RootShell({ children }: { children: React.ReactNode }) {
-  return (
-<<<<<<< HEAD
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-=======
-    <html lang="en">
-      <head>
->>>>>>> 645b623128585f49216b5fc01c339c8c31f4f4c3
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();

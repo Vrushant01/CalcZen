@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import cors from "cors";
@@ -14,6 +15,19 @@ import subscribeRoutes from "./routes/subscribeRoutes.js";
 import { formatDbError } from "./utils/errors.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+function resolveAdminDist(): string {
+  const candidates = [
+    path.resolve(process.cwd(), "admin/dist"),
+    path.resolve(__dirname, "../../admin/dist"),
+  ];
+  for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, "index.html"))) {
+      return dir;
+    }
+  }
+  return candidates[0];
+}
 
 let dbVerified = false;
 
@@ -95,7 +109,7 @@ export async function createApp(): Promise<Express> {
   app.use("/api/admin", adminRoutes);
   app.use("/api/newsletters", newsletterRoutes);
 
-  const adminDist = path.resolve(__dirname, "../../admin/dist");
+  const adminDist = resolveAdminDist();
   app.use("/admin", express.static(adminDist, { index: "index.html" }));
   app.get(["/admin", "/admin/*path"], (req, res, next) => {
     if (req.path.match(/\.[a-zA-Z0-9]+$/)) {

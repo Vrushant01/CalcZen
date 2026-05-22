@@ -93,10 +93,8 @@ server/
 
 ## Vercel
 
-Set all `server/.env` variables in Vercel project settings. Build server before deploy:
+See **[VERCEL.md](./VERCEL.md)** for full deploy steps.
 
-```bash
-cd server && npm run build
-```
-
-Use `api/index.ts` serverless handler or deploy server to Railway/Render with `npm start`.
+- Build: `npm run vercel-build` (admin + API + Nitro frontend)
+- API + admin: `api/index.ts` serverless function
+- Set all `server/.env` variables in the Vercel dashboard (not committed)

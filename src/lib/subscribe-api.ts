@@ -1,6 +1,5 @@
-/** Same-origin /api in dev (Vite proxy → :3001). Set VITE_API_URL for production. */
-const API_BASE =
-  import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? "" : "http://localhost:3001");
+/** Same-origin /api in dev (Vite proxy) and on Vercel. Set VITE_API_URL only for split API hosting. */
+const API_BASE = import.meta.env.VITE_API_URL ?? "";
 
 export type SubscribeResult =
   | { ok: true; message: string }

@@ -1,5 +1,4 @@
-/** Same-origin /api in dev (Vite proxy) and on Vercel. Set VITE_API_URL only for split API hosting. */
-const API_BASE = import.meta.env.VITE_API_URL ?? "";
+import { apiFetch, getNetworkErrorMessage } from "@/lib/api-config";
 
 export type SubscribeResult =
   | { ok: true; message: string }
@@ -7,13 +6,16 @@ export type SubscribeResult =
 
 export async function subscribeEmail(email: string): Promise<SubscribeResult> {
   try {
-    const res = await fetch(`${API_BASE}/api/subscribe`, {
+    const res = await apiFetch("/api/subscribe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
     });
 
-    const data = (await res.json()) as { success?: boolean; message?: string };
+    const data = (await res.json().catch(() => ({}))) as {
+      success?: boolean;
+      message?: string;
+    };
 
     if (res.ok && data.success) {
       return { ok: true, message: data.message ?? "Thanks! You're subscribed." };
@@ -21,13 +23,12 @@ export async function subscribeEmail(email: string): Promise<SubscribeResult> {
 
     return {
       ok: false,
-      message: data.message ?? "Something went wrong. Please try again.",
+      message: data.message ?? `Something went wrong (${res.status}). Please try again.`,
     };
-  } catch {
+  } catch (err) {
     return {
       ok: false,
-      message:
-        "Could not reach the server. Make sure the API is running (npm run dev:server) and restart the website after config changes.",
+      message: getNetworkErrorMessage(err),
     };
   }
 }

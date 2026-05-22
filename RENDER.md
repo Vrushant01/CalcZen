@@ -67,24 +67,24 @@ Click **Create Web Service** (or **Manual Deploy**). Wait until status is **Live
 
 Your API base URL will look like:
 
-`https://calczen-api.onrender.com`
+`https://calczen.onrender.com`
 
 Test:
 
-- `https://calczen-api.onrender.com/api/health` → `"database": "connected"`
-- `https://calczen-api.onrender.com/admin` → admin login
+- `https://calczen.onrender.com/api/health` → `"database": "connected"`
+- `https://calczen.onrender.com/admin` → admin login
 
 ## 5. Connect Vercel frontend to Render API
 
 In **Vercel → Project → Environment Variables** add:
 
 ```env
-VITE_API_URL=https://calczen-api.onrender.com
+VITE_API_URL=https://calczen.onrender.com
 ```
 
 Use your actual Render URL (no trailing slash). Apply to **Production** and **Preview**, then **Redeploy** Vercel.
 
-The site will call `https://calczen-api.onrender.com/api/subscribe` instead of same-origin `/api`.
+The site will call `https://calczen.onrender.com/api/subscribe` instead of same-origin `/api`.
 
 ### Admin on Render
 

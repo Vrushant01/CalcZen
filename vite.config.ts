@@ -42,12 +42,15 @@ export default defineConfig(({ mode }) => {
     server: {
       host: "::",
       port: 8080,
-      proxy: {
-        "/api": {
-          target: "http://localhost:3001",
-          changeOrigin: true,
-        },
-      },
+      // Dev only: when VITE_API_URL is unset, proxy /api → local Express (:3001)
+      proxy: env.VITE_API_URL
+        ? undefined
+        : {
+            "/api": {
+              target: "http://localhost:3001",
+              changeOrigin: true,
+            },
+          },
     },
   };
 });

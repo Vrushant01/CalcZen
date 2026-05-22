@@ -20,6 +20,9 @@ dist-ssr
 .env.*
 !.env.example
 !**/.env.example
+!.env.production
+!**/.env.production
+!admin/.env.production
 server/.env
 admin/.env
 

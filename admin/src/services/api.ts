@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_URL ?? "";
+import { apiFetch, getApiBaseUrl, getNetworkErrorMessage } from "@/lib/api-config";
 
 export function getToken(): string | null {
   return localStorage.getItem("admin_token");
@@ -26,14 +26,27 @@ async function request<T>(
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
-  const json = await res.json().catch(() => ({ success: false, message: "Invalid response" }));
+  let res: Response;
+  try {
+    res = await apiFetch(path, { ...options, headers });
+  } catch (err) {
+    throw new Error(getNetworkErrorMessage(err));
+  }
+
+  const json = (await res.json().catch(() => ({
+    success: false,
+    message: "Invalid response from server",
+  }))) as { success?: boolean; message?: string; data?: T };
 
   if (!res.ok) {
     throw new Error(json.message ?? `Request failed (${res.status})`);
   }
 
-  return json;
+  return {
+    success: json.success ?? true,
+    message: json.message,
+    data: json.data,
+  };
 }
 
 export type AdminStats = {
@@ -95,10 +108,18 @@ export const api = {
 
   exportCsv: async () => {
     const token = getToken();
-    const res = await fetch(`${API_BASE}/api/admin/subscribers/export/csv`, {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    });
-    if (!res.ok) throw new Error("Export failed");
+    let res: Response;
+    try {
+      res = await apiFetch("/api/admin/subscribers/export/csv", {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+    } catch (err) {
+      throw new Error(getNetworkErrorMessage(err));
+    }
+    if (!res.ok) {
+      const err = (await res.json().catch(() => ({}))) as { message?: string };
+      throw new Error(err.message ?? `Export failed (${res.status})`);
+    }
     return res.blob();
   },
 
@@ -118,3 +139,6 @@ export const api = {
       }>
     >("/api/newsletters/history"),
 };
+
+/** Resolved API base (for debugging / display). */
+export const apiBaseUrl = getApiBaseUrl;

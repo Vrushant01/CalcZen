@@ -1,0 +1,29 @@
+import { assertProductionEnv, env, hasDbConfig, hasEmailConfig } from "./config/env.js";
+import { createApp } from "./app.js";
+
+async function main() {
+  assertProductionEnv();
+
+  if (!hasDbConfig()) {
+    console.warn("SUPABASE_URL / key not set — database operations will fail.");
+  }
+
+  const app = await createApp();
+
+  app.listen(env.port, () => {
+    console.log(`Server running on http://localhost:${env.port}`);
+    console.log(`Admin panel: http://localhost:${env.port}/admin`);
+    console.log(`API: http://localhost:${env.port}/api`);
+    console.log(hasDbConfig() ? "Database: Supabase PostgreSQL" : "Database: NOT configured");
+    console.log(
+      hasEmailConfig()
+        ? `Email: Resend (${env.emailFrom})`
+        : "Email: NOT configured — set RESEND_API_KEY",
+    );
+  });
+}
+
+main().catch((err) => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
+});

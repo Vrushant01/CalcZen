@@ -111,3 +111,97 @@ function escapeHtml(text: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 }
+
+function contactLayout(content: string, preheader: string): string {
+  const year = new Date().getFullYear();
+  const siteUrl = env.siteUrl.startsWith("http") ? env.siteUrl : `https://${env.siteUrl}`;
+  const siteName = env.siteName;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${siteName} — Contact</title>
+  <style>
+    body { margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: ${colors.bg}; }
+    @media only screen and (max-width: 600px) {
+      .wrapper { width: 100% !important; }
+      .mobile-pad { padding-left: 20px !important; padding-right: 20px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:${colors.bg};font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+  <span style="display:none;font-size:1px;color:${colors.bg};line-height:1px;max-height:0;opacity:0;overflow:hidden;">${escapeHtml(preheader)}</span>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${colors.bg};">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" class="wrapper" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+          <tr>
+            <td style="background:linear-gradient(135deg,${colors.bg} 0%,${colors.card} 55%,${colors.primary} 120%);border:1px solid ${colors.cardBorder};border-radius:16px 16px 0 0;padding:28px 32px;text-align:center;">
+              <h1 style="margin:0;font-size:22px;font-weight:800;color:${colors.text};letter-spacing:-0.5px;">${siteName}</h1>
+              <p style="margin:8px 0 0;font-size:13px;color:${colors.muted};">New contact form submission</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="mobile-pad" style="background-color:${colors.card};border-left:1px solid ${colors.cardBorder};border-right:1px solid ${colors.cardBorder};padding:32px;">
+              ${content}
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color:${colors.surface};border:1px solid ${colors.cardBorder};border-top:0;border-radius:0 0 16px 16px;padding:20px 32px;text-align:center;">
+              <p style="margin:0;font-size:11px;color:${colors.muted};line-height:1.6;">
+                Sent via <a href="${siteUrl}/contact" style="color:${colors.accent};text-decoration:none;">${siteUrl}/contact</a>
+                · &copy; ${year} ${siteName}
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
+export type ContactFormEmailData = {
+  name: string;
+  email: string;
+  message: string;
+  submittedAt: string;
+};
+
+export function contactFormEmailHtml(data: ContactFormEmailData): string {
+  const content = `
+    <h2 style="margin:0 0 20px;font-size:20px;font-weight:700;color:${colors.text};">New Contact Form Submission</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;">
+      <tr>
+        <td style="padding:12px 0;border-bottom:1px solid ${colors.cardBorder};">
+          <p style="margin:0 0 4px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:${colors.muted};">Name</p>
+          <p style="margin:0;font-size:16px;color:${colors.text};">${escapeHtml(data.name)}</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:12px 0;border-bottom:1px solid ${colors.cardBorder};">
+          <p style="margin:0 0 4px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:${colors.muted};">Email</p>
+          <p style="margin:0;font-size:16px;">
+            <a href="mailto:${escapeHtml(data.email)}" style="color:${colors.primaryLight};text-decoration:none;">${escapeHtml(data.email)}</a>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:12px 0;border-bottom:1px solid ${colors.cardBorder};">
+          <p style="margin:0 0 4px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:${colors.muted};">Submitted</p>
+          <p style="margin:0;font-size:14px;color:${colors.muted};">${escapeHtml(data.submittedAt)}</p>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:0 0 8px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:${colors.muted};">Message</p>
+    <div style="margin:0;padding:16px;background-color:${colors.surface};border:1px solid ${colors.cardBorder};border-radius:10px;font-size:15px;line-height:1.65;color:${colors.text};white-space:pre-wrap;">${escapeHtml(data.message)}</div>
+    <p style="margin:24px 0 0;font-size:13px;color:${colors.muted};">
+      Reply directly to this email to respond to the sender (Reply-To is set to their address).
+    </p>
+  `;
+
+  return contactLayout(content, `Contact from ${data.name}`);
+}

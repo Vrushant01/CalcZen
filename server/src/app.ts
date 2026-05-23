@@ -17,6 +17,7 @@ import { mongoSanitize } from "./middleware/sanitize.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import newsletterRoutes from "./routes/newsletterRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
 import subscribeRoutes from "./routes/subscribeRoutes.js";
 import { formatDbError } from "./utils/errors.js";
 
@@ -91,6 +92,7 @@ export async function createApp(): Promise<Express> {
       links: {
         health: "/api/health",
         subscribe: "POST /api/subscribe",
+        contact: "POST /api/contact",
         adminLogin: "POST /api/auth/login",
         adminPanel: "/admin",
       },
@@ -121,6 +123,7 @@ export async function createApp(): Promise<Express> {
   });
 
   app.use("/api/subscribe", subscribeRoutes);
+  app.use("/api/contact", contactRoutes);
   app.use("/api/auth", authRoutes);
   app.use("/api/admin", adminRoutes);
   app.use("/api/newsletters", newsletterRoutes);

@@ -35,6 +35,8 @@ export const env = {
   siteName: process.env.SITE_NAME ?? "CalcZen",
   resendApiKey: process.env.RESEND_API_KEY ?? "",
   emailFrom: process.env.EMAIL_FROM ?? "hello@calczen.in",
+  /** Inbox for contact form notifications (Cloudflare → Gmail). */
+  contactTo: process.env.CONTACT_TO ?? process.env.EMAIL_FROM ?? "hello@calczen.in",
   adminEmail: process.env.ADMIN_EMAIL ?? "",
   adminPassword: process.env.ADMIN_PASSWORD ?? "",
   emailBatchSize: Number(process.env.EMAIL_BATCH_SIZE ?? 50),

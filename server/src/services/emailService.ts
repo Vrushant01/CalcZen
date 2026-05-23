@@ -1,5 +1,10 @@
 import { env, hasEmailConfig } from "../config/env.js";
-import { newsletterEmailHtml, welcomeEmailHtml } from "../utils/emailTemplates.js";
+import {
+  contactFormEmailHtml,
+  type ContactFormEmailData,
+  newsletterEmailHtml,
+  welcomeEmailHtml,
+} from "../utils/emailTemplates.js";
 import { getFromAddress, getResendClient } from "./resendClient.js";
 
 export type BulkSendResult = {
@@ -7,18 +12,37 @@ export type BulkSendResult = {
   failed: string[];
 };
 
+type SendEmailOptions = {
+  replyTo?: string;
+};
+
 /** Send a single email via Resend */
-async function sendEmail(to: string, subject: string, html: string): Promise<void> {
+async function sendEmail(
+  to: string,
+  subject: string,
+  html: string,
+  options?: SendEmailOptions,
+): Promise<void> {
   const resend = getResendClient();
   const { error } = await resend.emails.send({
     from: getFromAddress(),
     to: [to],
     subject,
     html,
+    ...(options?.replyTo ? { replyTo: options.replyTo } : {}),
   });
   if (error) {
     throw new Error(error.message);
   }
+}
+
+/** Notify team inbox when someone submits the contact form */
+export async function sendContactFormEmail(data: ContactFormEmailData): Promise<void> {
+  const inbox = env.contactTo;
+  const subject = `New Contact Form Submission — ${data.name}`;
+  await sendEmail(inbox, subject, contactFormEmailHtml(data), {
+    replyTo: data.email,
+  });
 }
 
 /** Welcome email after subscription */

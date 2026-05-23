@@ -46,6 +46,7 @@ Add under **Environment**:
 | `JWT_SECRET` | Yes | long random string |
 | `RESEND_API_KEY` | Yes | `re_...` |
 | `EMAIL_FROM` | Yes | `hello@calczen.in` |
+| `CONTACT_TO` | Optional | `hello@calczen.in` (contact form inbox) |
 | `SITE_URL` | Yes | `https://www.calczen.in` |
 | `CORS_ORIGIN` | Optional | extra exact origins only (see below) |
 | `ADMIN_EMAIL` | For seed only | used locally with `npm run seed:admin` |

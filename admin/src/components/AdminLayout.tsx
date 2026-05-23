@@ -1,9 +1,10 @@
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import { LayoutDashboard, LogOut, Mail, Users } from "lucide-react";
+import { Inbox, LayoutDashboard, LogOut, Mail, Users } from "lucide-react";
 import { clearToken } from "@/services/api";
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/support", label: "Support", icon: Inbox },
   { to: "/newsletter", label: "Newsletter", icon: Mail },
 ];
 

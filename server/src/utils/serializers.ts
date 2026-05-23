@@ -1,8 +1,10 @@
 import type {
   AdminRow,
   ApiAdmin,
+  ApiContactMessage,
   ApiNewsletter,
   ApiSubscriber,
+  ContactMessageRow,
   NewsletterRow,
   SubscriberRow,
 } from "../types/database.js";
@@ -24,6 +26,20 @@ export function toApiAdmin(row: AdminRow): ApiAdmin {
     passwordHash: row.password_hash,
     name: row.name,
     createdAt: row.created_at,
+  };
+}
+
+export function toApiContactMessage(row: ContactMessageRow): ApiContactMessage {
+  return {
+    _id: row.id,
+    name: row.name,
+    email: row.email,
+    subject: row.subject,
+    message: row.message,
+    status: row.status,
+    adminReply: row.admin_reply,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
   };
 }
 

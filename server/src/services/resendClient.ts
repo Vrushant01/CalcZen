@@ -17,3 +17,12 @@ export function getFromAddress(): string {
   const from = env.emailFrom;
   return from.includes("<") ? from : `${env.siteName} <${from}>`;
 }
+
+/** Support replies to contact form users */
+export function getSupportFromAddress(): string {
+  const from = env.emailFrom;
+  const email = from.includes("<")
+    ? (from.match(/<([^>]+)>/)?.[1] ?? from)
+    : from;
+  return `CalcZen Support <${email}>`;
+}

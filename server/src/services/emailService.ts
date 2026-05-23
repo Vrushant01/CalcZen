@@ -3,9 +3,11 @@ import {
   contactFormEmailHtml,
   type ContactFormEmailData,
   newsletterEmailHtml,
+  type SupportReplyEmailData,
+  supportReplyEmailHtml,
   welcomeEmailHtml,
 } from "../utils/emailTemplates.js";
-import { getFromAddress, getResendClient } from "./resendClient.js";
+import { getFromAddress, getResendClient, getSupportFromAddress } from "./resendClient.js";
 
 export type BulkSendResult = {
   sent: number;
@@ -14,6 +16,7 @@ export type BulkSendResult = {
 
 type SendEmailOptions = {
   replyTo?: string;
+  from?: string;
 };
 
 /** Send a single email via Resend */
@@ -25,7 +28,7 @@ async function sendEmail(
 ): Promise<void> {
   const resend = getResendClient();
   const { error } = await resend.emails.send({
-    from: getFromAddress(),
+    from: options?.from ?? getFromAddress(),
     to: [to],
     subject,
     html,
@@ -42,6 +45,17 @@ export async function sendContactFormEmail(data: ContactFormEmailData): Promise<
   const subject = `New Contact Form Submission — ${data.name}`;
   await sendEmail(inbox, subject, contactFormEmailHtml(data), {
     replyTo: data.email,
+  });
+}
+
+/** Send support reply to the user who submitted the contact form */
+export async function sendSupportReplyEmail(
+  to: string,
+  data: SupportReplyEmailData,
+): Promise<void> {
+  const subject = `Re: ${data.originalSubject}`;
+  await sendEmail(to, subject, supportReplyEmailHtml(data), {
+    from: getSupportFromAddress(),
   });
 }
 

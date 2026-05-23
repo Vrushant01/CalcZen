@@ -93,6 +93,8 @@ export async function createApp(): Promise<Express> {
         health: "/api/health",
         subscribe: "POST /api/subscribe",
         contact: "POST /api/contact",
+        adminContactMessages: "GET /api/admin/contact-messages",
+        adminReplyMessage: "POST /api/admin/reply-message",
         adminLogin: "POST /api/auth/login",
         adminPanel: "/admin",
       },

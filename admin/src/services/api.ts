@@ -57,6 +57,18 @@ export type AdminStats = {
   recentLast7Days: number;
 };
 
+export type ContactMessage = {
+  _id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  status: "unread" | "read" | "replied";
+  adminReply: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export const api = {
   login: (email: string, password: string) =>
     request<{ token: string; admin: { id: string; email: string; name?: string } }>(
@@ -138,6 +150,33 @@ export const api = {
         recipientCount: number;
       }>
     >("/api/newsletters/history"),
+
+  contactMessages: (params?: {
+    search?: string;
+    status?: string;
+    page?: number;
+    limit?: number;
+  }) => {
+    const q = new URLSearchParams();
+    if (params?.search) q.set("search", params.search);
+    if (params?.status) q.set("status", params.status);
+    if (params?.page) q.set("page", String(params.page));
+    if (params?.limit) q.set("limit", String(params.limit));
+    const query = q.toString() ? `?${q}` : "";
+    return request<{
+      messages: ContactMessage[];
+      pagination: { page: number; limit: number; total: number; pages: number };
+    }>(`/api/admin/contact-messages${query}`);
+  },
+
+  contactMessage: (id: string) =>
+    request<ContactMessage>(`/api/admin/contact-messages/${id}`),
+
+  replyToMessage: (id: string, reply: string) =>
+    request<ContactMessage>("/api/admin/reply-message", {
+      method: "POST",
+      body: JSON.stringify({ id, reply }),
+    }),
 };
 
 /** Resolved API base (for debugging / display). */

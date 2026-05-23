@@ -82,7 +82,10 @@ function Contact() {
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-balance">Contact us</h1>
         <p className="mt-2 text-sm sm:text-base text-muted-foreground">Have a calculator request or feedback? Drop us a line.</p>
         {sent ? (
-          <div className="mt-8 rounded-2xl border border-success/30 bg-success/10 p-6 text-success-foreground">
+          <div
+            className="mt-8 rounded-2xl border border-success/30 bg-success/10 p-6 text-success-foreground dark:text-emerald-100"
+            role="status"
+          >
             Thanks for reaching out — we'll reply within 48 hours.
           </div>
         ) : (

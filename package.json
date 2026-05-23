@@ -19,7 +19,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "seed:admin": "npm run seed:admin --prefix server"
+    "seed:admin": "npm run seed:admin --prefix server",
+    "admin:reset-password": "npm run admin:reset-password --prefix server"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

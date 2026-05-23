@@ -46,7 +46,7 @@ Add under **Environment**:
 | `JWT_SECRET` | Yes | long random string |
 | `RESEND_API_KEY` | Yes | `re_...` |
 | `EMAIL_FROM` | Yes | `hello@calczen.in` |
-| `SITE_URL` | Yes | `https://www.calczen.com` |
+| `SITE_URL` | Yes | `https://www.calczen.in` |
 | `CORS_ORIGIN` | Optional | extra exact origins only (see below) |
 | `ADMIN_EMAIL` | For seed only | used locally with `npm run seed:admin` |
 | `ADMIN_PASSWORD` | For seed only | used locally with `npm run seed:admin` |
@@ -62,7 +62,7 @@ The API allows cross-origin requests from:
 Set `CORS_ORIGIN` only when you need **additional** exact origins (comma-separated, no trailing slash), for example:
 
 ```env
-CORS_ORIGIN=https://www.calczen.com
+CORS_ORIGIN=https://www.calczen.in
 ```
 
 After changing server CORS code, **Manual Deploy** on Render so preflight and POST responses include `Access-Control-Allow-Origin`.

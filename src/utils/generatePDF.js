@@ -8,7 +8,7 @@ export async function generateCalculatorPDF({
   calculatorName = "Calculator",
   calculatorSlug = "calculator",
   siteName = "CalcZen",
-  siteUrl = "www.calczen.com",
+  siteUrl = "www.calczen.in",
   inputs = [],
   results = [],
   summary,

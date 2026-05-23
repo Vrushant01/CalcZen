@@ -26,8 +26,8 @@ SUPABASE_SERVICE_ROLE_KEY=
 JWT_SECRET=
 RESEND_API_KEY=
 EMAIL_FROM=hello@calczen.in
-SITE_URL=https://www.calczen.com
-CORS_ORIGIN=https://www.calczen.com,https://YOUR_PROJECT.vercel.app
+SITE_URL=https://www.calczen.in
+CORS_ORIGIN=https://www.calczen.in,https://YOUR_PROJECT.vercel.app
 ```
 
 Optional: `SITE_URL` is used when generating `public/sitemap.xml` at build time.

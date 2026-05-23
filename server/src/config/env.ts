@@ -29,7 +29,9 @@ export const env = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "7d",
   /** Optional comma-separated extra exact origins (patterns are built-in). */
   corsOrigin: process.env.CORS_ORIGIN ?? "",
-  siteUrl: process.env.SITE_URL ?? "http://localhost:5173",
+  siteUrl:
+    process.env.SITE_URL ??
+    (process.env.NODE_ENV === "production" ? "https://www.calczen.in" : "http://localhost:5173"),
   siteName: process.env.SITE_NAME ?? "CalcZen",
   resendApiKey: process.env.RESEND_API_KEY ?? "",
   emailFrom: process.env.EMAIL_FROM ?? "hello@calczen.in",

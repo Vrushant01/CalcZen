@@ -21,6 +21,6 @@ services:
       - key: EMAIL_FROM
         value: hello@calczen.in
       - key: SITE_URL
-        sync: false
+        value: https://www.calczen.in
       - key: CORS_ORIGIN
         sync: false

@@ -18,9 +18,9 @@ export const Route = createFileRoute("/about")({
         content:
           "Learn how CalcZen delivers fast, accurate calculator tools with clear methods and a distraction-free experience.",
       },
-      { property: "og:url", content: "https://calczen.in/about" },
+      { property: "og:url", content: "/about" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.in/about" }],
+    links: [{ rel: "canonical", href: "/about" }],
   }),
   component: AboutPage,
 });

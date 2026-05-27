@@ -17,9 +17,9 @@ export const Route = createFileRoute("/privacy")({
         property: "og:description",
         content: "How CalcZen handles data, cookies, analytics, and advertising on our calculator platform.",
       },
-      { property: "og:url", content: "https://calczen.in/privacy" },
+      { property: "og:url", content: "/privacy" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.in/privacy" }],
+    links: [{ rel: "canonical", href: "/privacy" }],
   }),
   component: PrivacyPage,
 });

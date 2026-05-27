@@ -67,9 +67,9 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "CalcZen — Free Online Calculators" },
       { property: "og:description", content: "Online calculators for finance, health, math, and everyday use. Fast, accurate, and free." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://calczen.in/" },
+      { property: "og:url", content: "/" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.in/" }],
+    links: [{ rel: "canonical", href: "/" }],
     scripts: [{
       type: "application/ld+json",
       children: JSON.stringify({

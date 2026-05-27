@@ -1,7 +1,7 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-const siteUrl = (process.env.SITE_URL || "https://calczen.in").replace(/\/$/, "");
+const siteUrl = (process.env.SITE_URL || "https://www.calczen.in").replace(/\/$/, "");
 
 const STATIC_PATHS = ["/", "/calculators", "/about", "/contact", "/terms", "/privacy", "/disclaimer"];
 const CATEGORY_SLUGS = ["finance", "health", "math", "everyday"];

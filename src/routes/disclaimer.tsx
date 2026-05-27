@@ -17,9 +17,9 @@ export const Route = createFileRoute("/disclaimer")({
         property: "og:description",
         content: "Important limits on how CalcZen finance, health, and math calculator results should be used.",
       },
-      { property: "og:url", content: "https://calczen.in/disclaimer" },
+      { property: "og:url", content: "/disclaimer" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.in/disclaimer" }],
+    links: [{ rel: "canonical", href: "/disclaimer" }],
   }),
   component: DisclaimerPage,
 });

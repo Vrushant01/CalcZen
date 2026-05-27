@@ -2,47 +2,16 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "framework": "vite",
-
   "buildCommand": "npm run vercel-build",
   "installCommand": "npm install && npm install --prefix server && npm install --prefix admin",
   "outputDirectory": "dist",
-
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.calczen.in"
-        }
-      ],
-      "destination": "https://calczen.in/$1",
-      "permanent": true
-    }
-  ],
-
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "index, follow"
-        }
-      ]
-    }
-  ],
-
   "rewrites": [
     { "source": "/api", "destination": "/api" },
     { "source": "/api/(.*)", "destination": "/api" },
-
     { "source": "/admin", "destination": "/api" },
     { "source": "/admin/(.*)", "destination": "/api" },
-
     { "source": "/((?!api/|admin/).*)", "destination": "/index.html" }
   ],
-
   "functions": {
     "api/index.ts": {
       "maxDuration": 60,

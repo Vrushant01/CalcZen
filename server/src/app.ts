@@ -64,6 +64,17 @@ export async function createApp(): Promise<Express> {
   // MUST be first: Render sets X-Forwarded-For; rate-limit throws without this.
   configureTrustProxy(app);
 
+  // Redirect HTTP to HTTPS in production (301 permanent redirect)
+  app.use((req, res, next) => {
+    if (
+      process.env.NODE_ENV === "production" &&
+      req.headers["x-forwarded-proto"] !== "https"
+    ) {
+      return res.redirect(301, `https://${req.headers.host}${req.url}`);
+    }
+    next();
+  });
+
   app.use(corsPreflightMiddleware);
   app.use(corsMiddleware);
   app.use(corsHeadersMiddleware);

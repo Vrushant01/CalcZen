@@ -21,9 +21,9 @@ export const Route = createFileRoute("/category/$slug")({
         { title }, { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
-        { property: "og:url", content: `/category/${cat.slug}` },
+        { property: "og:url", content: `https://calczen.in/category/${cat.slug}` },
       ],
-      links: [{ rel: "canonical", href: `/category/${cat.slug}` }],
+      links: [{ rel: "canonical", href: `https://calczen.in/category/${cat.slug}` }],
     };
   },
   component: CategoryPage,

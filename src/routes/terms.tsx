@@ -17,9 +17,9 @@ export const Route = createFileRoute("/terms")({
         property: "og:description",
         content: "Terms governing your use of CalcZen free finance, health, and math calculator tools.",
       },
-      { property: "og:url", content: "/terms" },
+      { property: "og:url", content: "https://calczen.in/terms" },
     ],
-    links: [{ rel: "canonical", href: "/terms" }],
+    links: [{ rel: "canonical", href: "https://calczen.in/terms" }],
   }),
   component: TermsPage,
 });

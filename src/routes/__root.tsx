@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 function NotFoundComponent() {
   return (
@@ -57,34 +58,41 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1, viewport-fit=cover",
-      },
-      { title: "CalcZen — Smart Online Calculators" },
-      {
-        name: "description",
-        content: "Free online calculators for finance, health, math and everyday life.",
-      },
-      { name: "author", content: "CalcZen" },
-      { name: "theme-color", content: "#0F172A" },
-      { property: "og:site_name", content: "CalcZen" },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: "/icons/android-chrome-512x512.png" },
-      { name: "twitter:image", content: "/icons/android-chrome-512x512.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [
-      { rel: "icon", type: "image/x-icon", href: "/icons/favicon.ico" },
-      { rel: "icon", type: "image/png", sizes: "32x32", href: "/icons/favicon-32x32.png" },
-      { rel: "icon", type: "image/png", sizes: "16x16", href: "/icons/favicon-16x16.png" },
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/icons/apple-touch-icon.png" },
-      { rel: "manifest", href: "/manifest.webmanifest" },
-    ],
-  }),
+  head: () => {
+    const isProd = typeof window !== "undefined"
+      ? (window.location.hostname === "calczen.in" || window.location.hostname === "www.calczen.in")
+      : (typeof process !== "undefined" && process.env && (process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production"));
+
+    return {
+      meta: [
+        { charSet: "utf-8" },
+        { name: "robots", content: isProd ? "index, follow" : "noindex, nofollow" },
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1, viewport-fit=cover",
+        },
+        { title: "CalcZen — Smart Online Calculators" },
+        {
+          name: "description",
+          content: "Free online calculators for finance, health, math and everyday life.",
+        },
+        { name: "author", content: "CalcZen" },
+        { name: "theme-color", content: "#0F172A" },
+        { property: "og:site_name", content: "CalcZen" },
+        { property: "og:type", content: "website" },
+        { property: "og:image", content: "/icons/android-chrome-512x512.png" },
+        { name: "twitter:image", content: "/icons/android-chrome-512x512.png" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+      links: [
+        { rel: "icon", type: "image/x-icon", href: "/icons/favicon.ico" },
+        { rel: "icon", type: "image/png", sizes: "32x32", href: "/icons/favicon-32x32.png" },
+        { rel: "icon", type: "image/png", sizes: "16x16", href: "/icons/favicon-16x16.png" },
+        { rel: "apple-touch-icon", sizes: "180x180", href: "/icons/apple-touch-icon.png" },
+        { rel: "manifest", href: "/manifest.webmanifest" },
+      ],
+    };
+  },
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
@@ -92,6 +100,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.protocol === "http:") {
+      window.location.replace(
+        window.location.href.replace(/^http:/i, "https:")
+      );
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

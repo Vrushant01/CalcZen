@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Calculator, Menu, Search, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -38,12 +39,10 @@ export function Header() {
           className="flex min-w-0 shrink items-center gap-2 group touch-target !min-w-0 !justify-start"
           onClick={() => setOpen(false)}
         >
-          <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-accent shadow-glow transition-[transform,box-shadow] duration-300 ease-out group-hover:scale-105 group-hover:shadow-glow-lg">
-            <Calculator className="h-4 w-4 sm:h-5 sm:w-5 text-primary-foreground" />
-          </div>
-          <span className="truncate text-base sm:text-lg font-bold tracking-tight">
-            Calc<span className="text-gradient">Zen</span>
-          </span>
+          <BrandLogo
+            className="transition-[transform,filter] duration-300 ease-out group-hover:scale-[1.015]"
+            imgClassName="h-8 w-8 sm:h-9 sm:w-9"
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 min-w-0">

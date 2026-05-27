@@ -1,0 +1,21 @@
+{
+  "name": "CalcZen Admin",
+  "short_name": "CalcZen Admin",
+  "description": "CalcZen admin dashboard for subscriber and newsletter management.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#0F172A",
+  "icons": [
+    {
+      "src": "/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

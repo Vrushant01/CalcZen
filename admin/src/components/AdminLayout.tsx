@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import { Inbox, LayoutDashboard, LogOut, Mail, Users } from "lucide-react";
+import { Inbox, LayoutDashboard, LogOut, Mail } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { clearToken } from "@/services/api";
 
 const nav = [
@@ -20,8 +21,8 @@ export function AdminLayout() {
     <div className="min-h-screen flex flex-col md:flex-row">
       <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-[var(--color-card-border)] bg-[var(--color-card)] p-4 md:min-h-screen shrink-0">
         <div className="mb-8">
-          <Link to="/dashboard" className="text-xl font-bold text-white">
-            CalcZen
+          <Link to="/dashboard" className="inline-flex items-center gap-2">
+            <BrandLogo imageClassName="h-8 w-8 object-contain" labelClassName="text-xl font-bold tracking-tight" />
           </Link>
           <p className="text-xs text-[var(--color-muted)] mt-1">Admin Panel</p>
         </div>

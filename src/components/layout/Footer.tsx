@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Calculator } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { categories } from "@/data/calculators";
 
 function FooterColumn({
@@ -31,10 +31,7 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-y-6 sm:gap-x-10 lg:gap-x-14 py-8 sm:py-8">
           <div className="sm:col-span-2 lg:col-span-4 min-w-0">
             <Link to="/" className="inline-flex items-center gap-2.5 group touch-target !min-w-0 !justify-start">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-accent shadow-glow transition-shadow group-hover:shadow-glow-lg">
-                <Calculator className="h-4 w-4 text-primary-foreground" />
-              </div>
-              <span className="text-base font-semibold text-foreground tracking-tight">CalcZen</span>
+              <BrandLogo imgClassName="h-8 w-8" labelClassName="text-base font-semibold tracking-tight" />
             </Link>
             <p className="mt-3 text-sm text-muted-foreground/90 leading-relaxed max-w-sm">
               Fast, reliable calculators for finance, health, math, and everyday use.

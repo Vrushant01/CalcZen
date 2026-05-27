@@ -21,3 +21,40 @@ body {
   margin: 0;
   min-height: 100vh;
 }
+
+.admin-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 35%, #152746 0%, #0b0f19 62%);
+  animation: adminLoaderFade 440ms ease-out 1.15s both;
+}
+
+.admin-loader-logo {
+  width: clamp(4.4rem, 8vw, 6.2rem);
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.45)) drop-shadow(0 0 40px rgba(99, 102, 241, 0.3));
+  animation: adminLogoPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes adminLogoPulse {
+  0%,
+  100% {
+    transform: scale(0.97);
+    opacity: 0.88;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes adminLoaderFade {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

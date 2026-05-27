@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { BrandLogo } from "@/components/BrandLogo";
 import { api, setToken } from "@/services/api";
 
 export function LoginPage() {
@@ -30,6 +31,9 @@ export function LoginPage() {
     <div className="min-h-screen flex items-center justify-center p-4 bg-[var(--color-background)]">
       <div className="w-full max-w-md rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-8 shadow-xl">
         <div className="text-center mb-8">
+          <div className="flex justify-center mb-3">
+            <BrandLogo imageClassName="h-12 w-12 object-contain" showLabel={false} />
+          </div>
           <h1 className="text-2xl font-bold">CalcZen Admin</h1>
           <p className="text-sm text-[var(--color-muted)] mt-2">Sign in to manage subscribers</p>
         </div>

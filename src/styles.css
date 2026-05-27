@@ -763,6 +763,48 @@
     background: color-mix(in oklch, var(--muted) 50%, var(--background));
   }
 
+  .app-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(
+      circle at 50% 36%,
+      color-mix(in oklch, var(--accent) 14%, var(--background)) 0%,
+      var(--background) 62%
+    );
+    animation: appLoaderFade 440ms ease-out 1.15s both;
+  }
+
+  .app-loader-logo {
+    width: clamp(4.4rem, 8vw, 6.2rem);
+    aspect-ratio: 1;
+    object-fit: contain;
+    filter: drop-shadow(0 0 18px color-mix(in oklch, var(--accent) 42%, transparent))
+      drop-shadow(0 0 40px color-mix(in oklch, var(--secondary) 28%, transparent));
+    animation: appLogoPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes appLogoPulse {
+    0%,
+    100% {
+      transform: scale(0.97);
+      opacity: 0.88;
+    }
+    50% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes appLoaderFade {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
   /* Legal & about pages — calm, scannable layout */
   .legal-page-header {
     margin-bottom: 2.5rem;

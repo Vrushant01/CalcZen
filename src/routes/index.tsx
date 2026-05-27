@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, ShieldCheck, Zap, TrendingUp } from "lucide-react";
+import { ArrowRight, TrendingUp } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
@@ -170,25 +170,7 @@ function Index() {
         </div>
       </section>
 
-      <section className="page-container mt-12 sm:mt-20 md:mt-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 min-w-0">
-          {[
-            { icon: Zap, title: "Instant results", text: "Every input updates the result in real time. No buttons, no waiting." },
-            { icon: ShieldCheck, title: "Trusted formulas", text: "Each calculator shows its formula and an example so you can verify the math." },
-            { icon: Sparkles, title: "Beautifully simple", text: "Mobile-first design that works on any device, with charts that bring numbers to life." },
-          ].map((f) => (
-            <div key={f.title} className="surface-card rounded-xl sm:rounded-2xl p-5 sm:p-6 min-w-0">
-              <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-gradient-accent text-primary-foreground">
-                <f.icon className="h-5 w-5" />
-              </div>
-              <h3 className="mt-3 sm:mt-4 text-base sm:text-lg font-semibold">{f.title}</h3>
-              <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{f.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="page-container mt-12 sm:mt-20 md:mt-24 max-w-4xl prose prose-sm sm:prose-base text-muted-foreground min-w-0">
+      <section className="page-container mt-10 sm:mt-16 md:mt-20 max-w-4xl prose prose-sm sm:prose-base text-muted-foreground min-w-0">
         <h2 className="text-xl sm:text-2xl font-bold text-foreground text-balance">
           Free online calculators for everyday decisions
         </h2>

@@ -106,14 +106,15 @@ export default function CalculatorBlog({ content }: Props) {
       {/* 2. Real-World Scenario callout card */}
       {content.scenarioTitle && (
         <div className="relative my-8 overflow-hidden rounded-2xl border border-dashed border-border/80 bg-muted/10 p-5 sm:p-6">
-          <div className="absolute right-4 top-4 rounded-full bg-primary/10 border border-primary/20 px-2 py-0.5 text-[9px] font-bold text-primary uppercase tracking-wider">
-            Case Study
+          <div className="flex flex-col-reverse min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between gap-3 mb-4">
+            <h4 className="text-base font-semibold text-foreground flex items-center gap-1.5">
+              <CheckCircle2 className="h-4.5 w-4.5 text-primary shrink-0" />
+              {content.scenarioTitle}
+            </h4>
+            <div className="self-start min-[400px]:self-auto rounded-full bg-primary/10 border border-primary/20 px-2.5 py-0.5 text-[9px] font-bold text-primary uppercase tracking-wider">
+              Case Study
+            </div>
           </div>
-          
-          <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-1.5">
-            <CheckCircle2 className="h-4 w-4 text-primary" />
-            {content.scenarioTitle}
-          </h4>
           
           <p className="text-[13.5px] text-muted-foreground leading-relaxed mb-4">
             {content.scenarioText}

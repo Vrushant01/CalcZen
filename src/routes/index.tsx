@@ -170,18 +170,20 @@ function Index() {
         </div>
       </section>
 
-      <section className="page-container mt-10 sm:mt-16 md:mt-20 max-w-4xl prose prose-sm sm:prose-base text-muted-foreground min-w-0">
-        <h2 className="text-xl sm:text-2xl font-bold text-foreground text-balance">
+      <section className="page-container mt-12 sm:mt-20 md:mt-24 max-w-4xl min-w-0">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-5 sm:mb-6">
           Free online calculators for everyday decisions
         </h2>
-        <p>
-          From planning a home purchase to checking your daily calorie target, CalcZen gives you a clean, modern set of online calculators that work on any device.
-          Every tool explains its formula, shows worked examples, and includes answers to the most common questions — so you understand the math, not just the answer.
-        </p>
-        <p>
-          Our finance calculators help with mortgages, loans, EMI schedules and compound interest growth. Health tools cover BMI, calories, BMR and hydration.
-          Math and everyday helpers — percentage, age, and tip calculators — make quick work of the small calculations that come up daily.
-        </p>
+        <div className="space-y-4.5 sm:space-y-5 text-sm sm:text-base text-muted-foreground leading-[1.8] font-normal">
+          <p>
+            From planning a home purchase to checking your daily calorie target, CalcZen gives you a clean, modern set of online calculators that work on any device.
+            Every tool explains its formula, shows worked examples, and includes answers to the most common questions — so you understand the math, not just the answer.
+          </p>
+          <p>
+            Our finance calculators help with mortgages, loans, EMI schedules and compound interest growth. Health tools cover BMI, calories, BMR and hydration.
+            Math and everyday helpers — percentage, age, and tip calculators — make quick work of the small calculations that come up daily.
+          </p>
+        </div>
       </section>
 
       <section className="page-container mt-10 sm:mt-16 md:mt-20 max-w-4xl min-w-0">

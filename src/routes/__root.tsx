@@ -59,6 +59,9 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => {
+    const isProd = typeof window !== "undefined"
+      ? (window.location.hostname === "calczen.in" || window.location.hostname === "www.calczen.in")
+      : (typeof process !== "undefined" && process.env && (process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production"));
 
     return {
       meta: [

@@ -66,7 +66,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     return {
       meta: [
         { charSet: "utf-8" },
-        { name: "robots", content: isProd ? "index, follow" : "noindex, nofollow" },
+        {
+  name: "robots",
+  content: "index, follow",
+},
         {
           name: "viewport",
           content: "width=device-width, initial-scale=1, viewport-fit=cover",

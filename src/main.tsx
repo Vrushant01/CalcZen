@@ -36,9 +36,14 @@ function AppBoot() {
   }, []);
 
   if (!ready) {
+    const isDark = typeof document !== "undefined" && document.documentElement.classList.contains("dark");
     return (
       <div className="app-loader" role="status" aria-live="polite" aria-label="Loading CalcZen">
-        <img src="/brand/calczen-logo.png" alt="CalcZen" className="app-loader-logo" />
+        <img 
+          src={isDark ? "/brand/calczen-logo-dark.png" : "/brand/calczen-logo.png"} 
+          alt="CalcZen" 
+          className="app-loader-logo" 
+        />
       </div>
     );
   }

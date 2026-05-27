@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/hooks/use-theme";
 
 type BrandLogoProps = {
   className?: string;
@@ -16,11 +17,12 @@ export function BrandLogo({
   label = "CalcZen",
 }: BrandLogoProps) {
   const isDefaultWordmark = label.trim().toLowerCase() === "calczen";
+  const { isDark } = useTheme();
 
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
       <img
-        src="/brand/calczen-logo.png"
+        src={isDark ? "/brand/calczen-logo-dark.png" : "/brand/calczen-logo.png"}
         alt="CalcZen logo"
         className={cn("h-9 w-9 object-contain", imgClassName)}
         loading="eager"

@@ -101,13 +101,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.location.protocol === "http:") {
-      window.location.replace(
-        window.location.href.replace(/^http:/i, "https:")
-      );
-    }
-  }, []);
+  
 
   return (
     <QueryClientProvider client={queryClient}>

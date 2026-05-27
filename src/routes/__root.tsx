@@ -59,14 +59,14 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => {
-    const isProd = typeof window !== "undefined"
-      ? (window.location.hostname === "calczen.in" || window.location.hostname === "www.calczen.in")
-      : (typeof process !== "undefined" && process.env && (process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production"));
 
     return {
       meta: [
         { charSet: "utf-8" },
-        { name: "robots", content: isProd ? "index, follow" : "noindex, nofollow" },
+        {
+          name: "robots",
+          content: "index, follow",
+        },
         {
           name: "viewport",
           content: "width=device-width, initial-scale=1, viewport-fit=cover",

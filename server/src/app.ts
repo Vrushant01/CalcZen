@@ -19,6 +19,8 @@ import authRoutes from "./routes/authRoutes.js";
 import newsletterRoutes from "./routes/newsletterRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import subscribeRoutes from "./routes/subscribeRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
+
 import { formatDbError } from "./utils/errors.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -82,6 +84,19 @@ export async function createApp(): Promise<Express> {
   app.use(express.json({ limit: "1mb" }));
   app.use(mongoSanitize);
 
+  // Temporary Route Audit Debug Logging Middleware
+  app.use((req, res, next) => {
+    console.log(`[ROUTE AUDIT] Incoming Request: ${req.method} ${req.originalUrl || req.url}`);
+    res.on("finish", () => {
+      if (res.statusCode >= 400) {
+        console.warn(`[ROUTE AUDIT] Request FAILED: ${req.method} ${req.originalUrl || req.url} -> Status ${res.statusCode}`);
+      } else {
+        console.log(`[ROUTE AUDIT] Request SUCCEEDED: ${req.method} ${req.originalUrl || req.url} -> Status ${res.statusCode}`);
+      }
+    });
+    next();
+  });
+
   void ensureDb();
 
   app.get("/", (_req, res) => {
@@ -129,6 +144,8 @@ export async function createApp(): Promise<Express> {
   app.use("/api/auth", authRoutes);
   app.use("/api/admin", adminRoutes);
   app.use("/api/newsletters", newsletterRoutes);
+  app.use("/api/blogs", blogRoutes);
+
 
   const adminDist = resolveAdminDist();
   app.use("/admin", express.static(adminDist, { index: "index.html" }));

@@ -4,26 +4,56 @@ const REQUEST_TIMEOUT_MS = 30_000;
 
 export function getApiBaseUrl(): string {
   const fromEnv = import.meta.env.VITE_API_URL?.trim();
-  if (fromEnv) return fromEnv.replace(/\/$/, "");
-  if (import.meta.env.DEV) return "";
-  return PRODUCTION_API_URL;
+  if (fromEnv) {
+    return fromEnv.replace(/\/$/, "");
+  }
+  if (import.meta.env.DEV) {
+    return "http://localhost:3001/api";
+  }
+  if (typeof window !== "undefined" && window.location) {
+    return `${window.location.origin}/api`;
+  }
+  return `${PRODUCTION_API_URL}/api`;
 }
 
 export function buildApiUrl(path: string): string {
-  const base = getApiBaseUrl();
-  const normalized = path.startsWith("/") ? path : `/${path}`;
-  return `${base}${normalized}`;
+  let base = getApiBaseUrl();
+  base = base.replace(/\/$/, "");
+  let cleanPath = path.startsWith("/") ? path : `/${path}`;
+  
+  // Prevent duplicate "/api/api" prefixing and handle absolute vs relative mismatches
+  if (base.endsWith("/api") && cleanPath.startsWith("/api/")) {
+    cleanPath = cleanPath.substring(4);
+  } else if (!base.endsWith("/api") && !cleanPath.startsWith("/api/")) {
+    cleanPath = `/api${cleanPath}`;
+  }
+  
+  return `${base}${cleanPath}`;
 }
 
 export async function apiFetch(path: string, init?: RequestInit): Promise<Response> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const resolvedUrl = buildApiUrl(path);
+
+  console.log(`[API REQUEST] Fetching URL: ${resolvedUrl} (Method: ${init?.method ?? "GET"})`);
 
   try {
-    return await fetch(buildApiUrl(path), {
+    const res = await fetch(resolvedUrl, {
       ...init,
       signal: init?.signal ?? controller.signal,
     });
+    
+    if (res.ok) {
+      console.log(`[API RESPONSE] Success: ${resolvedUrl} -> Status ${res.status}`);
+    } else {
+      console.warn(`[API RESPONSE] FAILED: ${resolvedUrl} -> Status ${res.status}`);
+    }
+    
+    return res;
+  } catch (err) {
+    console.error(`[API ERROR] Exception during fetch to ${resolvedUrl}:`, err);
+    throw err;
   } finally {
     clearTimeout(timeoutId);
   }
@@ -38,3 +68,4 @@ export function getNetworkErrorMessage(err: unknown): string {
   }
   return err instanceof Error ? err.message : "Something went wrong.";
 }
+

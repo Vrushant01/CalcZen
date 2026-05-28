@@ -47,30 +47,30 @@
   --theme-duration: 480ms;
 
   /* Light — #F5F7FB airy canvas, slate type, cyan→blue→violet accents */
-  --background: oklch(0.975 0.008 264);
-  --foreground: oklch(0.31 0.04 264);
+  --background: oklch(0.96 0.008 264);
+  --foreground: oklch(0.18 0.025 264);
   --card: oklch(1 0.002 264);
-  --card-foreground: oklch(0.31 0.04 264);
+  --card-foreground: oklch(0.22 0.03 264);
   --popover: oklch(1 0.002 264);
-  --popover-foreground: oklch(0.31 0.04 264);
-  --primary: oklch(0.38 0.08 264);
+  --popover-foreground: oklch(0.22 0.03 264);
+  --primary: oklch(0.35 0.08 264);
   --primary-foreground: oklch(0.99 0.002 264);
-  --secondary: oklch(0.55 0.19 264);
+  --secondary: oklch(0.50 0.18 264);
   --secondary-foreground: oklch(0.99 0.002 264);
-  --muted: oklch(0.955 0.012 264);
-  --muted-foreground: oklch(0.5 0.035 264);
-  --accent: oklch(0.58 0.14 220);
+  --muted: oklch(0.94 0.01 264);
+  --muted-foreground: oklch(0.42 0.03 264);
+  --accent: oklch(0.55 0.14 220);
   --accent-foreground: oklch(0.99 0.002 264);
-  --destructive: oklch(0.55 0.22 25);
+  --destructive: oklch(0.52 0.22 25);
   --destructive-foreground: oklch(0.99 0 0);
-  --success: oklch(0.58 0.14 155);
-  --success-foreground: oklch(0.2 0.04 155);
-  --border: oklch(0.45 0.04 264 / 0.1);
-  --input: oklch(0.45 0.04 264 / 0.12);
-  --ring: oklch(0.58 0.14 220);
-  --chart-1: oklch(0.58 0.14 220);
-  --chart-2: oklch(0.55 0.19 264);
-  --chart-3: oklch(0.58 0.14 155);
+  --success: oklch(0.55 0.14 155);
+  --success-foreground: oklch(0.18 0.04 155);
+  --border: oklch(0.25 0.03 264 / 0.14);
+  --input: oklch(0.25 0.03 264 / 0.16);
+  --ring: oklch(0.55 0.14 220);
+  --chart-1: oklch(0.55 0.14 220);
+  --chart-2: oklch(0.50 0.18 264);
+  --chart-3: oklch(0.55 0.14 155);
   --chart-4: oklch(0.68 0.14 75);
   --chart-5: oklch(0.58 0.2 25);
 
@@ -111,17 +111,17 @@
       transparent 50%
     );
 
-  --shadow-soft: 0 1px 2px oklch(0.28 0.04 264 / 0.04), 0 2px 8px oklch(0.28 0.04 264 / 0.05),
-    0 12px 32px -8px oklch(0.28 0.04 264 / 0.08);
-  --shadow-card: 0 0 0 1px oklch(0.45 0.04 264 / 0.06), 0 4px 20px -6px oklch(0.28 0.04 264 / 0.1);
-  --shadow-glow: 0 0 0 1px oklch(0.58 0.14 220 / 0.15), 0 12px 40px -8px oklch(0.55 0.19 264 / 0.22);
-  --shadow-glow-lg: 0 20px 50px -12px oklch(0.55 0.19 264 / 0.28);
+  --shadow-soft: 0 1px 2px oklch(0.18 0.03 264 / 0.04), 0 3px 10px oklch(0.18 0.03 264 / 0.06),
+    0 16px 36px -8px oklch(0.18 0.03 264 / 0.09);
+  --shadow-card: 0 0 0 1px oklch(0.18 0.03 264 / 0.07), 0 5px 22px -4px oklch(0.18 0.03 264 / 0.11);
+  --shadow-glow: 0 0 0 1px oklch(0.55 0.14 220 / 0.18), 0 12px 42px -6px oklch(0.50 0.18 264 / 0.18);
+  --shadow-glow-lg: 0 22px 52px -10px oklch(0.50 0.18 264 / 0.24);
 
   --toggle-track: oklch(0.92 0.02 264);
   --toggle-thumb: oklch(1 0.002 264);
-  --toggle-glow: oklch(0.58 0.14 220 / 0.35);
+  --toggle-glow: oklch(0.55 0.14 220 / 0.35);
   --input-background: oklch(1 0.002 264);
-  --shadow-input: 0 1px 2px oklch(0.28 0.04 264 / 0.05);
+  --shadow-input: 0 1px 2px oklch(0.18 0.03 264 / 0.05);
 }
 
 .dark {
@@ -1011,3 +1011,210 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ─── Premium Blog Prose & Typography Styling ─── */
+.prose {
+  font-family: var(--font-sans);
+  color: var(--foreground);
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.prose p {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  line-height: 1.85;
+  color: var(--foreground);
+}
+
+/* Headings spacing and hierarchical separation */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--foreground);
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.prose h1 {
+  font-size: 2.25rem;
+  margin-top: 2.5rem;
+}
+
+.prose h2 {
+  font-size: 1.75rem;
+  margin-top: 2.25rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.prose h3 {
+  font-size: 1.375rem;
+  margin-top: 1.75rem;
+}
+
+.prose h4 {
+  font-size: 1.125rem;
+  margin-top: 1.5rem;
+}
+
+/* Bullet and numbered lists visual breathing room */
+.prose ul,
+.prose ol {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding-left: 1.75rem;
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+.prose li {
+  margin-bottom: 0.625rem;
+  line-height: 1.75;
+}
+
+.prose li::marker {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Blockquotes Notion-style spacing and border */
+.prose blockquote {
+  margin: 1.75rem 0;
+  padding: 0.75rem 1.25rem;
+  border-left: 4px solid var(--primary);
+  background: color-mix(in oklch, var(--primary) 4%, transparent);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+  color: var(--foreground);
+}
+
+.prose blockquote p {
+  margin-bottom: 0;
+}
+
+/* Premium links formatting */
+.prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.prose a:hover {
+  color: color-mix(in oklch, var(--primary) 80%, white);
+}
+
+/* Strong bold styling */
+.prose strong {
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+/* Inline code formatting */
+.prose code:not(pre code) {
+  font-family: ui-monospace, monospace;
+  font-size: 0.875rem;
+  background: color-mix(in oklch, var(--foreground) 8%, transparent);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  color: #ef4444; /* danger red */
+}
+
+/* Tables styling preservation */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.75rem 0;
+  font-size: 0.875rem;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+}
+
+.prose th {
+  background: color-mix(in oklch, var(--foreground) 4%, transparent);
+  font-weight: 600;
+  color: var(--foreground);
+  text-align: left;
+}
+
+.prose tr:nth-child(even) {
+  background: color-mix(in oklch, var(--foreground) 1%, transparent);
+}
+
+/* Embed Calculator CTA visual separation */
+.prose .calc-cta-block {
+  margin: 2.25rem 0 !important;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.prose .calc-cta-block:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklch, var(--primary) 40%, transparent) !important;
+}
+
+.prose .calc-cta-block h4 {
+  color: #ffffff !important;
+  margin: 0 !important;
+}
+
+.prose .calc-cta-block p {
+  color: rgba(255, 255, 255, 0.72) !important;
+  margin: 0.25rem 0 0 0 !important;
+}
+
+.prose .calc-cta-block a {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+.prose .calc-cta-block a:hover {
+  color: #ffffff !important;
+  background-color: oklch(0.48 0.18 260) !important;
+}
+
+/* Inline keyword CTA box styling resets to prevent prose overrides */
+.prose .calc-keyword-cta {
+  margin: 1.5rem 0 !important;
+}
+
+.prose .calc-keyword-cta p {
+  margin: 0.25rem 0 0 0 !important;
+  color: var(--muted-foreground) !important;
+  font-size: 0.75rem !important;
+  line-height: 1.45 !important;
+}
+
+.prose .calc-keyword-cta h5 {
+  margin: 0 !important;
+  color: var(--foreground) !important;
+}
+
+.prose .calc-keyword-cta a {
+  text-decoration: none !important;
+  color: var(--primary) !important;
+  background-color: color-mix(in oklch, var(--primary) 12%, transparent) !important;
+  border: 1px solid color-mix(in oklch, var(--primary) 25%, transparent) !important;
+}
+
+.prose .calc-keyword-cta a:hover {
+  color: var(--primary-foreground) !important;
+  background-color: var(--primary) !important;
+}
+
+

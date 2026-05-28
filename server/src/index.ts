@@ -11,6 +11,30 @@ async function main() {
 
   const app = await createApp();
 
+  // Route Auditor: Recursively logs all registered express endpoints on boot
+  try {
+    console.log("\n=== REGISTERED BACKEND ROUTE TREE ===");
+    const logStack = (stack: any[], parent = "") => {
+      stack.forEach((r) => {
+        if (r.route) {
+          const methods = Object.keys(r.route.methods).map(m => m.toUpperCase()).join(", ");
+          console.log(`[ROUTE] [${methods}] ${parent}${r.route.path}`);
+        } else if (r.name === "router" && r.handle && r.handle.stack) {
+          let mountPath = "";
+          if (r.regexp) {
+            const match = r.regexp.toString().match(/^\/\^\\(\/\w+)/);
+            if (match && match[1]) mountPath = match[1];
+          }
+          logStack(r.handle.stack, parent + mountPath);
+        }
+      });
+    };
+    logStack(app._router.stack);
+    console.log("=====================================\n");
+  } catch (err) {
+    console.warn("Failed to audit express route tree on boot:", err);
+  }
+
   const host = process.env.RENDER || process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost";
   const trustProxy = app.get("trust proxy");
 

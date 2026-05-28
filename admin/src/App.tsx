@@ -6,6 +6,8 @@ import { DashboardPage } from "@/pages/Dashboard";
 import { LoginPage } from "@/pages/Login";
 import { NewsletterPage } from "@/pages/Newsletter";
 import { SupportPage } from "@/pages/Support";
+import { BlogListPage } from "@/pages/BlogList";
+import { BlogEditorPage } from "@/pages/BlogEditor";
 
 export default function App() {
   return (
@@ -16,6 +18,9 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AdminLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/blogs" element={<BlogListPage />} />
+            <Route path="/blogs/new" element={<BlogEditorPage />} />
+            <Route path="/blogs/edit/:id" element={<BlogEditorPage />} />
             <Route path="/newsletter" element={<NewsletterPage />} />
             <Route path="/support" element={<SupportPage />} />
           </Route>
@@ -26,3 +31,4 @@ export default function App() {
     </BrowserRouter>
   );
 }
+

@@ -7,6 +7,8 @@ import type {
   ContactMessageRow,
   NewsletterRow,
   SubscriberRow,
+  BlogRow,
+  ApiBlog,
 } from "../types/database.js";
 
 export function toApiSubscriber(row: SubscriberRow): ApiSubscriber {
@@ -58,3 +60,29 @@ export function toApiNewsletter(
       : null,
   };
 }
+
+export function toApiBlog(row: BlogRow): ApiBlog {
+  return {
+    _id: row.id,
+    title: row.title,
+    slug: row.slug,
+    excerpt: row.excerpt,
+    content: row.content,
+    thumbnail: row.thumbnail,
+    category: row.category,
+    tags: row.tags || [],
+    metaTitle: row.meta_title,
+    metaDescription: row.meta_description,
+    keywords: row.keywords || [],
+    author: row.author,
+    calculatorLinks: row.calculator_links,
+    featured: row.featured,
+    published: row.published,
+    views: row.views,
+    readingTime: row.reading_time,
+    publishDate: row.publish_date,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
+

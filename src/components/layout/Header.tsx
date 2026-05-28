@@ -13,6 +13,7 @@ export function Header() {
     { to: "/category/finance", label: "Finance" },
     { to: "/category/health", label: "Health" },
     { to: "/category/math", label: "Math" },
+    { to: "/blog", label: "Blog" },
     { to: "/about", label: "About" },
   ];
 

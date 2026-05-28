@@ -12,6 +12,14 @@ import {
   getStats,
   listSubscribersHandler,
 } from "../controllers/adminController.js";
+import {
+  getBlogStatsHandler,
+  listBlogsAdminHandler,
+  getBlogByIdAdminHandler,
+  createBlogAdminHandler,
+  updateBlogAdminHandler,
+  deleteBlogAdminHandler,
+} from "../controllers/blogAdminController.js";
 import { attachAdmin, requireAuth } from "../middleware/auth.js";
 import { createRateLimiter } from "../middleware/rate-limit.js";
 import { validateBody } from "../middleware/validate.js";
@@ -50,4 +58,13 @@ router.post(
   replyToContactMessageHandler,
 );
 
+// Admin Blogs CMS routes
+router.get("/blogs/stats", getBlogStatsHandler);
+router.get("/blogs", listBlogsAdminHandler);
+router.get("/blogs/:id", getBlogByIdAdminHandler);
+router.post("/blogs", createBlogAdminHandler);
+router.put("/blogs/:id", updateBlogAdminHandler);
+router.delete("/blogs/:id", deleteBlogAdminHandler);
+
 export default router;
+

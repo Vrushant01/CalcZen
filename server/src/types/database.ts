@@ -79,3 +79,50 @@ export type ApiContactMessage = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type BlogRow = {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  thumbnail: string | null;
+  category: string;
+  tags: string[];
+  meta_title: string | null;
+  meta_description: string | null;
+  keywords: string[];
+  author: string;
+  calculator_links: any; // JSONB
+  featured: boolean;
+  published: boolean;
+  views: number;
+  reading_time: number;
+  publish_date: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ApiBlog = {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  thumbnail: string | null;
+  category: string;
+  tags: string[];
+  metaTitle: string | null;
+  metaDescription: string | null;
+  keywords: string[];
+  author: string;
+  calculatorLinks: any;
+  featured: boolean;
+  published: boolean;
+  views: number;
+  readingTime: number;
+  publishDate: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+

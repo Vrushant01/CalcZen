@@ -1,14 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { BrandLogo } from "../components/BrandLogo";
-import { api, setToken } from "../services/api";
+import { api, setToken, getToken, clearToken } from "../services/api";
 
 export function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Auto-redirect if already logged in with a valid session
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      api.me()
+        .then(() => {
+          navigate("/dashboard", { replace: true });
+        })
+        .catch(() => {
+          // Token is invalid/expired, clear it
+          clearToken();
+        });
+    }
+  }, [navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

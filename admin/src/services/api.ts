@@ -33,6 +33,18 @@ async function request<T>(
     throw new Error(getNetworkErrorMessage(err));
   }
 
+  // Handle global session expiration (401 Unauthorized)
+  if (res.status === 401) {
+    clearToken();
+    if (typeof window !== "undefined") {
+      const isLoginPath = window.location.pathname.endsWith("/login");
+      if (!isLoginPath) {
+        // Enforce hard redirect to login page
+        window.location.href = "/login";
+      }
+    }
+  }
+
   const json = (await res.json().catch(() => ({
     success: false,
     message: "Invalid response from server",

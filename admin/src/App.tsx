@@ -35,9 +35,10 @@ export default function App() {
               <Route path="/newsletter" element={<NewsletterPage />} />
               <Route path="/support" element={<SupportPage />} />
             </Route>
+            {/* Fallbacks are nested inside ProtectedRoute to guarantee authentication gating */}
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Route>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </BrowserRouter>
     </div>

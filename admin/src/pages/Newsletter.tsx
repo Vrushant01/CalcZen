@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Send, Users } from "lucide-react";
 import { toast } from "sonner";
-import { PageHeader } from "@/components/AdminLayout";
-import { EmptyState } from "@/components/EmptyState";
-import { api } from "@/services/api";
+import { PageHeader } from "../components/AdminLayout";
+import { EmptyState } from "../components/EmptyState";
+import { api } from "../services/api";
 
 export function NewsletterPage() {
   const [subject, setSubject] = useState("");

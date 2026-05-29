@@ -1,4 +1,4 @@
-import { apiFetch, getApiBaseUrl, getNetworkErrorMessage } from "@/lib/api-config";
+import { apiFetch, getApiBaseUrl, getNetworkErrorMessage } from "../lib/api-config";
 
 export function getToken(): string | null {
   return localStorage.getItem("admin_token");

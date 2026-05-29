@@ -2,10 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Download, FileText, Globe, Plus, Search, Trash2, Edit, Eye } from "lucide-react";
 import { toast } from "sonner";
-import { PageHeader, StatCard } from "@/components/AdminLayout";
-import { EmptyState } from "@/components/EmptyState";
-import { LoadingTable } from "@/components/LoadingTable";
-import { api, type Blog, type BlogStats } from "@/services/api";
+import { PageHeader, StatCard } from "../components/AdminLayout";
+import { EmptyState } from "../components/EmptyState";
+import { LoadingTable } from "../components/LoadingTable";
+import { api, type Blog, type BlogStats } from "../services/api";
 
 const emptyStats: BlogStats = {
   total: 0,

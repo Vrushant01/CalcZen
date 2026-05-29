@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { api, getToken } from "@/services/api";
+import { api, getToken } from "../services/api";
 
 export function ProtectedRoute() {
   const [status, setStatus] = useState<"loading" | "ok" | "fail">("loading");

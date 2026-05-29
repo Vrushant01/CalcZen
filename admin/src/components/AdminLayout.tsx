@@ -1,7 +1,7 @@
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Inbox, LayoutDashboard, LogOut, Mail, FileText } from "lucide-react";
-import { BrandLogo } from "@/components/BrandLogo";
-import { clearToken } from "@/services/api";
+import { BrandLogo } from "./BrandLogo";
+import { clearToken } from "../services/api";
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },

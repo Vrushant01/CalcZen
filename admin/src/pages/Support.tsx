@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { Inbox, Mail, Search, Send } from "lucide-react";
 import { toast } from "sonner";
-import { PageHeader } from "@/components/AdminLayout";
-import { LoadingTable } from "@/components/LoadingTable";
-import { api, type ContactMessage } from "@/services/api";
+import { PageHeader } from "../components/AdminLayout";
+import { LoadingTable } from "../components/LoadingTable";
+import { api, type ContactMessage } from "../services/api";
 
 function StatusBadge({ status }: { status: ContactMessage["status"] }) {
   const styles = {

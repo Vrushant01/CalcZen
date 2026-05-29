@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Download, Mail, Search, TrendingUp, UserCheck, Users } from "lucide-react";
 import { toast } from "sonner";
-import { PageHeader, StatCard } from "@/components/AdminLayout";
-import { SubscriberTable } from "@/components/SubscriberTable";
-import { api, type AdminStats } from "@/services/api";
+import { PageHeader, StatCard } from "../components/AdminLayout";
+import { SubscriberTable } from "../components/SubscriberTable";
+import { api, type AdminStats } from "../services/api";
 
 const emptyStats: AdminStats = {
   total: 0,

@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "@tanstack/react-router";
 import { getRouter } from "./router";
 import "./styles.css";
+import AdminApp from "../admin/src/App";
 
 const router = getRouter();
 
@@ -16,6 +17,13 @@ const rootEl = document.getElementById("root");
 if (!rootEl) {
   throw new Error("Root element #root not found");
 }
+
+// Evaluate hostname and local development overrides on boot
+const hostname = typeof window !== "undefined" ? window.location.hostname : "";
+const isAdminHost =
+  hostname === "admin.calczen.in" ||
+  hostname.startsWith("admin.") ||
+  (typeof window !== "undefined" && window.location.search.includes("admin=true"));
 
 function AppBoot() {
   const [ready, setReady] = useState(false);
@@ -48,6 +56,6 @@ function AppBoot() {
 
 createRoot(rootEl).render(
   <StrictMode>
-    <AppBoot />
+    {isAdminHost ? <AdminApp /> : <AppBoot />}
   </StrictMode>,
 );

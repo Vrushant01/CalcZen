@@ -23,8 +23,8 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { toast } from "sonner";
-import { PageHeader } from "@/components/AdminLayout";
-import { api, type Blog } from "@/services/api";
+import { PageHeader } from "../components/AdminLayout";
+import { api, type Blog } from "../services/api";
 
 const CATEGORIES = [
   "Finance",

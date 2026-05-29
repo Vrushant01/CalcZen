@@ -1,7 +1,19 @@
 @import "tailwindcss";
 
-@theme {
+.admin-theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --background: #0b0f19;
+  --foreground: #f1f5f9;
+  --card: #131a2b;
+  --card-border: #1e293b;
+  --muted: #94a3b8;
+  --primary: #6366f1;
+  --primary-hover: #818cf8;
+  --accent: #f59e0b;
+  --danger: #ef4444;
+  --success: #22c55e;
+
+  /* Tailwind variables scoping */
   --color-background: #0b0f19;
   --color-foreground: #f1f5f9;
   --color-card: #131a2b;
@@ -12,9 +24,7 @@
   --color-accent: #f59e0b;
   --color-danger: #ef4444;
   --color-success: #22c55e;
-}
 
-body {
   font-family: var(--font-sans);
   background: var(--color-background);
   color: var(--color-foreground);
@@ -60,14 +70,14 @@ body {
 }
 
 /* ─── Premium Blog Prose & Typography Styling ─── */
-.prose {
+.admin-theme .prose {
   font-family: var(--font-sans);
   color: #cbd5e1; /* slate-300 */
   line-height: 1.8;
   font-size: 1rem;
 }
 
-.prose p {
+.admin-theme .prose p {
   margin-top: 0;
   margin-bottom: 1.5rem;
   line-height: 1.85;
@@ -75,10 +85,10 @@ body {
 }
 
 /* Headings spacing and hierarchical separation */
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4 {
+.admin-theme .prose h1,
+.admin-theme .prose h2,
+.admin-theme .prose h3,
+.admin-theme .prose h4 {
   color: #ffffff;
   font-weight: 700;
   line-height: 1.35;
@@ -86,56 +96,56 @@ body {
   letter-spacing: -0.02em;
 }
 
-.prose h1 {
+.admin-theme .prose h1 {
   font-size: 2.25rem;
   margin-top: 2.5rem;
 }
 
-.prose h2 {
+.admin-theme .prose h2 {
   font-size: 1.75rem;
   margin-top: 2.25rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   padding-bottom: 0.5rem;
 }
 
-.prose h3 {
+.admin-theme .prose h3 {
   font-size: 1.375rem;
   margin-top: 1.75rem;
 }
 
-.prose h4 {
+.admin-theme .prose h4 {
   font-size: 1.125rem;
   margin-top: 1.5rem;
 }
 
 /* Bullet and numbered lists visual breathing room */
-.prose ul,
-.prose ol {
+.admin-theme .prose ul,
+.admin-theme .prose ol {
   margin-top: 0;
   margin-bottom: 1.5rem;
   padding-left: 1.75rem;
 }
 
-.prose ul {
+.admin-theme .prose ul {
   list-style-type: disc;
 }
 
-.prose ol {
+.admin-theme .prose ol {
   list-style-type: decimal;
 }
 
-.prose li {
+.admin-theme .prose li {
   margin-bottom: 0.625rem;
   line-height: 1.75;
 }
 
-.prose li::marker {
+.admin-theme .prose li::marker {
   color: #6366f1; /* primary indigo-500 */
   font-weight: 600;
 }
 
 /* Blockquotes Notion-style spacing and border */
-.prose blockquote {
+.admin-theme .prose blockquote {
   margin: 1.75rem 0;
   padding: 0.75rem 1.25rem;
   border-left: 4px solid #6366f1;
@@ -145,12 +155,12 @@ body {
   color: #e2e8f0;
 }
 
-.prose blockquote p {
+.admin-theme .prose blockquote p {
   margin-bottom: 0;
 }
 
 /* Premium links formatting */
-.prose a {
+.admin-theme .prose a {
   color: #818cf8; /* indigo-400 */
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -158,18 +168,18 @@ body {
   transition: color 0.2s ease;
 }
 
-.prose a:hover {
+.admin-theme .prose a:hover {
   color: #a5b4fc; /* indigo-300 */
 }
 
 /* Strong bold styling */
-.prose strong {
+.admin-theme .prose strong {
   font-weight: 700;
   color: #ffffff;
 }
 
 /* Inline code formatting */
-.prose code:not(pre code) {
+.admin-theme .prose code:not(pre code) {
   font-family: ui-monospace, monospace;
   font-size: 0.875rem;
   background: rgba(255, 255, 255, 0.08);
@@ -179,38 +189,38 @@ body {
 }
 
 /* Tables styling preservation */
-.prose table {
+.admin-theme .prose table {
   width: 100%;
   border-collapse: collapse;
   margin: 1.75rem 0;
   font-size: 0.875rem;
 }
 
-.prose th,
-.prose td {
+.admin-theme .prose th,
+.admin-theme .prose td {
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 0.75rem 1rem;
 }
 
-.prose th {
+.admin-theme .prose th {
   background: rgba(255, 255, 255, 0.03);
   font-weight: 600;
   color: #ffffff;
   text-align: left;
 }
 
-.prose tr:nth-child(even) {
+.admin-theme .prose tr:nth-child(even) {
   background: rgba(255, 255, 255, 0.01);
 }
 
 /* Embed Calculator CTA visual separation */
-.prose .calc-cta-block {
+.admin-theme .prose .calc-cta-block {
   margin: 2.25rem 0 !important;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.prose .calc-cta-block:hover {
+.admin-theme .prose .calc-cta-block:hover {
   transform: translateY(-2px);
   border-color: rgba(99, 102, 241, 0.5) !important;
 }

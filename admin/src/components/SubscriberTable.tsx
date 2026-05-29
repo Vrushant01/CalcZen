@@ -1,6 +1,6 @@
 import { Trash2, Users } from "lucide-react";
-import { EmptyState } from "@/components/EmptyState";
-import { LoadingTable } from "@/components/LoadingTable";
+import { EmptyState } from "./EmptyState";
+import { LoadingTable } from "./LoadingTable";
 
 export type SubscriberRow = {
   _id: string;

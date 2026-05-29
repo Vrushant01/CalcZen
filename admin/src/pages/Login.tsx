@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { BrandLogo } from "@/components/BrandLogo";
-import { api, setToken } from "@/services/api";
+import { BrandLogo } from "../components/BrandLogo";
+import { api, setToken } from "../services/api";
 
 export function LoginPage() {
   const navigate = useNavigate();

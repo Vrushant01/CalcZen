@@ -5,6 +5,41 @@
   "buildCommand": "npm run vercel-build",
   "installCommand": "npm install && npm install --prefix server && npm install --prefix admin",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/admin/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?calczen\\.in"
+        }
+      ],
+      "destination": "https://admin.calczen.in/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/admin/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin\\.calczen\\.in"
+        }
+      ],
+      "destination": "https://admin.calczen.in/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin\\.calczen\\.in"
+        }
+      ],
+      "destination": "https://admin.calczen.in/login",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     { "source": "/api", "destination": "/api" },
     { "source": "/api/(.*)", "destination": "/api" },

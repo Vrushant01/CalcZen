@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Component, type ErrorInfo, type ReactNode } from "react";
 import {
   Activity,
   Server,
@@ -26,7 +26,68 @@ import { api } from "../services/api";
 
 type TabName = "overview" | "render" | "supabase" | "resend" | "cloudflare" | "analytics" | "alerts";
 
+interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class DashboardErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  public state: ErrorBoundaryState = {
+    hasError: false,
+    error: null,
+  };
+
+  public static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("Uncaught infrastructure dashboard error:", error, errorInfo);
+  }
+
+  public render() {
+    if (this.state.hasError) {
+      return (
+        <div className="rounded-xl border border-dashed border-rose-500/20 bg-rose-500/5 p-12 text-center my-6">
+          <div className="inline-flex p-3 rounded-full bg-rose-500/10 text-rose-400 mb-4 animate-bounce">
+            <AlertTriangle className="h-8 w-8" />
+          </div>
+          <h3 className="text-lg font-bold text-white mb-2">Infrastructure Dashboard Crashed</h3>
+          <p className="text-sm text-[var(--color-muted)] max-w-lg mx-auto mb-6">
+            A rendering runtime error occurred within the dashboard component. 
+            Telemetry data might be malformed or an unexpected variable was undefined.
+          </p>
+          <div className="bg-black/40 border border-white/5 rounded-lg p-4 max-w-xl mx-auto text-left mb-6 font-mono text-xs text-rose-300 overflow-auto max-h-40">
+            {this.state.error?.toString()}
+          </div>
+          <button
+            type="button"
+            onClick={() => this.setState({ hasError: false, error: null })}
+            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold transition-colors"
+          >
+            Reset Dashboard View
+          </button>
+        </div>
+      );
+    }
+
+    return this.children;
+  }
+}
+
 export function InfrastructurePage() {
+  return (
+    <DashboardErrorBoundary>
+      <InfrastructurePageContent />
+    </DashboardErrorBoundary>
+  );
+}
+
+function InfrastructurePageContent() {
   const [activeTab, setActiveTab] = useState<TabName>("overview");
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -104,6 +165,101 @@ export function InfrastructurePage() {
     );
   }
 
+  // ==========================================
+  // SAFE TELEMETRY METRICS EXTRACTION & PERCENTAGES
+  // ==========================================
+
+  // 1. Render metrics
+  const renderFreeHoursUsed = stats?.render?.freeHoursUsed ?? 0;
+  const renderFreeHoursLimit = stats?.render?.freeHoursLimit ?? 0;
+  const renderPlanUsagePercent = stats?.render?.planUsagePercent ?? (
+    renderFreeHoursLimit > 0 ? Math.round((renderFreeHoursUsed / renderFreeHoursLimit) * 100) : 0
+  );
+
+  const renderBandwidthUsedGb = stats?.render?.bandwidthUsedGb ?? 0;
+  const renderBandwidthLimitGb = stats?.render?.bandwidthLimitGb ?? 0;
+  const renderBandwidthPercent = stats?.render?.bandwidthPercent ?? (
+    renderBandwidthLimitGb > 0 ? Math.round((renderBandwidthUsedGb / renderBandwidthLimitGb) * 100) : 0
+  );
+
+  const renderCpuUsagePercent = stats?.render?.cpuUsagePercent ?? 0;
+  const renderMemoryUsagePercent = stats?.render?.memoryUsagePercent ?? 0;
+  const renderUptime = stats?.render?.uptime ?? "Unavailable";
+  const renderResponseTime = stats?.render?.responseTime ?? "Unavailable";
+  const renderActiveRequests = stats?.render?.activeRequests ?? 0;
+  const renderLastDeploy = stats?.render?.lastDeploy ?? "Unavailable";
+  const renderTotalDeployments = stats?.render?.totalDeployments ?? 0;
+
+  // 2. Supabase metrics
+  const supabaseStorageUsedMb = stats?.supabase?.storageUsedMb ?? 0;
+  const supabaseStorageLimitMb = stats?.supabase?.storageLimitMb ?? 0;
+  const storagePercent = stats?.supabase?.storagePercent ?? (
+    supabaseStorageLimitMb > 0 ? Math.round((supabaseStorageUsedMb / supabaseStorageLimitMb) * 100) : 0
+  );
+
+  const supabaseDatabaseSizeMb = stats?.supabase?.databaseSizeMb ?? 0;
+  const supabaseDatabaseLimitMb = stats?.supabase?.databaseLimitMb ?? 0;
+  const dbSizePercent = stats?.supabase?.dbSizePercent ?? (
+    supabaseDatabaseLimitMb > 0 ? Math.round((supabaseDatabaseSizeMb / supabaseDatabaseLimitMb) * 100) : 0
+  );
+
+  const supabaseBandwidthUsedGb = stats?.supabase?.bandwidthUsedGb ?? 0;
+  const supabaseBandwidthLimitGb = stats?.supabase?.bandwidthLimitGb ?? 0;
+  const supabaseBandwidthPercent = stats?.supabase?.bandwidthPercent ?? (
+    supabaseBandwidthLimitGb > 0 ? Math.round((supabaseBandwidthUsedGb / supabaseBandwidthLimitGb) * 100) : 0
+  );
+
+  const supabaseApiRequests = stats?.supabase?.apiRequests ?? 0;
+  const supabaseApiRequestsLimit = stats?.supabase?.apiRequestsLimit ?? 0;
+  const supabaseApiRequestsPercent = stats?.supabase?.apiRequestsPercent ?? (
+    supabaseApiRequestsLimit > 0 ? Math.round((supabaseApiRequests / supabaseApiRequestsLimit) * 100) : 0
+  );
+
+  const supabaseTotalUsers = stats?.supabase?.totalUsers ?? 0;
+  const supabaseStatus = stats?.supabase?.status ?? "Unavailable";
+
+  // 3. Resend metrics
+  const resendSentToday = stats?.resend?.sentToday ?? 0;
+  const resendLimitToday = stats?.resend?.limitToday ?? 0;
+  const resendSentThisMonth = stats?.resend?.sentThisMonth ?? 0;
+  const resendLimitThisMonth = stats?.resend?.limitThisMonth ?? 0;
+  const resendLimitPercent = stats?.resend?.limitPercent ?? (
+    resendLimitThisMonth > 0 ? Math.round((resendSentThisMonth / resendLimitThisMonth) * 100) : 0
+  );
+  const resendDeliveryRatePercent = stats?.resend?.deliveryRatePercent ?? "Unavailable";
+  const resendBounceRatePercent = stats?.resend?.bounceRatePercent ?? "Unavailable";
+  const resendStatus = stats?.resend?.status ?? "Unavailable";
+
+  // 4. Cloudflare metrics
+  const cloudflareDnsStatus = stats?.cloudflare?.dnsStatus ?? "Unavailable";
+  const cloudflareSslStatus = stats?.cloudflare?.sslStatus ?? "Unavailable";
+  const cloudflareTotalRequests = stats?.cloudflare?.totalRequests ?? 0;
+  const cloudflareCacheHitRatePercent = stats?.cloudflare?.cacheHitRatePercent ?? "Unavailable";
+  const cloudflareThreatsBlocked = stats?.cloudflare?.threatsBlocked ?? 0;
+  const cloudflareTrafficTrends = stats?.cloudflare?.trafficTrends ?? [];
+
+  // 5. CalcZen Internal Analytics
+  const calczenTotalUsers = stats?.calczen?.totalUsers ?? 0;
+  const calczenVisitorsToday = stats?.calczen?.visitorsToday ?? 0;
+  const calczenVisitorsThisMonth = stats?.calczen?.visitorsThisMonth ?? 0;
+  const calczenTotalCalculatorUses = stats?.calczen?.totalCalculatorUses ?? 0;
+  const calczenPopularCalculator = stats?.calczen?.popularCalculator ?? "Unavailable";
+  const calczenNewsletterSubscribers = stats?.calczen?.newsletterSubscribers ?? 0;
+  const calczenContactSubmissions = stats?.calczen?.contactSubmissions ?? 0;
+  const calczenBlogViews = stats?.calczen?.blogViews ?? 0;
+  const calczenUsageTrends = stats?.calczen?.usageTrends ?? [];
+  const alerts = stats?.alerts ?? [];
+
+  // 6. Traffic trend helpers for SVG rendering
+  const getRequestY = (idx: number) => {
+    const val = cloudflareTrafficTrends[idx]?.requests ?? 0;
+    return 180 - (val / 3500) * 120;
+  };
+  const getCachedY = (idx: number) => {
+    const val = cloudflareTrafficTrends[idx]?.cached ?? 0;
+    return 180 - (val / 3500) * 120;
+  };
+
   // Quota usage alerts threshold generator helper
   const getProgressColor = (percent: number) => {
     if (percent >= 95) return "bg-rose-500 shadow-[0_0_12px_rgba(239,68,68,0.4)]";
@@ -170,23 +326,23 @@ export function InfrastructurePage() {
         <div className="space-y-6 animate-fade-in">
           {/* Health indicator bar */}
           <div className={`p-4 rounded-xl border flex items-center justify-between gap-4 ${
-            stats.systemHealth === "critical"
+            stats?.systemHealth === "critical"
               ? "bg-rose-500/10 border-rose-500/20 text-rose-400"
-              : stats.systemHealth === "warning"
+              : stats?.systemHealth === "warning"
                 ? "bg-amber-500/10 border-amber-500/20 text-amber-400"
                 : "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
           }`}>
             <div className="flex items-center gap-3">
-              {stats.systemHealth === "critical" ? (
+              {stats?.systemHealth === "critical" ? (
                 <XCircle size={24} className="animate-pulse" />
-              ) : stats.systemHealth === "warning" ? (
+              ) : stats?.systemHealth === "warning" ? (
                 <AlertTriangle size={24} />
               ) : (
                 <CheckCircle size={24} />
               )}
               <div>
-                <div className="font-bold text-sm sm:text-base capitalize">Systems Status: {stats.systemHealth}</div>
-                <div className="text-xs opacity-80 mt-0.5">Telemetry telemetry verified at {new Date(stats.lastRefreshed).toLocaleTimeString()}</div>
+                <div className="font-bold text-sm sm:text-base capitalize">Systems Status: {stats?.systemHealth ?? "Healthy"}</div>
+                <div className="text-xs opacity-80 mt-0.5">Telemetry verified at {stats?.lastRefreshed ? new Date(stats.lastRefreshed).toLocaleTimeString() : "N/A"}</div>
               </div>
             </div>
             
@@ -242,12 +398,12 @@ export function InfrastructurePage() {
               <div>
                 <div className="flex justify-between items-center text-xs mb-1.5">
                   <span className="font-semibold text-slate-300">Render Free Instance Hours</span>
-                  <span className="text-[var(--color-muted)] font-mono">{stats.render.freeHoursUsed} / {stats.render.freeHoursLimit} hrs ({stats.render.planUsagePercent}%)</span>
+                  <span className="text-[var(--color-muted)] font-mono">{renderFreeHoursUsed} / {renderFreeHoursLimit} hrs ({renderPlanUsagePercent}%)</span>
                 </div>
                 <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden border border-white/5">
                   <div
-                    className={`h-full rounded-full transition-all duration-500 ${getProgressColor(stats.render.planUsagePercent)}`}
-                    style={{ width: `${stats.render.planUsagePercent}%` }}
+                    className={`h-full rounded-full transition-all duration-500 ${getProgressColor(renderPlanUsagePercent)}`}
+                    style={{ width: `${renderPlanUsagePercent}%` }}
                   />
                 </div>
                 <p className="text-[10px] text-[var(--color-muted)] mt-1.5">Calculates continuous server runtime this month. Resets on 1st of month.</p>
@@ -260,7 +416,7 @@ export function InfrastructurePage() {
                     Supabase Storage
                     {getWarningBadge(Math.round(storagePercent))}
                   </span>
-                  <span className="text-[var(--color-muted)] font-mono">{stats.supabase.storageUsedMb} / {stats.supabase.storageLimitMb} MB ({(storagePercent).toFixed(1)}%)</span>
+                  <span className="text-[var(--color-muted)] font-mono">{supabaseStorageUsedMb} / {supabaseStorageLimitMb} MB ({(storagePercent).toFixed(1)}%)</span>
                 </div>
                 <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden border border-white/5">
                   <div
@@ -277,7 +433,7 @@ export function InfrastructurePage() {
                     Supabase Database Size
                     {getWarningBadge(Math.round(dbSizePercent))}
                   </span>
-                  <span className="text-[var(--color-muted)] font-mono">{stats.supabase.databaseSizeMb} / {stats.supabase.databaseLimitMb} MB ({(dbSizePercent).toFixed(1)}%)</span>
+                  <span className="text-[var(--color-muted)] font-mono">{supabaseDatabaseSizeMb} / {supabaseDatabaseLimitMb} MB ({(dbSizePercent).toFixed(1)}%)</span>
                 </div>
                 <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden border border-white/5">
                   <div
@@ -292,14 +448,14 @@ export function InfrastructurePage() {
                 <div className="flex justify-between items-center text-xs mb-1.5">
                   <span className="font-semibold text-slate-300 flex items-center gap-1.5">
                     Resend Monthly Email Quota
-                    {getWarningBadge(Math.round((stats.resend.sentThisMonth / stats.resend.limitThisMonth) * 100))}
+                    {getWarningBadge(Math.round(resendLimitPercent))}
                   </span>
-                  <span className="text-[var(--color-muted)] font-mono">{stats.resend.sentThisMonth} / {stats.resend.limitThisMonth} Emails ({((stats.resend.sentThisMonth / stats.resend.limitThisMonth) * 100).toFixed(1)}%)</span>
+                  <span className="text-[var(--color-muted)] font-mono">{resendSentThisMonth} / {resendLimitThisMonth} Emails ({resendLimitPercent.toFixed(1)}%)</span>
                 </div>
                 <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden border border-white/5">
                   <div
-                    className={`h-full rounded-full transition-all duration-500 ${getProgressColor((stats.resend.sentThisMonth / stats.resend.limitThisMonth) * 100)}`}
-                    style={{ width: `${(stats.resend.sentThisMonth / stats.resend.limitThisMonth) * 100}%` }}
+                    className={`h-full rounded-full transition-all duration-500 ${getProgressColor(resendLimitPercent)}`}
+                    style={{ width: `${resendLimitPercent}%` }}
                   />
                 </div>
               </div>
@@ -322,17 +478,17 @@ export function InfrastructurePage() {
             
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Backend Uptime</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.render.uptime}%</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{renderUptime}%</p>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">API Response Time</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.render.responseTime}ms</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{renderResponseTime}ms</p>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Active Connections</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.render.activeRequests} req/s</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{renderActiveRequests} req/s</p>
             </div>
           </div>
 
@@ -345,23 +501,23 @@ export function InfrastructurePage() {
                 <div>
                   <div className="flex justify-between items-center text-xs mb-1">
                     <span className="text-slate-300">Free Instance Hours</span>
-                    <span className="font-semibold text-white">{stats.render.freeHoursUsed} / {stats.render.freeHoursLimit} hrs</span>
+                    <span className="font-semibold text-white">{renderFreeHoursUsed} / {renderFreeHoursLimit} hrs</span>
                   </div>
                   <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/5">
-                    <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${stats.render.planUsagePercent}%` }} />
+                    <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${renderPlanUsagePercent}%` }} />
                   </div>
-                  <p className="text-[10px] text-[var(--color-muted)] mt-1">{stats.render.freeHoursLimit - stats.render.freeHoursUsed} hours remaining this billing month.</p>
+                  <p className="text-[10px] text-[var(--color-muted)] mt-1">{renderFreeHoursLimit - renderFreeHoursUsed} hours remaining this billing month.</p>
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center text-xs mb-1">
                     <span className="text-slate-300">Outbound Bandwidth Egress</span>
-                    <span className="font-semibold text-white">{stats.render.bandwidthUsedGb} / {stats.render.bandwidthLimitGb} GB</span>
+                    <span className="font-semibold text-white">{renderBandwidthUsedGb} / {renderBandwidthLimitGb} GB</span>
                   </div>
                   <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/5">
-                    <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${(stats.render.bandwidthUsedGb / stats.render.bandwidthLimitGb) * 100}%` }} />
+                    <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${renderBandwidthPercent}%` }} />
                   </div>
-                  <p className="text-[10px] text-[var(--color-muted)] mt-1">{Math.round(stats.render.bandwidthLimitGb - stats.render.bandwidthUsedGb)} GB free bandwidth remaining.</p>
+                  <p className="text-[10px] text-[var(--color-muted)] mt-1">{Math.max(0, Math.round(renderBandwidthLimitGb - renderBandwidthUsedGb))} GB free bandwidth remaining.</p>
                 </div>
               </div>
             </div>
@@ -375,28 +531,28 @@ export function InfrastructurePage() {
                   <dt className="text-[var(--color-muted)] flex items-center gap-1.5 mb-1">
                     <Cpu size={14} /> CPU Consumption
                   </dt>
-                  <dd className="font-bold text-lg text-white">{stats.render.cpuUsagePercent}%</dd>
+                  <dd className="font-bold text-lg text-white">{renderCpuUsagePercent}%</dd>
                 </div>
 
                 <div className="border border-white/5 bg-black/20 p-3.5 rounded-lg">
                   <dt className="text-[var(--color-muted)] flex items-center gap-1.5 mb-1">
                     <HardDrive size={14} /> Memory Footprint
                   </dt>
-                  <dd className="font-bold text-lg text-white">{stats.render.memoryUsagePercent}%</dd>
+                  <dd className="font-bold text-lg text-white">{renderMemoryUsagePercent}%</dd>
                 </div>
 
                 <div className="border border-white/5 bg-black/20 p-3.5 rounded-lg">
                   <dt className="text-[var(--color-muted)] flex items-center gap-1.5 mb-1">
                     <Calendar size={14} /> Last Deployment
                   </dt>
-                  <dd className="font-semibold text-white truncate">{stats.render.lastDeploy}</dd>
+                  <dd className="font-semibold text-white truncate">{renderLastDeploy}</dd>
                 </div>
 
                 <div className="border border-white/5 bg-black/20 p-3.5 rounded-lg">
                   <dt className="text-[var(--color-muted)] flex items-center gap-1.5 mb-1">
                     <Server size={14} /> Total Deployments
                   </dt>
-                  <dd className="font-bold text-lg text-white">{stats.render.totalDeployments}</dd>
+                  <dd className="font-bold text-lg text-white">{renderTotalDeployments}</dd>
                 </div>
               </dl>
             </div>
@@ -418,17 +574,17 @@ export function InfrastructurePage() {
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">API Requests</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.supabase.apiRequests.toLocaleString()}</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{supabaseApiRequests.toLocaleString()}</p>
             </div>
 
-            <div className="rounded-xl border border(--color-card-border) bg-[var(--color-card)] p-4">
+            <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Database Size</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.supabase.databaseSizeMb} MB</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{supabaseDatabaseSizeMb} MB</p>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Total Registered Users</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.supabase.totalUsers}</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{supabaseTotalUsers}</p>
             </div>
           </div>
 
@@ -440,30 +596,30 @@ export function InfrastructurePage() {
               <div>
                 <div className="flex justify-between items-center text-xs mb-1.5">
                   <span className="font-semibold text-slate-300">Database Size</span>
-                  <span className="text-[var(--color-muted)] font-mono">{stats.supabase.databaseSizeMb} / {stats.supabase.databaseLimitMb} MB ({((stats.supabase.databaseSizeMb / stats.supabase.databaseLimitMb) * 100).toFixed(2)}%)</span>
+                  <span className="text-[var(--color-muted)] font-mono">{supabaseDatabaseSizeMb} / {supabaseDatabaseLimitMb} MB ({dbSizePercent.toFixed(2)}%)</span>
                 </div>
                 <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/5">
-                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${(stats.supabase.databaseSizeMb / stats.supabase.databaseLimitMb) * 100}%` }} />
+                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${dbSizePercent}%` }} />
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between items-center text-xs mb-1.5">
                   <span className="font-semibold text-slate-300">Storage Size</span>
-                  <span className="text-[var(--color-muted)] font-mono">{stats.supabase.storageUsedMb} / {stats.supabase.storageLimitMb} MB ({((stats.supabase.storageUsedMb / stats.supabase.storageLimitMb) * 100).toFixed(2)}%)</span>
+                  <span className="text-[var(--color-muted)] font-mono">{supabaseStorageUsedMb} / {supabaseStorageLimitMb} MB ({storagePercent.toFixed(2)}%)</span>
                 </div>
                 <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/5">
-                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${(stats.supabase.storageUsedMb / stats.supabase.storageLimitMb) * 100}%` }} />
+                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${storagePercent}%` }} />
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between items-center text-xs mb-1.5">
                   <span className="font-semibold text-slate-300">Storage Bandwidth</span>
-                  <span className="text-[var(--color-muted)] font-mono">{stats.supabase.bandwidthUsedGb} / {stats.supabase.bandwidthLimitGb} GB ({((stats.supabase.bandwidthUsedGb / stats.supabase.bandwidthLimitGb) * 100).toFixed(2)}%)</span>
+                  <span className="text-[var(--color-muted)] font-mono">{supabaseBandwidthUsedGb} / {supabaseBandwidthLimitGb} GB ({supabaseBandwidthPercent.toFixed(2)}%)</span>
                 </div>
                 <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/5">
-                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${(stats.supabase.bandwidthUsedGb / stats.supabase.bandwidthLimitGb) * 100}%` }} />
+                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${supabaseBandwidthPercent}%` }} />
                 </div>
               </div>
             </div>
@@ -483,17 +639,17 @@ export function InfrastructurePage() {
             
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Emails Sent Today</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.resend.sentToday} / {stats.resend.limitToday}</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{resendSentToday} / {resendLimitToday}</p>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Delivery Rate</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.resend.deliveryRatePercent}%</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{resendDeliveryRatePercent}%</p>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Bounce Rate</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.resend.bounceRatePercent}%</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{resendBounceRatePercent}%</p>
             </div>
           </div>
 
@@ -504,12 +660,12 @@ export function InfrastructurePage() {
             <div>
               <div className="flex justify-between items-center text-xs mb-1.5">
                 <span className="font-semibold text-slate-300">Free Tier Limit</span>
-                <span className="text-[var(--color-muted)] font-mono">{stats.resend.sentThisMonth} / {stats.resend.limitThisMonth} Emails Used</span>
+                <span className="text-[var(--color-muted)] font-mono">{resendSentThisMonth} / {resendLimitThisMonth} Emails Used</span>
               </div>
               <div className="w-full bg-black/40 h-3 rounded-full overflow-hidden border border-white/5">
-                <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${(stats.resend.sentThisMonth / stats.resend.limitThisMonth) * 100}%` }} />
+                <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${resendLimitPercent}%` }} />
               </div>
-              <p className="text-xs text-[var(--color-muted)] mt-2">Provides {stats.resend.limitThisMonth - stats.resend.sentThisMonth} emails remaining this billing month.</p>
+              <p className="text-xs text-[var(--color-muted)] mt-2">Provides {Math.max(0, resendLimitThisMonth - resendSentThisMonth)} emails remaining this billing month.</p>
             </div>
           </div>
         </div>
@@ -522,22 +678,22 @@ export function InfrastructurePage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">DNS / SSL Status</p>
-              <p className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1 capitalize">{stats.cloudflare.dnsStatus} / {stats.cloudflare.sslStatus}</p>
+              <p className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1 capitalize">{cloudflareDnsStatus} / {cloudflareSslStatus}</p>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Total Requests</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.cloudflare.totalRequests.toLocaleString()}</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{cloudflareTotalRequests.toLocaleString()}</p>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Cache Hit Rate</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{stats.cloudflare.cacheHitRatePercent}%</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{cloudflareCacheHitRatePercent}%</p>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Security Blocked</p>
-              <p className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">{stats.cloudflare.threatsBlocked} threats</p>
+              <p className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">{cloudflareThreatsBlocked} threats</p>
             </div>
           </div>
 
@@ -569,26 +725,26 @@ export function InfrastructurePage() {
                 {/* Area 1: Total requests */}
                 <path
                   d={`M 0,200 
-                      L 0,${180 - (stats.cloudflare.trafficTrends[0].requests / 3500) * 120} 
-                      L 116,${180 - (stats.cloudflare.trafficTrends[1].requests / 3500) * 120} 
-                      L 233,${180 - (stats.cloudflare.trafficTrends[2].requests / 3500) * 120} 
-                      L 350,${180 - (stats.cloudflare.trafficTrends[3].requests / 3500) * 120} 
-                      L 466,${180 - (stats.cloudflare.trafficTrends[4].requests / 3500) * 120} 
-                      L 583,${180 - (stats.cloudflare.trafficTrends[5].requests / 3500) * 120} 
-                      L 700,${180 - (stats.cloudflare.trafficTrends[6].requests / 3500) * 120} 
+                      L 0,${getRequestY(0)} 
+                      L 116,${getRequestY(1)} 
+                      L 233,${getRequestY(2)} 
+                      L 350,${getRequestY(3)} 
+                      L 466,${getRequestY(4)} 
+                      L 583,${getRequestY(5)} 
+                      L 700,${getRequestY(6)} 
                       L 700,200 Z`}
                   fill="url(#gradient-requests)"
                 />
 
                 {/* Line 1: Total requests */}
                 <path
-                  d={`M 0,${180 - (stats.cloudflare.trafficTrends[0].requests / 3500) * 120} 
-                      L 116,${180 - (stats.cloudflare.trafficTrends[1].requests / 3500) * 120} 
-                      L 233,${180 - (stats.cloudflare.trafficTrends[2].requests / 3500) * 120} 
-                      L 350,${180 - (stats.cloudflare.trafficTrends[3].requests / 3500) * 120} 
-                      L 466,${180 - (stats.cloudflare.trafficTrends[4].requests / 3500) * 120} 
-                      L 583,${180 - (stats.cloudflare.trafficTrends[5].requests / 3500) * 120} 
-                      L 700,${180 - (stats.cloudflare.trafficTrends[6].requests / 3500) * 120}`}
+                  d={`M 0,${getRequestY(0)} 
+                      L 116,${getRequestY(1)} 
+                      L 233,${getRequestY(2)} 
+                      L 350,${getRequestY(3)} 
+                      L 466,${getRequestY(4)} 
+                      L 583,${getRequestY(5)} 
+                      L 700,${getRequestY(6)}`}
                   fill="none"
                   stroke="#6366f1"
                   strokeWidth="2.5"
@@ -598,26 +754,26 @@ export function InfrastructurePage() {
                 {/* Area 2: Cached requests */}
                 <path
                   d={`M 0,200 
-                      L 0,${180 - (stats.cloudflare.trafficTrends[0].cached / 3500) * 120} 
-                      L 116,${180 - (stats.cloudflare.trafficTrends[1].cached / 3500) * 120} 
-                      L 233,${180 - (stats.cloudflare.trafficTrends[2].cached / 3500) * 120} 
-                      L 350,${180 - (stats.cloudflare.trafficTrends[3].cached / 3500) * 120} 
-                      L 466,${180 - (stats.cloudflare.trafficTrends[4].cached / 3500) * 120} 
-                      L 583,${180 - (stats.cloudflare.trafficTrends[5].cached / 3500) * 120} 
-                      L 700,${180 - (stats.cloudflare.trafficTrends[6].cached / 3500) * 120} 
+                      L 0,${getCachedY(0)} 
+                      L 116,${getCachedY(1)} 
+                      L 233,${getCachedY(2)} 
+                      L 350,${getCachedY(3)} 
+                      L 466,${getCachedY(4)} 
+                      L 583,${getCachedY(5)} 
+                      L 700,${getCachedY(6)} 
                       L 700,200 Z`}
                   fill="url(#gradient-cached)"
                 />
 
                 {/* Line 2: Cached requests */}
                 <path
-                  d={`M 0,${180 - (stats.cloudflare.trafficTrends[0].cached / 3500) * 120} 
-                      L 116,${180 - (stats.cloudflare.trafficTrends[1].cached / 3500) * 120} 
-                      L 233,${180 - (stats.cloudflare.trafficTrends[2].cached / 3500) * 120} 
-                      L 350,${180 - (stats.cloudflare.trafficTrends[3].cached / 3500) * 120} 
-                      L 466,${180 - (stats.cloudflare.trafficTrends[4].cached / 3500) * 120} 
-                      L 583,${180 - (stats.cloudflare.trafficTrends[5].cached / 3500) * 120} 
-                      L 700,${180 - (stats.cloudflare.trafficTrends[6].cached / 3500) * 120}`}
+                  d={`M 0,${getCachedY(0)} 
+                      L 116,${getCachedY(1)} 
+                      L 233,${getCachedY(2)} 
+                      L 350,${getCachedY(3)} 
+                      L 466,${getCachedY(4)} 
+                      L 583,${getCachedY(5)} 
+                      L 700,${getCachedY(6)}`}
                   fill="none"
                   stroke="#22c55e"
                   strokeWidth="2"
@@ -636,7 +792,7 @@ export function InfrastructurePage() {
                   <span className="h-2.5 w-2.5 bg-emerald-500 rounded-full" /> Cached Requests
                 </span>
               </div>
-              <span className="text-[var(--color-muted)] font-mono font-semibold">Cache hit: {stats.cloudflare.cacheHitRatePercent}%</span>
+              <span className="text-[var(--color-muted)] font-mono font-semibold">Cache hit: {cloudflareCacheHitRatePercent}%</span>
             </div>
           </div>
         </div>
@@ -651,7 +807,7 @@ export function InfrastructurePage() {
               <div className="p-2 rounded bg-indigo-500/10 text-indigo-400"><Users size={20} /></div>
               <div>
                 <p className="text-xs text-[var(--color-muted)] font-semibold">Unique Visitors Today</p>
-                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{stats.calczen.visitorsToday.toLocaleString()}</p>
+                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{calczenVisitorsToday.toLocaleString()}</p>
               </div>
             </div>
 
@@ -659,7 +815,7 @@ export function InfrastructurePage() {
               <div className="p-2 rounded bg-indigo-500/10 text-indigo-400"><Activity size={20} /></div>
               <div>
                 <p className="text-xs text-[var(--color-muted)] font-semibold">Calculator Calculations</p>
-                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{stats.calczen.totalCalculatorUses.toLocaleString()}</p>
+                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{calczenTotalCalculatorUses.toLocaleString()}</p>
               </div>
             </div>
 
@@ -667,7 +823,7 @@ export function InfrastructurePage() {
               <div className="p-2 rounded bg-indigo-500/10 text-indigo-400"><Mail size={20} /></div>
               <div>
                 <p className="text-xs text-[var(--color-muted)] font-semibold">Newsletter Subscriptions</p>
-                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{stats.calczen.newsletterSubscribers.toLocaleString()}</p>
+                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{calczenNewsletterSubscribers.toLocaleString()}</p>
               </div>
             </div>
 
@@ -675,7 +831,7 @@ export function InfrastructurePage() {
               <div className="p-2 rounded bg-indigo-500/10 text-indigo-400"><Sparkles size={20} /></div>
               <div>
                 <p className="text-xs text-[var(--color-muted)] font-semibold">Total Blog Views</p>
-                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{stats.calczen.blogViews.toLocaleString()}</p>
+                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{calczenBlogViews.toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -689,27 +845,29 @@ export function InfrastructurePage() {
               
               <div className="h-56 relative w-full pt-4 flex items-end justify-between px-2 gap-4">
                 {/* 7 responsive columns of customized CSS/SVG bar elements representing traffic scale */}
-                {stats.calczen.usageTrends.map((trend: any, idx: number) => {
-                  const visitorsHeight = Math.max(10, Math.round((trend.visitors / 450) * 100));
-                  const calcUsesHeight = Math.max(10, Math.round((trend.calcUses / 1500) * 100));
+                {calczenUsageTrends.map((trend: any, idx: number) => {
+                  const visitors = trend?.visitors ?? 0;
+                  const calcUses = trend?.calcUses ?? 0;
+                  const visitorsHeight = Math.max(10, Math.round((visitors / 450) * 100));
+                  const calcUsesHeight = Math.max(10, Math.round((calcUses / 1500) * 100));
 
                   return (
                     <div key={idx} className="flex-1 flex flex-col items-center">
-                      <div className="w-full flex items-end justify-center gap-1 h-36">
+                       <div className="w-full flex items-end justify-center gap-1 h-36">
                         {/* Visitors Bar */}
                         <div 
                           className="w-2.5 sm:w-3.5 bg-indigo-500 rounded-t shadow-[0_0_8px_rgba(99,102,241,0.25)]"
                           style={{ height: `${visitorsHeight}%` }}
-                          title={`Visitors: ${trend.visitors}`}
+                          title={`Visitors: ${visitors}`}
                         />
                         {/* Calculator Uses Bar */}
                         <div 
                           className="w-2.5 sm:w-3.5 bg-sky-400 rounded-t shadow-[0_0_8px_rgba(56,189,248,0.25)]"
                           style={{ height: `${calcUsesHeight}%` }}
-                          title={`Calculation Runs: ${trend.calcUses}`}
+                          title={`Calculation Runs: ${calcUses}`}
                         />
                       </div>
-                      <span className="text-[10px] text-[var(--color-muted)] mt-2 font-mono">{trend.date}</span>
+                      <span className="text-[10px] text-[var(--color-muted)] mt-2 font-mono">{trend?.date ?? "N/A"}</span>
                     </div>
                   );
                 })}
@@ -735,18 +893,18 @@ export function InfrastructurePage() {
                   <div className="text-xs text-[var(--color-muted)]">Popular Tool This Week</div>
                   <div className="text-base font-bold text-white mt-1 flex items-center gap-2">
                     <Sparkles size={16} className="text-indigo-400 animate-pulse" />
-                    {stats.calczen.popularCalculator}
+                    {calczenPopularCalculator}
                   </div>
                 </div>
 
                 <dl className="grid grid-cols-2 gap-3 text-xs">
                   <div className="border border-white/5 bg-black/10 p-3 rounded">
                     <dt className="text-[var(--color-muted)] mb-1">Feedback Mail</dt>
-                    <dd className="font-bold text-white">{stats.calczen.contactSubmissions} posts</dd>
+                    <dd className="font-bold text-white">{calczenContactSubmissions} posts</dd>
                   </div>
                   <div className="border border-white/5 bg-black/10 p-3 rounded">
                     <dt className="text-[var(--color-muted)] mb-1">Mailing List</dt>
-                    <dd className="font-bold text-white">{stats.calczen.newsletterSubscribers} users</dd>
+                    <dd className="font-bold text-white">{calczenNewsletterSubscribers} users</dd>
                   </div>
                 </dl>
               </div>
@@ -768,22 +926,22 @@ export function InfrastructurePage() {
             </h3>
             
             <div className="space-y-3">
-              {stats.alerts.map((alert: any) => (
+              {alerts.map((alert: any) => (
                 <div
-                  key={alert.id}
+                  key={alert?.id}
                   className={`p-4 rounded-lg border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm ${
-                    alert.severity === "critical"
+                    alert?.severity === "critical"
                       ? "bg-rose-500/10 border-rose-500/20 text-rose-400"
-                      : alert.severity === "warning"
+                      : alert?.severity === "warning"
                         ? "bg-amber-500/10 border-amber-500/20 text-amber-400"
                         : "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
                   }`}
                 >
                   <div className="flex items-start sm:items-center gap-3">
                     <div className="shrink-0 mt-0.5 sm:mt-0">
-                      {alert.severity === "critical" ? (
+                      {alert?.severity === "critical" ? (
                         <XCircle size={18} className="animate-pulse" />
-                      ) : alert.severity === "warning" ? (
+                      ) : alert?.severity === "warning" ? (
                         <AlertTriangle size={18} />
                       ) : (
                         <CheckCircle size={18} />
@@ -791,14 +949,14 @@ export function InfrastructurePage() {
                     </div>
                     <div>
                       <span className="font-bold uppercase tracking-wider text-[10px] border border-current px-1.5 py-0.5 rounded bg-black/10 mr-2">
-                        {alert.service}
+                        {alert?.service ?? "System"}
                       </span>
-                      <span className="font-semibold">{alert.message}</span>
+                      <span className="font-semibold">{alert?.message ?? "Metrics check ok"}</span>
                     </div>
                   </div>
                   
                   <div className="text-[10px] opacity-70 font-mono self-end sm:self-center">
-                    {new Date(alert.timestamp).toLocaleTimeString()}
+                    {alert?.timestamp ? new Date(alert.timestamp).toLocaleTimeString() : "N/A"}
                   </div>
                 </div>
               ))}

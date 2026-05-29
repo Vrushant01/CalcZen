@@ -124,6 +124,12 @@ export function CalculatorPageLayout({ calc, intro, formula, example, faqs, chil
           <div className="calc-container-inner">{children}</div>
         </section>
 
+        {blog && (
+          <div className="w-full min-w-0">
+            {blog}
+          </div>
+        )}
+
         {formula && (
           <div className="surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0">
             <CalculatorFormula formula={formula} />
@@ -135,11 +141,7 @@ export function CalculatorPageLayout({ calc, intro, formula, example, faqs, chil
             <CalculatorExample example={example} />
           </div>
         )}
-        {blog && (
-          <div className="w-full min-w-0">
-            {blog}
-          </div>
-        )}
+
 
         <section id="faq-section" className="scroll-mt-20 surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0">
           <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Frequently asked questions</h2>

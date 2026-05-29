@@ -216,46 +216,22 @@ export default function CalculatorBlog({ content }: Props) {
               </div>
             )}
 
-            {/* Optional Formula Block */}
-            {s.formulaBox && (
-              <div className="my-10 rounded-xl border border-primary/15 bg-primary/5 p-5 w-full">
-                {s.formulaBox.title && (
-                  <h4 className="text-[11px] font-bold uppercase tracking-wider text-primary mb-3 select-none">
-                    {s.formulaBox.title}
-                  </h4>
-                )}
-                <div className="bg-background border border-border/60 rounded-lg p-4.5 text-center font-mono text-sm sm:text-base text-primary select-all shadow-input overflow-x-auto">
-                  {s.formulaBox.formula}
-                </div>
-                {s.formulaBox.variables.length > 0 && (
-                  <dl className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs sm:text-sm border-t border-border/40 pt-3">
-                    {s.formulaBox.variables.map((v, vIdx) => (
-                      <div key={vIdx} className="flex gap-2">
-                        <dt className="font-bold text-primary shrink-0 select-none">
-                          {v.name}:
-                        </dt>
-                        <dd className="text-muted-foreground">{v.desc}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                )}
-              </div>
-            )}
+
 
             {/* Optional Step-by-Step Example Box */}
             {s.exampleBox && (
-              <div className="my-10 rounded-xl border border-border bg-card/45 p-5 w-full shadow-soft">
-                <h4 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3.5 border-b border-border/40 pb-2">
+              <div className="my-10 rounded-xl border border-border bg-card/45 p-6 sm:p-8 w-full shadow-soft">
+                <h4 className="text-sm sm:text-base font-semibold text-foreground flex items-center gap-2 mb-5 border-b border-border/40 pb-3">
                   <CheckCircle2 size={16} className="text-primary shrink-0" />
                   {s.exampleBox.title}
                 </h4>
                 
                 {/* Inputs list */}
-                <div className="text-xs sm:text-sm text-muted-foreground mb-4">
-                  <div className="font-semibold text-foreground mb-1 select-none">
+                <div className="text-xs sm:text-sm text-muted-foreground mb-6">
+                  <div className="font-semibold text-foreground mb-3 select-none">
                     Example Parameters:
                   </div>
-                  <ul className="list-disc list-inside space-y-1 pl-1">
+                  <ul className="list-disc list-inside space-y-2.5 pl-2">
                     {s.exampleBox.inputs.map((inp, iIdx) => (
                       <li key={iIdx}>
                         <strong>{inp.name}</strong>: {inp.val}
@@ -265,11 +241,11 @@ export default function CalculatorBlog({ content }: Props) {
                 </div>
 
                 {/* Calculation steps */}
-                <div className="text-xs sm:text-sm text-muted-foreground mb-4">
-                  <div className="font-semibold text-foreground mb-1 select-none">
+                <div className="text-xs sm:text-sm text-muted-foreground mb-8">
+                  <div className="font-semibold text-foreground mb-3 select-none">
                     Sequential Steps:
                   </div>
-                  <ol className="list-decimal list-inside space-y-1.5 pl-1 leading-relaxed">
+                  <ol className="list-decimal list-inside space-y-3 pl-2 leading-relaxed">
                     {s.exampleBox.steps.map((st, sIdx) => (
                       <li key={sIdx} dangerouslySetInnerHTML={{ __html: st }} />
                     ))}
@@ -277,12 +253,12 @@ export default function CalculatorBlog({ content }: Props) {
                 </div>
 
                 {/* Final outcome banner */}
-                <div className="text-xs sm:text-sm font-medium text-foreground bg-muted/40 rounded-lg px-3.5 py-2.5 border-l-3 border-l-primary flex items-baseline gap-2">
-                  <span className="text-primary font-bold text-xs uppercase tracking-wide mt-0.5 select-none">
+                <div className="text-xs sm:text-sm font-medium text-foreground bg-muted/40 rounded-xl p-5 border-l-4 border-l-primary flex flex-col sm:flex-row items-start gap-2 sm:gap-3">
+                  <span className="text-primary font-bold text-xs uppercase tracking-wide shrink-0 select-none mt-0.5">
                     Takeaway Result:
                   </span>
                   <span
-                    className="text-muted-foreground/90"
+                    className="text-muted-foreground/90 leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: s.exampleBox.result }}
                   />
                 </div>

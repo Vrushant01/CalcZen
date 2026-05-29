@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { PageShell } from "@/components/layout/PageShell";
 import { getCalculator } from "@/data/calculators";
 import { calculatorComponents } from "@/calculators/registry";
@@ -50,6 +50,20 @@ export const Route = createFileRoute("/calculator/$slug")({
 function CalcPage() {
   const { calc } = Route.useLoaderData();
   const Component = calculatorComponents[calc.slug];
+
+  useEffect(() => {
+    if (calc) {
+      const title = calc.metaTitle || `${calc.name} - Free Online Calculator | CalcZen`;
+      document.title = title;
+
+      let titleTag = document.querySelector("head title");
+      if (!titleTag) {
+        titleTag = document.createElement("title");
+        document.head.appendChild(titleTag);
+      }
+      titleTag.textContent = title;
+    }
+  }, [calc]);
 
   return (
     <PageShell>

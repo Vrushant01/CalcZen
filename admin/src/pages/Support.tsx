@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Inbox, Mail, Search, Send } from "lucide-react";
+import { Inbox, Mail, Search, Send, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "../components/AdminLayout";
 import { LoadingTable } from "../components/LoadingTable";
@@ -123,7 +123,10 @@ export function SupportPage() {
       />
 
       <div className="flex flex-col lg:flex-row gap-4 min-h-[520px]">
-        <div className="lg:w-[380px] shrink-0 flex flex-col rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] overflow-hidden">
+        {/* Messages List Column - hidden on mobile when a message is selected */}
+        <div className={`lg:w-[380px] shrink-0 flex flex-col rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] overflow-hidden ${
+          selectedId ? "hidden lg:flex" : "flex"
+        }`}>
           <div className="p-3 border-b border-[var(--color-card-border)] space-y-3">
             <div className="relative">
               <Search
@@ -223,9 +226,12 @@ export function SupportPage() {
           )}
         </div>
 
-        <div className="flex-1 rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 md:p-6 min-h-[320px]">
+        {/* Message Details Column - hidden on mobile when no message is selected */}
+        <div className={`flex-1 rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 md:p-6 min-h-[320px] ${
+          selectedId ? "flex flex-col" : "hidden lg:flex flex-col"
+        }`}>
           {!selectedId ? (
-            <div className="h-full flex flex-col items-center justify-center text-[var(--color-muted)] text-sm">
+            <div className="h-full flex flex-col items-center justify-center text-[var(--color-muted)] text-sm my-auto">
               <Mail size={40} className="mb-3 opacity-40" />
               Select a message to view details and reply.
               {unreadCount > 0 && (
@@ -233,9 +239,18 @@ export function SupportPage() {
               )}
             </div>
           ) : loadingDetail ? (
-            <div className="py-12 text-center text-sm text-[var(--color-muted)]">Loading…</div>
+            <div className="py-12 text-center text-sm text-[var(--color-muted)] my-auto">Loading…</div>
           ) : selected ? (
             <div className="flex flex-col h-full">
+              {/* Back button on mobile to return to list */}
+              <button
+                type="button"
+                onClick={() => { setSelectedId(null); setSelected(null); }}
+                className="lg:hidden mb-4 inline-flex items-center gap-1.5 text-xs text-[var(--color-muted)] hover:text-white transition-colors py-1.5 w-fit"
+              >
+                <ArrowLeft size={14} /> Back to messages
+              </button>
+
               <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
                 <div>
                   <h2 className="text-lg font-semibold">{selected.name}</h2>

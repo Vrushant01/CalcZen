@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import { Inbox, LayoutDashboard, LogOut, Mail, FileText } from "lucide-react";
+import { Inbox, LayoutDashboard, LogOut, Mail, FileText, Menu, X } from "lucide-react";
 import { BrandLogo } from "./BrandLogo";
 import { clearToken } from "../services/api";
 
@@ -12,6 +13,7 @@ const nav = [
 
 export function AdminLayout() {
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   function logout() {
     clearToken();
@@ -19,42 +21,65 @@ export function AdminLayout() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-[var(--color-card-border)] bg-[var(--color-card)] p-4 md:min-h-screen shrink-0">
-        <div className="mb-8">
-          <Link to="/dashboard" className="inline-flex items-center gap-2">
-            <BrandLogo imageClassName="h-8 w-8 object-contain" labelClassName="text-xl font-bold tracking-tight" />
-          </Link>
-          <p className="text-xs text-[var(--color-muted)] mt-1">Admin Panel</p>
+    <div className="min-h-screen flex flex-col md:flex-row bg-[var(--color-background)]">
+      {/* Sidebar / Topbar container */}
+      <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-[var(--color-card-border)] bg-[var(--color-card)] p-4 md:min-h-screen shrink-0 transition-all duration-300">
+        <div className="flex items-center justify-between md:block md:mb-8">
+          <div>
+            <Link to="/dashboard" className="inline-flex items-center gap-2" onClick={() => setMenuOpen(false)}>
+              <BrandLogo imageClassName="h-8 w-8 object-contain" labelClassName="text-xl font-bold tracking-tight" />
+            </Link>
+            <p className="text-xs text-[var(--color-muted)] mt-1">Admin Panel</p>
+          </div>
+          
+          {/* Hamburger toggle button on mobile */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden p-2 text-[var(--color-muted)] hover:text-white rounded-lg hover:bg-white/5 transition-colors focus:outline-none touch-target"
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
-        <nav className="flex md:flex-col gap-1">
-          {nav.map(({ to, label, icon: Icon }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-[var(--color-primary)] text-white"
-                    : "text-[var(--color-muted)] hover:bg-white/5 hover:text-white"
-                }`
-              }
-            >
-              <Icon size={18} />
-              {label}
-            </NavLink>
-          ))}
-        </nav>
-        <button
-          type="button"
-          onClick={logout}
-          className="mt-6 flex items-center gap-2 px-3 py-2 text-sm text-[var(--color-muted)] hover:text-white transition-colors w-full"
+
+        {/* Collapsible/Slideable Navigation block on mobile */}
+        <div
+          className={`mt-4 md:mt-0 transition-all duration-300 overflow-hidden md:max-h-none ${
+            menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 md:opacity-100"
+          }`}
         >
-          <LogOut size={18} />
-          Log out
-        </button>
+          <nav className="flex flex-col gap-1.5 py-2 md:py-0">
+            {nav.map(({ to, label, icon: Icon }) => (
+              <NavLink
+                key={to}
+                to={to}
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-[var(--color-primary)] text-white"
+                      : "text-[var(--color-muted)] hover:bg-white/5 hover:text-white"
+                  }`
+                }
+              >
+                <Icon size={18} />
+                {label}
+              </NavLink>
+            ))}
+          </nav>
+          
+          <button
+            type="button"
+            onClick={logout}
+            className="mt-4 md:mt-8 flex items-center gap-2.5 px-3.5 py-2.5 text-sm text-[var(--color-muted)] hover:text-white hover:bg-red-500/10 hover:text-red-400 rounded-lg transition-colors w-full text-left"
+          >
+            <LogOut size={18} />
+            Log out
+          </button>
+        </div>
       </aside>
-      <main className="flex-1 p-4 md:p-8 overflow-auto">
+      <main className="flex-1 p-4 md:p-8 overflow-auto w-full max-w-full">
         <Outlet />
       </main>
     </div>

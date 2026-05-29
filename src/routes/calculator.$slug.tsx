@@ -13,13 +13,16 @@ export const Route = createFileRoute("/calculator/$slug")({
   head: ({ loaderData }) => {
     const calc = loaderData?.calc;
     if (!calc) return {};
-    const title = calc.metaTitle || `${calc.name} — Free Online Calculator | CalcZen`;
+    
+    const title = calc.metaTitle || `${calc.name} - Free Online Calculator | CalcZen`;
     const desc = calc.metaDescription || calc.description;
     const url = `https://www.calczen.in/calculator/${calc.slug}`;
+    
     return {
       meta: [
         { title },
         { name: "description", content: desc },
+        { name: "robots", content: "index,follow" },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "website" },

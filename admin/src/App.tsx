@@ -8,6 +8,7 @@ import { NewsletterPage } from "./pages/Newsletter";
 import { SupportPage } from "./pages/Support";
 import { BlogListPage } from "./pages/BlogList";
 import { BlogEditorPage } from "./pages/BlogEditor";
+import { InfrastructurePage } from "./pages/Infrastructure";
 import "./styles.css";
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
               <Route path="/blogs/edit/:id" element={<BlogEditorPage />} />
               <Route path="/newsletter" element={<NewsletterPage />} />
               <Route path="/support" element={<SupportPage />} />
+              <Route path="/infrastructure" element={<InfrastructurePage />} />
             </Route>
             {/* Fallbacks are nested inside ProtectedRoute to guarantee authentication gating */}
             <Route path="/" element={<Navigate to="/dashboard" replace />} />

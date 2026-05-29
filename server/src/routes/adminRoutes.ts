@@ -20,6 +20,7 @@ import {
   updateBlogAdminHandler,
   deleteBlogAdminHandler,
 } from "../controllers/blogAdminController.js";
+import { getInfrastructureStats } from "../controllers/infrastructureController.js";
 import { attachAdmin, requireAuth } from "../middleware/auth.js";
 import { createRateLimiter } from "../middleware/rate-limit.js";
 import { validateBody } from "../middleware/validate.js";
@@ -44,6 +45,7 @@ const replyLimiter = createRateLimiter({
 router.use(requireAuth, attachAdmin);
 
 router.get("/stats", getStats);
+router.get("/infrastructure/stats", getInfrastructureStats);
 router.get("/subscribers/recent", getRecentSubscribersHandler);
 router.get("/subscribers", listSubscribersHandler);
 router.delete("/subscribers/:id", deleteSubscriber);

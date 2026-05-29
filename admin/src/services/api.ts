@@ -261,6 +261,9 @@ export const api = {
 
   deleteBlog: (id: string) =>
     request(`/api/admin/blogs/${id}`, { method: "DELETE" }),
+
+  infrastructureStats: () =>
+    request<any>("/api/admin/infrastructure/stats"),
 };
 
 

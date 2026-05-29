@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import { Inbox, LayoutDashboard, LogOut, Mail, FileText, Menu, X } from "lucide-react";
+import { Inbox, LayoutDashboard, LogOut, Mail, FileText, Menu, X, Activity } from "lucide-react";
 import { BrandLogo } from "./BrandLogo";
 import { clearToken } from "../services/api";
 
@@ -9,6 +9,7 @@ const nav = [
   { to: "/blogs", label: "Blogs", icon: FileText },
   { to: "/support", label: "Support", icon: Inbox },
   { to: "/newsletter", label: "Newsletter", icon: Mail },
+  { to: "/infrastructure", label: "Infrastructure", icon: Activity },
 ];
 
 export function AdminLayout() {

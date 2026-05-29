@@ -93,7 +93,10 @@ You contributed $130,000; ~$225,000 came from compounding.`}
         { q: "What is compound interest?", a: "Interest earned on both your original money and the interest already added — your balance grows exponentially over time." },
         { q: "How often should returns compound?", a: "We assume monthly compounding, which closely matches most investment and savings accounts." },
         { q: "Is the rate guaranteed?", a: "No. Investment returns vary year to year. Use a conservative long-term average and rebalance regularly." },
+        { q: "What is the Rule of 72?", a: "The Rule of 72 is a quick, handy mental shortcut used to estimate how long it will take for an investment to double in value at a fixed rate of interest. Simply divide 72 by your annual interest rate (e.g., at an 8% return, your money doubles in approximately 9 years)." },
+        { q: "How does inflation affect my compounded growth?", a: "While your investment grows nominally, inflation erodes its purchasing power. To calculate the 'real' inflation-adjusted value, you should subtract the expected inflation rate from your nominal return rate before compounding." },
       ]}
+      blog={<CalculatorBlog content={blogContent.compound} />}
     >
       <CalculatorCurrencyBar />
       <div className="calc-layout-grid">
@@ -140,7 +143,6 @@ You contributed $130,000; ~$225,000 came from compounding.`}
           <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
         </div>
       </div>
-      <CalculatorBlog content={blogContent.compound} />
     </CalculatorPageLayout>
   );
 }

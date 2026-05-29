@@ -1,31 +1,45 @@
 import { Link } from "@tanstack/react-router";
-import { Lightbulb, HelpCircle, CheckCircle2, AlertCircle, ArrowRight, BookOpen } from "lucide-react";
+import {
+  Lightbulb,
+  HelpCircle,
+  CheckCircle2,
+  AlertCircle,
+  ArrowRight,
+  BookOpen,
+  Sparkles,
+  ChevronRight,
+} from "lucide-react";
 
 export interface BlogContent {
   primaryKeyword: string;
-  h2Heading: string;
-  h3Heading: string;
-  paragraph1: string;
-  paragraph2: string;
-  paragraph3: string;
-  h2Body: string;
-  h3Body: string;
-  paragraph4: string;
-  closingParagraph: string;
-  internalLinks: {
-    text: string;
-    calculatorName: string;
-    href: string;
-  }[];
-  // --- New Premium Engagement Additions (Optional for robust backward-compatibility) ---
-  didYouKnow?: string;
-  proTip?: string;
-  scenarioTitle?: string;
-  scenarioText?: string;
-  scenarioMath?: string;
-  scenarioTakeaway?: string;
-  commonMistakesTitle?: string;
-  commonMistakes?: string[];
+  category: string;
+  introText: string;
+  sections: Array<{
+    title: string;
+    paragraphs: string[];
+    callout?: {
+      type: "didYouKnow" | "proTip" | "quickFact" | "commonMistake" | "expertInsight";
+      title?: string;
+      text: string;
+    };
+    table?: {
+      headers: string[];
+      rows: string[][];
+    };
+    formulaBox?: {
+      title?: string;
+      formula: string;
+      variables: Array<{ name: string; desc: string }>;
+    };
+    exampleBox?: {
+      title: string;
+      inputs: Array<{ name: string; val: string }>;
+      steps: string[];
+      result: string;
+    };
+  }>;
+  faqs?: Array<{ q: string; a: string }>;
+  internalLinks?: Array<{ text: string; calculatorName: string; href: string }>;
 }
 
 type Props = {
@@ -34,145 +48,249 @@ type Props = {
 
 export default function CalculatorBlog({ content }: Props) {
   return (
-    <article className="mt-12 pt-10 border-t border-border/80 w-full">
-      {/* Visual Badge/Header */}
-      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 mb-5">
+    <article className="mt-20 sm:mt-24 pt-16 border-t border-border/40 w-full min-w-0 max-w-none text-left">
+      {/* 1. Header Badge */}
+      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-5 select-none">
         <BookOpen className="h-3.5 w-3.5 text-primary" />
         <span className="text-[10px] font-semibold text-primary uppercase tracking-[0.08em]">
-          Educational Guide
+          Knowledge Base & Insights
         </span>
       </div>
 
-      <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground mb-4">
+      {/* 2. Main Article Heading */}
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6">
         Understanding {content.primaryKeyword}
       </h2>
 
-      {/* Intro paragraph with slightly elevated styling */}
-      <p 
-        className="text-[15px] sm:text-[16px] text-muted-foreground leading-[1.8] mb-6 font-normal"
-        dangerouslySetInnerHTML={{ __html: content.paragraph1 }}
+      {/* 3. Dynamic elevated intro paragraph */}
+      <p
+        className="text-[15px] sm:text-[16px] text-muted-foreground/90 leading-[1.8] mb-10 font-normal w-full"
+        dangerouslySetInnerHTML={{ __html: content.introText }}
       />
 
-      {/* 1. Pro Tip & Did You Know Cards (Responsive Grid) */}
-      {(content.didYouKnow || content.proTip) && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
-          {content.didYouKnow && (
-            <div className="relative overflow-hidden rounded-xl border border-border/60 bg-muted/20 p-5 shadow-sm transition-all duration-300 hover:border-primary/30">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <HelpCircle className="h-4 w-4" />
-                </div>
-                <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
-                  Did You Know?
-                </span>
-              </div>
-              <p 
-                className="text-[13px] text-muted-foreground leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: content.didYouKnow }}
-              />
-            </div>
-          )}
-
-          {content.proTip && (
-            <div className="relative overflow-hidden rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-5 shadow-sm transition-all duration-300 hover:border-emerald-500/35 border-l-4 border-l-emerald-500">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500">
-                  <Lightbulb className="h-4 w-4" />
-                </div>
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-500/90">
-                  Pro Strategy
-                </span>
-              </div>
-              <p 
-                className="text-[13px] text-muted-foreground leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: content.proTip }}
-              />
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Main body content */}
-      <p className={pClass} dangerouslySetInnerHTML={{ __html: content.paragraph2 }} />
-      <p className={pClass} dangerouslySetInnerHTML={{ __html: content.paragraph3 }} />
-
-      {/* H2 Heading with left accent indicator */}
-      <h3 className={h2Class}>
-        <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-primary rounded-full"></span>
-        {content.h2Heading}
-      </h3>
-      <p className={pClass} dangerouslySetInnerHTML={{ __html: content.h2Body }} />
-
-      {/* 2. Real-World Scenario callout card */}
-      {content.scenarioTitle && (
-        <div className="relative my-8 overflow-hidden rounded-2xl border border-dashed border-border/80 bg-muted/10 p-5 sm:p-6">
-          <div className="flex flex-col-reverse min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between gap-3 mb-4">
-            <h4 className="text-base font-semibold text-foreground flex items-center gap-1.5">
-              <CheckCircle2 className="h-4.5 w-4.5 text-primary shrink-0" />
-              {content.scenarioTitle}
-            </h4>
-            <div className="self-start min-[400px]:self-auto rounded-full bg-primary/10 border border-primary/20 px-2.5 py-0.5 text-[9px] font-bold text-primary uppercase tracking-wider">
-              Case Study
-            </div>
-          </div>
-          
-          <p className="text-[13.5px] text-muted-foreground leading-relaxed mb-4">
-            {content.scenarioText}
-          </p>
-
-          {content.scenarioMath && (
-            <div className="bg-muted/40 rounded-lg border border-border/30 p-3.5 my-3.5 overflow-x-auto">
-              <pre className="font-mono text-xs text-foreground/90 leading-relaxed whitespace-pre-wrap">
-                {content.scenarioMath}
-              </pre>
-            </div>
-          )}
-
-          {content.scenarioTakeaway && (
-            <div className="text-[13px] font-medium text-foreground bg-muted/30 rounded-lg px-3 py-2 border-l-2 border-primary/60 flex items-start gap-2">
-              <span className="text-primary font-bold text-xs uppercase tracking-wide mt-0.5">Result:</span>
-              <span className="text-muted-foreground">{content.scenarioTakeaway}</span>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* H3 Heading with left accent indicator */}
-      <h4 className={h3Class}>
-        <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-primary/80 rounded-full"></span>
-        {content.h3Heading}
-      </h4>
-      <p className={pClass} dangerouslySetInnerHTML={{ __html: content.h3Body }} />
-
-      {/* 3. Common Mistakes to Avoid list card */}
-      {content.commonMistakes && content.commonMistakes.length > 0 && (
-        <div className="my-8 rounded-xl border border-destructive/15 bg-destructive/5 p-5">
-          <h4 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3.5">
-            <AlertCircle className="h-4 w-4 text-destructive" />
-            {content.commonMistakesTitle || "Pitfalls & Mistakes to Avoid"}
+      {/* 4. Table of Contents / Scannability index */}
+      {content.sections.length > 0 && (
+        <div className="rounded-xl border border-border/60 bg-muted/10 p-4 sm:p-5 mt-6 mb-16 w-full select-none">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80 mb-3 flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            Quick Navigation Index
           </h4>
-          <ul className="space-y-2.5">
-            {content.commonMistakes.map((mistake, i) => (
-              <li key={i} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
-                <span className="inline-flex h-1.5 w-1.5 shrink-0 rounded-full bg-destructive/60 mt-2"></span>
-                <span>{mistake}</span>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+            {content.sections.map((s, idx) => (
+              <li key={idx}>
+                <a
+                  href={`#section-${idx}`}
+                  className="text-primary hover:underline flex items-center gap-1.5 transition-colors"
+                >
+                  <ArrowRight size={12} className="shrink-0 text-primary/70" />
+                  <span className="truncate">{s.title}</span>
+                </a>
               </li>
             ))}
+            {content.faqs && content.faqs.length > 0 && (
+              <li>
+                <a
+                  href="#faq-section"
+                  className="text-primary hover:underline flex items-center gap-1.5 transition-colors"
+                >
+                  <ArrowRight size={12} className="shrink-0 text-primary/70" />
+                  <span>Frequently Asked Questions</span>
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       )}
 
-      <p className={pClass} dangerouslySetInnerHTML={{ __html: content.paragraph4 }} />
-      <p 
-        className="text-[14.5px] sm:text-base text-muted-foreground leading-[1.8] mb-8 font-normal"
-        dangerouslySetInnerHTML={{ __html: content.closingParagraph }}
-      />
+      {/* 5. Dynamically iterate content sections */}
+      <div className="space-y-16 sm:space-y-24 mt-16 sm:mt-20">
+        {content.sections.map((s, idx) => (
+          <section key={idx} className="scroll-mt-20">
+            {/* Section H3 Title */}
+            <h3
+              id={`section-${idx}`}
+              className="relative text-xl sm:text-2xl font-bold text-foreground mb-6 pl-4.5 flex items-center"
+            >
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-primary rounded-full" />
+              {s.title}
+            </h3>
 
+            {/* Paragraph elements */}
+            <div className="space-y-6 w-full">
+              {s.paragraphs.map((p, pIdx) => (
+                <p
+                  key={pIdx}
+                  className="text-[15px] sm:text-[16px] text-muted-foreground/90 leading-[1.8] font-normal"
+                  dangerouslySetInnerHTML={{ __html: p }}
+                />
+              ))}
+            </div>
 
+            {/* Optional Callout Block */}
+            {s.callout && (
+              <div
+                className={`relative overflow-hidden rounded-xl border p-5 my-10 shadow-sm border-l-4 transition-all duration-300 w-full ${
+                  s.callout.type === "commonMistake"
+                    ? "border-destructive/20 border-l-destructive bg-destructive/5"
+                    : s.callout.type === "proTip"
+                      ? "border-emerald-500/20 border-l-emerald-500 bg-emerald-500/5"
+                      : "border-primary/20 border-l-primary bg-muted/15"
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-2.5">
+                  <div
+                    className={`flex h-7 w-7 items-center justify-center rounded-lg ${
+                      s.callout.type === "commonMistake"
+                        ? "bg-destructive/10 text-destructive"
+                        : s.callout.type === "proTip"
+                          ? "bg-emerald-500/10 text-emerald-500"
+                          : "bg-primary/10 text-primary"
+                    }`}
+                  >
+                    {s.callout.type === "commonMistake" ? (
+                      <AlertCircle size={15} />
+                    ) : s.callout.type === "proTip" ? (
+                      <Lightbulb size={15} />
+                    ) : s.callout.type === "didYouKnow" ? (
+                      <HelpCircle size={15} />
+                    ) : s.callout.type === "quickFact" ? (
+                      <BookOpen size={15} />
+                    ) : (
+                      <Sparkles size={15} />
+                    )}
+                  </div>
+                  <span
+                    className={`text-[11px] font-bold uppercase tracking-wider select-none ${
+                      s.callout.type === "commonMistake"
+                        ? "text-destructive"
+                        : s.callout.type === "proTip"
+                          ? "text-emerald-500"
+                          : "text-muted-foreground/80"
+                    }`}
+                  >
+                    {s.callout.title || s.callout.type.replace(/([A-Z])/g, " $1").trim()}
+                  </span>
+                </div>
+                <p
+                  className="text-[13.5px] text-muted-foreground leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: s.callout.text }}
+                />
+              </div>
+            )}
+
+            {/* Optional Tabular Block */}
+            {s.table && (
+              <div className="my-10 border border-border/80 rounded-xl overflow-hidden shadow-soft w-full">
+                <div className="overflow-x-auto scrollbar-none">
+                  <table className="w-full border-collapse text-sm text-left">
+                    <thead className="bg-muted/40 border-b border-border/80">
+                      <tr>
+                        {s.table.headers.map((h, hIdx) => (
+                          <th
+                            key={hIdx}
+                            className="px-4.5 py-3 font-semibold text-foreground"
+                          >
+                            {h}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-border/60">
+                      {s.table.rows.map((row, rIdx) => (
+                        <tr
+                          key={rIdx}
+                          className="hover:bg-muted/20 transition-colors odd:bg-card/30 even:bg-muted/10"
+                        >
+                          {row.map((cell, cIdx) => (
+                            <td
+                              key={cIdx}
+                              className="px-4.5 py-3 text-muted-foreground/90 leading-relaxed"
+                              dangerouslySetInnerHTML={{ __html: cell }}
+                            />
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* Optional Formula Block */}
+            {s.formulaBox && (
+              <div className="my-10 rounded-xl border border-primary/15 bg-primary/5 p-5 w-full">
+                {s.formulaBox.title && (
+                  <h4 className="text-[11px] font-bold uppercase tracking-wider text-primary mb-3 select-none">
+                    {s.formulaBox.title}
+                  </h4>
+                )}
+                <div className="bg-background border border-border/60 rounded-lg p-4.5 text-center font-mono text-sm sm:text-base text-primary select-all shadow-input overflow-x-auto">
+                  {s.formulaBox.formula}
+                </div>
+                {s.formulaBox.variables.length > 0 && (
+                  <dl className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs sm:text-sm border-t border-border/40 pt-3">
+                    {s.formulaBox.variables.map((v, vIdx) => (
+                      <div key={vIdx} className="flex gap-2">
+                        <dt className="font-bold text-primary shrink-0 select-none">
+                          {v.name}:
+                        </dt>
+                        <dd className="text-muted-foreground">{v.desc}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+              </div>
+            )}
+
+            {/* Optional Step-by-Step Example Box */}
+            {s.exampleBox && (
+              <div className="my-10 rounded-xl border border-border bg-card/45 p-5 w-full shadow-soft">
+                <h4 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3.5 border-b border-border/40 pb-2">
+                  <CheckCircle2 size={16} className="text-primary shrink-0" />
+                  {s.exampleBox.title}
+                </h4>
+                
+                {/* Inputs list */}
+                <div className="text-xs sm:text-sm text-muted-foreground mb-4">
+                  <div className="font-semibold text-foreground mb-1 select-none">
+                    Example Parameters:
+                  </div>
+                  <ul className="list-disc list-inside space-y-1 pl-1">
+                    {s.exampleBox.inputs.map((inp, iIdx) => (
+                      <li key={iIdx}>
+                        <strong>{inp.name}</strong>: {inp.val}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Calculation steps */}
+                <div className="text-xs sm:text-sm text-muted-foreground mb-4">
+                  <div className="font-semibold text-foreground mb-1 select-none">
+                    Sequential Steps:
+                  </div>
+                  <ol className="list-decimal list-inside space-y-1.5 pl-1 leading-relaxed">
+                    {s.exampleBox.steps.map((st, sIdx) => (
+                      <li key={sIdx} dangerouslySetInnerHTML={{ __html: st }} />
+                    ))}
+                  </ol>
+                </div>
+
+                {/* Final outcome banner */}
+                <div className="text-xs sm:text-sm font-medium text-foreground bg-muted/40 rounded-lg px-3.5 py-2.5 border-l-3 border-l-primary flex items-baseline gap-2">
+                  <span className="text-primary font-bold text-xs uppercase tracking-wide mt-0.5 select-none">
+                    Takeaway Result:
+                  </span>
+                  <span
+                    className="text-muted-foreground/90"
+                    dangerouslySetInnerHTML={{ __html: s.exampleBox.result }}
+                  />
+                </div>
+              </div>
+            )}
+          </section>
+        ))}
+      </div>
     </article>
   );
 }
-
-const pClass = "text-[14.5px] sm:text-base text-muted-foreground leading-[1.8] mb-5 font-normal";
-const h2Class = "relative text-lg sm:text-xl font-bold text-foreground mt-8 mb-4 pl-4";
-const h3Class = "relative text-base sm:text-lg font-bold text-foreground mt-7 mb-3.5 pl-4";

@@ -88,7 +88,10 @@ BMI = 72 ÷ (1.75)² ≈ 23.5 (normal weight range).`}
         { q: "What is a healthy BMI range?", a: "For most adults a BMI between 18.5 and 24.9 is considered healthy. Below 18.5 is underweight; 25–29.9 is overweight; 30+ is obese." },
         { q: "Does BMI work for athletes?", a: "BMI doesn't distinguish muscle from fat, so very muscular individuals can read as overweight even when healthy. Use it alongside body-fat measurements for a fuller picture." },
         { q: "Should I see a doctor about my BMI?", a: "BMI is a screening tool, not a diagnosis. Talk to a healthcare provider before changing your diet or activity level." },
+        { q: "Why is BMI sometimes inaccurate for muscular individuals?", a: "BMI does not distinguish between body fat and lean muscle mass. Because muscle tissue is significantly denser than adipose fat tissue, highly muscular athletes or bodybuilders can have high BMIs that classify them as 'overweight' or 'obese' despite having extremely low body fat levels." },
+        { q: "Is BMI interpreted the same way for children and teenagers?", a: "The formula is the same, but child/teen BMI is plotted on growth charts as a percentile rather than a fixed scale. This accounts for rapid developmental changes and varying growth rates across age groups." },
       ]}
+      blog={<CalculatorBlog content={blogContent.bmi} />}
     >
       <div className="calc-layout-grid">
         <div className="calc-input-column">
@@ -149,7 +152,6 @@ BMI = 72 ÷ (1.75)² ≈ 23.5 (normal weight range).`}
           <CalculatorPdfExport hasResult={hasResult && bmi > 0} pdfData={pdfData} />
         </div>
       </div>
-      <CalculatorBlog content={blogContent.bmi} />
     </CalculatorPageLayout>
   );
 }

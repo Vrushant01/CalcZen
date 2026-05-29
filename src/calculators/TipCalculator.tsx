@@ -70,7 +70,10 @@ Tip = $10.80, total = $70.80, $35.40 per person.`}
         { q: "What's a standard tip in the US?", a: "15–20% is typical for sit-down service. 18% is the most common default." },
         { q: "Should I tip on tax?", a: "It's customary to tip on the pre-tax amount, but tipping on the total is also common and appreciated." },
         { q: "How do I split a bill unevenly?", a: "Add up each person's items first, apply the tip percentage, then split the tax proportionally." },
+        { q: "Should I calculate tips before or after sales tax?", a: "Standard tipping etiquette dictates that tips should be calculated on the pre-tax subtotal of the bill, rather than the total including local sales taxes." },
+        { q: "What should I do if a service charge is already included?", a: "If a 'service charge' or 'gratuity' is already added to the bill (often for groups of 6 or more), you do not need to add an additional tip, though you may do so if the service was exceptional." },
       ]}
+      blog={<CalculatorBlog content={blogContent.tip} />}
     >
       <CalculatorCurrencyBar />
       <div className="calc-layout-grid">
@@ -115,7 +118,6 @@ Tip = $10.80, total = $70.80, $35.40 per person.`}
           <CalculatorPdfExport hasResult={hasResult && bill > 0} pdfData={pdfData} />
         </div>
       </div>
-      <CalculatorBlog content={blogContent.tip} />
     </CalculatorPageLayout>
   );
 }

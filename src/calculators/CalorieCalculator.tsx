@@ -83,7 +83,10 @@ TDEE ≈ 2,602 kcal/day to maintain weight.`}
         { q: "Why a 500-calorie deficit for weight loss?", a: "A daily 500-calorie deficit creates roughly a 0.5 kg (≈1 lb) loss per week, a sustainable rate recommended by most health authorities." },
         { q: "Are these numbers exact?", a: "They're a strong starting point. Track your weight for two to three weeks and adjust by 100–200 calories if results are too fast or too slow." },
         { q: "What activity level should I pick?", a: "Sedentary = desk job, no exercise. Moderate = workouts 3–5 days/week. Very active = physical job or daily intense training." },
+        { q: "What is metabolic adaptation?", a: "Metabolic adaptation is the body's natural defense mechanism during prolonged calorie restriction. It slightly slows your resting metabolic rate and decreases unconscious movements (NEAT) to conserve energy, which can cause weight loss plateaus." },
+        { q: "How should I divide my daily calories into macronutrients?", a: "A standard, healthy baseline distribution of macronutrients is 40% carbohydrates, 30% protein, and 30% healthy fats. However, active individuals should prioritize protein intake (e.g., 1.6 to 2.2 grams per kilogram of body weight) to preserve lean muscle tissue." },
       ]}
+      blog={<CalculatorBlog content={blogContent.calorie} />}
     >
       <div className="calc-layout-grid">
         <div className="calc-input-column">
@@ -167,7 +170,6 @@ TDEE ≈ 2,602 kcal/day to maintain weight.`}
           <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
         </div>
       </div>
-      <CalculatorBlog content={blogContent.calorie} />
     </CalculatorPageLayout>
   );
 }

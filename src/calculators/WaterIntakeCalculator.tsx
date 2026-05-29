@@ -53,7 +53,10 @@ Recommended intake ≈ 2.8 L (about 12 cups) per day.`}
         { q: "Do other drinks count?", a: "Tea, coffee and most foods contribute to hydration, but plain water is the most efficient way to meet daily needs." },
         { q: "Can I drink too much water?", a: "Very rarely — overhydration is uncommon outside of endurance events. Spread intake throughout the day." },
         { q: "Should I drink more in hot weather?", a: "Yes. Add 500–1000 ml on hot days or when sweating heavily." },
+        { q: "Does coffee or tea count toward my daily hydration target?", a: "Yes, caffeinated drinks like coffee and tea contribute to your total daily fluid intake. Although caffeine has a mild diuretic effect, studies show it does not cause dehydration in habitual drinkers." },
+        { q: "What are the early signs of mild dehydration?", a: "The earliest symptoms of mild dehydration include thirst, dry mouth, reduced urine output, dark urine color, fatigue, and persistent afternoon headaches." },
       ]}
+      blog={<CalculatorBlog content={blogContent.water} />}
     >
       <div className="calc-layout-grid">
         <div className="calc-input-column">
@@ -67,7 +70,6 @@ Recommended intake ≈ 2.8 L (about 12 cups) per day.`}
           <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
         </div>
       </div>
-      <CalculatorBlog content={blogContent.water} />
     </CalculatorPageLayout>
   );
 }

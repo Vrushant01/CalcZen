@@ -115,7 +115,11 @@ With $3,000/yr tax and $1,200/yr insurance, total monthly ≈ $2,372.`}
         { q: "How does the down payment affect my mortgage?", a: "A larger down payment reduces the loan principal, lowers your monthly payment, and may help you avoid private mortgage insurance (PMI)." },
         { q: "Is a 15-year or 30-year loan better?", a: "A 15-year loan has higher monthly payments but far less total interest. A 30-year loan has lower payments and more flexibility, but you pay more over time." },
         { q: "Are the results from this calculator final?", a: "Results are estimates for planning. Your actual payment depends on your lender, credit, taxes, insurance quotes and other fees." },
+        { q: "What is the difference between a fixed-rate and an adjustable-rate mortgage (ARM)?", a: "A fixed-rate mortgage maintains the exact same interest rate and monthly principal/interest payment for the entire life of the loan. Adjustable-rate mortgages (ARMs) have rates that fluctuate over time based on market indexes." },
+        { q: "How can I avoid paying Private Mortgage Insurance (PMI)?", a: "To avoid paying PMI, you must make a down payment of at least 20% of the home's purchase price. Lenders require PMI on down payments below 20% to protect themselves against borrower default." },
+        { q: "Does prepaying my mortgage principal really save money?", a: "Yes, substantially. By making extra payments directly toward your loan's principal balance, you reduce the base on which interest compounds, saving thousands in lifetime interest and shortening your repayment timeline." },
       ]}
+      blog={<CalculatorBlog content={blogContent.mortgage} />}
     >
       <CalculatorCurrencyBar />
       <div className="calc-layout-grid">
@@ -155,7 +159,6 @@ With $3,000/yr tax and $1,200/yr insurance, total monthly ≈ $2,372.`}
           <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
         </div>
       </div>
-      <CalculatorBlog content={blogContent.mortgage} />
     </CalculatorPageLayout>
   );
 }

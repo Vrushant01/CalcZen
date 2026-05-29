@@ -68,7 +68,10 @@ Age = 29 years, 6 months, 26 days.`}
         { q: "Does it count leap years?", a: "Yes — calculations use real calendar dates so leap years are handled automatically." },
         { q: "Can I check age on a future date?", a: "Yes. Set the 'as of' date to any date in the future to find someone's age then." },
         { q: "Why does the day count look off by one sometimes?", a: "We use the date difference. Time zones and the same calendar day can shift the count by one — switch the 'as of' date to verify." },
+        { q: "How does a leap year affect my age in days?", a: "A leap year occurs every four years, adding an extra day (February 29) to the calendar. Our age calculator automatically accounts for these leap days, ensuring your age in days is 100% accurate." },
+        { q: "What are legal age limits based on?", a: "Legal age boundaries (such as voting, driving, or retirement account eligibility) are defined by the chronological age reached in years on your exact calendar birth date according to local jurisdiction rules." },
       ]}
+      blog={<CalculatorBlog content={blogContent.age} />}
     >
       <div className="calc-layout-grid">
         <div className="calc-input-column">
@@ -116,7 +119,6 @@ Age = 29 years, 6 months, 26 days.`}
           )}
         </div>
       </div>
-      <CalculatorBlog content={blogContent.age} />
     </CalculatorPageLayout>
   );
 }

@@ -16,9 +16,10 @@ type Props = {
   example?: string;
   faqs: FAQ[];
   children: React.ReactNode;
+  blog?: React.ReactNode;
 };
 
-export function CalculatorPageLayout({ calc, intro, formula, example, faqs, children }: Props) {
+export function CalculatorPageLayout({ calc, intro, formula, example, faqs, children, blog }: Props) {
   const category = getCategory(calc.category);
 
   // Dynamic high-relevance semantic internal linking dictionary for programmatic SEO
@@ -134,8 +135,13 @@ export function CalculatorPageLayout({ calc, intro, formula, example, faqs, chil
             <CalculatorExample example={example} />
           </div>
         )}
+        {blog && (
+          <div className="w-full min-w-0">
+            {blog}
+          </div>
+        )}
 
-        <section className="surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0">
+        <section id="faq-section" className="scroll-mt-20 surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0">
           <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Frequently asked questions</h2>
           <div className="divide-y divide-border">
             {faqs.map((f) => (

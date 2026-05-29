@@ -56,7 +56,10 @@ BMR ≈ 1,679 kcal/day at rest.`}
       faqs={[
         { q: "What's the difference between BMR and TDEE?", a: "BMR is calories at rest; TDEE multiplies BMR by your activity level to estimate total daily calories burned." },
         { q: "Does BMR change?", a: "Yes — it shifts with age, weight, muscle mass and hormones. Recalculate every few months as your weight changes." },
+        { q: "How can I naturally increase my BMR?", a: "The most effective way to naturally increase your BMR is by building lean muscle mass through resistance training. Muscle tissue is metabolically active, burning about three times more calories at rest than fat tissue." },
+        { q: "Does aging really slow down my metabolism?", a: "Yes, BMR slowly decreases with age (by about 1% to 2% per decade after age 30), primarily due to the natural loss of lean muscle mass (sarcopenia). Maintaining a strength training routine can largely counteract this effect." },
       ]}
+      blog={<CalculatorBlog content={blogContent.bmr} />}
     >
       <div className="calc-layout-grid">
         <div className="calc-input-column">
@@ -87,7 +90,6 @@ BMR ≈ 1,679 kcal/day at rest.`}
           <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
         </div>
       </div>
-      <CalculatorBlog content={blogContent.bmr} />
     </CalculatorPageLayout>
   );
 }

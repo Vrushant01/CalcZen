@@ -60,7 +60,10 @@ Estimated due date: October 8, 2025.`}
         { q: "How accurate is the due date?", a: "Only about 5% of babies arrive exactly on the due date — a normal range is 37 to 42 weeks. Ultrasound dating in the first trimester is more precise." },
         { q: "What if I don't remember my LMP?", a: "An early ultrasound can date the pregnancy by measuring the baby's size. Talk to your healthcare provider." },
         { q: "Can I plan based on this date?", a: "Use it as a guideline. Your provider may revise the due date during prenatal visits." },
+        { q: "How accurate is an ultrasound compared to my LMP due date?", a: "An early dating ultrasound (performed between weeks 8 and 13) is considered the most accurate method for establishing gestational age, and may adjust your LMP due date by up to 5 to 7 days." },
+        { q: "What percentage of babies are born on their exact due date?", a: "Only about 4% to 5% of babies are born on their exact estimated due date. Most healthy babies naturally arrive anywhere in the window between 37 weeks and 42 weeks of gestation." },
       ]}
+      blog={<CalculatorBlog content={blogContent.pregnancy} />}
     >
       <div className="calc-layout-grid">
         <div className="calc-input-column">
@@ -93,7 +96,6 @@ Estimated due date: October 8, 2025.`}
           )}
         </div>
       </div>
-      <CalculatorBlog content={blogContent.pregnancy} />
     </CalculatorPageLayout>
   );
 }

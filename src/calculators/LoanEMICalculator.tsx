@@ -77,7 +77,10 @@ Total interest paid ≈ $4,910.`}
         { q: "What is EMI?", a: "EMI stands for Equated Monthly Installment — a fixed payment that includes both principal and interest, paid every month until the loan is repaid." },
         { q: "Does prepayment reduce EMI?", a: "Prepayments typically reduce the loan tenure or principal. Many lenders let you choose; reducing tenure usually saves more interest." },
         { q: "Are EMI calculations exact?", a: "EMI is exact for the inputs given. Real loans may include processing fees, insurance, or variable rates that change the actual payment." },
+        { q: "What is the difference between flat interest rate and reducing interest rate?", a: "In a flat interest rate scheme, interest is calculated on the initial principal loan amount for the entire duration, making it much more expensive. In a reducing balance rate scheme, interest is calculated only on the outstanding principal balance each month, meaning your interest charges drop as you repay the loan." },
+        { q: "Are there pre-payment penalties on personal loans?", a: "Many lenders charge pre-payment penalties if you pay off your loan early, as it deprives them of anticipated interest earnings. Always review the loan contract to verify if prepayment penalties apply before making extra payments." },
       ]}
+      blog={<CalculatorBlog content={blogContent.loan} />}
     >
       <CalculatorCurrencyBar />
       <div className="calc-layout-grid">
@@ -124,7 +127,6 @@ Total interest paid ≈ $4,910.`}
           <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
         </div>
       </div>
-      <CalculatorBlog content={blogContent.loan} />
     </CalculatorPageLayout>
   );
 }

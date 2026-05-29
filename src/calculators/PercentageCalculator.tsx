@@ -57,7 +57,10 @@ Change from 100 to 125 = +25%.`}
         { q: "How do I calculate a discount?", a: "Use 'percent of': 25% of $80 = $20 off → final price $60." },
         { q: "What does percent change mean?", a: "It measures growth or decline relative to the starting value. A jump from 100 to 125 is a 25% increase." },
         { q: "Can I use negative numbers?", a: "Yes — negative or fractional values work in all three calculators." },
+        { q: "Why don't consecutive discounts add up directly?", a: "Consecutive discounts do not add up directly because the second discount applies to the already-reduced price, not to the original baseline price. Therefore, a 30% discount followed by a 20% discount equals 44% off, not 50%." },
+        { q: "What is the difference between percentage points and percentage change?", a: "Percentage points measure the absolute difference between two percentages (e.g., a rise from 5% to 6% is an increase of 1 percentage point). Percentage change measures the relative difference (a rise from 5% to 6% is a 20% relative increase in the value)." },
       ]}
+      blog={<CalculatorBlog content={blogContent.percentage} />}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 min-w-0">
         <Box title="What is X% of Y?" result={`${r1.toLocaleString()}`}>
@@ -82,7 +85,6 @@ Change from 100 to 125 = +25%.`}
       {hasResult && (
         <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
       )}
-      <CalculatorBlog content={blogContent.percentage} />
     </CalculatorPageLayout>
   );
 }

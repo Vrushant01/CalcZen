@@ -1,5 +1,27 @@
-import { writeFileSync } from "node:fs";
+import { writeFileSync, existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+
+// Dynamically load server/.env to pull Supabase credentials during build or manual runs
+const serverEnvPath = join(process.cwd(), "server", ".env");
+if (existsSync(serverEnvPath)) {
+  try {
+    const envContent = readFileSync(serverEnvPath, "utf8");
+    envContent.split(/\r?\n/).forEach((line) => {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith("#") && trimmed.includes("=")) {
+        const index = trimmed.indexOf("=");
+        const key = trimmed.substring(0, index).trim();
+        const value = trimmed.substring(index + 1).trim().replace(/^['"]|['"]$/g, "");
+        if (key && value && !process.env[key]) {
+          process.env[key] = value;
+        }
+      }
+    });
+    console.log("[SITEMAP BUILD] Successfully loaded environment variables from server/.env");
+  } catch (err) {
+    console.warn("[SITEMAP BUILD] Warning: Could not read server/.env file:", err.message);
+  }
+}
 
 const siteUrl = (process.env.SITE_URL || "https://www.calczen.in").replace(/\/$/, "");
 

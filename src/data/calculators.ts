@@ -59,6 +59,8 @@ export type CalculatorMeta = {
   icon: LucideIcon;
   popular?: boolean;
   trending?: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
 };
 
 export const calculators: CalculatorMeta[] = [
@@ -69,6 +71,8 @@ export const calculators: CalculatorMeta[] = [
     description: "Estimate your monthly mortgage payment with taxes, insurance and HOA included.",
     keywords: ["mortgage", "home loan", "monthly payment"],
     icon: Home, popular: true, trending: true,
+    metaTitle: "Mortgage Calculator - Free Home Loan Calculator | CalcZen",
+    metaDescription: "Calculate mortgage payments, interest costs, and affordability instantly using CalcZen's free Mortgage Calculator.",
   },
   {
     slug: "compound-interest-calculator",
@@ -77,6 +81,8 @@ export const calculators: CalculatorMeta[] = [
     description: "See how your money grows with the power of compounding over time.",
     keywords: ["compound interest", "investment", "savings"],
     icon: TrendingUp, popular: true,
+    metaTitle: "Compound Interest Calculator - Grow Your Savings | CalcZen",
+    metaDescription: "Calculate how your money grows over time with compounding interest. See detailed annual schedules and charts.",
   },
   {
     slug: "loan-emi-calculator",
@@ -85,6 +91,8 @@ export const calculators: CalculatorMeta[] = [
     description: "Calculate your monthly EMI for any loan amount, rate and tenure.",
     keywords: ["emi", "loan", "payment"],
     icon: Coins, popular: true,
+    metaTitle: "Loan EMI Calculator - Free Monthly Payment Estimator | CalcZen",
+    metaDescription: "Calculate your monthly EMI, interest payable, and total loan payment for personal, car, or home loans.",
   },
   {
     slug: "bmi-calculator",
@@ -93,6 +101,8 @@ export const calculators: CalculatorMeta[] = [
     description: "Check your Body Mass Index and understand your healthy weight range.",
     keywords: ["bmi", "body mass index", "health"],
     icon: Scale, popular: true, trending: true,
+    metaTitle: "BMI Calculator - Free Body Mass Index Calculator | CalcZen",
+    metaDescription: "Check your Body Mass Index (BMI) instantly. Find your healthy weight range based on height and age.",
   },
   {
     slug: "calorie-calculator",
@@ -101,6 +111,8 @@ export const calculators: CalculatorMeta[] = [
     description: "Estimate your daily calorie needs based on your goals and activity.",
     keywords: ["calories", "tdee", "diet"],
     icon: Flame, popular: true,
+    metaTitle: "Calorie Calculator - Free Daily Calorie Needs Estimator | CalcZen",
+    metaDescription: "Estimate your daily calorie needs for weight loss, maintenance, or gain based on TDEE and activity level.",
   },
   {
     slug: "water-intake-calculator",
@@ -109,6 +121,8 @@ export const calculators: CalculatorMeta[] = [
     description: "Find out how much water you should drink each day.",
     keywords: ["water", "hydration", "health"],
     icon: Droplet,
+    metaTitle: "Water Intake Calculator - Daily Hydration Estimator | CalcZen",
+    metaDescription: "Calculate how much water you should drink daily based on your weight, activity levels, and environment.",
   },
   {
     slug: "pregnancy-due-date-calculator",
@@ -117,6 +131,8 @@ export const calculators: CalculatorMeta[] = [
     description: "Estimate your baby's due date from your last menstrual period.",
     keywords: ["pregnancy", "due date", "baby"],
     icon: Baby,
+    metaTitle: "Pregnancy Due Date Calculator - Track Due Date | CalcZen",
+    metaDescription: "Calculate your baby's estimated due date, gestational age, and progress timeline instantly.",
   },
   {
     slug: "percentage-calculator",
@@ -125,6 +141,8 @@ export const calculators: CalculatorMeta[] = [
     description: "Quickly calculate percentages, increases and decreases.",
     keywords: ["percentage", "percent"],
     icon: Percent, popular: true, trending: true,
+    metaTitle: "Percentage Calculator - Free Percent Math Tool | CalcZen",
+    metaDescription: "Quickly calculate percentage increases, decreases, differences, and fractional shifts instantly.",
   },
   {
     slug: "age-calculator",
@@ -133,6 +151,8 @@ export const calculators: CalculatorMeta[] = [
     description: "Find your exact age in years, months, days, and total minutes.",
     keywords: ["age", "birthday"],
     icon: Cake, popular: true,
+    metaTitle: "Age Calculator - Exact Age in Years, Months & Days | CalcZen",
+    metaDescription: "Calculate your exact age in years, months, days, minutes, and seconds from your birthdate.",
   },
   {
     slug: "tip-calculator",
@@ -141,6 +161,8 @@ export const calculators: CalculatorMeta[] = [
     description: "Calculate tips and split the bill fairly among friends.",
     keywords: ["tip", "bill", "restaurant"],
     icon: Receipt, popular: true,
+    metaTitle: "Tip Calculator - Split Restaurant Bills & Tips | CalcZen",
+    metaDescription: "Calculate the tip percentage and split restaurant bills evenly among friends in seconds.",
   },
   {
     slug: "bmr-calculator",
@@ -149,6 +171,8 @@ export const calculators: CalculatorMeta[] = [
     description: "Calculate your Basal Metabolic Rate — calories burned at rest.",
     keywords: ["bmr", "metabolism"],
     icon: Activity,
+    metaTitle: "BMR Calculator - Basal Metabolic Rate Estimator | CalcZen",
+    metaDescription: "Calculate your Basal Metabolic Rate (BMR). Understand calories burned at rest based on height, weight, and age.",
   },
 ];
 

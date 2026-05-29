@@ -13,8 +13,9 @@ export const Route = createFileRoute("/calculator/$slug")({
   head: ({ loaderData }) => {
     const calc = loaderData?.calc;
     if (!calc) return {};
-    const title = `${calc.name} — Free Online Tool | CalcZen`;
-    const desc = calc.description;
+    const title = calc.metaTitle || `${calc.name} — Free Online Calculator | CalcZen`;
+    const desc = calc.metaDescription || calc.description;
+    const url = `https://www.calczen.in/calculator/${calc.slug}`;
     return {
       meta: [
         { title },
@@ -22,13 +23,13 @@ export const Route = createFileRoute("/calculator/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "website" },
-        { property: "og:url", content: `/calculator/${calc.slug}` },
-        { name: "twitter:card", content: "summary" },
+        { property: "og:url", content: url },
+        { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: desc },
         { name: "keywords", content: calc.keywords.join(", ") },
       ],
-      links: [{ rel: "canonical", href: `/calculator/${calc.slug}` }],
+      links: [{ rel: "canonical", href: url }],
     };
   },
   component: CalcPage,

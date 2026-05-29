@@ -20,9 +20,37 @@ type Props = {
 
 export function CalculatorPageLayout({ calc, intro, formula, example, faqs, children }: Props) {
   const category = getCategory(calc.category);
-  const related = calculators
-    .filter((c) => c.category === calc.category && c.slug !== calc.slug)
-    .slice(0, 4);
+
+  // Dynamic high-relevance semantic internal linking dictionary for programmatic SEO
+  const SEMANTIC_RELATION_MAP: Record<string, string[]> = {
+    "mortgage-calculator": ["loan-emi-calculator", "compound-interest-calculator", "percentage-calculator"],
+    "compound-interest-calculator": ["loan-emi-calculator", "mortgage-calculator", "percentage-calculator"],
+    "loan-emi-calculator": ["mortgage-calculator", "compound-interest-calculator", "tip-calculator"],
+    "bmi-calculator": ["calorie-calculator", "bmr-calculator", "water-intake-calculator"],
+    "calorie-calculator": ["bmr-calculator", "bmi-calculator", "water-intake-calculator"],
+    "water-intake-calculator": ["calorie-calculator", "bmi-calculator", "bmr-calculator"],
+    "bmr-calculator": ["calorie-calculator", "bmi-calculator", "water-intake-calculator"],
+    "pregnancy-due-date-calculator": ["water-intake-calculator", "bmi-calculator", "calorie-calculator"],
+    "percentage-calculator": ["tip-calculator", "age-calculator", "compound-interest-calculator"],
+    "age-calculator": ["percentage-calculator", "tip-calculator", "pregnancy-due-date-calculator"],
+    "tip-calculator": ["percentage-calculator", "loan-emi-calculator", "age-calculator"],
+  };
+
+  const getRelatedCalculators = (): typeof calculators => {
+    const semanticSlugs = SEMANTIC_RELATION_MAP[calc.slug] || [];
+    const semanticItems = semanticSlugs
+      .map((slug) => calculators.find((c) => c.slug === slug))
+      .filter((c): c is CalculatorMeta => !!c);
+
+    // Backfill with category matching items to ensure exactly 3-5 high-relevance links
+    const categoryMatches = calculators.filter(
+      (c) => c.category === calc.category && c.slug !== calc.slug && !semanticSlugs.includes(c.slug)
+    );
+
+    return [...semanticItems, ...categoryMatches].slice(0, 5);
+  };
+
+  const related = getRelatedCalculators();
 
   const share = async () => {
     const url = typeof window !== "undefined" ? window.location.href : "";
@@ -141,12 +169,61 @@ export function CalculatorPageLayout({ calc, intro, formula, example, faqs, chil
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: faqs.map((f) => ({
-              "@type": "Question",
-              name: f.q,
-              acceptedAnswer: { "@type": "Answer", text: f.a },
-            })),
+            "@graph": [
+              {
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "@id": `https://www.calczen.in/calculator/${calc.slug}#webapp`,
+                "name": calc.metaTitle || calc.name,
+                "description": calc.metaDescription || calc.description,
+                "url": `https://www.calczen.in/calculator/${calc.slug}`,
+                "applicationCategory": calc.category === "finance" 
+                  ? "BusinessApplication" 
+                  : calc.category === "health" 
+                    ? "HealthApplication" 
+                    : "EducationalApplication",
+                "operatingSystem": "All",
+                "browserRequirements": "Requires JavaScript. Requires HTML5."
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "@id": `https://www.calczen.in/calculator/${calc.slug}#faq`,
+                "mainEntity": faqs.map((f) => ({
+                  "@type": "Question",
+                  "name": f.q,
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": f.a
+                  }
+                }))
+              },
+              ...(category ? [{
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "@id": `https://www.calczen.in/calculator/${calc.slug}#breadcrumb`,
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.calczen.in"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": category.name,
+                    "item": `https://www.calczen.in/category/${category.slug}`
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": calc.name,
+                    "item": `https://www.calczen.in/calculator/${calc.slug}`
+                  }
+                ]
+              }] : [])
+            ]
           }),
         }}
       />

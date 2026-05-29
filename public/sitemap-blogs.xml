@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.calczen.in/blog</loc></url>
-  <url><loc>https://www.calczen.in/blog/us-mortgage-rates-drop-in-2026-what-home-buyers-should-do-now</loc></url>
+  <url><loc>http://localhost:8080/blog</loc></url>
+  <url><loc>http://localhost:8080/blog/us-mortgage-rates-drop-in-2026-what-home-buyers-should-do-now</loc></url>
 </urlset>

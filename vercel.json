@@ -50,7 +50,7 @@
   "functions": {
     "api/index.ts": {
       "maxDuration": 60,
-      "includeFiles": ["admin/dist/**", "dist/index.html"]
+      "includeFiles": "{admin/dist/**,dist/index.html}"
     }
   }
 }

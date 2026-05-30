@@ -56,10 +56,9 @@ class DashboardErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundary
           <div className="inline-flex p-3 rounded-full bg-rose-500/10 text-rose-400 mb-4 animate-bounce">
             <AlertTriangle className="h-8 w-8" />
           </div>
-          <h3 className="text-lg font-bold text-white mb-2">Infrastructure Dashboard Crashed</h3>
+          <h3 className="text-lg font-bold text-white mb-2">Unable to load monitoring data</h3>
           <p className="text-sm text-[var(--color-muted)] max-w-lg mx-auto mb-6">
-            A rendering runtime error occurred within the dashboard component. 
-            Telemetry data might be malformed or an unexpected variable was undefined.
+            Please refresh or try again later.
           </p>
           <div className="bg-black/40 border border-white/5 rounded-lg p-4 max-w-xl mx-auto text-left mb-6 font-mono text-xs text-rose-300 overflow-auto max-h-40">
             {this.state.error?.toString()}
@@ -99,18 +98,44 @@ function InfrastructurePageContent() {
     else setIsRefreshing(true);
     
     try {
+      console.log("[DEBUG] Fetching raw infrastructure stats...");
       const res = await api.infrastructureStats();
-      if (res.success && res.data) {
-        setStats(res.data);
-        if (isAuto) {
-          toast.success("Infrastructure stats auto-refreshed", { duration: 1500 });
+      console.log("[DEBUG] Raw API Response:", res);
+
+      if (!res.success) {
+        throw new Error(res.message ?? "Authentication or system telemetry request failed");
+      }
+
+      const data = res.data;
+      if (!data || typeof data !== "object") {
+        console.error("[DEBUG] Telemetry validation failed: res.data is null, undefined, or not an object.", data);
+        throw new Error("Empty or malformed telemetry payload received");
+      }
+
+      // Track missing fields to aid in debugging
+      const expectedSections = ["render", "supabase", "resend", "cloudflare", "calczen", "alerts"];
+      const missingFields: string[] = [];
+      expectedSections.forEach(section => {
+        if (!data[section] || typeof data[section] !== "object") {
+          missingFields.push(section);
         }
+      });
+
+      if (missingFields.length > 0) {
+        console.warn("[DEBUG] Missing or incomplete telemetry sections:", missingFields);
       } else {
-        throw new Error(res.message ?? "Invalid metrics payload received");
+        console.log("[DEBUG] Telemetry payload validation succeeded. Parsed dashboard data:", data);
+      }
+
+      setStats(data);
+
+      if (isAuto) {
+        toast.success("Infrastructure stats auto-refreshed", { duration: 1500 });
       }
     } catch (err) {
-      console.error("Infrastructure fetch error:", err);
+      console.error("[DEBUG] Infrastructure fetch exception:", err);
       toast.error(err instanceof Error ? err.message : "Failed to load infrastructure metrics");
+      setStats(null);
     } finally {
       setLoading(false);
       setIsRefreshing(false);
@@ -139,9 +164,54 @@ function InfrastructurePageContent() {
 
   if (loading) {
     return (
-      <div className="min-h-[400px] flex flex-col items-center justify-center text-[var(--color-muted)]">
-        <div className="h-9 w-9 border-2 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin mb-3" />
-        <span className="text-sm font-medium animate-pulse">Fetching real-time infrastructure stats...</span>
+      <div className="animate-pulse space-y-6">
+        {/* Skeleton Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 border-b border-[var(--color-card-border)] pb-4">
+          <div className="space-y-2">
+            <div className="h-7 w-48 bg-slate-800 rounded" />
+            <div className="h-4 w-96 bg-slate-800/80 rounded" />
+          </div>
+          <div className="h-9 w-24 bg-slate-800 rounded shrink-0 self-end sm:self-center" />
+        </div>
+
+        {/* Skeleton Tabs */}
+        <div className="flex gap-2 border-b border-[var(--color-card-border)] pb-px mb-6 overflow-x-auto">
+          {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+            <div key={i} className="h-9 w-20 bg-slate-800/80 rounded mb-2 shrink-0" />
+          ))}
+        </div>
+
+        {/* Skeleton Alert Bar */}
+        <div className="h-14 w-full bg-slate-800/40 border border-slate-800/60 rounded-xl" />
+
+        {/* Skeleton Grid Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-20 bg-[var(--color-card)] border border-[var(--color-card-border)] rounded-xl p-4 flex items-center gap-3">
+              <div className="p-2 h-9 w-9 bg-slate-800 rounded shrink-0" />
+              <div className="space-y-2 w-full">
+                <div className="h-3 w-16 bg-slate-800/80 rounded" />
+                <div className="h-5 w-24 bg-slate-800 rounded" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Skeleton Large Card */}
+        <div className="h-80 bg-[var(--color-card)] border border-[var(--color-card-border)] rounded-xl p-5 space-y-6">
+          <div className="h-6 w-48 bg-slate-800 rounded" />
+          <div className="space-y-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="space-y-2">
+                <div className="flex justify-between">
+                  <div className="h-4 w-32 bg-slate-800/80 rounded" />
+                  <div className="h-4 w-12 bg-slate-800/80 rounded" />
+                </div>
+                <div className="h-2.5 w-full bg-slate-800 rounded-full" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }

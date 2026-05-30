@@ -33,24 +33,33 @@ async function request<T>(
     throw new Error(getNetworkErrorMessage(err));
   }
 
-  // Handle global session expiration (401 Unauthorized)
-  if (res.status === 401) {
+  const json = (await res.json().catch(() => ({
+    success: false,
+    message: "Invalid response from server",
+  }))) as { success?: boolean; message?: string; data?: T };
+
+  // Check BOTH HTTP status and payload response.success for authentication failure
+  const isUnauthenticated = 
+    res.status === 401 || 
+    (json.success === false && (
+      json.message?.toLowerCase().includes("auth") ||
+      json.message?.toLowerCase().includes("token") ||
+      json.message?.toLowerCase().includes("unauthorized")
+    ));
+
+  if (isUnauthenticated) {
     clearToken();
     if (typeof window !== "undefined") {
       const isLoginPath = window.location.pathname.endsWith("/login");
       if (!isLoginPath) {
         // Enforce hard redirect to login page
         window.location.href = "/login";
+        throw new Error(json.message ?? "Authentication required");
       }
     }
   }
 
-  const json = (await res.json().catch(() => ({
-    success: false,
-    message: "Invalid response from server",
-  }))) as { success?: boolean; message?: string; data?: T };
-
-  if (!res.ok) {
+  if (!res.ok || json.success === false) {
     throw new Error(json.message ?? `Request failed (${res.status})`);
   }
 

@@ -316,7 +316,7 @@ export async function createApp(): Promise<Express> {
   });
 
   // Serve public frontend index.html with dynamic metadata for crawlers/SEO
-  app.get("*", async (req, res, next) => {
+  app.get("*path", async (req, res, next) => {
     // Skip API, Admin, or files with extensions
     if (req.path.startsWith("/api") || req.path.startsWith("/admin") || req.path.match(/\.[a-zA-Z0-9]+$/)) {
       return next();

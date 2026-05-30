@@ -20,6 +20,7 @@ import newsletterRoutes from "./routes/newsletterRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import subscribeRoutes from "./routes/subscribeRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
+import { findPublishedBlogBySlug } from "./services/blogService.js";
 
 import { formatDbError } from "./utils/errors.js";
 
@@ -29,6 +30,19 @@ function resolveAdminDist(): string {
   const candidates = [
     path.resolve(process.cwd(), "admin/dist"),
     path.resolve(__dirname, "../../admin/dist"),
+  ];
+  for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, "index.html"))) {
+      return dir;
+    }
+  }
+  return candidates[0];
+}
+
+function resolvePublicDist(): string {
+  const candidates = [
+    path.resolve(process.cwd(), "dist"),
+    path.resolve(__dirname, "../../dist"),
   ];
   for (const dir of candidates) {
     if (fs.existsSync(path.join(dir, "index.html"))) {
@@ -48,6 +62,144 @@ async function ensureDb(): Promise<void> {
     }
     dbVerified = true;
   }
+}
+
+const calculatorMeta: Record<string, { title: string; description: string }> = {
+  "mortgage-calculator": {
+    title: "Mortgage Calculator - Estimate Monthly Home Loan Payments | CalcZen",
+    description: "Calculate monthly mortgage payments, interest rates, taxes, and HOA fees instantly. Estimate your home loan costs and budget with our free calculator."
+  },
+  "compound-interest-calculator": {
+    title: "Compound Interest Calculator - Calculate Savings Growth Online | CalcZen",
+    description: "Calculate compound interest growth for your savings and investments. See detailed annual compound schedules and charts to visualize your future wealth."
+  },
+  "loan-emi-calculator": {
+    title: "Loan EMI Calculator - Calculate Monthly Loan Payments Online | CalcZen",
+    description: "Calculate your monthly loan EMI payouts, interest payable, and total loan payment instantly. Plan home, car, or personal loan budgets with our tool."
+  },
+  "bmi-calculator": {
+    title: "BMI Calculator - Calculate Body Mass Index Online | CalcZen",
+    description: "Calculate your Body Mass Index (BMI) instantly. Understand your healthy weight category and track your health fitness metrics online with our tool."
+  },
+  "calorie-calculator": {
+    title: "Calorie Calculator - Calculate Daily Calorie Needs Online | CalcZen",
+    description: "Estimate daily calorie needs for weight loss, gain, or maintenance. Calculate your TDEE based on height, weight, activity, and fitness goals easily."
+  },
+  "water-intake-calculator": {
+    title: "Water Intake Calculator - Calculate Daily Hydration Needs | CalcZen",
+    description: "Calculate your daily water intake needs based on weight, exercise time, and climate. Keep hydrated and track your daily hydration goals with ease."
+  },
+  "pregnancy-due-date-calculator": {
+    title: "Pregnancy Due Date Calculator - Calculate Baby Due Date | CalcZen",
+    description: "Estimate your baby's due date, gestational age, and pregnancy progress timeline instantly. Track your pregnancy milestones online using clinical metrics."
+  },
+  "percentage-calculator": {
+    title: "Percentage Calculator - Calculate Percent Shifts and Ratios | CalcZen",
+    description: "Calculate percentage increases, decreases, differences, and fractional shifts instantly. Solve school or business percent math equations in seconds."
+  },
+  "age-calculator": {
+    title: "Age Calculator - Calculate Exact Age from Date of Birth | CalcZen",
+    description: "Calculate your exact age in years, months, days, minutes, and seconds from your birthdate. Find the time remaining until your next birthday instantly."
+  },
+  "tip-calculator": {
+    title: "Tip Calculator - Calculate Restaurant Tips & Split Bills | CalcZen",
+    description: "Calculate tip percentages and split restaurant bills evenly among friends in seconds. Manage tipping amounts and group payment transactions fairly."
+  },
+  "bmr-calculator": {
+    title: "BMR Calculator - Calculate Basal Metabolic Rate Online | CalcZen",
+    description: "Calculate your Basal Metabolic Rate (BMR) instantly. Estimate calories burned at rest based on height, weight, gender, and age for fitness planning."
+  }
+};
+
+const categoryMeta: Record<string, { title: string; description: string }> = {
+  finance: {
+    title: "Finance Calculators - Loans, investments, savings & more | CalcZen",
+    description: "Explore our free online finance calculators for mortgages, loan EMIs, compound interest growth, and daily financial planning."
+  },
+  health: {
+    title: "Health & Fitness Calculators - BMI, calories, BMR & more | CalcZen",
+    description: "Track your fitness goals with our free health calculators. Estimate BMI, daily calorie targets, BMR, water intake, and pregnancy milestones."
+  },
+  math: {
+    title: "Math & Percentage Calculators - Ratios, age & GPA | CalcZen",
+    description: "Solve math equations and daily figures easily. Free percentage calculators, age estimators, ratio solvers, and academic GPA helpers."
+  },
+  everyday: {
+    title: "Everyday Calculators - Tips, dates, fuel & lifestyle | CalcZen",
+    description: "Simple online tools for daily tasks. Split restaurant bills, calculate tips, analyze fuel costs, and organize your lifestyle with ease."
+  }
+};
+
+function getCanonicalUrl(urlPath: string): string {
+  const pathPart = urlPath.endsWith("/") && urlPath !== "/" ? urlPath.slice(0, -1) : urlPath;
+  return `https://www.calczen.in${pathPart}`;
+}
+
+async function getDynamicMetadata(urlPath: string): Promise<{ title: string; description: string; canonical: string }> {
+  const canonical = getCanonicalUrl(urlPath);
+  
+  let title = "CalcZen — Smart Online Calculators";
+  let description = "Free online calculators for finance, health, math and everyday life.";
+
+  const pathPart = urlPath.endsWith("/") && urlPath !== "/" ? urlPath.slice(0, -1) : urlPath;
+  const lowercasePath = pathPart.toLowerCase();
+
+  if (lowercasePath.startsWith("/calculator/")) {
+    const slug = lowercasePath.replace("/calculator/", "");
+    const meta = calculatorMeta[slug];
+    if (meta) {
+      title = meta.title;
+      description = meta.description;
+    } else {
+      const name = slug
+        .split("-")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+      title = `${name} - Free Online Calculator | CalcZen`;
+      description = `Use our free online ${name} for instant calculations, explanations, formulas, and worked examples.`;
+    }
+  } else if (lowercasePath.startsWith("/category/")) {
+    const slug = lowercasePath.replace("/category/", "");
+    const meta = categoryMeta[slug];
+    if (meta) {
+      title = meta.title;
+      description = meta.description;
+    }
+  } else if (lowercasePath.startsWith("/blog/")) {
+    const slug = lowercasePath.replace("/blog/", "");
+    try {
+      const blog = await findPublishedBlogBySlug(slug);
+      if (blog) {
+        title = blog.metaTitle || `${blog.title} | CalcZen Blog`;
+        description = blog.metaDescription || blog.excerpt || (blog.content.replace(/<[^>]*>/g, "").substring(0, 155) + "...");
+      }
+    } catch (err) {
+      console.error(`Failed to fetch blog metadata for slug ${slug}:`, err);
+    }
+  } else if (lowercasePath === "/about") {
+    title = "About Us - CalcZen";
+    description = "Learn more about CalcZen, our mission to build beautiful online tools, and our standards for mathematical accuracy.";
+  } else if (lowercasePath === "/contact") {
+    title = "Contact Us - CalcZen";
+    description = "Have feedback or a request for a new calculator? Reach out to the CalcZen team directly.";
+  } else if (lowercasePath === "/privacy") {
+    title = "Privacy Policy - CalcZen";
+    description = "Read the CalcZen privacy policy to understand how we secure your data and maintain privacy.";
+  } else if (lowercasePath === "/terms") {
+    title = "Terms of Service - CalcZen";
+    description = "View the terms and conditions for using CalcZen calculators and resources.";
+  } else if (lowercasePath === "/disclaimer") {
+    title = "Disclaimer - CalcZen";
+    description = "Read our site disclaimer regarding the informational nature of our calculation results.";
+  } else if (lowercasePath === "/calculators") {
+    title = "All Calculators - CalcZen";
+    description = "Browse our complete directory of free online calculators for finance, health, math, and everyday tasks.";
+  } else if (lowercasePath === "/blog") {
+    title = "CalcZen Blog - Financial Tips, Health Insights & Math Guides";
+    description = "Expert guides, calculator tutorials, and practical articles on managing personal finance, tracking fitness goals, and solving math problems.";
+  }
+
+  return { title, description, canonical };
 }
 
 /**
@@ -159,6 +311,90 @@ export async function createApp(): Promise<Express> {
           success: false,
           message: "Admin panel not built. Run: npm run build:admin",
         });
+      }
+    });
+  });
+
+  // Serve public frontend index.html with dynamic metadata for crawlers/SEO
+  app.get("*", async (req, res, next) => {
+    // Skip API, Admin, or files with extensions
+    if (req.path.startsWith("/api") || req.path.startsWith("/admin") || req.path.match(/\.[a-zA-Z0-9]+$/)) {
+      return next();
+    }
+
+    const publicDist = resolvePublicDist();
+    const indexPath = path.join(publicDist, "index.html");
+
+    if (!fs.existsSync(indexPath)) {
+      console.warn("Public index.html not found at:", indexPath);
+      return next(); // Fallback to 404
+    }
+
+    fs.readFile(indexPath, "utf8", async (err, html) => {
+      if (err) {
+        console.error("Failed to read public index.html:", err);
+        return res.status(500).send("Internal server error");
+      }
+
+      try {
+        const metadata = await getDynamicMetadata(req.path);
+        let modifiedHtml = html;
+
+        // 1. Overwrite <title> tag
+        if (metadata.title) {
+          modifiedHtml = modifiedHtml.replace(
+            /<title>[^<]*<\/title>/i,
+            `<title>${metadata.title}</title>`
+          );
+        }
+
+        // 2. Overwrite <meta name="description" ... />
+        if (metadata.description) {
+          if (modifiedHtml.match(/<meta[^>]*name="description"[^>]*>/i)) {
+            modifiedHtml = modifiedHtml.replace(
+              /<meta[^>]*name="description"[^>]*content="[^"]*"[^>]*>/i,
+              `<meta name="description" content="${metadata.description}" />`
+            );
+          } else {
+            modifiedHtml = modifiedHtml.replace(
+              "</head>",
+              `<meta name="description" content="${metadata.description}" />\n</head>`
+            );
+          }
+        }
+
+        // 3. Overwrite <link rel="canonical" ... />
+        if (metadata.canonical) {
+          if (modifiedHtml.match(/<link[^>]*rel="canonical"[^>]*>/i)) {
+            modifiedHtml = modifiedHtml.replace(
+              /<link[^>]*rel="canonical"[^>]*href="[^"]*"[^>]*>/i,
+              `<link rel="canonical" href="${metadata.canonical}" />`
+            );
+          } else {
+            modifiedHtml = modifiedHtml.replace(
+              "</head>",
+              `<link rel="canonical" href="${metadata.canonical}" />\n</head>`
+            );
+          }
+        }
+
+        // 4. Inject Dynamic Open Graph and Twitter tags (or overwrite if existing)
+        const ogMetaTags = `
+    <meta property="og:title" content="${metadata.title}" />
+    <meta property="og:description" content="${metadata.description}" />
+    <meta property="og:url" content="${metadata.canonical}" />
+    <meta name="twitter:title" content="${metadata.title}" />
+    <meta name="twitter:description" content="${metadata.description}" />
+        `;
+        modifiedHtml = modifiedHtml.replace("</head>", `${ogMetaTags}\n</head>`);
+
+        res.setHeader("Content-Type", "text/html");
+        res.send(modifiedHtml);
+      } catch (seoErr) {
+        console.error("SEO Metadata Injector Error:", seoErr);
+        // Fallback to sending raw un-modified HTML
+        res.setHeader("Content-Type", "text/html");
+        res.send(html);
       }
     });
   });

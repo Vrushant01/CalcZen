@@ -45,12 +45,12 @@
     { "source": "/api/(.*)", "destination": "/api" },
     { "source": "/admin", "destination": "/api" },
     { "source": "/admin/(.*)", "destination": "/api" },
-    { "source": "/((?!api/|admin/).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|admin/).*)", "destination": "/api" }
   ],
   "functions": {
     "api/index.ts": {
       "maxDuration": 60,
-      "includeFiles": "admin/dist/**"
+      "includeFiles": ["admin/dist/**", "dist/index.html"]
     }
   }
 }

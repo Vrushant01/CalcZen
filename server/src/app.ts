@@ -335,64 +335,43 @@ export async function createApp(): Promise<Express> {
         console.error("Failed to read public index.html:", err);
         return res.status(500).send("Internal server error");
       }
-
       try {
         const metadata = await getDynamicMetadata(req.path);
+        
+        // 1. Remove all old SEO tags to prevent duplicates and handle minification attribute re-ordering
         let modifiedHtml = html;
+        modifiedHtml = modifiedHtml.replace(/<title>[^<]*<\/title>/gi, "");
+        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?description["']?[^>]*>/gi, "");
+        modifiedHtml = modifiedHtml.replace(/<link\s+[^>]*rel=["']?canonical["']?[^>]*>/gi, "");
+        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*property=["']?og:(title|description|url)["']?[^>]*>/gi, "");
+        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?twitter:(title|description)["']?[^>]*>/gi, "");
 
-        // 1. Overwrite <title> tag
-        if (metadata.title) {
-          modifiedHtml = modifiedHtml.replace(
-            /<title>[^<]*<\/title>/i,
-            `<title>${metadata.title}</title>`
-          );
-        }
-
-        // 2. Overwrite <meta name="description" ... />
-        if (metadata.description) {
-          if (modifiedHtml.match(/<meta[^>]*name="description"[^>]*>/i)) {
-            modifiedHtml = modifiedHtml.replace(
-              /<meta[^>]*name="description"[^>]*content="[^"]*"[^>]*>/i,
-              `<meta name="description" content="${metadata.description}" />`
-            );
-          } else {
-            modifiedHtml = modifiedHtml.replace(
-              "</head>",
-              `<meta name="description" content="${metadata.description}" />\n</head>`
-            );
-          }
-        }
-
-        // 3. Overwrite <link rel="canonical" ... />
-        if (metadata.canonical) {
-          if (modifiedHtml.match(/<link[^>]*rel="canonical"[^>]*>/i)) {
-            modifiedHtml = modifiedHtml.replace(
-              /<link[^>]*rel="canonical"[^>]*href="[^"]*"[^>]*>/i,
-              `<link rel="canonical" href="${metadata.canonical}" />`
-            );
-          } else {
-            modifiedHtml = modifiedHtml.replace(
-              "</head>",
-              `<link rel="canonical" href="${metadata.canonical}" />\n</head>`
-            );
-          }
-        }
-
-        // 4. Inject Dynamic Open Graph and Twitter tags (or overwrite if existing)
-        const ogMetaTags = `
+        // 2. Inject fresh, verified dynamic metadata inside the head
+        const seoMetaTags = `
+    <title>${metadata.title}</title>
+    <meta name="description" content="${metadata.description}" />
+    <link rel="canonical" href="${metadata.canonical}" />
     <meta property="og:title" content="${metadata.title}" />
     <meta property="og:description" content="${metadata.description}" />
     <meta property="og:url" content="${metadata.canonical}" />
     <meta name="twitter:title" content="${metadata.title}" />
     <meta name="twitter:description" content="${metadata.description}" />
         `;
-        modifiedHtml = modifiedHtml.replace("</head>", `${ogMetaTags}\n</head>`);
+        modifiedHtml = modifiedHtml.replace("</head>", `${seoMetaTags}\n</head>`);
+
+        // 3. Prevent any browser disk-level or CDN caching of the HTML file
+        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
+        res.setHeader("Pragma", "no-cache");
+        res.setHeader("Expires", "0");
 
         res.setHeader("Content-Type", "text/html");
         res.send(modifiedHtml);
       } catch (seoErr) {
         console.error("SEO Metadata Injector Error:", seoErr);
-        // Fallback to sending raw un-modified HTML
+        // Fallback to sending raw unmodified HTML with no-cache
+        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
+        res.setHeader("Pragma", "no-cache");
+        res.setHeader("Expires", "0");
         res.setHeader("Content-Type", "text/html");
         res.send(html);
       }

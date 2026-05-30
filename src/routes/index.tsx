@@ -127,7 +127,7 @@ function Index() {
               <Link
                 to="/category/$slug"
                 params={{ slug: c.slug }}
-                className={`group block rounded-xl sm:rounded-2xl border bg-gradient-to-br p-4 sm:p-5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-glow min-h-[5.5rem] ${c.color}`}
+                className={`group block rounded-xl sm:rounded-2xl border p-4 sm:p-5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-glow min-h-[5.5rem] ${c.color}`}
               >
                 <c.icon className={`h-5 w-5 sm:h-6 sm:w-6 ${c.iconColor}`} />
                 <div className="mt-2 sm:mt-3 font-semibold text-sm sm:text-base">{c.name}</div>

@@ -21,7 +21,7 @@ export const categories: Category[] = [
     name: "Finance",
     description: "Loans, investments, savings & more",
     icon: Coins,
-    color: "from-sky-100 to-blue-50 border-sky-200/80 dark:from-sky-950/70 dark:to-blue-950/50 dark:border-sky-500/25",
+    color: "category-card-finance",
     iconColor: "text-sky-600 dark:text-sky-400",
   },
   {
@@ -29,7 +29,7 @@ export const categories: Category[] = [
     name: "Health",
     description: "BMI, calories, fitness metrics",
     icon: Heart,
-    color: "from-emerald-100 to-teal-50 border-emerald-200/80 dark:from-emerald-950/70 dark:to-teal-950/50 dark:border-emerald-500/25",
+    color: "category-card-health",
     iconColor: "text-emerald-600 dark:text-emerald-400",
   },
   {
@@ -37,7 +37,7 @@ export const categories: Category[] = [
     name: "Math",
     description: "Percentages, ratios, age & GPA",
     icon: Calculator,
-    color: "from-violet-100 to-indigo-50 border-violet-200/80 dark:from-violet-950/70 dark:to-indigo-950/50 dark:border-violet-500/25",
+    color: "category-card-math",
     iconColor: "text-violet-600 dark:text-violet-400",
   },
   {
@@ -45,7 +45,7 @@ export const categories: Category[] = [
     name: "Everyday",
     description: "Tips, dates, fuel, lifestyle",
     icon: Receipt,
-    color: "from-amber-100 to-orange-50 border-amber-200/80 dark:from-amber-950/65 dark:to-orange-950/45 dark:border-amber-500/25",
+    color: "category-card-everyday",
     iconColor: "text-amber-600 dark:text-amber-400",
   },
 ];

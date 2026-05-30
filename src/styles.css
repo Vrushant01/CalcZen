@@ -741,6 +741,27 @@
       0 4px 24px -8px color-mix(in oklch, var(--foreground) 6%, transparent);
   }
 
+  /* Category card utility classes to enforce standard opaque backgrounds in light theme */
+  .category-card-finance {
+    @apply bg-gradient-to-br from-sky-100 to-blue-50 border-sky-200/80 bg-white;
+    @apply dark:bg-transparent dark:from-sky-950/70 dark:to-blue-950/50 dark:border-sky-500/25;
+  }
+
+  .category-card-health {
+    @apply bg-gradient-to-br from-emerald-100 to-teal-50 border-emerald-200/80 bg-white;
+    @apply dark:bg-transparent dark:from-emerald-950/70 dark:to-teal-950/50 dark:border-emerald-500/25;
+  }
+
+  .category-card-math {
+    @apply bg-gradient-to-br from-violet-100 to-indigo-50 border-violet-200/80 bg-white;
+    @apply dark:bg-transparent dark:from-violet-950/70 dark:to-indigo-950/50 dark:border-violet-500/25;
+  }
+
+  .category-card-everyday {
+    @apply bg-gradient-to-br from-amber-100 to-orange-50 border-amber-200/80 bg-white;
+    @apply dark:bg-transparent dark:from-amber-950/65 dark:to-orange-950/45 dark:border-amber-500/25;
+  }
+
   /* Premium elevated card */
   .surface-card {
     background: var(--card);

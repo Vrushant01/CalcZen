@@ -74,7 +74,7 @@ class DashboardErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundary
       );
     }
 
-    return this.children;
+    return this.props.children;
   }
 }
 

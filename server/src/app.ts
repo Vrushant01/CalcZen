@@ -340,7 +340,7 @@ export async function createApp(): Promise<Express> {
         
         // 1. Remove all old SEO tags to prevent duplicates and handle minification attribute re-ordering
         let modifiedHtml = html;
-        modifiedHtml = modifiedHtml.replace(/<title>[^<]*<\/title>/gi, "");
+        modifiedHtml = modifiedHtml.replace(/<title[^>]*>[^<]*<\/title>/gi, "");
         modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?description["']?[^>]*>/gi, "");
         modifiedHtml = modifiedHtml.replace(/<link\s+[^>]*rel=["']?canonical["']?[^>]*>/gi, "");
         modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*property=["']?og:(title|description|url)["']?[^>]*>/gi, "");

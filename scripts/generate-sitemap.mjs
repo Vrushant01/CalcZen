@@ -39,6 +39,8 @@ const CALCULATOR_SLUGS = [
   "age-calculator",
   "tip-calculator",
   "bmr-calculator",
+  "regular-calculator",
+  "scientific-calculator",
 ];
 
 async function generateSitemap() {

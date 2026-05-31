@@ -135,6 +135,18 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Estimate your baby's due date, gestational age, and pregnancy progress timeline instantly. Track your pregnancy milestones online using clinical metrics.",
   },
   {
+    slug: "scientific-calculator",
+    name: "Scientific Calculator",
+    category: "math",
+    description: "Perform advanced arithmetic, trigonometric, logarithmic, exponential, and algebraic operations with absolute precision.",
+    keywords: ["scientific calculator", "online scientific calculator", "free scientific calculator", "advanced calculator", "scientific math calculator", "trigonometry", "logarithm"],
+    icon: Calculator,
+    popular: true,
+    trending: true,
+    metaTitle: "Free Online Scientific Calculator | Advanced Math Solver | CalcZen",
+    metaDescription: "Solve complex algebraic, trigonometric, logarithmic, and exponential equations with our free, high-performance online scientific calculator. Instant session history, radian/degree support, and PDF exports.",
+  },
+  {
     slug: "percentage-calculator",
     name: "Percentage Calculator",
     category: "math",
@@ -153,6 +165,17 @@ export const calculators: CalculatorMeta[] = [
     icon: Cake, popular: true,
     metaTitle: "Age Calculator - Calculate Exact Age from Date of Birth | CalcZen",
     metaDescription: "Calculate your exact age in years, months, days, minutes, and seconds from your birthdate. Find the time remaining until your next birthday instantly.",
+  },
+  {
+    slug: "regular-calculator",
+    name: "Regular Calculator",
+    category: "everyday",
+    description: "Perform standard arithmetic operations, percentages, and fractions with persistent session history.",
+    keywords: ["calculator", "regular calculator", "standard calculator", "basic calculator", "math"],
+    icon: Calculator,
+    popular: true,
+    metaTitle: "Regular Calculator - Standard Basic Online Math Calculator | CalcZen",
+    metaDescription: "Use our free online standard calculator for fast addition, subtraction, multiplication, division, fractions, and percentage operations with session history.",
   },
   {
     slug: "tip-calculator",
@@ -174,6 +197,7 @@ export const calculators: CalculatorMeta[] = [
     metaTitle: "BMR Calculator - Calculate Basal Metabolic Rate Online | CalcZen",
     metaDescription: "Calculate your Basal Metabolic Rate (BMR) instantly. Estimate calories burned at rest based on height, weight, gender, and age for fitness planning.",
   },
+
 ];
 
 export const getCalculator = (slug: string) =>

@@ -23,6 +23,9 @@
   <url><loc>http://localhost:8080/calculator/age-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/tip-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/bmr-calculator</loc></url>
-  <url><loc>http://localhost:8080/blog/us-mortgage-rates-drop-in-2026-what-home-buyers-should-do-now</loc></url>
+  <url><loc>http://localhost:8080/calculator/regular-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/scientific-calculator</loc></url>
   <url><loc>http://localhost:8080/blog/pregnancy-due-date-calculator-estimate-your-babys-arrival-date-accurately</loc></url>
+  <url><loc>http://localhost:8080/blog/water-intake-calculator-how-much-water-should-you-drink-each-day</loc></url>
+  <url><loc>http://localhost:8080/blog/us-mortgage-rates-drop-in-2026-what-home-buyers-should-do-now</loc></url>
 </urlset>

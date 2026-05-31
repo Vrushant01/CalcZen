@@ -823,5 +823,103 @@ export const blogContent: Record<string, BlogContent> = {
         href: "/calculator/bmi-calculator"
       }
     ]
+  },
+  "regular": {
+    primaryKeyword: "regular calculator",
+    category: "Everyday Tools & Math Operations",
+    introText: "A <strong>regular calculator</strong> is a fundamental tool for performing standard arithmetic, percentage calculations, and algebraic groupings in daily life. Whether you are budgeting, calculating local retail discounts, or executing homework equations, a simple, accurate standard calculator is an essential productivity aid.",
+    sections: [
+      {
+        title: "Understanding Mathematical Operator Hierarchy",
+        paragraphs: [
+          "Standard calculators evaluate mathematical operations based on standard hierarchy rules—popularly remembered as **PEMDAS** (Parentheses, Exponents, Multiplication & Division, Addition & Subtraction).",
+          "Our interactive tool fully implements parenthesis grouping `( )` and active percentage scaling, letting you execute complex algebraic chains in a single calculation rather than performing multiple individual steps."
+        ]
+      }
+    ],
+    faqs: [
+      {
+        q: "Does the history panel save my calculations?",
+        a: "Yes, it tracks all operations performed during your current active session. Navigating between calculators or other pages on the site keeps the history intact, but refreshing the browser (F5) or closing the tab resets it for privacy."
+      },
+      {
+        q: "How do percentage addition and subtraction work?",
+        a: "In standard commercial arithmetic, adding or subtracting a percentage calculates relatively (e.g. 50 + 10% translates to 50 + (50 * 0.1) = 55). Our algebraic parser automatically maps these structures cleanly."
+      }
+    ],
+    internalLinks: [
+      {
+        text: "calculate tip percentages and split restaurant bills",
+        calculatorName: "Tip Calculator",
+        href: "/calculator/tip-calculator"
+      },
+      {
+        text: "solve retail percentage increase and decrease math equations",
+        calculatorName: "Percentage Calculator",
+        href: "/calculator/percentage-calculator"
+      }
+    ]
+  },
+  scientific: {
+    primaryKeyword: "scientific calculator",
+    category: "Mathematics & Science",
+    introText: "A <strong>scientific calculator</strong> is an indispensable tool for students, engineers, and scientists. Unlike basic calculators that only perform simple arithmetic, a scientific calculator supports trigonometric, logarithmic, exponential, and advanced algebraic functions. Designed to solve complex math and physics formulas, it acts as a high-performance sandbox that calculates with absolute precision.",
+    sections: [
+      {
+        title: "Trigonometric and Angle Mode Operations",
+        paragraphs: [
+          "Trigonometric functions like **sin**, **cos**, and **tan** are essential in geometry, physics, and engineering. A key feature of scientific calculators is the ability to toggle between **Degree** and **Radian** modes.",
+          "In **Degree mode (DEG)**, a full rotation is represented by 360 degrees. For example, `sin(30)` evaluates to `0.5`.",
+          "In **Radian mode (RAD)**, a full circle represents `2π` radians. Toggling this mode ensures trigonometric ratios are parsed correctly depending on your active mathematical model."
+        ],
+        callout: {
+          type: "didYouKnow",
+          title: "The Radians Concept",
+          text: "One radian is the angle subtended at the center of a circle by an arc that is equal in length to the radius of the circle. Radians are the natural unit of angular measurement used in calculus and advanced physics."
+        }
+      },
+      {
+        title: "Logarithmic and Exponential Functions",
+        paragraphs: [
+          "Logarithmic operations are the inverse of exponentiation. The calculator supports **natural logarithms (ln)** using Euler's number `e` as the base, and **common logarithms (log)** using base 10.",
+          "Exponential functions like `eˣ` are widely used in modeling compound interest, population growth, and radioactive decay. The power operator `xʸ` allows evaluating any base raised to any exponent with real and decimal exponents."
+        ],
+        formulaBox: {
+          title: "Key Exponent and Logarithm Relations",
+          formula: "y = log_b(x)  <=>  b^y = x",
+          variables: [
+            { name: "log(x)", desc: "Common logarithm (base 10)" },
+            { name: "ln(x)", desc: "Natural logarithm (base e ≈ 2.718)" },
+            { name: "eˣ", desc: "Exponential function with base e" }
+          ]
+        }
+      }
+    ],
+    faqs: [
+      {
+        q: "What is the difference between Degree and Radian modes?",
+        a: "Degree mode measures angles from 0 to 360, which is standard in geometry and navigation. Radian mode measures angles based on the radius of a circle, which is the mathematically natural unit used in calculus, physics, and complex analysis."
+      },
+      {
+        q: "How does the factorial (n!) function work?",
+        a: "Factorial multiplies a positive integer by all positive integers below it. For example, `5!` is `5 × 4 × 3 × 2 × 1 = 120`. Our calculator evaluates factorials up to high integer limits with absolute precision."
+      },
+      {
+        q: "Does my scientific calculation history persist?",
+        a: "Yes. All calculation history is preserved in-memory as you navigate other sections of the CalcZen website. It is fully wiped upon closing the browser tab or performing an F5 refresh to protect your privacy."
+      }
+    ],
+    internalLinks: [
+      {
+        text: "perform quick everyday arithmetic operations",
+        calculatorName: "Regular Calculator",
+        href: "/calculator/regular-calculator"
+      },
+      {
+        text: "solve percentage shift and relative ratios",
+        calculatorName: "Percentage Calculator",
+        href: "/calculator/percentage-calculator"
+      }
+    ]
   }
 };

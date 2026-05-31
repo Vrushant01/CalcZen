@@ -38,19 +38,11 @@ export async function apiFetch(path: string, init?: RequestInit): Promise<Respon
   const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   const resolvedUrl = buildApiUrl(path);
 
-  console.log(`[API REQUEST] Fetching URL: ${resolvedUrl} (Method: ${init?.method ?? "GET"})`);
-
   try {
     const res = await fetch(resolvedUrl, {
       ...init,
       signal: init?.signal ?? controller.signal,
     });
-    
-    if (res.ok) {
-      console.log(`[API RESPONSE] Success: ${resolvedUrl} -> Status ${res.status}`);
-    } else {
-      console.warn(`[API RESPONSE] FAILED: ${resolvedUrl} -> Status ${res.status}`);
-    }
     
     return res;
   } catch (err) {

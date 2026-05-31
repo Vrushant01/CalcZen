@@ -8,6 +8,7 @@ import { PageShell } from "@/components/layout/PageShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CalculatorCard } from "@/components/CalculatorCard";
+import { BlogSection } from "@/components/BlogSection";
 import { categories, calculators } from "@/data/calculators";
 import { subscribeEmail } from "@/lib/subscribe-api";
 
@@ -169,6 +170,8 @@ function Index() {
           ))}
         </div>
       </section>
+
+      <BlogSection />
 
       <section className="page-container mt-12 sm:mt-20 md:mt-24 max-w-4xl min-w-0">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-5 sm:mb-6">

@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
+import { Outlet, Link, createRootRouteWithContext, useRouter, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 function NotFoundComponent() {
@@ -103,8 +103,58 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+  const state = useRouterState();
 
-  
+  useEffect(() => {
+    let title = "CalcZen — Smart Online Calculators";
+    let description = "Free online calculators for finance, health, math and everyday life.";
+
+    // Iterate from root to leaf so that specific child routes override parent/root default tags
+    for (let i = 0; i < state.matches.length; i++) {
+      const match = state.matches[i];
+      const route = router.routesById[match.routeId];
+      if (route?.options?.head) {
+        try {
+          const headResult = typeof route.options.head === "function"
+            ? route.options.head({
+                loaderData: match.loaderData,
+                params: match.params,
+                context: match.context,
+              })
+            : route.options.head;
+
+          if (headResult?.meta) {
+            // Find title
+            const titleObj = headResult.meta.find((m: any) => m && "title" in m);
+            if (titleObj && typeof titleObj.title === "string") {
+              title = titleObj.title;
+            }
+
+            // Find description
+            const descObj = headResult.meta.find((m: any) => m && m.name === "description");
+            if (descObj && typeof descObj.content === "string") {
+              description = descObj.content;
+            }
+          }
+        } catch (err) {
+          console.error("Error evaluating route head:", err);
+        }
+      }
+    }
+
+    // Update document title
+    document.title = title;
+
+    // Update meta description
+    let descMeta = document.querySelector('meta[name="description"]');
+    if (!descMeta) {
+      descMeta = document.createElement("meta");
+      descMeta.setAttribute("name", "description");
+      document.head.appendChild(descMeta);
+    }
+    descMeta.setAttribute("content", description);
+  }, [state.matches, router]);
 
   return (
     <QueryClientProvider client={queryClient}>

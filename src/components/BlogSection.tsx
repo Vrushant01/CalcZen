@@ -108,7 +108,7 @@ export function BlogSection() {
       <div className="flex items-center justify-between mb-5 sm:mb-6 gap-3">
         <div className="flex items-center gap-2 min-w-0">
           <BookOpen className="h-5 w-5 text-accent shrink-0" />
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white truncate">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-foreground truncate">
             Latest From Our Blog
           </h2>
         </div>

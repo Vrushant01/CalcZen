@@ -41,6 +41,8 @@ const CALCULATOR_SLUGS = [
   "bmr-calculator",
   "regular-calculator",
   "scientific-calculator",
+  "retirement-calculator",
+  "401k-calculator",
 ];
 
 async function generateSitemap() {

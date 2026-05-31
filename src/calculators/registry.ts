@@ -16,4 +16,6 @@ export const calculatorComponents: Record<string, ComponentType> = {
   "bmr-calculator": lazy(() => import("@/calculators/BMRCalculator").then(m => ({ default: m.BMRCalculator }))),
   "regular-calculator": lazy(() => import("@/calculators/RegularCalculator").then(m => ({ default: m.RegularCalculator }))),
   "scientific-calculator": lazy(() => import("@/calculators/ScientificCalculator").then(m => ({ default: m.ScientificCalculator }))),
+  "retirement-calculator": lazy(() => import("@/calculators/RetirementCalculator").then(m => ({ default: m.RetirementCalculator }))),
+  "401k-calculator": lazy(() => import("@/calculators/401kCalculator").then(m => ({ default: m.Four01kCalculator }))),
 };

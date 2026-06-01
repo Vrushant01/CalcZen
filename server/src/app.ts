@@ -315,6 +315,10 @@ export async function createApp(): Promise<Express> {
     });
   });
 
+  // Serve public frontend static assets (robots.txt, ads.txt, assets/, sitemaps, etc.)
+  const publicDist = resolvePublicDist();
+  app.use(express.static(publicDist));
+
   // Serve public frontend index.html with dynamic metadata for crawlers/SEO
   app.get("*path", async (req, res, next) => {
     // Skip API, Admin, or files with extensions

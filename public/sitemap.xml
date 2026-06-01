@@ -23,7 +23,7 @@
   <url><loc>http://localhost:8080/calculator/age-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/tip-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/bmr-calculator</loc></url>
-  <url><loc>http://localhost:8080/calculator/regular-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/standard-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/scientific-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/retirement-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/401k-calculator</loc></url>

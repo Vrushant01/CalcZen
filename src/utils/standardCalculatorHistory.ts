@@ -7,11 +7,11 @@ export interface HistoryItem {
 
 let sessionHistory: HistoryItem[] = [];
 
-export function getRegularCalculatorHistory(): HistoryItem[] {
+export function getStandardCalculatorHistory(): HistoryItem[] {
   return sessionHistory;
 }
 
-export function addRegularCalculatorHistory(expression: string, result: string) {
+export function addStandardCalculatorHistory(expression: string, result: string) {
   const now = new Date();
   const timestamp = now.toLocaleTimeString([], { 
     hour: "2-digit", 
@@ -28,6 +28,6 @@ export function addRegularCalculatorHistory(expression: string, result: string) 
   ];
 }
 
-export function clearRegularCalculatorHistory() {
+export function clearStandardCalculatorHistory() {
   sessionHistory = [];
 }

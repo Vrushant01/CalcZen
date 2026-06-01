@@ -187,14 +187,14 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Calculate your exact age in years, months, days, minutes, and seconds from your birthdate. Find the time remaining until your next birthday instantly.",
   },
   {
-    slug: "regular-calculator",
-    name: "Regular Calculator",
+    slug: "standard-calculator",
+    name: "Standard Calculator",
     category: "everyday",
     description: "Perform standard arithmetic operations, percentages, and fractions with persistent session history.",
-    keywords: ["calculator", "regular calculator", "standard calculator", "basic calculator", "math"],
+    keywords: ["calculator", "standard calculator", "basic calculator", "math"],
     icon: Calculator,
     popular: true,
-    metaTitle: "Regular Calculator - Standard Basic Online Math Calculator | CalcZen",
+    metaTitle: "Standard Calculator - Standard Basic Online Math Calculator | CalcZen",
     metaDescription: "Use our free online standard calculator for fast addition, subtraction, multiplication, division, fractions, and percentage operations with session history.",
   },
   {

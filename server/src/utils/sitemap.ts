@@ -20,7 +20,7 @@ const CALCULATOR_SLUGS = [
   "age-calculator",
   "tip-calculator",
   "bmr-calculator",
-  "regular-calculator",
+  "standard-calculator",
   "scientific-calculator",
   "retirement-calculator",
   "401k-calculator",

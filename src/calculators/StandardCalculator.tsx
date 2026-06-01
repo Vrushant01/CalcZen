@@ -7,11 +7,11 @@ import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
 import { 
-  getRegularCalculatorHistory, 
-  addRegularCalculatorHistory, 
-  clearRegularCalculatorHistory, 
+  getStandardCalculatorHistory, 
+  addStandardCalculatorHistory, 
+  clearStandardCalculatorHistory, 
   type HistoryItem 
-} from "@/utils/regularCalculatorHistory";
+} from "@/utils/standardCalculatorHistory";
 import { Calendar, Trash2, RotateCcw, HelpCircle, Delete } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -55,12 +55,12 @@ function parseAndEvaluate(expr: string): string {
   return String(Math.round(result * 1e12) / 1e12);
 }
 
-export function RegularCalculator() {
-  const calc = getCalculator("regular-calculator")!;
+export function StandardCalculator() {
+  const calc = getCalculator("standard-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
   
   // In-memory sync state
-  const [history, setHistory] = useState<HistoryItem[]>(getRegularCalculatorHistory());
+  const [history, setHistory] = useState<HistoryItem[]>(getStandardCalculatorHistory());
   
   // Calculator display state machine
   const [display, setDisplay] = useState("0");
@@ -70,7 +70,7 @@ export function RegularCalculator() {
 
   // Sync state with singleton store on initialization
   useEffect(() => {
-    setHistory(getRegularCalculatorHistory());
+    setHistory(getStandardCalculatorHistory());
   }, []);
 
   // Keyboard support event listener
@@ -241,7 +241,7 @@ export function RegularCalculator() {
       const result = parseAndEvaluate(equation);
       
       // Save expression to singleton store list
-      addRegularCalculatorHistory(equation, result);
+      addStandardCalculatorHistory(equation, result);
       
       // Update displays
       setDisplay(result);
@@ -249,7 +249,7 @@ export function RegularCalculator() {
       setIsResetOnNext(true);
       
       // Update local react components
-      setHistory(getRegularCalculatorHistory());
+      setHistory(getStandardCalculatorHistory());
       markCalculated();
     } catch (err) {
       console.warn("Calculator evaluation failed:", err);
@@ -261,7 +261,7 @@ export function RegularCalculator() {
 
   // Wipes history completely directly without confirmation
   function handleClearHistory() {
-    clearRegularCalculatorHistory();
+    clearStandardCalculatorHistory();
     setHistory([]);
     resetCalculated();
   }
@@ -281,8 +281,8 @@ export function RegularCalculator() {
     const formattedEq = equation.includes("=") ? equation.split("=")[0].trim() : equation;
     
     return {
-      calculatorName: "Regular Calculator",
-      calculatorSlug: "regular-calculator",
+      calculatorName: "Standard Calculator",
+      calculatorSlug: "standard-calculator",
       siteName: PDF_SITE_NAME,
       siteUrl: PDF_SITE_URL,
       inputs: [
@@ -320,7 +320,7 @@ Percentage multiplication = A × (B ÷ 100)`}
         { q: "How do percentage calculations work?", a: "Adding or subtracting a percentage calculates relatively (e.g. 50 + 10% adds 10% of 50, resulting in 55). Multiplication or division acts proportionally (e.g. 50 * 10% returns 5)." },
         { q: "Does resetting the calculator clear the history?", a: "No. Clicking the Reset button (C) clears your current displays, but leaves your sidebar calculation history completely visible and intact." }
       ]}
-      blog={<CalculatorBlog content={blogContent.regular} />}
+      blog={<CalculatorBlog content={blogContent.standard} />}
     >
       <div className="calc-layout-grid">
         

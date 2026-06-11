@@ -435,8 +435,9 @@
     margin-top: 1.25rem;
     padding: 1rem;
     border-radius: 0.625rem;
-    border: 1px solid color-mix(in oklch, #0f6e56 25%, var(--border));
-    background: color-mix(in oklch, #f0faf6 88%, var(--card));
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   }
 
   @media (min-width: 640px) {
@@ -450,16 +451,44 @@
     margin: 0;
     font-size: 0.75rem;
     line-height: 1.5;
-    color: color-mix(in oklch, #0f6e56 75%, var(--foreground));
+    color: color-mix(in oklch, var(--muted-foreground) 90%, var(--foreground));
   }
 
   .dark .calc-pdf-export {
     border-color: color-mix(in oklch, #34d399 35%, var(--border));
     background: color-mix(in oklch, #064e3b 45%, var(--card));
+    box-shadow: none;
   }
 
   .dark .calc-pdf-export-text {
     color: color-mix(in oklch, #a7f3d0 90%, var(--foreground));
+  }
+
+  /* Save as PDF button — light mode idle state */
+  .pdf-btn-idle {
+    background-color: #059669 !important; /* emerald-600 */
+    color: #ffffff !important;
+    border-color: #059669 !important;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.30) !important;
+  }
+
+  .pdf-btn-idle:hover {
+    background-color: #047857 !important; /* emerald-700 on hover */
+    border-color: #047857 !important;
+    box-shadow: 0 8px 20px rgba(5, 150, 105, 0.40) !important;
+  }
+
+  /* Dark mode — restore glass/neon effect */
+  .dark .pdf-btn-idle {
+    background-color: rgba(6, 78, 59, 0.4) !important;  /* emerald-950/40 */
+    color: #6ee7b7 !important;                           /* emerald-300 */
+    border-color: rgba(52, 211, 153, 0.4) !important;   /* emerald-500/40 */
+    box-shadow: none !important;
+  }
+
+  .dark .pdf-btn-idle:hover {
+    background-color: rgba(6, 78, 59, 0.8) !important;
+    border-color: rgba(52, 211, 153, 0.6) !important;
   }
 
   .calc-formula-section,
@@ -724,6 +753,130 @@
 
   .shadow-input {
     box-shadow: var(--shadow-input);
+  }
+
+  .dashboard-stat-card {
+    border-color: #ececef;
+    background: #ffffff;
+    box-shadow: 0 2px 10px #0f172a0f;
+  }
+
+  .dashboard-stat-label {
+    color: #64748b;
+  }
+
+  .dashboard-stat-value {
+    color: var(--stat-value-light);
+  }
+
+  .dashboard-stat-badge {
+    border-color: var(--stat-badge-border-light);
+    background: var(--stat-badge-bg-light);
+    color: var(--stat-badge-text-light);
+  }
+
+  html.dark .dashboard-stat-card {
+    border-color: color-mix(in oklch, var(--border) 60%, transparent);
+    background: var(--card);
+    box-shadow: var(--shadow-soft);
+  }
+
+  html.dark .dashboard-stat-label {
+    color: var(--muted-foreground);
+  }
+
+  html.dark .dashboard-stat-value {
+    color: var(--stat-value-dark);
+  }
+
+  html.dark .dashboard-stat-badge {
+    border-color: var(--stat-badge-border-dark);
+    background: var(--stat-badge-bg-dark);
+    color: var(--stat-badge-text-dark);
+  }
+
+  .dashboard-insight-card {
+    color: #334155;
+  }
+
+  .dashboard-insight-card[data-tone="info"] {
+    border-color: #d8e6fd;
+    background: #f7faff;
+  }
+
+  .dashboard-insight-card[data-tone="success"] {
+    border-color: #cff3e6;
+    background: #f6fcfa;
+  }
+
+  .dashboard-insight-card[data-tone="warning"] {
+    border-color: #fdecce;
+    background: #fffaf1;
+  }
+
+  .dashboard-insight-card[data-tone="tip"] {
+    border-color: #eeddfd;
+    background: #fbf8fe;
+  }
+
+  .dashboard-insight-text {
+    color: #334155;
+  }
+
+  .dashboard-insight-card[data-tone="info"] .dashboard-insight-icon {
+    color: var(--color-blue-500);
+  }
+
+  .dashboard-insight-card[data-tone="success"] .dashboard-insight-icon {
+    color: var(--color-emerald-600);
+  }
+
+  .dashboard-insight-card[data-tone="warning"] .dashboard-insight-icon {
+    color: var(--color-amber-600);
+  }
+
+  .dashboard-insight-card[data-tone="tip"] .dashboard-insight-icon {
+    color: var(--color-purple-600);
+  }
+
+  html.dark .dashboard-insight-card[data-tone="info"] {
+    border-color: color-mix(in oklab, var(--color-blue-800) 50%, transparent);
+    background: color-mix(in oklab, var(--color-blue-950) 30%, transparent);
+  }
+
+  html.dark .dashboard-insight-card[data-tone="success"] {
+    border-color: color-mix(in oklab, var(--color-emerald-800) 50%, transparent);
+    background: color-mix(in oklab, var(--color-emerald-950) 30%, transparent);
+  }
+
+  html.dark .dashboard-insight-card[data-tone="warning"] {
+    border-color: color-mix(in oklab, var(--color-amber-800) 50%, transparent);
+    background: color-mix(in oklab, var(--color-amber-950) 30%, transparent);
+  }
+
+  html.dark .dashboard-insight-card[data-tone="tip"] {
+    border-color: color-mix(in oklab, var(--color-purple-800) 50%, transparent);
+    background: color-mix(in oklab, var(--color-purple-950) 30%, transparent);
+  }
+
+  html.dark .dashboard-insight-text {
+    color: color-mix(in oklab, var(--foreground) 80%, transparent);
+  }
+
+  html.dark .dashboard-insight-card[data-tone="info"] .dashboard-insight-icon {
+    color: var(--color-blue-400);
+  }
+
+  html.dark .dashboard-insight-card[data-tone="success"] .dashboard-insight-icon {
+    color: var(--color-emerald-400);
+  }
+
+  html.dark .dashboard-insight-card[data-tone="warning"] .dashboard-insight-icon {
+    color: var(--color-amber-400);
+  }
+
+  html.dark .dashboard-insight-card[data-tone="tip"] .dashboard-insight-icon {
+    color: var(--color-purple-400);
   }
 
   .text-gradient {

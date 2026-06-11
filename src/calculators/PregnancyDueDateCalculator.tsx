@@ -5,17 +5,25 @@ import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { blogContent } from "@/data/blogContent";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { CalculateButton } from "@/components/CalculateButton";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { motion } from "framer-motion";
 
 export function PregnancyDueDateCalculator() {
   const calc = getCalculator("pregnancy-due-date-calculator")!;
-  const { hasResult, markCalculated } = useHasCalculated();
+  const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  
+  // Live input states
   const [lmp, setLmp] = useState("2025-01-01");
 
+  // Calculated states
+  const [calcLmp, setCalcLmp] = useState("2025-01-01");
+
   const r = useMemo(() => {
-    const d = new Date(lmp);
+    const d = new Date(calcLmp);
     if (isNaN(d.getTime())) return null;
     const due = new Date(d);
     due.setDate(due.getDate() + 280);
@@ -24,7 +32,7 @@ export function PregnancyDueDateCalculator() {
     const week = Math.max(0, Math.floor(daysIn / 7));
     const trimester = week < 13 ? 1 : week < 27 ? 2 : 3;
     return { due, week, trimester, lmpDate: d };
-  }, [lmp]);
+  }, [calcLmp]);
 
   const formatLong = (date: Date) =>
     date.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
@@ -49,6 +57,26 @@ export function PregnancyDueDateCalculator() {
         }
       : null;
 
+  const isButtonDisabled = !lmp;
+
+  const handleCalculate = () => {
+    if (isButtonDisabled) return;
+    setCalcLmp(lmp);
+    markCalculated();
+  };
+
+  const handleReset = () => {
+    setLmp("2025-01-01");
+    setCalcLmp("2025-01-01");
+    resetCalculated();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !isButtonDisabled) {
+      handleCalculate();
+    }
+  };
+
   return (
     <CalculatorPageLayout
       calc={calc}
@@ -65,36 +93,91 @@ Estimated due date: October 8, 2025.`}
       ]}
       blog={<CalculatorBlog content={blogContent.pregnancy} />}
     >
-      <div className="calc-layout-grid">
+      <div className="flex flex-col gap-6">
         <div className="calc-input-column">
           <div>
             <Label className="text-xs font-medium text-muted-foreground">First day of last period</Label>
             <Input
               type="date"
               value={lmp}
-              onChange={(e) => {
-                setLmp(e.target.value);
-                markCalculated();
-              }}
+              onChange={(e) => setLmp(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="mt-1"
             />
           </div>
+
+          <div className="flex flex-row gap-3 mt-4">
+            <CalculateButton
+              category="health"
+              className="flex-1 min-h-11"
+              disabled={isButtonDisabled}
+              onClick={handleCalculate}
+            >
+              Calculate
+            </CalculateButton>
+            <Button
+              variant="outline"
+              className="flex-1 min-h-11"
+              onClick={handleReset}
+            >
+              Reset
+            </Button>
+          </div>
         </div>
-        <div className="calc-result-panel select-copy flex flex-col">
-          {r ? (
-            <>
-              <div className="text-sm text-muted-foreground">Estimated due date</div>
-              <div className="text-3xl font-bold mt-1 text-gradient">{formatLong(r.due)}</div>
-              <dl className="grid grid-cols-1 min-[360px]:grid-cols-2 gap-2.5 text-sm">
-                <div><dt className="text-muted-foreground">Current week</dt><dd className="font-semibold">{r.week}</dd></div>
-                <div><dt className="text-muted-foreground">Trimester</dt><dd className="font-semibold">{r.trimester}</dd></div>
-              </dl>
-              <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
-            </>
-          ) : (
-            <p className="text-destructive text-sm">Please enter a valid date.</p>
-          )}
-        </div>
+
+        {hasResult && (
+          <motion.div
+            initial={{ opacity: 0, height: 0, scale: 0.95, y: 15 }}
+            animate={{ opacity: 1, height: "auto", scale: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            className="mt-6 pt-6 border-t border-border space-y-6 overflow-hidden relative"
+          >
+            <div 
+              className="absolute inset-0 pointer-events-none blur-3xl opacity-15 -z-10"
+              style={{
+                background: "radial-gradient(circle at 50% 50%, #10b981, transparent 65%)"
+              }}
+            />
+            {r ? (
+              <>
+                <div>
+                  <h2 className="text-xl font-bold text-foreground">Results</h2>
+                  <div className="mt-3 p-6 rounded-xl bg-card border border-border/70 shadow-soft">
+                    <div className="text-sm text-muted-foreground">Estimated due date</div>
+                    <div className="text-3xl font-bold mt-1 text-gradient">{formatLong(r.due)}</div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-base font-semibold text-foreground mb-3">Detailed Analysis</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="p-4 rounded-lg bg-muted/30 border border-border/50">
+                      <div className="text-xs text-muted-foreground">Current week</div>
+                      <div className="text-lg font-bold mt-1 text-foreground">Week {r.week}</div>
+                    </div>
+                    <div className="p-4 rounded-lg bg-muted/30 border border-border/50">
+                      <div className="text-xs text-muted-foreground">Trimester</div>
+                      <div className="text-lg font-bold mt-1 text-foreground">Trimester {r.trimester}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-base font-semibold text-foreground mb-3">Insights</h3>
+                  <div className="p-4 rounded-lg bg-muted/30 border border-border/50 text-sm text-muted-foreground leading-relaxed font-normal">
+                    Based on Naegele's clinical rule, your baby is estimated to arrive on {formatLong(r.due)}. You are currently at week {r.week} of your pregnancy (Trimester {r.trimester}). Standard gestation is 280 days (40 weeks) from your last period.
+                  </div>
+                </div>
+
+                <div className="flex flex-col">
+                  <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
+                </div>
+              </>
+            ) : (
+              <p className="text-destructive text-sm">Please enter a valid date.</p>
+            )}
+          </motion.div>
+        )}
       </div>
     </CalculatorPageLayout>
   );

@@ -8,49 +8,81 @@ import { MoneyField } from "@/components/MoneyField";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { CalculateButton } from "@/components/CalculateButton";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
 import { useCurrency } from "@/hooks/use-currency";
 import { formatPdfUsd } from "@/utils/formatPdfUsd";
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid } from "recharts";
+import {
+  AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid, Legend,
+} from "recharts";
+import { motion } from "framer-motion";
+import {
+  HeroMetric, StatCard, DashboardSection, InsightCard,
+  ComparisonTable, RecommendationList,
+} from "@/components/dashboard";
 
 export function CompoundInterestCalculator() {
   const calc = getCalculator("compound-interest-calculator")!;
   const { format, formatAxis } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const [principal, setPrincipal] = useState(10000);
-  const [monthly, setMonthly] = useState(500);
-  const [rate, setRate] = useState(8);
-  const [years, setYears] = useState(20);
+
+  const [principal, setPrincipal] = useState<number | "">(10000);
+  const [monthly, setMonthly] = useState<number | "">(500);
+  const [rate, setRate] = useState<number | "">(8);
+  const [years, setYears] = useState<number | "">(20);
+
+  const [calcPrincipal, setCalcPrincipal] = useState<number>(10000);
+  const [calcMonthly, setCalcMonthly] = useState<number>(500);
+  const [calcRate, setCalcRate] = useState<number>(8);
+  const [calcYears, setCalcYears] = useState<number>(20);
 
   const { series, total, contributed, earned } = useMemo(() => {
-    const r = rate / 100 / 12;
-    const n = years * 12;
-    let bal = principal;
-    let contrib = principal;
-    const series: { year: number; balance: number; contributed: number }[] = [{ year: 0, balance: bal, contributed: contrib }];
+    const r = calcRate / 100 / 12;
+    const n = calcYears * 12;
+    let bal = calcPrincipal;
+    let contrib = calcPrincipal;
+    const series: { year: number; balance: number; contributed: number; earned: number }[] = [
+      { year: 0, balance: bal, contributed: contrib, earned: 0 },
+    ];
     for (let m = 1; m <= n; m++) {
-      bal = bal * (1 + r) + monthly;
-      contrib += monthly;
-      if (m % 12 === 0) series.push({ year: m / 12, balance: Math.round(bal), contributed: Math.round(contrib) });
+      bal = bal * (1 + r) + calcMonthly;
+      contrib += calcMonthly;
+      if (m % 12 === 0)
+        series.push({ year: m / 12, balance: Math.round(bal), contributed: Math.round(contrib), earned: Math.round(bal - contrib) });
     }
     return { series, total: bal, contributed: contrib, earned: bal - contrib };
-  }, [principal, monthly, rate, years]);
+  }, [calcPrincipal, calcMonthly, calcRate, calcYears]);
 
   const multiplier = contributed > 0 ? (total / contributed).toFixed(2) : "0";
+  const cagr = calcYears > 0 ? ((Math.pow(total / Math.max(contributed, 1), 1 / calcYears) - 1) * 100).toFixed(2) : "0";
+  const rule72 = calcRate > 0 ? (72 / calcRate).toFixed(1) : "—";
+
   const fiveYearsEarlier = useMemo(() => {
-    if (years <= 5) return 0;
-    const r = rate / 100 / 12;
-    const n = (years - 5) * 12;
-    let bal = principal;
-    let contrib = principal;
-    for (let m = 1; m <= n; m++) {
-      bal = bal * (1 + r) + monthly;
-      contrib += monthly;
-    }
+    if (calcYears <= 5) return 0;
+    const r = calcRate / 100 / 12;
+    const n = (calcYears - 5) * 12;
+    let bal = calcPrincipal;
+    for (let m = 1; m <= n; m++) bal = bal * (1 + r) + calcMonthly;
     return Math.max(0, total - bal);
-  }, [principal, monthly, rate, years, total]);
+  }, [calcPrincipal, calcMonthly, calcRate, calcYears, total]);
+
+  // Comparison at different rates
+  const rateOptions = [4, 6, 8, 10, 12];
+  const comparisonRows = rateOptions.map((r) => {
+    const mr = r / 100 / 12;
+    const n = calcYears * 12;
+    let bal = calcPrincipal;
+    let c = calcPrincipal;
+    for (let m = 1; m <= n; m++) { bal = bal * (1 + mr) + calcMonthly; c += calcMonthly; }
+    const isActive = r === calcRate;
+    return {
+      label: `${r}% annual return`,
+      values: [format(bal), format(bal - c), `${(bal / c).toFixed(2)}x`],
+      highlight: isActive,
+    };
+  });
 
   const pdfData = hasResult
     ? {
@@ -59,10 +91,10 @@ export function CompoundInterestCalculator() {
         siteName: PDF_SITE_NAME,
         siteUrl: PDF_SITE_URL,
         inputs: [
-          { label: "Initial Principal", value: formatPdfUsd(principal) },
-          { label: "Monthly Contribution", value: formatPdfUsd(monthly) },
-          { label: "Annual Return", value: `${rate}%` },
-          { label: "Time Horizon", value: `${years} years` },
+          { label: "Initial Principal", value: formatPdfUsd(calcPrincipal) },
+          { label: "Monthly Contribution", value: formatPdfUsd(calcMonthly) },
+          { label: "Annual Return", value: `${calcRate}%` },
+          { label: "Time Horizon", value: `${calcYears} years` },
           { label: "Compounding", value: "Monthly" },
         ],
         results: [
@@ -71,24 +103,45 @@ export function CompoundInterestCalculator() {
           { label: "Total Interest Earned", value: formatPdfUsd(earned), highlight: false },
           { label: "Growth Multiplier", value: `${multiplier}x`, highlight: false },
         ],
-        summary: `Your ${formatPdfUsd(principal)} investment grows to ${formatPdfUsd(total)} over ${years} years — a gain of ${formatPdfUsd(earned)} from compound interest alone. Your money is effectively multiplying ${multiplier}x. Starting just 5 years earlier would result in approximately ${formatPdfUsd(fiveYearsEarlier)} more at the same rate.`,
+        summary: `Your ${formatPdfUsd(calcPrincipal)} investment grows to ${formatPdfUsd(total)} over ${calcYears} years — a gain of ${formatPdfUsd(earned)} from compound interest alone. Your money is effectively multiplying ${multiplier}x. Starting just 5 years earlier would result in approximately ${formatPdfUsd(fiveYearsEarlier)} more at the same rate.`,
         chartElementId: "compound-chart",
       }
     : null;
+
+  const isButtonDisabled = principal === "" || monthly === "" || rate === "" || years === ""
+    || Number(principal) < 0 || Number(monthly) < 0 || Number(rate) <= 0 || Number(years) <= 0;
+
+  const handleCalculate = () => {
+    if (isButtonDisabled) return;
+    setCalcPrincipal(Number(principal));
+    setCalcMonthly(Number(monthly));
+    setCalcRate(Number(rate));
+    setCalcYears(Number(years));
+    markCalculated();
+  };
+
+  const handleReset = () => {
+    setPrincipal(10000); setMonthly(500); setRate(8); setYears(20);
+    setCalcPrincipal(10000); setCalcMonthly(500); setCalcRate(8); setCalcYears(20);
+    resetCalculated();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !isButtonDisabled) handleCalculate();
+  };
+
+  const tooltipStyle = {
+    contentStyle: { background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px", fontSize: 12 },
+    labelStyle: { color: "var(--color-foreground)" },
+    itemStyle: { color: "var(--color-foreground)" },
+  };
 
   return (
     <CalculatorPageLayout
       calc={calc}
       intro="Watch your savings grow with compound interest. Set an initial amount, monthly contribution, expected annual return and time horizon to see your future balance."
-      formula={`Future Value = P(1 + r)^n + PMT × [((1 + r)^n − 1) / r]
-where
-P = initial principal
-PMT = monthly contribution
-r = monthly rate (annual rate ÷ 12)
-n = number of months`}
-      example={`Start with $10,000, add $500/month, earn 8%/yr for 20 years.
-Final balance ≈ $355,000.
-You contributed $130,000; ~$225,000 came from compounding.`}
+      formula={`Future Value = P(1 + r)^n + PMT × [((1 + r)^n − 1) / r]\nwhere\nP = initial principal\nPMT = monthly contribution\nr = monthly rate (annual rate ÷ 12)\nn = number of months`}
+      example={`Start with $10,000, add $500/month, earn 8%/yr for 20 years.\nFinal balance ≈ $355,000.\nYou contributed $130,000; ~$225,000 came from compounding.`}
       faqs={[
         { q: "What is compound interest?", a: "Interest earned on both your original money and the interest already added — your balance grows exponentially over time." },
         { q: "How often should returns compound?", a: "We assume monthly compounding, which closely matches most investment and savings accounts." },
@@ -99,63 +152,136 @@ You contributed $130,000; ~$225,000 came from compounding.`}
       blog={<CalculatorBlog content={blogContent.compound} />}
     >
       <CalculatorCurrencyBar />
-      <div className="calc-layout-grid">
+      <div className="flex flex-col gap-6">
         <div className="calc-input-column">
-          <MoneyField label="Initial amount" value={principal} onChange={(v) => { setPrincipal(v); markCalculated(); }} />
-          <MoneyField label="Monthly contribution" value={monthly} onChange={(v) => { setMonthly(v); markCalculated(); }} />
+          <MoneyField label="Initial amount" value={principal} onChange={(v) => setPrincipal(v)} />
+          <MoneyField label="Monthly contribution" value={monthly} onChange={(v) => setMonthly(v)} />
           <div className="calc-field-grid-2">
-            <NumField label="Annual return" value={rate} onChange={(v) => { setRate(v); markCalculated(); }} suffix="%" step={0.1} />
-            <NumField label="Years" value={years} onChange={(v) => { setYears(v); markCalculated(); }} suffix="yr" />
+            <NumField label="Annual return" value={rate} onChange={(v) => setRate(v)} onKeyDown={handleKeyDown} suffix="%" step={0.1} />
+            <NumField label="Years" value={years} onChange={(v) => setYears(v)} onKeyDown={handleKeyDown} suffix="yr" />
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              setPrincipal(10000);
-              setMonthly(500);
-              setRate(8);
-              setYears(20);
-              resetCalculated();
-            }}
+          <div className="flex flex-row gap-3 mt-4">
+            <CalculateButton category="finance" className="flex-1 min-h-11" disabled={isButtonDisabled} onClick={handleCalculate}>
+              Calculate
+            </CalculateButton>
+            <Button variant="outline" className="flex-1 min-h-11" onClick={handleReset}>Reset</Button>
+          </div>
+        </div>
+
+        {hasResult && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="mt-2 flex flex-col gap-6"
           >
-            Reset
-          </Button>
-        </div>
-        <div className="calc-result-panel select-copy flex flex-col">
-          <div className="text-sm text-muted-foreground">Future balance</div>
-          <div className="calc-result-hero text-gradient">{format(total)}</div>
-          <dl className="grid grid-cols-1 min-[360px]:grid-cols-2 gap-2.5 text-sm">
-            <div><dt className="text-muted-foreground">Contributed</dt><dd className="font-semibold">{format(contributed)}</dd></div>
-            <div><dt className="text-muted-foreground">Interest earned</dt><dd className="font-semibold">{format(earned)}</dd></div>
-          </dl>
-          <div id="compound-chart" className="h-56">
-            <ResponsiveContainer>
-              <LineChart data={series}>
-                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
-                <XAxis dataKey="year" stroke="var(--color-muted-foreground)" fontSize={11} />
-                <YAxis stroke="var(--color-muted-foreground)" fontSize={11} tickFormatter={formatAxis} />
-                <Tooltip formatter={(v: number) => format(v)} />
-                <Line type="monotone" dataKey="balance" stroke="var(--color-chart-1)" strokeWidth={2.5} dot={false} />
-                <Line type="monotone" dataKey="contributed" stroke="var(--color-chart-2)" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
-        </div>
+            {/* Hero */}
+            <HeroMetric
+              label="Final Balance"
+              value={format(total)}
+              sub={`After ${calcYears} years of compounding monthly at ${calcRate}% annual return`}
+              glow="#0ea5e9"
+            />
+
+            {/* Key Metrics */}
+            <DashboardSection title="Key Metrics">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <StatCard index={0} label="Total Contributed" value={format(contributed)} accent="blue" />
+                <StatCard index={1} label="Interest Earned" value={format(earned)} accent="green"
+                  subValue={`${((earned / total) * 100).toFixed(0)}% of final balance`} />
+                <StatCard index={2} label="Growth Multiplier" value={`${multiplier}×`} accent="purple" />
+                <StatCard index={3} label="Effective CAGR" value={`${cagr}%`} accent="cyan" />
+                <StatCard index={4} label="Money Doubles Every" value={`${rule72} yrs`} accent="amber" subValue="Rule of 72" />
+                <StatCard index={5} label="5 Yrs Earlier = +" value={fiveYearsEarlier > 0 ? format(fiveYearsEarlier) : "N/A"} accent="green" />
+              </div>
+            </DashboardSection>
+
+            {/* Chart */}
+            <DashboardSection title="Growth Projection">
+              <div id="compound-chart" className="rounded-xl border border-border/60 bg-card p-4 shadow-soft">
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={series} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
+                      <defs>
+                        <linearGradient id="balGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="var(--color-chart-1)" stopOpacity={0.35} />
+                          <stop offset="95%" stopColor="var(--color-chart-1)" stopOpacity={0.04} />
+                        </linearGradient>
+                        <linearGradient id="contribGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="var(--color-chart-2)" stopOpacity={0.25} />
+                          <stop offset="95%" stopColor="var(--color-chart-2)" stopOpacity={0.04} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
+                      <XAxis dataKey="year" stroke="var(--color-muted-foreground)" fontSize={11}
+                        tickFormatter={(v) => `${v}y`} />
+                      <YAxis stroke="var(--color-muted-foreground)" fontSize={11} tickFormatter={formatAxis} />
+                      <Tooltip formatter={(v: number) => format(v)} {...tooltipStyle} />
+                      <Legend wrapperStyle={{ fontSize: 12 }} />
+                      <Area type="monotone" dataKey="balance" name="Balance" stroke="var(--color-chart-1)"
+                        strokeWidth={2.5} fill="url(#balGrad)" dot={false} />
+                      <Area type="monotone" dataKey="contributed" name="Contributed" stroke="var(--color-chart-2)"
+                        strokeWidth={2} fill="url(#contribGrad)" dot={false} />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </DashboardSection>
+
+            {/* Comparison */}
+            <DashboardSection title="Scenario Comparison — Annual Return Rates">
+              <ComparisonTable
+                headers={["Rate", "Final Balance", "Interest Earned", "Multiplier"]}
+                rows={comparisonRows}
+                highlightColIndex={0}
+              />
+            </DashboardSection>
+
+            {/* Insights */}
+            <DashboardSection title="Smart Insights">
+              <div className="flex flex-col gap-2">
+                <InsightCard index={0} tone="success"
+                  text={`At ${calcRate}% return, your money doubles approximately every ${rule72} years (Rule of 72). Over ${calcYears} years, it has multiplied ${multiplier}×.`} />
+                <InsightCard index={1} tone="info"
+                  text={`Interest makes up ${((earned / total) * 100).toFixed(0)}% of your final balance — compound growth contributed ${format(earned)} with no additional effort.`} />
+                {fiveYearsEarlier > 0 && (
+                  <InsightCard index={2} tone="tip"
+                    text={`Starting just 5 years earlier with the same contributions would add approximately ${format(fiveYearsEarlier)} to your final balance — the power of time in compounding.`} />
+                )}
+              </div>
+            </DashboardSection>
+
+            {/* Recommendations */}
+            <DashboardSection title="Recommendations">
+              <RecommendationList items={[
+                { title: "Automate monthly contributions", description: `Your ${format(calcMonthly)}/month contribution is the engine of your wealth. Automate it so you never miss a month — consistency beats timing every time.` },
+                { title: "Consider tax-advantaged accounts", description: "Placing investments in 401(k), IRA, or similar tax-sheltered accounts lets compounding work on money that would otherwise go to taxes." },
+                { title: "Increase contribution with income", description: "A 1% salary increase put into investments adds significantly over decades. Revisit your contribution rate every year or when your income rises." },
+              ]} />
+            </DashboardSection>
+
+            <div className="flex flex-col">
+              <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
+            </div>
+          </motion.div>
+        )}
       </div>
     </CalculatorPageLayout>
   );
 }
 
-function NumField({ label, value, onChange, suffix, step = 1 }: {
-  label: string; value: number; onChange: (n: number) => void;
-  suffix?: string; step?: number;
+function NumField({ label, value, onChange, onKeyDown, suffix, step = 1 }: {
+  label: string; value: number | ""; onChange: (n: number | "") => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void; suffix?: string; step?: number;
 }) {
   return (
     <div>
       <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
       <div className="mt-1 relative">
-        <Input type="number" step={step} value={value} onChange={(e) => onChange(Number(e.target.value) || 0)} className={suffix ? "pr-10" : ""} />
+        <Input type="number" step={step} value={value} onChange={(e) => {
+          const val = e.target.value;
+          onChange(val === "" ? "" : Number(val));
+        }} onKeyDown={onKeyDown} className={suffix ? "pr-10" : ""} />
         {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">{suffix}</span>}
       </div>
     </div>

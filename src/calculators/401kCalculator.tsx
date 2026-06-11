@@ -6,6 +6,8 @@ import { blogContent } from "@/data/blogContent";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
+import { Button } from "@/components/ui/button";
+import { CalculateButton } from "@/components/CalculateButton";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, BarChart, Bar, Legend
@@ -14,6 +16,7 @@ import {
   Calendar, Percent, HelpCircle, DollarSign, ArrowUpRight,
   TrendingUp, Sparkles, Sliders, Info, ShieldCheck, ChevronRight
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Four01kCalculator() {
   const calc = getCalculator("401k-calculator")!;
@@ -29,22 +32,20 @@ export function Four01kCalculator() {
   }
 
   // ----------------------------------------------------
-  // 401(K) CALCULATOR INPUT STATES
+  // 401(K) CALCULATOR INPUT STATES (Live)
   // ----------------------------------------------------
   const [currentAge, setCurrentAge] = useState(30);
   const [retirementAge, setRetirementAge] = useState(65);
-  const [currentSavings, setCurrentSavings] = useState(50000); // 401k Balance
-  const [salary, setSalary] = useState(80000);
-  const [employeeContrPct, setEmployeeContrPct] = useState(6);
-  const [employerMatchPct, setEmployerMatchPct] = useState(50);
-  const [employerLimitPct, setEmployerLimitPct] = useState(6);
-  const [salaryGrowthPct, setSalaryGrowthPct] = useState(3);
-  const [expectedReturn, setExpectedReturn] = useState(8);
-  const [inflationRate, setInflationRate] = useState(2.5);
+  const [currentSavings, setCurrentSavings] = useState<number | "">(50000); // 401k Balance
+  const [salary, setSalary] = useState<number | "">(80000);
+  const [employeeContrPct, setEmployeeContrPct] = useState<number | "">(6);
+  const [employerMatchPct, setEmployerMatchPct] = useState<number | "">(50);
+  const [employerLimitPct, setEmployerLimitPct] = useState<number | "">(6);
+  const [salaryGrowthPct, setSalaryGrowthPct] = useState<number | "">(3);
+  const [expectedReturn, setExpectedReturn] = useState<number | "">(8);
+  const [inflationRate, setInflationRate] = useState<number | "">(2.5);
 
-  // ----------------------------------------------------
-  // ADVANCED PLANNING & SCENARIOS STATES
-  // ----------------------------------------------------
+  // Advanced Planning & Scenarios
   const [inflationScenario, setInflationScenario] = useState<"conservative" | "moderate" | "aggressive">("moderate");
   const [marketPerformance, setMarketPerformance] = useState<"bear" | "average" | "bull">("average");
 
@@ -59,42 +60,49 @@ export function Four01kCalculator() {
     }
   }, [inflationScenario]);
 
+  // ----------------------------------------------------
+  // 401(K) CALCULATOR INPUT STATES (Calculated)
+  // ----------------------------------------------------
+  const [calcCurrentAge, setCalcCurrentAge] = useState(30);
+  const [calcRetirementAge, setCalcRetirementAge] = useState(65);
+  const [calcCurrentSavings, setCalcCurrentSavings] = useState(50000);
+  const [calcSalary, setCalcSalary] = useState(80000);
+  const [calcEmployeeContrPct, setCalcEmployeeContrPct] = useState(6);
+  const [calcEmployerMatchPct, setCalcEmployerMatchPct] = useState(50);
+  const [calcEmployerLimitPct, setCalcEmployerLimitPct] = useState(6);
+  const [calcSalaryGrowthPct, setCalcSalaryGrowthPct] = useState(3);
+  const [calcExpectedReturn, setCalcExpectedReturn] = useState(8);
+  const [calcInflationRate, setCalcInflationRate] = useState(2.5);
+  const [calcInflationScenario, setCalcInflationScenario] = useState<"conservative" | "moderate" | "aggressive">("moderate");
+  const [calcMarketPerformance, setCalcMarketPerformance] = useState<"bear" | "average" | "bull">("average");
+
   // Adjust returns based on market performance
   const resolvedExpectedReturn = useMemo(() => {
-    if (marketPerformance === "bear") return Math.max(0, expectedReturn - 3);
-    if (marketPerformance === "bull") return expectedReturn + 3;
-    return expectedReturn;
-  }, [marketPerformance, expectedReturn]);
-
-  // Mark calculated on changes
-  useEffect(() => {
-    markCalculated();
-  }, [
-    currentAge, retirementAge, currentSavings, salary, employeeContrPct,
-    employerMatchPct, employerLimitPct, salaryGrowthPct, resolvedExpectedReturn,
-    inflationRate
-  ]);
+    if (calcMarketPerformance === "bear") return Math.max(0, calcExpectedReturn - 3);
+    if (calcMarketPerformance === "bull") return calcExpectedReturn + 3;
+    return calcExpectedReturn;
+  }, [calcMarketPerformance, calcExpectedReturn]);
 
   // ----------------------------------------------------
   // CALCULATION LOGIC: 401(K)
   // ----------------------------------------------------
   const results401k = useMemo(() => {
-    const yearsToRetire = Math.max(0, retirementAge - currentAge);
-    let balance = currentSavings;
-    let balanceNoMatch = currentSavings;
+    const yearsToRetire = Math.max(0, calcRetirementAge - calcCurrentAge);
+    let balance = calcCurrentSavings;
+    let balanceNoMatch = calcCurrentSavings;
     let totalEmployeeContributions = 0;
     let totalEmployerContributions = 0;
-    let currentSalary = salary;
+    let currentSalary = calcSalary;
     
     const growthData: any[] = [];
 
     for (let year = 1; year <= yearsToRetire; year++) {
       const annualSalary = currentSalary;
-      const employeeAnnualContrib = annualSalary * (employeeContrPct / 100);
+      const employeeAnnualContrib = annualSalary * (calcEmployeeContrPct / 100);
       
       // Employer match matching cents on employee percentage limit
-      const matchLimitPercentage = Math.min(employeeContrPct, employerLimitPct);
-      const employerAnnualContrib = annualSalary * (matchLimitPercentage / 100) * (employerMatchPct / 100);
+      const matchLimitPercentage = Math.min(calcEmployeeContrPct, calcEmployerLimitPct);
+      const employerAnnualContrib = annualSalary * (matchLimitPercentage / 100) * (calcEmployerMatchPct / 100);
 
       // Monthly compounding
       const monthlyRate = resolvedExpectedReturn / 100 / 12;
@@ -109,25 +117,25 @@ export function Four01kCalculator() {
       totalEmployeeContributions += employeeAnnualContrib;
       totalEmployerContributions += employerAnnualContrib;
 
-      const totalContributions = currentSavings + totalEmployeeContributions + totalEmployerContributions;
+      const totalContributions = calcCurrentSavings + totalEmployeeContributions + totalEmployerContributions;
       const totalGrowth = balance - totalContributions;
 
       growthData.push({
-        age: currentAge + year,
+        age: calcCurrentAge + year,
         Contributions: Math.round(totalContributions),
         Growth: Math.round(totalGrowth),
         Balance: Math.round(balance)
       });
 
       // Grow salary annually
-      currentSalary *= (1 + salaryGrowthPct / 100);
+      currentSalary *= (1 + calcSalaryGrowthPct / 100);
     }
 
-    const inflationAdjusted = balance / Math.pow(1 + inflationRate / 100, yearsToRetire);
-    const investmentGrowth = balance - (currentSavings + totalEmployeeContributions + totalEmployerContributions);
+    const inflationAdjusted = balance / Math.pow(1 + calcInflationRate / 100, yearsToRetire);
+    const investmentGrowth = balance - (calcCurrentSavings + totalEmployeeContributions + totalEmployerContributions);
 
     // Readiness score dynamically mapped based on balance target (standard 8x salary benchmark at retirement)
-    const targetBenchmark = salary * 8;
+    const targetBenchmark = calcSalary * 8;
     const readinessScore = Math.min(100, Math.round((balance / Math.max(1, targetBenchmark)) * 100));
 
     return {
@@ -141,8 +149,8 @@ export function Four01kCalculator() {
       growthData
     };
   }, [
-    currentAge, retirementAge, currentSavings, salary, employeeContrPct,
-    employerMatchPct, employerLimitPct, salaryGrowthPct, resolvedExpectedReturn, inflationRate
+    calcCurrentAge, calcRetirementAge, calcCurrentSavings, calcSalary, calcEmployeeContrPct,
+    calcEmployerMatchPct, calcEmployerLimitPct, calcSalaryGrowthPct, resolvedExpectedReturn, calcInflationRate
   ]);
 
   // ----------------------------------------------------
@@ -160,8 +168,8 @@ export function Four01kCalculator() {
       list.push(`🎁 Free Money Captured: You will secure ${formatCurrency(employerContributions)} in total employer matched contributions.`);
     }
 
-    if (employeeContrPct < employerLimitPct) {
-      list.push(`💡 Contribution Tip: You are contributing ${employeeContrPct}%, but your employer matches up to ${employerLimitPct}%. Raise your savings to ${employerLimitPct}% to capture all available matched capital.`);
+    if (calcEmployeeContrPct < calcEmployerLimitPct) {
+      list.push(`💡 Contribution Tip: You are contributing ${calcEmployeeContrPct}%, but your employer matches up to ${calcEmployerLimitPct}%. Raise your savings to ${calcEmployerLimitPct}% to capture all available matched capital.`);
     } else {
       list.push(`🌟 Outstanding: You are fully maximizing your employer's matched contributions.`);
     }
@@ -170,7 +178,7 @@ export function Four01kCalculator() {
     list.push(`📈 Compound Acceleration: Raising your employee contribution by just 1% could compound an extra ${formatCurrency(powerOfOne)} at retirement.`);
 
     return list;
-  }, [results401k, employeeContrPct, employerLimitPct]);
+  }, [results401k, calcEmployeeContrPct, calcEmployerLimitPct]);
 
   // ----------------------------------------------------
   // DYNAMIC DOUGHNUT GRAPH DATA (Breakdown)
@@ -179,12 +187,12 @@ export function Four01kCalculator() {
     if (!results401k) return [];
     const { employeeContributions, employerContributions, investmentGrowth } = results401k;
     return [
-      { name: "Initial Balance", value: currentSavings, color: "#1a1a2e" },
+      { name: "Initial Balance", value: calcCurrentSavings, color: "#1a1a2e" },
       { name: "Employee Contributions", value: employeeContributions, color: "#0f9e75" },
       { name: "Employer Match", value: employerContributions, color: "#3b82f6" },
       { name: "Investment Growth", value: investmentGrowth, color: "#d97706" }
     ];
-  }, [results401k, currentSavings]);
+  }, [results401k, calcCurrentSavings]);
 
   // ----------------------------------------------------
   // EMPLOYER MATCH IMPACT BAR CHART DATA
@@ -217,15 +225,15 @@ export function Four01kCalculator() {
       siteName: PDF_SITE_NAME,
       siteUrl: PDF_SITE_URL,
       inputs: [
-        { label: "Current Age", value: `${currentAge} years` },
-        { label: "Retirement Age", value: `${retirementAge} years` },
-        { label: "Annual Salary", value: formatCurrency(salary) },
-        { label: "Employee Contribution", value: `${employeeContrPct}%` },
-        { label: "Employer Match Ratio", value: `${employerMatchPct}%` },
-        { label: "Employer Match Limit", value: `${employerLimitPct}%` },
-        { label: "Salary Growth Rate", value: `${salaryGrowthPct}%` },
-        { label: "Expected Market Return", value: `${resolvedExpectedReturn}%` },
-        { label: "Inflation Rate", value: `${inflationRate}%` }
+        { label: "Current Age", value: `${calcCurrentAge} years` },
+        { label: "Retirement Age", value: `${calcRetirementAge} years` },
+        { label: "Annual Salary", value: formatCurrency(calcSalary) },
+        { label: "Employee Contribution", value: `${calcEmployeeContrPct}%` },
+        { label: "Employer Match Ratio", value: `${calcEmployerMatchPct}%` },
+        { label: "Employer Match Limit", value: `${calcEmployerLimitPct}%` },
+        { label: "Salary Growth Rate", value: `${calcSalaryGrowthPct}%` },
+        { label: "Expected Market Return", value: `${calcExpectedReturn}%` },
+        { label: "Inflation Rate", value: `${calcInflationRate}%` }
       ],
       results: [
         { label: "Total Retirement 401(k) Balance", value: formatCurrency(totalRetirementBalance), highlight: true },
@@ -235,7 +243,7 @@ export function Four01kCalculator() {
         { label: "Inflation-Adjusted Value", value: formatCurrency(inflationAdjustedValue) },
         { label: "Retirement Readiness Score", value: `${readinessScore}/100` }
       ],
-      summary: `401(k) Contribution Matching & Growth report compiled on CalcZen. With an employee savings rate of ${employeeContrPct}% and employer limit of ${employerLimitPct}%, your 401(k) account balance is projected to compound to a nominal value of ${formatCurrency(totalRetirementBalance)} (Inflation-Adjusted: ${formatCurrency(inflationAdjustedValue)}) by age ${retirementAge}.`,
+      summary: `401(k) Contribution Matching & Growth report compiled on CalcZen. With an employee savings rate of ${calcEmployeeContrPct}% and employer limit of ${calcEmployerLimitPct}%, your 401(k) account balance is projected to compound to a nominal value of ${formatCurrency(totalRetirementBalance)} (Inflation-Adjusted: ${formatCurrency(inflationAdjustedValue)}) by age ${calcRetirementAge}.`,
       tableData: results401k.growthData.length > 0 ? {
         title: "ANNUAL 401(K) GROWTH TRANSITIONS",
         headers: ["Age", "Total Contributions", "Investment Growth", "Projected Balance"],
@@ -248,10 +256,73 @@ export function Four01kCalculator() {
       } : null
     };
   }, [
-    hasResult, currentAge, retirementAge, currentSavings, salary, employeeContrPct,
-    employerMatchPct, employerLimitPct, salaryGrowthPct, resolvedExpectedReturn,
-    inflationRate, results401k
+    hasResult, calcCurrentAge, calcRetirementAge, calcCurrentSavings, calcSalary, calcEmployeeContrPct,
+    calcEmployerMatchPct, calcEmployerLimitPct, calcSalaryGrowthPct, calcExpectedReturn,
+    calcInflationRate, results401k
   ]);
+
+  const isButtonDisabled = 
+    currentAge === "" || retirementAge === "" || currentSavings === "" ||
+    salary === "" || employeeContrPct === "" || employerMatchPct === "" ||
+    employerLimitPct === "" || salaryGrowthPct === "" || expectedReturn === "" ||
+    inflationRate === "" ||
+    Number(currentAge) <= 0 || Number(retirementAge) <= Number(currentAge) ||
+    Number(currentSavings) < 0 || Number(salary) <= 0 ||
+    Number(employeeContrPct) < 0 || Number(employerMatchPct) < 0 ||
+    Number(employerLimitPct) < 0 || Number(salaryGrowthPct) < 0 ||
+    Number(expectedReturn) < 0 || Number(inflationRate) < 0;
+
+  const handleCalculate = () => {
+    if (isButtonDisabled) return;
+    setCalcCurrentAge(Number(currentAge));
+    setCalcRetirementAge(Number(retirementAge));
+    setCalcCurrentSavings(Number(currentSavings));
+    setCalcSalary(Number(salary));
+    setCalcEmployeeContrPct(Number(employeeContrPct));
+    setCalcEmployerMatchPct(Number(employerMatchPct));
+    setCalcEmployerLimitPct(Number(employerLimitPct));
+    setCalcSalaryGrowthPct(Number(salaryGrowthPct));
+    setCalcExpectedReturn(Number(expectedReturn));
+    setCalcInflationRate(Number(inflationRate));
+    setCalcInflationScenario(inflationScenario);
+    setCalcMarketPerformance(marketPerformance);
+    markCalculated();
+  };
+
+  const handleReset = () => {
+    setCurrentAge(30);
+    setRetirementAge(65);
+    setCurrentSavings(50000);
+    setSalary(80000);
+    setEmployeeContrPct(6);
+    setEmployerMatchPct(50);
+    setEmployerLimitPct(6);
+    setSalaryGrowthPct(3);
+    setExpectedReturn(8);
+    setInflationRate(2.5);
+    setInflationScenario("moderate");
+    setMarketPerformance("average");
+
+    setCalcCurrentAge(30);
+    setCalcRetirementAge(65);
+    setCalcCurrentSavings(50000);
+    setCalcSalary(80000);
+    setCalcEmployeeContrPct(6);
+    setCalcEmployerMatchPct(50);
+    setCalcEmployerLimitPct(6);
+    setCalcSalaryGrowthPct(3);
+    setCalcExpectedReturn(8);
+    setCalcInflationRate(2.5);
+    setCalcInflationScenario("moderate");
+    setCalcMarketPerformance("average");
+    resetCalculated();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !isButtonDisabled) {
+      handleCalculate();
+    }
+  };
 
   return (
     <CalculatorPageLayout
@@ -268,275 +339,278 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
       ]}
       blog={<CalculatorBlog content={blogContent["401k"]} />}
     >
-      <div className="space-y-6">
-
-        {/* MAIN SUITE DASHBOARD GRID */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="flex flex-col gap-6">
+        {/* LEFT COLUMN: FINANCIAL INPUTS */}
+        <div className="calc-input-column space-y-6">
           
-          {/* LEFT COLUMN: FINANCIAL INPUTS */}
-          <div className="lg:col-span-7 space-y-6">
-            
-            {/* Core Inputs Card */}
-            <div className="bg-card/20 border border-border/70 rounded-2xl p-5 sm:p-6 shadow-card">
-              <h3 className="text-base font-bold text-foreground mb-5 flex items-center gap-2 select-none border-b border-border/20 pb-3">
-                <Sliders className="h-4.5 w-4.5 text-accent" />
-                401(k) Growth Parameters
-              </h3>
+          {/* Core Inputs Card */}
+          <div className="bg-card/20 border border-border/70 rounded-2xl p-5 sm:p-6 shadow-card">
+            <h3 className="text-base font-bold text-foreground mb-5 flex items-center gap-2 select-none border-b border-border/20 pb-3">
+              <Sliders className="h-4.5 w-4.5 text-accent" />
+              401(k) Growth Parameters
+            </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-6.5">
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold text-muted-foreground flex items-center justify-between">
-                    <span>Current Age</span>
-                    <span className="text-foreground">{currentAge} yrs</span>
-                  </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-6.5">
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-bold text-muted-foreground flex items-center justify-between">
+                  <span>Current Age</span>
+                  <span className="text-foreground">{currentAge} yrs</span>
+                </label>
+                <input
+                  type="range" min="18" max="80" value={currentAge}
+                  onChange={(e) => setCurrentAge(Number(e.target.value))}
+                  className="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-muted"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-bold text-muted-foreground flex items-center justify-between">
+                  <span>Target Retirement Age</span>
+                  <span className="text-foreground">{retirementAge} yrs</span>
+                </label>
+                <input
+                  type="range" min={Math.max(18, currentAge + 1)} max="95" value={retirementAge}
+                  onChange={(e) => setRetirementAge(Number(e.target.value))}
+                  className="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-muted"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-muted-foreground">Current 401(k) Balance</label>
+                <div className="relative">
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
                   <input
-                    type="range" min="18" max="80" value={currentAge}
-                    onChange={(e) => setCurrentAge(Number(e.target.value))}
-                    className="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-muted"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold text-muted-foreground flex items-center justify-between">
-                    <span>Target Retirement Age</span>
-                    <span className="text-foreground">{retirementAge} yrs</span>
-                  </label>
-                  <input
-                    type="range" min={Math.max(18, currentAge + 1)} max="95" value={retirementAge}
-                    onChange={(e) => setRetirementAge(Number(e.target.value))}
-                    className="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-muted"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-muted-foreground">Current 401(k) Balance</label>
-                  <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
-                    <input
-                      type="number" value={currentSavings}
-                      onChange={(e) => setCurrentSavings(Math.max(0, Number(e.target.value)))}
-                      className="w-full h-11 pl-8 pr-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-muted-foreground">Annual Salary</label>
-                  <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
-                    <input
-                      type="number" value={salary}
-                      onChange={(e) => setSalary(Math.max(0, Number(e.target.value)))}
-                      className="w-full h-11 pl-8 pr-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-muted-foreground">Employee Contribution (%)</label>
-                  <input
-                    type="number" value={employeeContrPct}
-                    onChange={(e) => setEmployeeContrPct(Math.max(0, Number(e.target.value)))}
-                    className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-muted-foreground">Employer Match Ratio (%)</label>
-                  <input
-                    type="number" value={employerMatchPct}
-                    onChange={(e) => setEmployerMatchPct(Math.max(0, Number(e.target.value)))}
-                    className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-muted-foreground">Employer Match Limit (%)</label>
-                  <input
-                    type="number" value={employerLimitPct}
-                    onChange={(e) => setEmployerLimitPct(Math.max(0, Number(e.target.value)))}
-                    className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-muted-foreground">Annual Salary Growth (%)</label>
-                  <input
-                    type="number" value={salaryGrowthPct}
-                    onChange={(e) => setSalaryGrowthPct(Math.max(0, Number(e.target.value)))}
-                    className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-muted-foreground">Expected Investment Return (%)</label>
-                  <input
-                    type="number" step="0.1" value={expectedReturn}
-                    onChange={(e) => setExpectedReturn(Math.max(0, Number(e.target.value)))}
-                    className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-muted-foreground">Inflation Rate (%)</label>
-                  <input
-                    type="number" step="0.1" value={inflationRate}
-                    onChange={(e) => setInflationRate(Math.max(0, Number(e.target.value)))}
-                    className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
+                    type="number" value={currentSavings}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setCurrentSavings(val === "" ? "" : Math.max(0, Number(val)));
+                    }}
+                    onKeyDown={handleKeyDown}
+                    className="w-full h-11 pl-8 pr-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
                   />
                 </div>
               </div>
-            </div>
 
-            {/* 401(K) GROWTH PROJECTION CHART */}
-            <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
-              <h3 className="text-base font-bold text-foreground mb-4.5 flex items-center gap-2 border-b border-border/20 pb-3">
-                <TrendingUp className="h-4.5 w-4.5 text-accent" />
-                401(k) Growth Projection
-              </h3>
-              <div className="h-64 sm:h-76 w-full pr-4 text-xs font-semibold">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={results401k?.growthData}>
-                    <defs>
-                      <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#d97706" stopOpacity={0.65}/>
-                        <stop offset="95%" stopColor="#d97706" stopOpacity={0.0}/>
-                      </linearGradient>
-                      <linearGradient id="colorContrib" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#0f9e75" stopOpacity={0.65}/>
-                        <stop offset="95%" stopColor="#0f9e75" stopOpacity={0.0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" strokeOpacity={0.3} />
-                    <XAxis dataKey="age" height={50} label={{ value: "Age", position: "insideBottom", offset: 0, fill: "var(--color-muted-foreground)", fontSize: 11, fontWeight: 600 }} stroke="var(--color-muted-foreground)" />
-                    <YAxis tickFormatter={(val) => `$${val/1000}k`} stroke="var(--color-muted-foreground)" />
-                    <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} labelStyle={{ color: "var(--color-foreground)" }} />
-                    <Legend />
-                    <Area type="monotone" dataKey="Growth" stroke="#d97706" strokeWidth={2.5} fillOpacity={1} fill="url(#colorGrowth)" />
-                    <Area type="monotone" dataKey="Contributions" stroke="#0f9e75" strokeWidth={2.5} fillOpacity={1} fill="url(#colorContrib)" />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* EMPLOYER MATCH IMPACT CHART */}
-            <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
-              <h3 className="text-base font-bold text-foreground mb-4.5 flex items-center gap-2 border-b border-border/20 pb-3">
-                <ArrowUpRight className="h-4.5 w-4.5 text-accent" />
-                Employer Match Impact at Retirement
-              </h3>
-              <div className="h-64 sm:h-72 w-full pr-4 text-xs font-semibold">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={matchImpactData} barSize={40}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" strokeOpacity={0.3} />
-                    <XAxis dataKey="name" stroke="var(--color-muted-foreground)" />
-                    <YAxis tickFormatter={(val) => `$${val/1000}k`} stroke="var(--color-muted-foreground)" />
-                    <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} itemStyle={{ color: "var(--color-foreground)" }} labelStyle={{ color: "var(--color-foreground)" }} />
-                    <Bar dataKey="Balance" radius={[6, 6, 0, 0]}>
-                      {matchImpactData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* ADVANCED PLANNING & SCENARIOS */}
-            <div className="bg-card/20 border border-border/70 rounded-2xl p-5 sm:p-6 shadow-card">
-              <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2 select-none border-b border-border/20 pb-3">
-                <Sliders className="h-4.5 w-4.5 text-accent" />
-                Advanced Strategic Scenarios
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5.5">
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold text-muted-foreground">Inflation Plan Scenario</label>
-                  <div className="flex gap-2">
-                    {["conservative", "moderate", "aggressive"].map((scen) => (
-                      <button
-                        key={scen} onClick={() => setInflationScenario(scen as any)}
-                        type="button"
-                        className={`flex-1 h-9 rounded-lg text-xs font-bold border transition-all uppercase ${
-                          inflationScenario === scen
-                            ? "bg-accent text-accent-foreground border-accent shadow-soft"
-                            : "bg-muted/10 text-muted-foreground border-border/30 hover:bg-muted/30"
-                        }`}
-                      >
-                        {scen.slice(0, 4)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold text-muted-foreground">Market Performance Scenario</label>
-                  <div className="flex gap-2">
-                    {["bear", "average", "bull"].map((perf) => (
-                      <button
-                        key={perf} onClick={() => setMarketPerformance(perf as any)}
-                        type="button"
-                        className={`flex-1 h-9 rounded-lg text-xs font-bold border transition-all uppercase ${
-                          marketPerformance === perf
-                            ? "bg-accent text-accent-foreground border-accent shadow-soft"
-                            : "bg-muted/10 text-muted-foreground border-border/30 hover:bg-muted/30"
-                        }`}
-                      >
-                        {perf}
-                      </button>
-                    ))}
-                  </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-muted-foreground">Annual Salary</label>
+                <div className="relative">
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
+                  <input
+                    type="number" value={salary}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setSalary(val === "" ? "" : Math.max(0, Number(val)));
+                    }}
+                    onKeyDown={handleKeyDown}
+                    className="w-full h-11 pl-8 pr-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
+                  />
                 </div>
               </div>
-            </div>
 
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-muted-foreground">Employee Contribution (%)</label>
+                <input
+                  type="number" value={employeeContrPct}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setEmployeeContrPct(val === "" ? "" : Math.max(0, Number(val)));
+                  }}
+                  onKeyDown={handleKeyDown}
+                  className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-muted-foreground">Employer Match Ratio (%)</label>
+                <input
+                  type="number" value={employerMatchPct}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setEmployerMatchPct(val === "" ? "" : Math.max(0, Number(val)));
+                  }}
+                  onKeyDown={handleKeyDown}
+                  className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-muted-foreground">Employer Match Limit (%)</label>
+                <input
+                  type="number" value={employerLimitPct}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setEmployerLimitPct(val === "" ? "" : Math.max(0, Number(val)));
+                  }}
+                  onKeyDown={handleKeyDown}
+                  className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-muted-foreground">Annual Salary Growth (%)</label>
+                <input
+                  type="number" value={salaryGrowthPct}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setSalaryGrowthPct(val === "" ? "" : Math.max(0, Number(val)));
+                  }}
+                  onKeyDown={handleKeyDown}
+                  className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-muted-foreground">Expected Investment Return (%)</label>
+                <input
+                  type="number" step="0.1" value={expectedReturn}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setExpectedReturn(val === "" ? "" : Math.max(0, Number(val)));
+                  }}
+                  onKeyDown={handleKeyDown}
+                  className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-muted-foreground">Inflation Rate (%)</label>
+                <input
+                  type="number" step="0.1" value={inflationRate}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setInflationRate(val === "" ? "" : Math.max(0, Number(val)));
+                  }}
+                  onKeyDown={handleKeyDown}
+                  className="w-full h-11 px-4 bg-muted/40 border border-border/30 rounded-lg text-sm text-foreground font-semibold focus:outline-none focus:border-accent"
+                />
+              </div>
+            </div>
           </div>
 
-          {/* RIGHT COLUMN: STICKY STYLED RESULTS PANEL */}
-          <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
-            
-            {/* Visual Readiness Score Index & Core Payout Metric */}
-            <div className="bg-card border border-border/80 rounded-2xl p-5 sm:p-6 shadow-glow relative overflow-hidden">
-              <div className="absolute right-0 top-0 h-16 w-16 bg-accent/5 rounded-bl-full flex items-center justify-center">
-                <Sparkles className="h-6 w-6 text-accent/25" />
+          {/* ADVANCED PLANNING & SCENARIOS */}
+          <div className="bg-card/20 border border-border/70 rounded-2xl p-5 sm:p-6 shadow-card">
+            <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2 select-none border-b border-border/20 pb-3">
+              <Sliders className="h-4.5 w-4.5 text-accent" />
+              Advanced Strategic Scenarios
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5.5">
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-bold text-muted-foreground">Inflation Plan Scenario</label>
+                <div className="flex gap-2">
+                  {["conservative", "moderate", "aggressive"].map((scen) => (
+                    <button
+                      key={scen} onClick={() => setInflationScenario(scen as any)}
+                      type="button"
+                      className={`flex-1 h-9 rounded-lg text-xs font-bold border transition-all uppercase ${
+                        inflationScenario === scen
+                          ? "bg-accent text-accent-foreground border-accent shadow-soft"
+                          : "bg-muted/10 text-muted-foreground border-border/30 hover:bg-muted/30"
+                      }`}
+                    >
+                      {scen.slice(0, 4)}
+                    </button>
+                  ))}
+                </div>
               </div>
-              
-              <h3 className="text-xs font-extrabold tracking-widest text-muted-foreground uppercase mb-3.5 flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-accent" />
-                Retirement Readiness Score
-              </h3>
 
-              {(() => {
-                const score = results401k?.readinessScore || 0;
-                let colorClass = "text-destructive border-destructive/20 bg-destructive/10";
-                let statusText = "At Risk";
-                if (score >= 80) {
-                  colorClass = "text-emerald-500 border-emerald-500/20 bg-emerald-500/10";
-                  statusText = "On Track";
-                } else if (score >= 50) {
-                  colorClass = "text-amber-500 border-amber-500/20 bg-amber-500/10";
-                  statusText = "Needs Improvement";
-                }
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-bold text-muted-foreground">Market Performance Scenario</label>
+                <div className="flex gap-2">
+                  {["bear", "average", "bull"].map((perf) => (
+                    <button
+                      key={perf} onClick={() => setMarketPerformance(perf as any)}
+                      type="button"
+                      className={`flex-1 h-9 rounded-lg text-xs font-bold border transition-all uppercase ${
+                        marketPerformance === perf
+                          ? "bg-accent text-accent-foreground border-accent shadow-soft"
+                          : "bg-muted/10 text-muted-foreground border-border/30 hover:bg-muted/30"
+                      }`}
+                    >
+                      {perf}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
 
-                return (
-                  <div className="flex items-center gap-4 mb-5">
-                    <div className="h-20 w-20 sm:h-22 sm:w-22 rounded-full border-4 border-muted flex flex-col items-center justify-center relative">
-                      <span className="text-xl sm:text-2xl font-extrabold text-foreground">{score}%</span>
-                    </div>
-                    <div>
-                      <div className={`px-3 py-1 text-[11px] font-extrabold border rounded-lg uppercase tracking-wider tracking-tight ${colorClass}`}>
-                        {statusText}
+          {/* ACTION BUTTONS */}
+          <div className="flex flex-row gap-3 mt-4">
+            <CalculateButton
+              category="finance"
+              className="flex-1 min-h-11"
+              disabled={isButtonDisabled}
+              onClick={handleCalculate}
+            >
+              Calculate
+            </CalculateButton>
+            <Button
+              variant="outline"
+              className="flex-1 min-h-11"
+              onClick={handleReset}
+            >
+              Reset
+            </Button>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: STICKY STYLED RESULTS PANEL (Revealed after calculation) */}
+        {hasResult && results401k && (
+          <motion.div
+            initial={{ opacity: 0, height: 0, scale: 0.95, y: 15 }}
+            animate={{ opacity: 1, height: "auto", scale: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            className="mt-6 pt-6 border-t border-border space-y-6 overflow-hidden relative"
+          >
+            <div 
+              className="absolute inset-0 pointer-events-none blur-3xl opacity-15 -z-10"
+              style={{
+                background: "radial-gradient(circle at 50% 50%, #0ea5e9, transparent 65%)"
+              }}
+            />
+            <div>
+              <h2 className="text-xl font-bold text-foreground">Results</h2>
+              <div className="mt-3 bg-card border border-border/80 rounded-2xl p-5 sm:p-6 shadow-glow relative overflow-hidden">
+                <div className="absolute right-0 top-0 h-16 w-16 bg-accent/5 rounded-bl-full flex items-center justify-center">
+                  <Sparkles className="h-6 w-6 text-accent/25" />
+                </div>
+                
+                <h3 className="text-xs font-extrabold tracking-widest text-muted-foreground uppercase mb-3.5 flex items-center gap-1.5">
+                  <ShieldCheck className="h-4 w-4 text-accent" />
+                  Retirement Readiness Score
+                </h3>
+
+                {(() => {
+                  const score = results401k.readinessScore;
+                  let colorClass = "text-destructive border-destructive/20 bg-destructive/10";
+                  let statusText = "At Risk";
+                  if (score >= 80) {
+                    colorClass = "text-emerald-500 border-emerald-500/20 bg-emerald-500/10";
+                    statusText = "On Track";
+                  } else if (score >= 50) {
+                    colorClass = "text-amber-500 border-amber-500/20 bg-amber-500/10";
+                    statusText = "Needs Improvement";
+                  }
+
+                  return (
+                    <div className="flex items-center gap-4 mb-5">
+                      <div className="h-20 w-20 sm:h-22 sm:w-22 rounded-full border-4 border-muted flex flex-col items-center justify-center relative">
+                        <span className="text-xl sm:text-2xl font-extrabold text-foreground">{score}%</span>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-2 max-w-[13rem]">
-                        Simulated score based on your active contributions, matched caps, and scenario constraints.
-                      </p>
+                      <div>
+                        <div className={`px-3 py-1 text-[11px] font-extrabold border rounded-lg uppercase tracking-wider tracking-tight ${colorClass}`}>
+                          {statusText}
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-2 max-w-[13rem]">
+                          Simulated score based on your active contributions, matched caps, and scenario constraints.
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                );
-              })()}
+                  );
+                })()}
 
-              {/* 401(K) CORE METRICS */}
-              {results401k && (
+                {/* 401(K) CORE METRICS */}
                 <div className="space-y-3.5 border-t border-border/20 pt-4.5">
                   <div className="flex justify-between items-center py-0.5">
                     <span className="text-xs font-bold text-muted-foreground">Total Personal Contribution</span>
@@ -559,77 +633,128 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
                     <span className="text-sm font-extrabold text-accent/90">{formatCurrency(results401k.inflationAdjustedValue)}</span>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* CONTRIBUTION VS GROWTH BREAKDOWN PIE CHART */}
-            <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
-              <h3 className="text-base font-bold text-foreground mb-4.5 flex items-center gap-2 border-b border-border/20 pb-3">
-                <Info className="h-4.5 w-4.5 text-accent" />
-                Contribution vs Growth Breakdown
-              </h3>
-              <div className="h-56 w-full flex items-center justify-center relative">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={doughnutData}
-                      cx="50%" cy="50%"
-                      innerRadius={55} outerRadius={80}
-                      paddingAngle={4}
-                      dataKey="value"
-                    >
-                      {doughnutData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} itemStyle={{ color: "var(--color-foreground)" }} labelStyle={{ color: "var(--color-foreground)" }} wrapperStyle={{ zIndex: 50 }} />
-                  </PieChart>
-                </ResponsiveContainer>
-                {/* Center Text Indicator */}
-                <div className="absolute flex flex-col items-center justify-center pointer-events-none select-none z-0">
-                  <span className="text-[10px] uppercase tracking-wider font-extrabold text-muted-foreground">Balance</span>
-                  <span className="text-base font-extrabold text-foreground">
-                    {formatCurrency(results401k?.totalRetirementBalance || 0)}
-                  </span>
+            <div>
+              <h3 className="text-base font-semibold text-foreground mb-3">Contribution vs Growth Breakdown</h3>
+              <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
+                <div className="h-56 w-full flex items-center justify-center relative">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={doughnutData}
+                        cx="50%" cy="50%"
+                        innerRadius={55} outerRadius={80}
+                        paddingAngle={4}
+                        dataKey="value"
+                      >
+                        {doughnutData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} itemStyle={{ color: "var(--color-foreground)" }} labelStyle={{ color: "var(--color-foreground)" }} wrapperStyle={{ zIndex: 50 }} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                  {/* Center Text Indicator */}
+                  <div className="absolute flex flex-col items-center justify-center pointer-events-none select-none z-0">
+                    <span className="text-[10px] uppercase tracking-wider font-extrabold text-muted-foreground">Balance</span>
+                    <span className="text-base font-extrabold text-foreground">
+                      {formatCurrency(results401k.totalRetirementBalance)}
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Legend grid */}
+                <div className="grid grid-cols-2 gap-2 text-[10px] font-bold text-muted-foreground mt-3">
+                  {doughnutData.map((item) => (
+                    <div key={item.name} className="flex items-center gap-1.5 truncate">
+                      <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                      <span className="truncate">{item.name}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-              
-              {/* Legend grid */}
-              <div className="grid grid-cols-2 gap-2 text-[10px] font-bold text-muted-foreground mt-3">
-                {doughnutData.map((item) => (
-                  <div key={item.name} className="flex items-center gap-1.5 truncate">
-                    <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                    <span className="truncate">{item.name}</span>
-                  </div>
-                ))}
+            </div>
+
+            {/* 401(K) GROWTH PROJECTION CHART */}
+            <div>
+              <h3 className="text-base font-semibold text-foreground mb-3">Visualization (Growth Projection)</h3>
+              <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
+                <div className="h-64 sm:h-76 w-full pr-4 text-xs font-semibold">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={results401k.growthData}>
+                      <defs>
+                        <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#d97706" stopOpacity={0.65}/>
+                          <stop offset="95%" stopColor="#d97706" stopOpacity={0.0}/>
+                        </linearGradient>
+                        <linearGradient id="colorContrib" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#0f9e75" stopOpacity={0.65}/>
+                          <stop offset="95%" stopColor="#0f9e75" stopOpacity={0.0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" strokeOpacity={0.3} />
+                      <XAxis dataKey="age" height={50} label={{ value: "Age", position: "insideBottom", offset: 0, fill: "var(--color-muted-foreground)", fontSize: 11, fontWeight: 600 }} stroke="var(--color-muted-foreground)" />
+                      <YAxis tickFormatter={(val) => `$${val/1000}k`} stroke="var(--color-muted-foreground)" />
+                      <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} labelStyle={{ color: "var(--color-foreground)" }} />
+                      <Legend />
+                      <Area type="monotone" dataKey="Growth" stroke="#d97706" strokeWidth={2.5} fillOpacity={1} fill="url(#colorGrowth)" />
+                      <Area type="monotone" dataKey="Contributions" stroke="#0f9e75" strokeWidth={2.5} fillOpacity={1} fill="url(#colorContrib)" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
+
+            {/* EMPLOYER MATCH IMPACT CHART */}
+            <div>
+              <h3 className="text-base font-semibold text-foreground mb-3">Visualization (Employer Match Impact)</h3>
+              <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
+                <div className="h-64 sm:h-72 w-full pr-4 text-xs font-semibold">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={matchImpactData} barSize={40}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" strokeOpacity={0.3} />
+                      <XAxis dataKey="name" stroke="var(--color-muted-foreground)" />
+                      <YAxis tickFormatter={(val) => `$${val/1000}k`} stroke="var(--color-muted-foreground)" />
+                      <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} itemStyle={{ color: "var(--color-foreground)" }} labelStyle={{ color: "var(--color-foreground)" }} />
+                      <Bar dataKey="Balance" radius={[6, 6, 0, 0]}>
+                        {matchImpactData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             </div>
 
             {/* DYNAMIC READABLE INSIGHTS METRICS */}
-            <div className="bg-card/20 border border-border/70 rounded-2xl p-5 shadow-card">
-              <h3 className="text-sm font-bold text-foreground mb-4.5 flex items-center gap-2 border-b border-border/20 pb-3 select-none">
-                <Sparkles className="h-4 w-4 text-accent" />
-                401(k) Growth Advisory & Insights
-              </h3>
-              <ul className="space-y-3">
-                {insights.map((insight, idx) => (
-                  <li key={idx} className="flex gap-2.5 text-xs font-semibold leading-relaxed text-muted-foreground">
-                    <ChevronRight className="h-4 w-4 text-accent shrink-0 mt-0.5" />
-                    <span>{insight}</span>
-                  </li>
-                ))}
-              </ul>
+            <div>
+              <h3 className="text-base font-semibold text-foreground mb-3">Insights</h3>
+              <div className="bg-card/20 border border-border/70 rounded-2xl p-5 shadow-card">
+                <h3 className="text-sm font-bold text-foreground mb-4.5 flex items-center gap-2 border-b border-border/20 pb-3 select-none">
+                  <Sparkles className="h-4 w-4 text-accent" />
+                  401(k) Growth Advisory & Insights
+                </h3>
+                <ul className="space-y-3">
+                  {insights.map((insight, idx) => (
+                    <li key={idx} className="flex gap-2.5 text-xs font-semibold leading-relaxed text-muted-foreground">
+                      <ChevronRight className="h-4 w-4 text-accent shrink-0 mt-0.5" />
+                      <span>{insight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             {/* PDF Report Exporters */}
-            <div className="bg-card/20 border border-border/70 rounded-2xl p-5 shadow-card">
+            <div className="flex flex-col">
               <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
             </div>
-
-          </div>
-
-        </div>
-
+          </motion.div>
+        )}
       </div>
     </CalculatorPageLayout>
   );

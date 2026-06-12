@@ -5,6 +5,7 @@ import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { blogContent } from "@/data/blogContent";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { useTheme } from "@/hooks/use-theme";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
 import { 
   getStandardCalculatorHistory, 
@@ -12,7 +13,7 @@ import {
   clearStandardCalculatorHistory, 
   type HistoryItem 
 } from "@/utils/standardCalculatorHistory";
-import { Calendar, Trash2, RotateCcw, HelpCircle, Delete } from "lucide-react";
+import { Calendar, Trash2, RotateCcw, HelpCircle, Delete, Clock, Copy, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Safe mathematical parser supporting advanced percentage calculations
@@ -57,6 +58,7 @@ function parseAndEvaluate(expr: string): string {
 
 export function StandardCalculator() {
   const calc = getCalculator("standard-calculator")!;
+  const { isDark } = useTheme();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
   
   // In-memory sync state
@@ -67,10 +69,17 @@ export function StandardCalculator() {
   const [equation, setEquation] = useState("");
   const [isResetOnNext, setIsResetOnNext] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const numberKeyClass = "h-12 rounded-2xl text-sm sm:text-base font-semibold transition-all duration-200 ease-out active:scale-[0.97] bg-white border border-[rgba(15,23,42,0.06)] text-slate-900 shadow-[0_2px_8px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] hover:scale-[1.01] hover:shadow-[0_4px_12px_rgba(15,23,42,0.1)] dark:bg-muted/20 dark:border-border/30 dark:text-foreground dark:hover:bg-muted/40"
-  const operatorKeyClass = "h-12 rounded-2xl text-base font-bold transition-all duration-200 ease-out active:scale-[0.97] bg-white border border-accent/30 text-accent shadow-[0_2px_8px_rgba(56,189,248,0.12)] hover:-translate-y-[2px] hover:scale-[1.01] hover:bg-accent/10 hover:shadow-[0_4px_14px_rgba(56,189,248,0.16)] dark:bg-accent/15 dark:border-accent/25 dark:text-accent dark:hover:bg-accent dark:hover:text-accent-foreground"
-  const equalKeyClass = "col-span-4 h-12 rounded-2xl text-sm sm:text-base font-extrabold transition-all duration-200 ease-out bg-accent text-accent-foreground border border-accent shadow-[0_8px_24px_rgba(56,189,248,0.22)] hover:-translate-y-[3px] hover:brightness-110 hover:shadow-[0_10px_30px_rgba(56,189,248,0.26)] active:scale-[0.98] active:translate-y-[1px] dark:bg-accent dark:border-accent dark:text-accent-foreground dark:shadow-[0_6px_18px_rgba(56,189,248,0.3)]"
+  const handleCopy = (id: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 1500);
+  };
+
+  const numberKeyClass = "calc-btn calc-btn-number h-11 text-sm sm:text-base"
+  const operatorKeyClass = "calc-btn calc-btn-operator h-11 text-base"
+  const equalKeyClass = "calc-btn calc-btn-equal col-span-4 h-11 text-sm sm:text-base"
 
   // Sync state with singleton store on initialization
   useEffect(() => {
@@ -120,6 +129,7 @@ export function StandardCalculator() {
   // Click digit handler
   function handleDigit(digit: string) {
     setErrorMsg("");
+    
     if (isResetOnNext) {
       setDisplay(digit);
       setEquation(digit);
@@ -129,6 +139,12 @@ export function StandardCalculator() {
 
     // Decimals validation
     if (digit === "." && display.includes(".")) return;
+
+    // Limit inputs to 16 digits to prevent numerical precision loss and visual overflow
+    const numericPart = display.replace(/[^0-9]/g, "");
+    if (numericPart.length >= 16 && /[0-9]/.test(digit)) {
+      return;
+    }
 
     if (display === "0" && digit !== ".") {
       setDisplay(digit);
@@ -280,7 +296,10 @@ export function StandardCalculator() {
 
   // PDF Download parameters mapping
   const pdfData = useMemo(() => {
-    if (!hasResult || display === "0" || display === "Error") return null;
+    const hasCurrent = hasResult && display !== "0" && display !== "Error";
+    const hasHistory = history.length > 0;
+
+    if (!hasCurrent && !hasHistory) return null;
 
     const formattedEq = equation.includes("=") ? equation.split("=")[0].trim() : equation;
     
@@ -289,14 +308,16 @@ export function StandardCalculator() {
       calculatorSlug: "standard-calculator",
       siteName: PDF_SITE_NAME,
       siteUrl: PDF_SITE_URL,
-      inputs: [
+      inputs: hasCurrent ? [
         { label: "Expression Evaluated", value: formattedEq || "0" },
-      ],
-      results: [
+      ] : [],
+      results: hasCurrent ? [
         { label: "Final Result", value: display, highlight: true },
-      ],
-      summary: `A standard calculator calculation performed on CalcZen. Current formula: ${formattedEq || "0"} = ${display}. Complete calculation history details are included in the tabular report below.`,
-      tableData: history.length > 0 ? {
+      ] : [],
+      summary: hasCurrent 
+        ? `A standard calculator calculation performed on CalcZen. Current formula: ${formattedEq || "0"} = ${display}. Complete calculation history details are included in the tabular report below.`
+        : `A standard calculator calculation session on CalcZen. Complete calculation history details are included in the tabular report below.`,
+      tableData: hasHistory ? {
         title: "CALCULATION HISTORY (CURRENT SESSION)",
         headers: ["Timestamp", "Expression", "Result"],
         rows: history.map((item) => [
@@ -326,256 +347,292 @@ Percentage multiplication = A × (B ÷ 100)`}
       ]}
       blog={<CalculatorBlog content={blogContent.standard} />}
     >
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 w-full items-stretch justify-start">
         
-        {/* LEFT PANEL: KEYPAD & DISPLAY */}
-        <div className="calc-input-column flex flex-col min-w-0 bg-card/25 border border-border/70 rounded-2xl p-4 sm:p-5 shadow-card select-none">
-          
-          {/* LCD Calculator Screen */}
-          <div className="bg-slate-950/70 border border-border/40 rounded-xl p-4.5 sm:p-5 text-right font-mono min-h-[6.5rem] flex flex-col justify-between mb-4.5 shadow-inner">
-            {/* Expression top line */}
-            <div className="text-xs sm:text-sm text-slate-400 break-all select-text font-normal min-h-[1.25rem]">
-              {equation || <span className="opacity-0">0</span>}
+        {/* LEFT COLUMN: CALCULATOR CARD */}
+        <div className="w-full lg:w-[400px] shrink-0">
+          <div className={`calc-input-column flex flex-col min-w-0 rounded-2xl p-5 select-none h-full justify-between transition-colors duration-200 ${
+            isDark 
+              ? "bg-[#111827] border border-white/[0.08] shadow-sm" 
+              : "bg-[#f0f0f0] border border-[#d4d4d4] shadow-[6px_6px_18px_rgba(0,0,0,0.14),-4px_-4px_12px_rgba(255,255,255,0.9)]"
+          }`}>
+            <div>
+              {/* LCD Calculator Screen */}
+              <div className="bg-slate-900 border border-border/40 rounded-xl py-3.5 px-4 text-right font-mono h-[100px] flex flex-col justify-between mb-3.5 shadow-inner overflow-hidden">
+                {/* Expression top line */}
+                <div className="text-xs sm:text-sm text-slate-300 break-all select-text font-normal min-h-[1.25rem]">
+                  {equation || <span className="opacity-0">0</span>}
+                </div>
+                {/* Current value bottom line */}
+                <div className={`text-2xl sm:text-3xl font-extrabold tracking-tight select-text overflow-x-auto scrollbar-none whitespace-nowrap ${errorMsg ? "text-destructive" : "text-white"}`}>
+                  {errorMsg || display || "0"}
+                </div>
+              </div>
+
+              {/* Keypad Grid */}
+              <div className="grid grid-cols-4 gap-2 font-mono">
+                {/* Row 1 */}
+                <button
+                  onClick={handleClear}
+                  type="button"
+                  className="calc-btn calc-btn-clear h-11 text-sm sm:text-base"
+                >
+                  C
+                </button>
+                <button
+                  onClick={handleBackspace}
+                  type="button"
+                  className="calc-btn calc-btn-utility h-11 text-sm sm:text-base flex items-center justify-center"
+                  aria-label="Backspace"
+                >
+                  <Delete className="h-4.5 w-4.5" />
+                </button>
+                <button
+                  onClick={handlePercent}
+                  type="button"
+                  className={operatorKeyClass}
+                >
+                  %
+                </button>
+                <button
+                  onClick={() => handleOperator("÷")}
+                  type="button"
+                  className={operatorKeyClass}
+                >
+                  ÷
+                </button>
+
+                {/* Row 2 */}
+                <button
+                  onClick={() => handleDigit("7")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  7
+                </button>
+                <button
+                  onClick={() => handleDigit("8")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  8
+                </button>
+                <button
+                  onClick={() => handleDigit("9")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  9
+                </button>
+                <button
+                  onClick={() => handleOperator("×")}
+                  type="button"
+                  className={operatorKeyClass}
+                >
+                  ×
+                </button>
+
+                {/* Row 3 */}
+                <button
+                  onClick={() => handleDigit("4")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  4
+                </button>
+                <button
+                  onClick={() => handleDigit("5")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  5
+                </button>
+                <button
+                  onClick={() => handleDigit("6")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  6
+                </button>
+                <button
+                  onClick={() => handleOperator("-")}
+                  type="button"
+                  className={operatorKeyClass}
+                >
+                  -
+                </button>
+
+                {/* Row 4 */}
+                <button
+                  onClick={() => handleDigit("1")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  1
+                </button>
+                <button
+                  onClick={() => handleDigit("2")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  2
+                </button>
+                <button
+                  onClick={() => handleDigit("3")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  3
+                </button>
+                <button
+                  onClick={() => handleOperator("+")}
+                  type="button"
+                  className={operatorKeyClass}
+                >
+                  +
+                </button>
+
+                {/* Row 5 */}
+                <button
+                  onClick={handleParenthesis}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  ( )
+                </button>
+                <button
+                  onClick={() => handleDigit("0")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  0
+                </button>
+                <button
+                  onClick={() => handleDigit(".")}
+                  type="button"
+                  className={numberKeyClass}
+                >
+                  .
+                </button>
+                <button
+                  onClick={handleEqual}
+                  type="button"
+                  className={equalKeyClass}
+                >
+                  =
+                </button>
+              </div>
             </div>
-            {/* Current value bottom line */}
-            <div className={`text-2xl sm:text-3xl font-extrabold tracking-tight select-text ${errorMsg ? "text-destructive" : "text-white"}`}>
-              {errorMsg || display || "0"}
-            </div>
-          </div>
-
-          {/* Keypad Grid */}
-          <div className="grid grid-cols-4 gap-2.5 sm:gap-3 font-mono">
-            {/* Row 1 */}
-            <button
-              onClick={handleClear}
-              type="button"
-              className="h-12 rounded-xl text-sm sm:text-base font-bold bg-destructive/10 border border-destructive/25 text-destructive hover:bg-destructive hover:text-white transition-all duration-150 active:scale-[0.96]"
-            >
-              C
-            </button>
-            <button
-              onClick={handleBackspace}
-              type="button"
-              className="h-12 rounded-xl text-sm sm:text-base font-bold bg-muted/40 border border-border/30 text-foreground hover:bg-muted/60 transition-all duration-150 active:scale-[0.96] flex items-center justify-center"
-              aria-label="Backspace"
-            >
-              <Delete className="h-4.5 w-4.5" />
-            </button>
-            <button
-              onClick={handlePercent}
-              type="button"
-              className={operatorKeyClass}
-            >
-              %
-            </button>
-            <button
-              onClick={() => handleOperator("÷")}
-              type="button"
-              className={operatorKeyClass}
-            >
-              ÷
-            </button>
-
-            {/* Row 2 */}
-            <button
-              onClick={() => handleDigit("7")}
-              type="button"
-              className={numberKeyClass}
-            >
-              7
-            </button>
-            <button
-              onClick={() => handleDigit("8")}
-              type="button"
-              className={numberKeyClass}
-            >
-              8
-            </button>
-            <button
-              onClick={() => handleDigit("9")}
-              type="button"
-              className={numberKeyClass}
-            >
-              9
-            </button>
-            <button
-              onClick={() => handleOperator("×")}
-              type="button"
-              className={operatorKeyClass}
-            >
-              ×
-            </button>
-
-            {/* Row 3 */}
-            <button
-              onClick={() => handleDigit("4")}
-              type="button"
-              className={numberKeyClass}
-            >
-              4
-            </button>
-            <button
-              onClick={() => handleDigit("5")}
-              type="button"
-              className={numberKeyClass}
-            >
-              5
-            </button>
-            <button
-              onClick={() => handleDigit("6")}
-              type="button"
-              className={numberKeyClass}
-            >
-              6
-            </button>
-            <button
-              onClick={() => handleOperator("-")}
-              type="button"
-              className={operatorKeyClass}
-            >
-              -
-            </button>
-
-            {/* Row 4 */}
-            <button
-              onClick={() => handleDigit("1")}
-              type="button"
-              className={numberKeyClass}
-            >
-              1
-            </button>
-            <button
-              onClick={() => handleDigit("2")}
-              type="button"
-              className={numberKeyClass}
-            >
-              2
-            </button>
-            <button
-              onClick={() => handleDigit("3")}
-              type="button"
-              className={numberKeyClass}
-            >
-              3
-            </button>
-            <button
-              onClick={() => handleOperator("+")}
-              type="button"
-              className={operatorKeyClass}
-            >
-              +
-            </button>
-
-            {/* Row 5 */}
-            <button
-              onClick={handleParenthesis}
-              type="button"
-              className={numberKeyClass}
-            >
-              ( )
-            </button>
-            <button
-              onClick={() => handleDigit("0")}
-              type="button"
-              className={numberKeyClass}
-            >
-              0
-            </button>
-            <button
-              onClick={() => handleDigit(".")}
-              type="button"
-              className={numberKeyClass}
-            >
-              .
-            </button>
-            <button
-              onClick={handleEqual}
-              type="button"
-              className={equalKeyClass}
-            >
-              =
-            </button>
           </div>
         </div>
 
-        {/* RIGHT PANEL: SESSION HISTORY SIDEBAR & PDF */}
-        {hasResult && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="overflow-hidden"
-          >
-            <div className="flex flex-col min-w-0 bg-card/25 border border-border/70 rounded-2xl p-4 sm:p-5 shadow-card select-text">
-              <header className="flex items-center justify-between pb-3.5 border-b border-border/30 mb-4 select-none">
-                <h3 className="font-bold text-sm tracking-tight text-foreground flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4 text-accent shrink-0" />
-                  Session History
-                </h3>
-                
-                {history.length > 0 && (
-                  <button
-                    onClick={handleClearHistory}
-                    type="button"
-                    className="text-[11px] font-bold text-destructive flex items-center gap-1 min-h-[2.25rem] px-2 py-0.5 rounded bg-destructive/10 border border-destructive/20 hover:bg-destructive hover:text-white transition-all"
-                  >
-                    <Trash2 className="h-3 w-3" />
-                    Clear
-                  </button>
-                )}
-              </header>
-
-              {/* History Item Entries (Animated) */}
-              <div className="flex-1 overflow-y-auto max-h-[16rem] sm:max-h-[18rem] md:max-h-[22rem] pr-1 space-y-3 scrollbar-none">
-                <AnimatePresence initial={false}>
-                  {history.length === 0 ? (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 0.6 }}
-                      exit={{ opacity: 0 }}
-                      className="py-10 text-center flex flex-col items-center gap-2 select-none"
+        {/* RIGHT COLUMN: SESSION HISTORY SIDEBAR */}
+        <div className="flex-1 min-w-0 sm:min-w-[350px]">
+          <div className="w-full h-full flex flex-col min-w-0 bg-card border border-border rounded-[24px] p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)] dark:shadow-sm select-text justify-between">
+            <div className="flex flex-col h-full justify-between flex-1 min-h-0">
+              <div className="flex flex-col flex-1 min-h-0">
+                <header className="flex items-center justify-between pb-3 border-b border-border mb-3 select-none shrink-0">
+                  <h3 className="font-bold text-xs tracking-tight text-card-foreground">
+                    Recent Calculations
+                  </h3>
+                  
+                  {history.length > 0 && (
+                    <button
+                      onClick={handleClearHistory}
+                      type="button"
+                      className="text-[10px] font-medium text-muted-foreground hover:text-foreground transition-all"
                     >
-                      <HelpCircle className="h-7 w-7 text-muted-foreground opacity-60" />
-                      <p className="text-xs text-muted-foreground font-normal leading-relaxed">
-                        No calculations performed during this session yet.
-                      </p>
-                    </motion.div>
-                  ) : (
-                    history.map((item, idx) => (
-                      <motion.div
-                        key={item.id}
-                        initial={{ opacity: 0, x: -10, y: -2 }}
-                        animate={{ opacity: 1, x: 0, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.25, delay: idx * 0.02 }}
-                        onClick={() => handleLoadHistoryItem(item)}
-                        className="p-3 bg-muted/10 border border-border/40 hover:border-accent/50 hover:bg-accent/5 transition-all rounded-xl text-left flex flex-col justify-between shadow-soft select-copy cursor-pointer active:scale-[0.98]"
-                      >
-                        <div className="flex items-center justify-between text-[9px] font-bold text-muted-foreground select-none mb-1 uppercase tracking-wider">
-                          <span>Entry #{history.length - idx}</span>
-                          <span>{item.timestamp}</span>
-                        </div>
-                        <div className="text-xs text-muted-foreground/95 truncate font-mono select-copy">
-                          {item.expression}
-                        </div>
-                        <div className="text-sm font-extrabold text-foreground mt-0.5 font-mono select-copy">
-                          = {item.result}
-                        </div>
-                      </motion.div>
-                    ))
+                      Clear
+                    </button>
                   )}
-                </AnimatePresence>
+                </header>
+
+                {/* History Item Entries (Animated) */}
+                <div className="overflow-y-auto max-h-[20rem] pr-1 space-y-2.5 scrollbar-none flex-1 min-h-0">
+                  <AnimatePresence initial={false}>
+                    {history.length === 0 ? (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.6 }}
+                        exit={{ opacity: 0 }}
+                        className="h-full flex flex-col items-center justify-center text-center select-none py-12"
+                      >
+                        <Clock className="h-7 w-7 text-muted-foreground opacity-60 mb-2.5" />
+                        <h4 className="font-bold text-xs text-card-foreground">
+                          No calculations yet
+                        </h4>
+                        <p className="text-[10px] text-muted-foreground font-normal leading-relaxed mt-1 max-w-[170px] mx-auto">
+                          Start calculating to build your history.
+                        </p>
+                      </motion.div>
+                    ) : (
+                      history.map((item, idx) => (
+                        <motion.div
+                          key={item.id}
+                          initial={{ opacity: 0, x: -10, y: -2 }}
+                          animate={{ opacity: 1, x: 0, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.25, delay: idx * 0.02 }}
+                          onClick={() => handleLoadHistoryItem(item)}
+                          className="p-4 bg-muted/40 border border-border/40 hover:border-accent/30 hover:bg-accent/[0.01] transition-all rounded-[14px] text-left flex flex-col justify-between shadow-sm select-copy cursor-pointer active:scale-[0.98] group relative"
+                        >
+                          <div className="text-[11px] text-muted-foreground truncate font-mono select-copy pr-8">
+                            {item.expression}
+                          </div>
+                          <div className="text-xs font-bold text-card-foreground mt-0.5 font-mono select-copy">
+                            = {item.result}
+                          </div>
+                          <div className="flex items-center justify-between mt-3 min-h-[16px] select-none text-[10px] font-bold">
+                            <span className="text-muted-foreground font-medium">{item.timestamp}</span>
+                            
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleLoadHistoryItem(item);
+                                }}
+                                type="button"
+                                className="text-accent hover:text-accent/80"
+                              >
+                                Reuse
+                              </button>
+                              <span className="text-border">|</span>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleCopy(item.id, item.result);
+                                }}
+                                type="button"
+                                className="text-accent hover:text-accent/80 flex items-center gap-0.5"
+                              >
+                                {copiedId === item.id ? (
+                                  <>
+                                    <Check className="h-2.5 w-2.5" />
+                                    Copied
+                                  </>
+                                ) : (
+                                  <>
+                                    <Copy className="h-2.5 w-2.5" />
+                                    Copy
+                                  </>
+                                )}
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))
+                    )}
+                  </AnimatePresence>
+                </div>              </div>
               </div>
 
               {/* Branded PDF Download Button */}
-              <div className="mt-5 border-t border-border/30 pt-4 flex flex-col">
-                <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
+              <div className="mt-3 border-t border-border/35 pt-3 flex flex-col select-none shrink-0">
+                <CalculatorPdfExport pdfData={pdfData} />
               </div>
             </div>
-          </motion.div>
-        )}
-
-      </div>
-    </CalculatorPageLayout>
+          </div>
+        </div>
+      </CalculatorPageLayout>
   );
 }

@@ -4,18 +4,8 @@ import { ArrowRight, BookOpen, Sparkles, Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchPublishedBlogs, type Blog } from "@/lib/blog-api";
 
-// 3 premium mock articles for our high-quality teaser state
+// 2 premium mock articles for our high-quality teaser state
 const MOCK_BLOGS = [
-  {
-    _id: "mock-1",
-    title: "The Complete Guide to Compound Interest & Wealth Building",
-    slug: "compound-interest-calculator",
-    excerpt: "Understand the exponential mathematics behind long-term investing, compounding frequency, and inflation.",
-    thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
-    category: "Finance",
-    readingTime: 8,
-    publishDate: "2026-05-15T00:00:00.000Z",
-  },
   {
     _id: "mock-2",
     title: "Understanding BMI: Metrics vs. Muscular Health",

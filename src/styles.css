@@ -2,7 +2,7 @@
 @source "../src";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -78,11 +78,11 @@
   --surface-overlay: oklch(1 0.002 264 / 0.88);
 
   --gradient-hero: linear-gradient(
-    145deg,
-    oklch(0.28 0.06 270) 0%,
-    oklch(0.34 0.1 264) 42%,
-    oklch(0.42 0.12 245) 72%,
-    oklch(0.48 0.14 220) 100%
+    140deg,
+    oklch(0.13 0.03 272) 0%,
+    oklch(0.16 0.05 260) 35%,
+    oklch(0.20 0.07 245) 70%,
+    oklch(0.25 0.09 230) 100%
   );
   --gradient-accent: linear-gradient(
     135deg,
@@ -96,18 +96,18 @@
     oklch(0.98 0.006 264) 100%
   );
   --gradient-mesh: radial-gradient(
-      ellipse 80% 60% at 15% 20%,
-      oklch(0.62 0.14 220 / 0.22),
+      ellipse 80% 60% at 10% 20%,
+      oklch(0.65 0.16 220 / 0.15),
       transparent 55%
     ),
     radial-gradient(
       ellipse 70% 50% at 85% 65%,
-      oklch(0.55 0.19 264 / 0.18),
+      oklch(0.55 0.18 260 / 0.12),
       transparent 55%
     ),
     radial-gradient(
-      ellipse 50% 40% at 60% 10%,
-      oklch(0.58 0.16 290 / 0.12),
+      ellipse 60% 50% at 50% 10%,
+      oklch(0.60 0.15 285 / 0.08),
       transparent 50%
     );
 
@@ -157,11 +157,11 @@
   --surface-overlay: oklch(0.22 0.035 270 / 0.92);
 
   --gradient-hero: linear-gradient(
-    145deg,
-    oklch(0.15 0.035 270) 0%,
-    oklch(0.2 0.05 268) 40%,
-    oklch(0.26 0.08 255) 70%,
-    oklch(0.32 0.1 235) 100%
+    140deg,
+    oklch(0.09 0.025 272) 0%,
+    oklch(0.12 0.04 260) 35%,
+    oklch(0.16 0.06 245) 70%,
+    oklch(0.20 0.08 230) 100%
   );
   --gradient-accent: linear-gradient(
     135deg,
@@ -175,18 +175,18 @@
     oklch(0.2 0.035 270) 100%
   );
   --gradient-mesh: radial-gradient(
-      ellipse 80% 60% at 15% 20%,
-      oklch(0.72 0.12 220 / 0.2),
+      ellipse 80% 60% at 10% 20%,
+      oklch(0.70 0.14 220 / 0.14),
       transparent 55%
     ),
     radial-gradient(
       ellipse 70% 50% at 85% 65%,
-      oklch(0.62 0.16 264 / 0.18),
+      oklch(0.60 0.16 260 / 0.12),
       transparent 55%
     ),
     radial-gradient(
-      ellipse 50% 40% at 55% 5%,
-      oklch(0.65 0.14 290 / 0.14),
+      ellipse 60% 50% at 50% 10%,
+      oklch(0.65 0.14 285 / 0.08),
       transparent 50%
     );
 
@@ -1399,4 +1399,665 @@
 }
 .scrollbar-none::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TACTILE CALCULATOR BUTTON SYSTEM
+   Reference: Physical neumorphic desktop calculator buttons
+   Light source: top-left
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Base shared structure ── */
+.calc-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+  /* Smooth transition: only shadow + transform, never layout */
+  transition:
+    box-shadow 160ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 160ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 160ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   LIGHT THEME — Number / Neutral buttons
+   Surface: #f0f0f0 (off-white, matches reference)
+   Light source: top-left → shadow bottom-right dark, top-left bright
+   ─────────────────────────────────────────────────────────────── */
+.calc-btn-number {
+  background: #f0f0f0;
+  color: #1a1a2e;
+  font-weight: 600;
+  border-radius: 12px;
+  /* Normal elevation:
+     – outer dark shadow  → bottom-right (light from top-left)
+     – outer white glow   → top-left
+     – inner top bevel    → hairline bright edge at top */
+  box-shadow:
+    5px 5px 12px rgba(0, 0, 0, 0.18),
+    -3px -3px 8px rgba(255, 255, 255, 0.92),
+    inset 0 1px 1px rgba(255, 255, 255, 0.75),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.calc-btn-number:hover {
+  background: #ebebeb;
+  box-shadow:
+    6px 6px 14px rgba(0, 0, 0, 0.2),
+    -4px -4px 10px rgba(255, 255, 255, 0.95),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+
+.calc-btn-number:active {
+  background: #e4e4e4;
+  /* Pressed: outer shadows collapse → inset shadows activate (sinks inward) */
+  box-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.14),
+    -1px -1px 3px rgba(255, 255, 255, 0.7),
+    inset 3px 3px 8px rgba(0, 0, 0, 0.16),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.6);
+  transform: translateY(1px);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   LIGHT THEME — Scientific / Function buttons
+   Slightly more subdued than number buttons
+   ─────────────────────────────────────────────────────────────── */
+.calc-btn-function {
+  background: #eaedf0;
+  color: #334155;
+  font-weight: 500;
+  border-radius: 12px;
+  box-shadow:
+    4px 4px 10px rgba(0, 0, 0, 0.14),
+    -2px -2px 7px rgba(255, 255, 255, 0.88),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.03);
+}
+
+.calc-btn-function:hover {
+  background: #e5e8eb;
+  box-shadow:
+    5px 5px 12px rgba(0, 0, 0, 0.16),
+    -3px -3px 8px rgba(255, 255, 255, 0.92),
+    inset 0 1px 1px rgba(255, 255, 255, 0.75),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.03);
+  transform: translateY(-1px);
+}
+
+.calc-btn-function:active {
+  background: #dde0e4;
+  box-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.12),
+    -1px -1px 3px rgba(255, 255, 255, 0.65),
+    inset 3px 3px 7px rgba(0, 0, 0, 0.14),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.55);
+  transform: translateY(1px);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   LIGHT THEME — Operator buttons (accent blue: #0284c7)
+   Same physical depth but tinted with brand accent
+   ─────────────────────────────────────────────────────────────── */
+.calc-btn-operator {
+  background: #0284c7;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 12px;
+  box-shadow:
+    4px 5px 12px rgba(2, 132, 199, 0.45),
+    -2px -2px 6px rgba(255, 255, 255, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.12);
+}
+
+.calc-btn-operator:hover {
+  background: #0277b5;
+  box-shadow:
+    5px 6px 14px rgba(2, 132, 199, 0.52),
+    -2px -2px 7px rgba(255, 255, 255, 0.22),
+    inset 0 1px 1px rgba(255, 255, 255, 0.28),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.14);
+  transform: translateY(-1px);
+}
+
+.calc-btn-operator:active {
+  background: #026aaa;
+  box-shadow:
+    1px 2px 4px rgba(2, 132, 199, 0.35),
+    -1px -1px 2px rgba(255, 255, 255, 0.12),
+    inset 3px 3px 8px rgba(0, 0, 0, 0.28),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.12);
+  transform: translateY(1px);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   LIGHT THEME — Equal button (gradient: sky→blue)
+   Largest, most prominent. Same tactile depth, stronger presence
+   ─────────────────────────────────────────────────────────────── */
+.calc-btn-equal {
+  background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+  color: #ffffff;
+  font-weight: 800;
+  border-radius: 12px;
+  box-shadow:
+    5px 6px 16px rgba(14, 165, 233, 0.45),
+    -2px -3px 8px rgba(255, 255, 255, 0.18),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.calc-btn-equal:hover {
+  background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
+  box-shadow:
+    6px 8px 20px rgba(14, 165, 233, 0.52),
+    -2px -3px 10px rgba(255, 255, 255, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.calc-btn-equal:active {
+  background: linear-gradient(135deg, #0284c7 0%, #1d4ed8 100%);
+  box-shadow:
+    2px 3px 6px rgba(14, 165, 233, 0.35),
+    -1px -1px 3px rgba(255, 255, 255, 0.1),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.1);
+  transform: translateY(1px);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   LIGHT THEME — Clear / Danger button (red tinted)
+   ─────────────────────────────────────────────────────────────── */
+.calc-btn-clear {
+  background: #fef2f2;
+  color: #dc2626;
+  font-weight: 700;
+  border-radius: 12px;
+  box-shadow:
+    4px 5px 11px rgba(0, 0, 0, 0.14),
+    -2px -2px 7px rgba(255, 255, 255, 0.88),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+.calc-btn-clear:hover {
+  background: #dc2626;
+  color: #ffffff;
+  box-shadow:
+    4px 5px 14px rgba(220, 38, 38, 0.4),
+    -2px -2px 7px rgba(255, 255, 255, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.calc-btn-clear:active {
+  background: #b91c1c;
+  color: #ffffff;
+  box-shadow:
+    1px 2px 4px rgba(220, 38, 38, 0.35),
+    -1px -1px 2px rgba(255, 255, 255, 0.1),
+    inset 3px 3px 8px rgba(0, 0, 0, 0.28),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.1);
+  transform: translateY(1px);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   LIGHT THEME — Backspace / Utility button
+   ─────────────────────────────────────────────────────────────── */
+.calc-btn-utility {
+  background: #f0f0f0;
+  color: #475569;
+  font-weight: 600;
+  border-radius: 12px;
+  box-shadow:
+    4px 4px 10px rgba(0, 0, 0, 0.14),
+    -2px -2px 7px rgba(255, 255, 255, 0.88),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.03);
+}
+
+.calc-btn-utility:hover {
+  background: #e8e8e8;
+  box-shadow:
+    5px 5px 12px rgba(0, 0, 0, 0.16),
+    -3px -3px 8px rgba(255, 255, 255, 0.92),
+    inset 0 1px 1px rgba(255, 255, 255, 0.75);
+  transform: translateY(-1px);
+}
+
+.calc-btn-utility:active {
+  background: #e0e0e0;
+  box-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.12),
+    -1px -1px 3px rgba(255, 255, 255, 0.65),
+    inset 3px 3px 7px rgba(0, 0, 0, 0.14),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.55);
+  transform: translateY(1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DARK MODE OVERRIDES
+   Same depth physics but adapted for dark surfaces.
+   Dark surface base: ~#1e293b (slate-800)
+   Light source still top-left.
+   Dark shadow → bottom-right #0f172a
+   Bright edge → top-left rgba(255,255,255,0.06)
+   ═══════════════════════════════════════════════════════════════ */
+
+.dark .calc-btn-number {
+  background: #1e293b;
+  color: #f1f5f9;
+  box-shadow:
+    4px 5px 12px rgba(0, 0, 0, 0.55),
+    -2px -2px 6px rgba(255, 255, 255, 0.055),
+    inset 0 1px 1px rgba(255, 255, 255, 0.065),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+}
+
+.dark .calc-btn-number:hover {
+  background: #243347;
+  box-shadow:
+    5px 6px 14px rgba(0, 0, 0, 0.62),
+    -2px -2px 7px rgba(255, 255, 255, 0.065),
+    inset 0 1px 1px rgba(255, 255, 255, 0.075),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.38);
+  transform: translateY(-1px);
+}
+
+.dark .calc-btn-number:active {
+  background: #162032;
+  box-shadow:
+    1px 2px 4px rgba(0, 0, 0, 0.45),
+    -1px -1px 2px rgba(255, 255, 255, 0.03),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.65),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.04);
+  transform: translateY(1px);
+}
+
+.dark .calc-btn-function {
+  background: #182234;
+  color: #94a3b8;
+  box-shadow:
+    4px 4px 10px rgba(0, 0, 0, 0.52),
+    -2px -2px 6px rgba(255, 255, 255, 0.045),
+    inset 0 1px 1px rgba(255, 255, 255, 0.055),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.32);
+}
+
+.dark .calc-btn-function:hover {
+  background: #1e2d40;
+  box-shadow:
+    5px 5px 12px rgba(0, 0, 0, 0.58),
+    -2px -2px 6px rgba(255, 255, 255, 0.055),
+    inset 0 1px 1px rgba(255, 255, 255, 0.065),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+.dark .calc-btn-function:active {
+  background: #111d2e;
+  box-shadow:
+    1px 2px 4px rgba(0, 0, 0, 0.42),
+    -1px -1px 2px rgba(255, 255, 255, 0.03),
+    inset 4px 4px 9px rgba(0, 0, 0, 0.6),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.035);
+  transform: translateY(1px);
+}
+
+.dark .calc-btn-operator {
+  background: #0369a1;
+  color: #e0f2fe;
+  box-shadow:
+    4px 5px 13px rgba(3, 105, 161, 0.55),
+    -2px -2px 5px rgba(255, 255, 255, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.18),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.dark .calc-btn-operator:hover {
+  background: #0284c7;
+  box-shadow:
+    5px 6px 16px rgba(3, 105, 161, 0.62),
+    -2px -2px 6px rgba(255, 255, 255, 0.07),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.28);
+  transform: translateY(-1px);
+}
+
+.dark .calc-btn-operator:active {
+  background: #025b8e;
+  box-shadow:
+    1px 2px 5px rgba(3, 105, 161, 0.4),
+    -1px -1px 2px rgba(255, 255, 255, 0.04),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.48),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.06);
+  transform: translateY(1px);
+}
+
+.dark .calc-btn-equal {
+  background: linear-gradient(135deg, #0284c7 0%, #1e40af 100%);
+  color: #ffffff;
+  box-shadow:
+    5px 6px 16px rgba(2, 132, 199, 0.5),
+    -2px -2px 6px rgba(255, 255, 255, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.22),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.28);
+}
+
+.dark .calc-btn-equal:hover {
+  background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+  box-shadow:
+    6px 8px 20px rgba(2, 132, 199, 0.58),
+    -2px -2px 7px rgba(255, 255, 255, 0.07),
+    inset 0 1px 1px rgba(255, 255, 255, 0.26),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.dark .calc-btn-equal:active {
+  background: linear-gradient(135deg, #0369a1 0%, #1d4ed8 100%);
+  box-shadow:
+    2px 3px 6px rgba(2, 132, 199, 0.38),
+    -1px -1px 3px rgba(255, 255, 255, 0.04),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.55),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.05);
+  transform: translateY(1px);
+}
+
+.dark .calc-btn-clear {
+  background: #2d1515;
+  color: #f87171;
+  box-shadow:
+    4px 4px 11px rgba(0, 0, 0, 0.52),
+    -2px -2px 6px rgba(255, 255, 255, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.dark .calc-btn-clear:hover {
+  background: #dc2626;
+  color: #ffffff;
+  box-shadow:
+    4px 5px 14px rgba(220, 38, 38, 0.5),
+    -2px -2px 5px rgba(255, 255, 255, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.dark .calc-btn-clear:active {
+  background: #b91c1c;
+  color: #ffffff;
+  box-shadow:
+    1px 2px 4px rgba(220, 38, 38, 0.38),
+    -1px -1px 2px rgba(255, 255, 255, 0.03),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.5),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.04);
+  transform: translateY(1px);
+}
+
+.dark .calc-btn-utility {
+  background: #1a2536;
+  color: #64748b;
+  box-shadow:
+    4px 4px 10px rgba(0, 0, 0, 0.52),
+    -2px -2px 6px rgba(255, 255, 255, 0.045),
+    inset 0 1px 1px rgba(255, 255, 255, 0.055),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.32);
+}
+
+.dark .calc-btn-utility:hover {
+  background: #1e2d40;
+  color: #94a3b8;
+  box-shadow:
+    5px 5px 12px rgba(0, 0, 0, 0.58),
+    -2px -2px 6px rgba(255, 255, 255, 0.055),
+    inset 0 1px 1px rgba(255, 255, 255, 0.065),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+.dark .calc-btn-utility:active {
+  background: #111d2e;
+  box-shadow:
+    1px 2px 4px rgba(0, 0, 0, 0.42),
+    -1px -1px 2px rgba(255, 255, 255, 0.03),
+    inset 4px 4px 9px rgba(0, 0, 0, 0.62),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.03);
+  transform: translateY(1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCIENTIFIC CALCULATOR — CLEAN WHITE LIGHT THEME
+   Matches Standard Calculator visual language:
+   flat white surfaces, soft borders, very subtle shadows.
+   Dark mode inherits from the neumorphic dark system above.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Number / neutral buttons ── */
+.calc-btn-sci-number {
+  background: #ffffff;
+  color: #111827;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: background 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.calc-btn-sci-number:hover {
+  background: #f8fafc;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.10);
+}
+
+.calc-btn-sci-number:active {
+  background: #f1f5f9;
+  box-shadow: 0 0 2px rgba(15, 23, 42, 0.06);
+  transform: translateY(2px);
+}
+
+/* ── Scientific / function buttons ── */
+.calc-btn-sci-function {
+  background: #f8fafc;
+  color: #334155;
+  font-weight: 500;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  transition: background 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.calc-btn-sci-function:hover {
+  background: #f1f5f9;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
+}
+
+.calc-btn-sci-function:active {
+  background: #e8eef4;
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
+/* ── Clear / Danger ── */
+.calc-btn-sci-clear {
+  background: #fff5f5;
+  color: #dc2626;
+  font-weight: 700;
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.calc-btn-sci-clear:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+  box-shadow: 0 3px 8px rgba(220, 38, 38, 0.28);
+}
+
+.calc-btn-sci-clear:active {
+  background: #b91c1c;
+  color: #ffffff;
+  border-color: #b91c1c;
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
+/* ── Utility (Backspace) ── */
+.calc-btn-sci-utility {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  transition: background 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.calc-btn-sci-utility:hover {
+  background: #f1f5f9;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
+}
+
+.calc-btn-sci-utility:active {
+  background: #e2e8f0;
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
+/* ── Dark mode: reuse the existing neumorphic dark styles ── */
+.dark .calc-btn-sci-number {
+  background: #1e293b;
+  color: #f1f5f9;
+  border-color: transparent;
+  box-shadow:
+    4px 5px 12px rgba(0, 0, 0, 0.55),
+    -2px -2px 6px rgba(255, 255, 255, 0.055),
+    inset 0 1px 1px rgba(255, 255, 255, 0.065),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+}
+
+.dark .calc-btn-sci-number:hover {
+  background: #243347;
+  box-shadow:
+    5px 6px 14px rgba(0, 0, 0, 0.62),
+    -2px -2px 7px rgba(255, 255, 255, 0.065),
+    inset 0 1px 1px rgba(255, 255, 255, 0.075),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.38);
+  transform: translateY(-1px);
+}
+
+.dark .calc-btn-sci-number:active {
+  background: #162032;
+  box-shadow:
+    1px 2px 4px rgba(0, 0, 0, 0.45),
+    -1px -1px 2px rgba(255, 255, 255, 0.03),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.65),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.04);
+  transform: translateY(1px);
+}
+
+.dark .calc-btn-sci-function {
+  background: #182234;
+  color: #94a3b8;
+  border-color: transparent;
+  box-shadow:
+    4px 4px 10px rgba(0, 0, 0, 0.52),
+    -2px -2px 6px rgba(255, 255, 255, 0.045),
+    inset 0 1px 1px rgba(255, 255, 255, 0.055),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.32);
+}
+
+.dark .calc-btn-sci-function:hover {
+  background: #1e2d40;
+  box-shadow:
+    5px 5px 12px rgba(0, 0, 0, 0.58),
+    -2px -2px 6px rgba(255, 255, 255, 0.055),
+    inset 0 1px 1px rgba(255, 255, 255, 0.065),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+.dark .calc-btn-sci-function:active {
+  background: #111d2e;
+  box-shadow:
+    1px 2px 4px rgba(0, 0, 0, 0.42),
+    -1px -1px 2px rgba(255, 255, 255, 0.03),
+    inset 4px 4px 9px rgba(0, 0, 0, 0.6),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.035);
+  transform: translateY(1px);
+}
+
+.dark .calc-btn-sci-clear {
+  background: #2d1515;
+  color: #f87171;
+  border-color: transparent;
+  box-shadow:
+    4px 4px 11px rgba(0, 0, 0, 0.52),
+    -2px -2px 6px rgba(255, 255, 255, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.dark .calc-btn-sci-clear:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow:
+    4px 5px 14px rgba(220, 38, 38, 0.5),
+    -2px -2px 5px rgba(255, 255, 255, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.dark .calc-btn-sci-clear:active {
+  background: #b91c1c;
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow:
+    1px 2px 4px rgba(220, 38, 38, 0.38),
+    -1px -1px 2px rgba(255, 255, 255, 0.03),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.5),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.04);
+  transform: translateY(1px);
+}
+
+.dark .calc-btn-sci-utility {
+  background: #1a2536;
+  color: #64748b;
+  border-color: transparent;
+  box-shadow:
+    4px 4px 10px rgba(0, 0, 0, 0.52),
+    -2px -2px 6px rgba(255, 255, 255, 0.045),
+    inset 0 1px 1px rgba(255, 255, 255, 0.055),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.32);
+}
+
+.dark .calc-btn-sci-utility:hover {
+  background: #1e2d40;
+  color: #94a3b8;
+  box-shadow:
+    5px 5px 12px rgba(0, 0, 0, 0.58),
+    -2px -2px 6px rgba(255, 255, 255, 0.055),
+    inset 0 1px 1px rgba(255, 255, 255, 0.065),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+.dark .calc-btn-sci-utility:active {
+  background: #111d2e;
+  box-shadow:
+    1px 2px 4px rgba(0, 0, 0, 0.42),
+    -1px -1px 2px rgba(255, 255, 255, 0.03),
+    inset 4px 4px 9px rgba(0, 0, 0, 0.62),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.03);
+  transform: translateY(1px);
 }

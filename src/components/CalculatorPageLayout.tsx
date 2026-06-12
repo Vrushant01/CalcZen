@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ChevronRight, Share2 } from "lucide-react";
 import { CalculatorExample } from "@/components/CalculatorExample";
 import { CalculatorFormula } from "@/components/CalculatorFormula";
+import { FaqAccordion } from "@/components/FaqAccordion";
 import { Button } from "@/components/ui/button";
 import { CalculatorCard } from "@/components/CalculatorCard";
 import { PageContainer } from "@/components/layout/PageContainer";
@@ -145,19 +146,7 @@ export function CalculatorPageLayout({ calc, intro, formula, example, faqs, chil
 
         <section id="faq-section" className="scroll-mt-20 surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0">
           <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Frequently asked questions</h2>
-          <div className="divide-y divide-border">
-            {faqs.map((f) => (
-              <details key={f.q} className="py-3 sm:py-3.5 group">
-                <summary className="cursor-pointer font-medium text-sm sm:text-base flex items-start justify-between gap-3 list-none min-h-[2.75rem] py-0.5">
-                  <span className="text-balance pr-1">{f.q}</span>
-                  <ChevronRight className="h-4 w-4 shrink-0 mt-0.5 transition-transform group-open:rotate-90" />
-                </summary>
-                <p className="select-copy mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  {f.a}
-                </p>
-              </details>
-            ))}
-          </div>
+          <FaqAccordion faqs={faqs} answerClassName="select-copy" />
         </section>
 
         {related.length > 0 && (

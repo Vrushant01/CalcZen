@@ -14,9 +14,8 @@ export function getStandardCalculatorHistory(): HistoryItem[] {
 export function addStandardCalculatorHistory(expression: string, result: string) {
   const now = new Date();
   const timestamp = now.toLocaleTimeString([], { 
-    hour: "2-digit", 
-    minute: "2-digit", 
-    second: "2-digit" 
+    hour: "numeric", 
+    minute: "2-digit"
   });
   
   // Create a unique id for React keys
@@ -25,9 +24,10 @@ export function addStandardCalculatorHistory(expression: string, result: string)
   sessionHistory = [
     { id, timestamp, expression, result },
     ...sessionHistory
-  ];
+  ].slice(0, 20);
 }
 
 export function clearStandardCalculatorHistory() {
   sessionHistory = [];
 }
+

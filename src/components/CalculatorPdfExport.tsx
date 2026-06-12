@@ -1,18 +1,27 @@
 import SavePDFButton, { type PdfData } from "@/components/SavePDFButton";
 
 type Props = {
-  hasResult: boolean;
   pdfData: PdfData | null;
 };
 
-export function CalculatorPdfExport({ hasResult, pdfData }: Props) {
-  if (!hasResult || !pdfData) return null;
+export function CalculatorPdfExport({ pdfData }: Props) {
+  const isButtonDisabled = !pdfData;
+  const fallbackPdfData: PdfData = pdfData || {
+    calculatorName: "Standard Calculator",
+    calculatorSlug: "standard-calculator",
+    siteName: "CalcZen",
+    siteUrl: "https://www.calczen.in",
+    inputs: [],
+    results: []
+  };
 
   return (
     <div className="calc-pdf-export">
-      <SavePDFButton pdfData={pdfData} disabled={!hasResult} />
+      <SavePDFButton pdfData={fallbackPdfData} disabled={isButtonDisabled} />
       <p className="calc-pdf-export-text">
-        Save your result as a clean PDF — share with your bank, accountant, or family
+        {isButtonDisabled
+          ? "(No calculations available)"
+          : "Save your calculations as a clean PDF report"}
       </p>
     </div>
   );

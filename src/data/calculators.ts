@@ -19,7 +19,7 @@ export const categories: Category[] = [
   {
     slug: "finance",
     name: "Finance",
-    description: "Loans, investments, savings & more",
+    description: "Loans, investments & savings",
     icon: Coins,
     color: "category-card-finance",
     iconColor: "text-sky-600 dark:text-sky-400",
@@ -27,7 +27,7 @@ export const categories: Category[] = [
   {
     slug: "health",
     name: "Health",
-    description: "BMI, calories, fitness metrics",
+    description: "BMI, calories & fitness",
     icon: Heart,
     color: "category-card-health",
     iconColor: "text-emerald-600 dark:text-emerald-400",
@@ -35,7 +35,7 @@ export const categories: Category[] = [
   {
     slug: "math",
     name: "Math",
-    description: "Percentages, ratios, age & GPA",
+    description: "Percentages, GPA & ratios",
     icon: Calculator,
     color: "category-card-math",
     iconColor: "text-violet-600 dark:text-violet-400",
@@ -43,7 +43,7 @@ export const categories: Category[] = [
   {
     slug: "everyday",
     name: "Everyday",
-    description: "Tips, dates, fuel, lifestyle",
+    description: "Dates, fuel & lifestyle",
     icon: Receipt,
     color: "category-card-everyday",
     iconColor: "text-amber-600 dark:text-amber-400",

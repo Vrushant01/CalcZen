@@ -20,8 +20,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         "group relative inline-flex h-9 w-[4.25rem] shrink-0 cursor-pointer items-center rounded-full p-1",
         "border border-border/50 bg-[var(--toggle-track)]",
         "shadow-[inset_0_1px_2px_oklch(0_0_0_/_0.06)]",
-        "transition-[border-color,box-shadow,transform] duration-300 ease-out",
-        "hover:border-accent/25 hover:shadow-[0_0_20px_var(--toggle-glow)]",
+        "transition-[background-color,border-color,box-shadow,transform] duration-300 ease-out",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         "active:scale-[0.94]",
         className,
@@ -55,8 +54,8 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         className={cn(
           "theme-toggle-thumb relative z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--toggle-thumb)]",
           "shadow-[0_2px_10px_oklch(0_0_0_/_0.15),0_0_0_1px_oklch(1_0_0_/_0.08)]",
-          "transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.34,1.25,0.64,1)]",
-          "group-hover:shadow-glow will-change-transform",
+          "transition-[background-color,transform,box-shadow] duration-500 ease-[cubic-bezier(0.34,1.25,0.64,1)]",
+          "will-change-transform",
           isDark ? "translate-x-8" : "translate-x-0",
         )}
       >

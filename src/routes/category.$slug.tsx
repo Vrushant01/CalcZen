@@ -4,6 +4,7 @@ import { PageContainer } from "@/components/layout/PageContainer";
 import { CalculatorCard } from "@/components/CalculatorCard";
 import { calculatorsByCategory, getCategory } from "@/data/calculators";
 import { ChevronRight } from "lucide-react";
+import { FaqAccordion } from "@/components/FaqAccordion";
 
 export const Route = createFileRoute("/category/$slug")({
   loader: ({ params }) => {
@@ -179,19 +180,7 @@ function CategoryPage() {
             <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
               {cat.name} Frequently Asked Questions
             </h2>
-            <div className="divide-y divide-border">
-              {data.faqs.map((f) => (
-                <details key={f.q} className="py-3 sm:py-3.5 group">
-                  <summary className="cursor-pointer font-medium text-sm sm:text-base flex items-start justify-between gap-3 list-none min-h-[2.75rem] py-0.5">
-                    <span className="text-balance pr-1">{f.q}</span>
-                    <ChevronRight className="h-4 w-4 shrink-0 mt-0.5 transition-transform group-open:rotate-90" />
-                  </summary>
-                  <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    {f.a}
-                  </p>
-                </details>
-              ))}
-            </div>
+            <FaqAccordion faqs={data.faqs} />
           </section>
         )}
 

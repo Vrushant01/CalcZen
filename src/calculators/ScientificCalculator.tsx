@@ -1,28 +1,96 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
-import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { blogContent } from "@/data/blogContent";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
-import { 
-  getScientificCalculatorHistory, 
+import { getScientificCalculatorHistory, 
   addScientificCalculatorHistory, 
   clearScientificCalculatorHistory, 
   type ScientificHistoryItem 
 } from "@/utils/scientificCalculatorHistory";
-import { Calendar, Trash2, HelpCircle, Delete } from "lucide-react";
+import { HelpCircle, Delete, Clock, Copy, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "@/hooks/use-theme";
+import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
+
+
+// Helper to balance missing closing parentheses and validate their order
+function validateAndBalanceParentheses(expr: string): string {
+  let openCount = 0;
+  for (let char of expr) {
+    if (char === '(') openCount++;
+    if (char === ')') {
+      openCount--;
+      if (openCount < 0) {
+        throw new Error("Parenthesis imbalance");
+      }
+    }
+  }
+  
+  let balanced = expr;
+  if (openCount > 0) {
+    balanced += ")".repeat(openCount);
+  }
+  return balanced;
+}
+
+// Preprocessor to inject implicit multiplication operations
+function preprocessExpression(expr: string): string {
+  let s = expr.trim();
+  
+  // Normalize spaces
+  s = s.replace(/\s+/g, "");
+
+  // 1. Parenthesis followed by parenthesis: )( -> )*(
+  s = s.replace(/\)\(/g, ")*(");
+
+  // 2. Number followed by parenthesis: 5( -> 5*(
+  s = s.replace(/(\d)\(/g, "$1*(");
+
+  // 3. Parenthesis followed by number/constant: )5 -> )*5, )π -> )*π, )e -> )*e
+  s = s.replace(/\)([\dπe])/g, ")*$1");
+
+  // 4. Number/constant followed by constants: 2π -> 2*π, 2e -> 2*e, πe -> π*e, eπ -> e*π, etc.
+  s = s.replace(/(\d)(π|e)\b/g, "$1*$2");
+  s = s.replace(/(\d)(π)/g, "$1*$2");
+  s = s.replace(/(π|e)(\d)/g, "$1*$2");
+  s = s.replace(/(π)(e)/g, "$1*$2");
+  s = s.replace(/(e)(π)/g, "$1*$2");
+
+  // 5. Number/constant followed by a function name: 2sin(30) -> 2*sin(30)
+  const funcs = "sin|cos|tan|asin|acos|atan|log|ln|sqrt|cbrt|abs|exp|fact|yroot|rand";
+  const funcRegex = new RegExp(`(\\d|π|e)(${funcs})`, "g");
+  s = s.replace(funcRegex, "$1*$2");
+
+  return s;
+}
 
 // Safe scientific mathematical parser supporting degree/radian mode and whitelisted functions
 function parseAndEvaluate(expr: string, angleMode: "deg" | "rad"): string {
   let cleaned = expr.trim();
-  
+  if (cleaned.length === 0) return "0";
+
+  // Validate parentheses balance
+  try {
+    cleaned = validateAndBalanceParentheses(cleaned);
+  } catch (err) {
+    throw new Error("Invalid Expression");
+  }
+
+  // Preprocess auto-multiplication
+  cleaned = preprocessExpression(cleaned);
+
   // Replace mathematical display symbols with javascript equivalents
   cleaned = cleaned.replace(/×/g, "*").replace(/÷/g, "/").replace(/mod/gi, "%");
   cleaned = cleaned.replace(/π/g, "Math.PI");
-  cleaned = cleaned.replace(/\be\b/g, "Math.E");
+  // Replace standalone 'e' constant - must NOT be part of a function name like exp, exp10, etc.
+  // Use negative lookahead/lookbehind to ensure 'e' is a standalone token
+  cleaned = cleaned.replace(/(?<![a-zA-Z])e(?![a-zA-Z0-9_])/g, "Math.E");
+
+  // Replace power ^ with **
+  cleaned = cleaned.replace(/\^/g, "**");
 
   // Factorial loop: e.g. "5!" -> "fact(5)"
   const factorialRegex = /(\d+(?:\.\d+)?|\((?:[^()]+|\([^()]*\))*\))!/g;
@@ -30,29 +98,29 @@ function parseAndEvaluate(expr: string, angleMode: "deg" | "rad"): string {
     cleaned = cleaned.replace(factorialRegex, "fact($1)");
   }
 
-  // Replace power ^ with **
-  cleaned = cleaned.replace(/\^/g, "**");
-
-  if (cleaned.length === 0) return "0";
-  
   // Validate characters to completely prevent XSS or arbitrary injection exploits
-  if (!/^[0-9+\-*/. (),*a-z]+$/i.test(cleaned)) {
-    throw new Error("Invalid characters");
+  // Allowed: digits, operators (+,-,*,/,%), decimal, spaces, parentheses, commas, letters (for Math.PI, Math.E, function names)
+  if (!/^[0-9+\-%*/. (),a-z]+$/i.test(cleaned)) {
+    throw new Error("Invalid Expression");
   }
 
   // Evaluate safely inside a function sandbox
-  const fn = new Function(
-    "sin", "cos", "tan", "asin", "acos", "atan", "log", "ln", "sqrt", "cbrt", "abs", "exp", "fact", "yroot", "rand",
-    `"use strict"; 
-     const Math = globalThis.Math;
-     return (${cleaned});`
-  );
+  let fn;
+  try {
+    fn = new Function(
+      "sin", "cos", "tan", "asin", "acos", "atan", "log", "ln", "sqrt", "cbrt", "abs", "exp", "fact", "yroot", "rand",
+      `"use strict"; 
+       const Math = globalThis.Math;
+       return (${cleaned});`
+    );
+  } catch (err) {
+    throw new Error("Invalid Expression");
+  }
 
   // Define sandbox variables
   const fact = (n: number) => {
-    if (n < 0) throw new Error("Negative factorial");
-    if (!Number.isInteger(n)) throw new Error("Non-integer factorial");
-    if (n > 170) return Infinity;
+    if (n < 0 || !Number.isInteger(n)) throw new Error("Invalid Factorial");
+    if (n > 170) throw new Error("Math Domain Error");
     let res = 1;
     for (let i = 2; i <= n; i++) res *= i;
     return res;
@@ -60,35 +128,82 @@ function parseAndEvaluate(expr: string, angleMode: "deg" | "rad"): string {
 
   const sinFn = (x: number) => angleMode === "deg" ? Math.sin(x * Math.PI / 180) : Math.sin(x);
   const cosFn = (x: number) => angleMode === "deg" ? Math.cos(x * Math.PI / 180) : Math.cos(x);
-  const tanFn = (x: number) => angleMode === "deg" ? Math.tan(x * Math.PI / 180) : Math.tan(x);
-  const asinFn = (x: number) => angleMode === "deg" ? Math.asin(x) * 180 / Math.PI : Math.asin(x);
-  const acosFn = (x: number) => angleMode === "deg" ? Math.acos(x) * 180 / Math.PI : Math.acos(x);
+  const tanFn = (x: number) => {
+    if (angleMode === "deg" && (Math.abs(x) - 90) % 180 === 0) {
+      throw new Error("Math Domain Error");
+    }
+    return angleMode === "deg" ? Math.tan(x * Math.PI / 180) : Math.tan(x);
+  };
+  const asinFn = (x: number) => {
+    if (x < -1 || x > 1) throw new Error("Math Domain Error");
+    return angleMode === "deg" ? Math.asin(x) * 180 / Math.PI : Math.asin(x);
+  };
+  const acosFn = (x: number) => {
+    if (x < -1 || x > 1) throw new Error("Math Domain Error");
+    return angleMode === "deg" ? Math.acos(x) * 180 / Math.PI : Math.acos(x);
+  };
   const atanFn = (x: number) => angleMode === "deg" ? Math.atan(x) * 180 / Math.PI : Math.atan(x);
   
-  const logFn = (x: number) => Math.log10(x);
-  const lnFn = (x: number) => Math.log(x);
-  const sqrtFn = (x: number) => Math.sqrt(x);
+  const logFn = (x: number) => {
+    if (x <= 0) throw new Error("Math Domain Error");
+    return Math.log10(x);
+  };
+  const lnFn = (x: number) => {
+    if (x <= 0) throw new Error("Math Domain Error");
+    return Math.log(x);
+  };
+  const sqrtFn = (x: number) => {
+    if (x < 0) throw new Error("Math Domain Error");
+    return Math.sqrt(x);
+  };
   const cbrtFn = (x: number) => Math.cbrt(x);
   const absFn = (x: number) => Math.abs(x);
   const expFn = (x: number) => Math.exp(x);
-  const yrootFn = (x: number, y: number) => Math.pow(x, 1 / y);
+  const yrootFn = (x: number, y: number) => {
+    if (y === 0) throw new Error("Cannot Divide by Zero");
+    if (x < 0 && y % 2 === 0) throw new Error("Math Domain Error");
+    return Math.pow(x, 1 / y);
+  };
   const randFn = () => Math.random();
 
-  const result = fn(
-    sinFn, cosFn, tanFn, asinFn, acosFn, atanFn, logFn, lnFn, sqrtFn, cbrtFn, absFn, expFn, fact, yrootFn, randFn
-  );
-
-  if (typeof result !== "number" || isNaN(result) || !isFinite(result)) {
-    throw new Error("Calculation error");
+  let result;
+  try {
+    result = fn(
+      sinFn, cosFn, tanFn, asinFn, acosFn, atanFn, logFn, lnFn, sqrtFn, cbrtFn, absFn, expFn, fact, yrootFn, randFn
+    );
+  } catch (err: any) {
+    if (err.message && (err.message.includes("Divide") || err.message.includes("Factorial") || err.message.includes("Domain"))) {
+      throw err;
+    }
+    throw new Error("Invalid Expression");
   }
 
-  // Floating-point precision adjustments
-  return String(Math.round(result * 1e12) / 1e12);
+  if (typeof result !== "number" || isNaN(result)) {
+    throw new Error("Invalid Expression");
+  }
+  if (!isFinite(result)) {
+    if (expr.includes("/") || expr.includes("÷")) {
+      throw new Error("Cannot Divide by Zero");
+    }
+    throw new Error("Math Domain Error");
+  }
+
+  // Floating-point precision adjustments & number formatting
+  const precise = Math.round(result * 1e12) / 1e12;
+  // Format very large or very small numbers in exponential notation
+  if (Math.abs(precise) >= 1e15 || (Math.abs(precise) < 1e-9 && precise !== 0)) {
+    return precise.toExponential(6);
+  }
+  // Trim trailing zeros for decimal results
+  const str = String(precise);
+  return str;
 }
 
 export function ScientificCalculator() {
   const calc = getCalculator("scientific-calculator")!;
+  const { isDark } = useTheme();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const inputRef = useRef<HTMLInputElement>(null);
   
   // In-memory sync state
   const [history, setHistory] = useState<ScientificHistoryItem[]>(getScientificCalculatorHistory());
@@ -99,21 +214,69 @@ export function ScientificCalculator() {
   const [angleMode, setAngleMode] = useState<"deg" | "rad">("deg");
   const [isResetOnNext, setIsResetOnNext] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [activeTab, setActiveTab] = useState<"basic" | "scientific">("basic");
+  const showHistory = true;
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const numberKeyClass = "h-10 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-200 ease-out active:scale-[0.97] bg-white border border-[rgba(15,23,42,0.06)] text-slate-900 shadow-[0_2px_8px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] hover:scale-[1.01] hover:shadow-[0_4px_12px_rgba(15,23,42,0.1)] dark:bg-muted/20 dark:border-border/30 dark:text-foreground dark:hover:bg-muted/40"
-  const operatorKeyClass = "h-10 rounded-2xl text-xs sm:text-sm font-bold transition-all duration-200 ease-out active:scale-[0.97] bg-white border border-accent/30 text-accent shadow-[0_2px_8px_rgba(56,189,248,0.12)] hover:-translate-y-[2px] hover:scale-[1.01] hover:bg-accent/10 hover:shadow-[0_4px_14px_rgba(56,189,248,0.16)] dark:bg-accent/15 dark:border-accent/25 dark:text-accent dark:hover:bg-accent dark:hover:text-accent-foreground"
-  const functionKeyClass = "h-10 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-200 ease-out active:scale-[0.97] bg-slate-100 border border-[rgba(15,23,42,0.08)] text-slate-700 shadow-[0_2px_8px_rgba(15,23,42,0.05)] hover:-translate-y-[2px] hover:scale-[1.01] hover:bg-slate-50 hover:shadow-[0_4px_12px_rgba(15,23,42,0.08)] dark:bg-muted/20 dark:border-border/30 dark:text-foreground dark:hover:bg-muted/40"
-  const equalKeyClass = "col-span-4 h-10 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-200 ease-out bg-accent text-accent-foreground border border-accent shadow-[0_8px_24px_rgba(56,189,248,0.22)] hover:-translate-y-[3px] hover:brightness-110 hover:shadow-[0_10px_30px_rgba(56,189,248,0.26)] active:scale-[0.98] active:translate-y-[1px] dark:bg-accent dark:border-accent dark:text-accent-foreground dark:shadow-[0_6px_18px_rgba(56,189,248,0.3)]"
+  const handleCopy = (id: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 1500);
+  };
+
+  const numberKeyClass = "calc-btn calc-btn-number h-10 text-xs sm:text-sm";
+  const operatorKeyClass = "calc-btn calc-btn-operator h-10 text-xs sm:text-sm";
+  const functionKeyClass = "calc-btn calc-btn-function h-10 text-xs sm:text-sm font-mono";
+  const equalKeyClass = "calc-btn calc-btn-equal col-span-4 h-10 text-sm";
 
   // Sync state on initialization
   useEffect(() => {
     setHistory(getScientificCalculatorHistory());
   }, []);
 
+  // Helper to insert content at current cursor position in input field
+  function insertAtCursor(text: string, autoMultiply = false) {
+    setErrorMsg("");
+    const input = inputRef.current;
+    const start = input?.selectionStart ?? equation.length;
+    const end = input?.selectionEnd ?? equation.length;
+    
+    let toInsert = text;
+    if (autoMultiply && start > 0) {
+      const charBefore = equation[start - 1];
+      if (/[0-9)eπ!]/.test(charBefore)) {
+        toInsert = "×" + text;
+      }
+    }
+    
+    const newEq = equation.substring(0, start) + toInsert + equation.substring(end);
+    setEquation(newEq);
+    
+    // Position cursor after the inserted text in next tick
+    setTimeout(() => {
+      if (input) {
+        input.focus();
+        const newCursorPos = start + toInsert.length;
+        input.setSelectionRange(newCursorPos, newCursorPos);
+      }
+    }, 0);
+  }
+
   // Keyboard support event listener
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
+      const isInputFocused = document.activeElement === inputRef.current;
+      
+      if (isInputFocused) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleEqual();
+        } else if (e.key === "Escape") {
+          e.preventDefault();
+          handleClear();
+        }
+        return;
+      }
+
       if (document.activeElement?.tagName === "INPUT" || document.activeElement?.tagName === "TEXTAREA") {
         return;
       }
@@ -146,7 +309,7 @@ export function ScientificCalculator() {
       } else if (key === "Backspace") {
         e.preventDefault();
         handleBackspace();
-      } else if (key === "Escape" || key.toLowerCase() === "c") {
+      } else if (key === "Escape" || key.toLowerCase() === "c" || key === "Delete") {
         handleClear();
       }
     }
@@ -155,60 +318,39 @@ export function ScientificCalculator() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [equation, display, isResetOnNext, angleMode]);
 
-  // Click digit or standard parenthesis handler
+  // Keypad click handlers
   function handleDigit(digit: string) {
     setErrorMsg("");
     if (isResetOnNext) {
-      setDisplay(digit);
       setEquation(digit);
+      setDisplay(digit);
       setIsResetOnNext(false);
       return;
     }
-
-    if (digit === "." && display.includes(".")) return;
-
-    if (display === "0" && digit !== "." && !["^", "!"].includes(digit)) {
-      setDisplay(digit);
-      setEquation(equation.slice(0, -1) + digit);
-    } else {
-      setDisplay((prev) => (prev === "0" && digit === "." ? "0." : prev + digit));
-      setEquation((prev) => prev + digit);
-    }
+    insertAtCursor(digit);
   }
 
-  // Click operator handler
   function handleOperator(op: string) {
     setErrorMsg("");
     if (isResetOnNext) {
-      setEquation(display + " " + op + " ");
+      setEquation(display + op);
       setDisplay("");
       setIsResetOnNext(false);
       return;
     }
-
-    const trimmed = equation.trim();
-    if (trimmed.length === 0) {
-      setEquation("0 " + op + " ");
-      setDisplay("");
-      return;
-    }
-
-    const lastChar = trimmed.slice(-1);
-    if (["+", "-", "×", "÷"].includes(lastChar)) {
-      setEquation(trimmed.slice(0, -1).trim() + " " + op + " ");
-      return;
-    }
-
-    setEquation((prev) => prev + " " + op + " ");
-    setDisplay("");
+    insertAtCursor(op);
   }
 
   // Percent operation handler
   function handlePercent() {
     setErrorMsg("");
-    if (isResetOnNext || display === "" || display.endsWith("%")) return;
-    setDisplay((prev) => prev + "%");
-    setEquation((prev) => prev + "%");
+    if (isResetOnNext) {
+      setEquation(display + "%");
+      setDisplay("");
+      setIsResetOnNext(false);
+      return;
+    }
+    insertAtCursor("%");
   }
 
   // Dedicated parenthesis handler
@@ -216,27 +358,14 @@ export function ScientificCalculator() {
     setErrorMsg("");
     if (isResetOnNext) {
       setEquation(char);
-      setDisplay(char === "(" ? "" : "0");
+      setDisplay("");
       setIsResetOnNext(false);
       return;
     }
-
     if (char === "(") {
-      const lastChar = equation.trim().slice(-1);
-      // Auto-insert multiplication if preceding char is a digit, constant, or parenthesis
-      if (/[0-9)eπ]/.test(lastChar)) {
-        setEquation((prev) => prev + " × (");
-      } else {
-        setEquation((prev) => prev + "(");
-      }
-      setDisplay("");
+      insertAtCursor("(", true);
     } else {
-      const openCount = (equation.match(/\(/g) || []).length;
-      const closeCount = (equation.match(/\)/g) || []).length;
-      if (openCount > closeCount) {
-        setEquation((prev) => prev + ")");
-        // Display remains the same to avoid "5)" bug
-      }
+      insertAtCursor(")");
     }
   }
 
@@ -249,15 +378,7 @@ export function ScientificCalculator() {
       setIsResetOnNext(false);
       return;
     }
-    
-    const lastChar = equation.trim().slice(-1);
-    // If preceding character is a number or parenthesis, auto-multiply
-    if (/[0-9)eπ]/.test(lastChar)) {
-      setEquation((prev) => prev + " × " + fnName + "(");
-    } else {
-      setEquation((prev) => prev + fnName + "(");
-    }
-    setDisplay("");
+    insertAtCursor(fnName + "(", true);
   }
 
   // Append scientific constants
@@ -269,14 +390,7 @@ export function ScientificCalculator() {
       setIsResetOnNext(false);
       return;
     }
-
-    const lastChar = equation.trim().slice(-1);
-    if (/[0-9)eπ]/.test(lastChar)) {
-      setEquation((prev) => prev + " × " + sym);
-    } else {
-      setEquation((prev) => prev + sym);
-    }
-    setDisplay(sym === "π" ? "3.14159265359" : "2.71828182846");
+    insertAtCursor(sym, true);
   }
 
   // Abs value |x| helper
@@ -292,24 +406,25 @@ export function ScientificCalculator() {
   // Reciprocal 1/x trigger
   function handleReciprocal() {
     setErrorMsg("");
-    if (display === "0" || display === "") return;
-    setEquation((prev) => "1 / (" + prev + ")");
-    setIsResetOnNext(true);
-    handleEqual();
+    if (isResetOnNext) {
+      setEquation("1/(" + display + ")");
+      setDisplay("");
+      setIsResetOnNext(false);
+      return;
+    }
+    setEquation((prev) => "1/(" + prev + ")");
   }
 
   // Random number triggers
   function handleRand() {
     setErrorMsg("");
-    const randVal = String(Math.random());
     if (isResetOnNext) {
       setEquation("rand()");
-      setDisplay(randVal);
+      setDisplay("");
       setIsResetOnNext(false);
       return;
     }
-    setEquation((prev) => prev + "rand()");
-    setDisplay(randVal);
+    insertAtCursor("rand()", true);
   }
 
   // Backspace click handler
@@ -320,26 +435,29 @@ export function ScientificCalculator() {
       return;
     }
 
-    if (display.length > 0) {
-      setDisplay((prev) => prev.slice(0, -1));
+    const input = inputRef.current;
+    if (!input) {
       setEquation((prev) => prev.slice(0, -1));
-    } else {
-      const trimmed = equation.trim();
-      if (trimmed.length > 0) {
-        const lastChar = trimmed.slice(-1);
-        if (["+", "-", "×", "÷"].includes(lastChar)) {
-          const undone = trimmed.slice(0, -1).trim();
-          setEquation(undone);
-          const parts = undone.split(/\s+/);
-          const lastPart = parts[parts.length - 1] || "";
-          if (/^[0-9.%()a-z]+$/i.test(lastPart)) {
-            setDisplay(lastPart);
-          } else {
-            setDisplay("");
-          }
-        }
-      }
+      return;
     }
+    
+    const start = input.selectionStart ?? equation.length;
+    const end = input.selectionEnd ?? equation.length;
+    
+    let newEq = equation;
+    let newCursorPos = start;
+    if (start !== end) {
+      newEq = equation.substring(0, start) + equation.substring(end);
+    } else if (start > 0) {
+      newEq = equation.substring(0, start - 1) + equation.substring(start);
+      newCursorPos = start - 1;
+    }
+    
+    setEquation(newEq);
+    setTimeout(() => {
+      input.focus();
+      input.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
   }
 
   // Clear/Reset current display
@@ -364,15 +482,14 @@ export function ScientificCalculator() {
       
       // Update display states
       setDisplay(result);
-      setEquation((prev) => prev + " = ");
       setIsResetOnNext(true);
       
       // Sync local component lists
       setHistory(getScientificCalculatorHistory());
       markCalculated();
-    } catch (err) {
+    } catch (err: any) {
       console.warn("Scientific Calculator evaluation error:", err);
-      setErrorMsg("Error");
+      setErrorMsg(err.message || "Invalid Expression");
       setDisplay("0");
       setIsResetOnNext(true);
     }
@@ -394,9 +511,30 @@ export function ScientificCalculator() {
     setIsResetOnNext(true);
   }
 
+  // Append a history result value to the current active equation
+  function handleReuseResult(resultVal: string) {
+    setErrorMsg("");
+    if (isResetOnNext) {
+      setEquation(resultVal);
+      setDisplay(resultVal);
+      setIsResetOnNext(false);
+      return;
+    }
+    const lastChar = equation.trim().slice(-1);
+    if (/[0-9)eπ]/.test(lastChar)) {
+      setEquation((prev) => prev + " × " + resultVal);
+    } else {
+      setEquation((prev) => prev + resultVal);
+    }
+    setDisplay(resultVal);
+  }
+
   // Map PDF export schemas
   const pdfData = useMemo(() => {
-    if (!hasResult || display === "0" || display === "Error") return null;
+    const hasCurrent = hasResult && display !== "0" && display !== "Error" && !errorMsg;
+    const hasHistory = history.length > 0;
+
+    if (!hasCurrent && !hasHistory) return null;
 
     const formattedEq = equation.includes("=") ? equation.split("=")[0].trim() : equation;
 
@@ -405,15 +543,17 @@ export function ScientificCalculator() {
       calculatorSlug: "scientific-calculator",
       siteName: PDF_SITE_NAME,
       siteUrl: PDF_SITE_URL,
-      inputs: [
+      inputs: hasCurrent ? [
         { label: "Expression Evaluated", value: formattedEq || "0" },
         { label: "Angle Mode Used", value: angleMode.toUpperCase() },
-      ],
-      results: [
+      ] : [],
+      results: hasCurrent ? [
         { label: "Final Result", value: display, highlight: true },
-      ],
-      summary: `A high-precision scientific calculation completed on CalcZen. Target formula: ${formattedEq || "0"} = ${display} using the ${angleMode.toUpperCase()} angle system. A comprehensive tabular grid of session history is included below.`,
-      tableData: history.length > 0 ? {
+      ] : [],
+      summary: hasCurrent 
+        ? `A high-precision scientific calculation completed on CalcZen. Target formula: ${formattedEq || "0"} = ${display} using the ${angleMode.toUpperCase()} angle system. Complete calculation history details are included in the tabular report below.`
+        : `A scientific calculator calculation session on CalcZen. Complete calculation history details are included in the tabular report below.`,
+      tableData: hasHistory ? {
         title: "CALCULATION HISTORY (CURRENT SESSION)",
         headers: ["Timestamp", "Angle Mode", "Expression", "Result"],
         rows: history.map((item) => [
@@ -424,7 +564,7 @@ export function ScientificCalculator() {
         ])
       } : null,
     };
-  }, [hasResult, display, equation, history, angleMode]);
+  }, [hasResult, display, equation, history, angleMode, errorMsg]);
 
   return (
     <CalculatorPageLayout
@@ -446,507 +586,314 @@ ln(e) = 1
       ]}
       blog={<CalculatorBlog content={blogContent.scientific} />}
     >
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col xl:flex-row gap-6 w-full items-stretch justify-start">
         
-        {/* LEFT PANEL: KEYPAD & DISPLAY */}
-        <div className="calc-input-column flex flex-col min-w-0 bg-card/25 border border-border/70 rounded-2xl p-4 sm:p-5 shadow-card select-none">
-          
-          {/* LCD Screen Display */}
-          <div className="bg-slate-950/70 border border-border/40 rounded-xl p-4.5 sm:p-5 text-right font-mono min-h-[7rem] flex flex-col justify-between mb-4.5 shadow-inner relative">
-            
-            {/* Expression top line */}
-            <div className="text-xs sm:text-sm text-slate-400 break-all select-text font-normal min-h-[1.5rem] pr-10">
-              {equation || <span className="opacity-0">0</span>}
+        {/* LEFT COLUMN: CALCULATOR CARD */}
+        <div className="w-full xl:w-[760px] shrink-0">
+          <div className={`calc-input-column flex flex-col min-w-0 rounded-2xl p-5 select-none h-full justify-between transition-colors duration-200 ${
+            isDark 
+              ? "bg-[#111827] border border-white/[0.08] shadow-sm" 
+              : "bg-[#f0f0f0] border border-[#d4d4d4] shadow-[6px_6px_18px_rgba(0,0,0,0.14),-4px_-4px_12px_rgba(255,255,255,0.9)]"
+          }`}>
+            <div>
+              {/* LCD Calculator Screen */}
+              <div className="relative bg-slate-900 border border-border/40 rounded-xl py-3.5 px-4 text-right font-mono h-[105px] flex flex-col justify-between mb-3.5 shadow-inner overflow-hidden">
+                {/* Angle mode indicator positioned top-left */}
+                <div className="absolute left-3 top-3 select-none">
+                  <span className="text-[8px] tracking-widest font-extrabold px-2 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 uppercase">
+                    {angleMode}
+                  </span>
+                </div>
+
+                {/* Expression display (Interactive Input) */}
+                <div className="min-h-[1.5rem] pl-16 text-right flex justify-end items-center">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={equation}
+                    onChange={(e) => {
+                      setErrorMsg("");
+                      setEquation(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") { e.preventDefault(); handleEqual(); }
+                      if (e.key === "Escape") { e.preventDefault(); handleClear(); }
+                    }}
+                    placeholder="Type an expression…"
+                    spellCheck={false}
+                    autoComplete="off"
+                    className="w-full bg-transparent text-right text-xs sm:text-sm text-slate-300 font-normal font-mono outline-none border-0 focus:ring-0 p-0 placeholder:text-slate-500 caret-sky-500"
+                  />
+                </div>
+                
+                {/* Result display */}
+                <div className={`text-2xl sm:text-3xl font-extrabold tracking-tight select-text text-right mt-2 leading-none transition-colors overflow-x-auto scrollbar-none whitespace-nowrap ${
+                  errorMsg ? "text-destructive" : "text-white"
+                }`}>
+                  {errorMsg || display || "0"}
+                </div>
+              </div>
+
+              {/* Mode Selectors Row */}
+              <div className="flex items-center justify-between gap-2 mb-3.5">
+                <div className={`flex items-center gap-1 flex-1 max-w-[150px] rounded-lg p-0.5 transition-colors ${
+                  isDark ? "bg-white/[0.05]" : "bg-[#e2e8f0]"
+                }`}>
+                  <button
+                    onClick={() => setAngleMode("deg")}
+                    type="button"
+                    className={`flex-1 h-7 rounded-md text-[10px] font-bold transition-all duration-150 active:scale-[0.97] ${
+                      angleMode === "deg"
+                        ? "bg-[#0ea5e9] text-white shadow-sm"
+                        : isDark
+                          ? "text-[#94a3b8] hover:text-white"
+                          : "text-[#64748b] hover:text-[#334155]"
+                    }`}
+                  >
+                    DEG
+                  </button>
+                  <button
+                    onClick={() => setAngleMode("rad")}
+                    type="button"
+                    className={`flex-1 h-7 rounded-md text-[10px] font-bold transition-all duration-150 active:scale-[0.97] ${
+                      angleMode === "rad"
+                        ? "bg-[#0ea5e9] text-white shadow-sm"
+                        : isDark
+                          ? "text-[#94a3b8] hover:text-white"
+                          : "text-[#64748b] hover:text-[#334155]"
+                    }`}
+                  >
+                    RAD
+                  </button>
+                </div>
+              </div>
+
+              {/* Keypad Grid split in two side-by-side columns on tablet/desktop, stacked on mobile */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                {/* Left Column: Scientific Functions & Constants */}
+                <div className="space-y-4">
+                  {/* SECTION 1: Scientific Functions */}
+                  <div>
+                    <span className="text-[9px] font-extrabold text-[#64748b] dark:text-[#94a3b8]/60 tracking-wider block mb-1.5 uppercase select-none">
+                      Scientific Functions
+                    </span>
+                    <div className="grid grid-cols-3 gap-[5px] font-mono">
+                      <button onClick={() => handleFunc("sin")} type="button" className={functionKeyClass}>sin</button>
+                      <button onClick={() => handleFunc("cos")} type="button" className={functionKeyClass}>cos</button>
+                      <button onClick={() => handleFunc("tan")} type="button" className={functionKeyClass}>tan</button>
+                      <button onClick={() => handleFunc("asin")} type="button" className={functionKeyClass}>asin</button>
+                      <button onClick={() => handleFunc("acos")} type="button" className={functionKeyClass}>acos</button>
+                      <button onClick={() => handleFunc("atan")} type="button" className={functionKeyClass}>atan</button>
+                      <button onClick={() => handleFunc("ln")} type="button" className={functionKeyClass}>ln</button>
+                      <button onClick={() => handleFunc("log")} type="button" className={functionKeyClass}>log</button>
+                      <button onClick={() => handleFunc("exp")} type="button" className={functionKeyClass}>eˣ</button>
+                      <button onClick={() => handleDigit("^2")} type="button" className={functionKeyClass}>x²</button>
+                      <button onClick={() => handleDigit("^3")} type="button" className={functionKeyClass}>x³</button>
+                      <button onClick={() => handleDigit("^")} type="button" className={functionKeyClass}>xʸ</button>
+                      <button onClick={() => handleFunc("sqrt")} type="button" className={functionKeyClass}>√x</button>
+                      <button onClick={() => handleFunc("cbrt")} type="button" className={functionKeyClass}>∛x</button>
+                      <button onClick={handleReciprocal} type="button" className={functionKeyClass}>1/x</button>
+                      <button onClick={() => handleFunc("yroot")} type="button" className={functionKeyClass}>y√x</button>
+                      <button onClick={() => handleDigit("!")} type="button" className={functionKeyClass}>n!</button>
+                      <button onClick={handleAbs} type="button" className={functionKeyClass}>|x|</button>
+                    </div>
+                  </div>
+
+                  {/* SECTION 2: Constants */}
+                  <div>
+                    <span className="text-[9px] font-extrabold text-[#64748b] dark:text-[#94a3b8]/60 tracking-wider block mb-1.5 uppercase select-none">
+                      Constants
+                    </span>
+                    <div className="grid grid-cols-4 gap-[5px] font-mono">
+                      <button onClick={() => handleConstant("π")} type="button" className={functionKeyClass}>π</button>
+                      <button onClick={() => handleConstant("e")} type="button" className={functionKeyClass}>e</button>
+                      <button onClick={handleRand} type="button" className={functionKeyClass}>Rand</button>
+                      <button onClick={handleMod} type="button" className={functionKeyClass}>mod</button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: Standard Calculator */}
+                <div>
+                  <span className="text-[9px] font-extrabold text-[#64748b] dark:text-[#94a3b8]/60 tracking-wider block mb-1.5 uppercase select-none">
+                    Standard Calculator
+                  </span>
+                  <div className="grid grid-cols-4 gap-[5px] font-mono">
+                    {/* Row 1: C, ⌫, (, ) */}
+                    <button
+                      onClick={handleClear}
+                      type="button"
+                      className="calc-btn calc-btn-clear h-10 text-xs sm:text-sm"
+                    >
+                      C
+                    </button>
+                    <button
+                      onClick={handleBackspace}
+                      type="button"
+                      className="calc-btn calc-btn-utility h-10 text-xs sm:text-sm flex items-center justify-center"
+                    >
+                      <Delete className="h-4 w-4" />
+                    </button>
+                    <button onClick={() => handleParenthesis("(")} type="button" className={numberKeyClass}>(</button>
+                    <button onClick={() => handleParenthesis(")")} type="button" className={numberKeyClass}>)</button>
+
+                    {/* Row 2 */}
+                    <button onClick={() => handleDigit("7")} type="button" className={numberKeyClass}>7</button>
+                    <button onClick={() => handleDigit("8")} type="button" className={numberKeyClass}>8</button>
+                    <button onClick={() => handleDigit("9")} type="button" className={numberKeyClass}>9</button>
+                    <button onClick={() => handleOperator("÷")} type="button" className={operatorKeyClass}>÷</button>
+
+                    {/* Row 3 */}
+                    <button onClick={() => handleDigit("4")} type="button" className={numberKeyClass}>4</button>
+                    <button onClick={() => handleDigit("5")} type="button" className={numberKeyClass}>5</button>
+                    <button onClick={() => handleDigit("6")} type="button" className={numberKeyClass}>6</button>
+                    <button onClick={() => handleOperator("×")} type="button" className={operatorKeyClass}>×</button>
+
+                    {/* Row 4 */}
+                    <button onClick={() => handleDigit("1")} type="button" className={numberKeyClass}>1</button>
+                    <button onClick={() => handleDigit("2")} type="button" className={numberKeyClass}>2</button>
+                    <button onClick={() => handleDigit("3")} type="button" className={numberKeyClass}>3</button>
+                    <button onClick={() => handleOperator("-")} type="button" className={operatorKeyClass}>-</button>
+
+                    {/* Row 5 */}
+                    <button onClick={() => handleDigit("0")} type="button" className={numberKeyClass}>0</button>
+                    <button onClick={() => handleDigit(".")} type="button" className={numberKeyClass}>.</button>
+                    <button onClick={handlePercent} type="button" className={numberKeyClass}>%</button>
+                    <button onClick={() => handleOperator("+")} type="button" className={operatorKeyClass}>+</button>
+
+                    {/* Equal Button */}
+                    <button
+                      onClick={handleEqual}
+                      type="button"
+                      className={equalKeyClass}
+                    >
+                      =
+                    </button>
+                  </div>
+                </div>
+
+              </div>
             </div>
-
-            {/* Current value bottom line & angle mode indicator */}
-            <div className="flex items-end justify-between mt-2 select-text">
-              <span className="text-[10px] tracking-widest font-extrabold px-1.5 py-0.5 rounded bg-accent/20 border border-accent/30 text-accent uppercase select-none">
-                {angleMode}
-              </span>
-              <span className={`text-2xl sm:text-3xl font-extrabold tracking-tight select-text ${errorMsg ? "text-destructive" : "text-white"}`}>
-                {errorMsg || display || "0"}
-              </span>
-            </div>
-
           </div>
-
-          {/* Toggle for DEG/RAD Angle Mode */}
-          <div className="flex items-center gap-2 mb-4">
-            <button
-              onClick={() => setAngleMode("deg")}
-              type="button"
-              className={`flex-1 h-9 rounded-lg text-xs font-bold transition-all border duration-150 active:scale-[0.98] ${
-                angleMode === "deg"
-                  ? "bg-accent text-accent-foreground border-accent shadow-soft"
-                  : "bg-muted/20 text-muted-foreground border-border/40 hover:bg-muted/40"
-              }`}
-            >
-              DEGREE (DEG)
-            </button>
-            <button
-              onClick={() => setAngleMode("rad")}
-              type="button"
-              className={`flex-1 h-9 rounded-lg text-xs font-bold transition-all border duration-150 active:scale-[0.98] ${
-                angleMode === "rad"
-                  ? "bg-accent text-accent-foreground border-accent shadow-soft"
-                  : "bg-muted/20 text-muted-foreground border-border/40 hover:bg-muted/40"
-              }`}
-            >
-              RADIAN (RAD)
-            </button>
-          </div>
-
-          {/* Responsive Mobile Tabs: Basic vs Scientific Keypad */}
-          <div className="flex md:hidden border-b border-border/30 mb-4 select-none">
-            <button
-              onClick={() => setActiveTab("basic")}
-              type="button"
-              className={`flex-1 pb-2.5 text-xs font-bold tracking-wider transition-all border-b-2 ${
-                activeTab === "basic" 
-                  ? "border-accent text-accent" 
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              BASIC KEYS
-            </button>
-            <button
-              onClick={() => setActiveTab("scientific")}
-              type="button"
-              className={`flex-1 pb-2.5 text-xs font-bold tracking-wider transition-all border-b-2 ${
-                activeTab === "scientific" 
-                  ? "border-accent text-accent" 
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              SCIENTIFIC KEYS
-            </button>
-          </div>
-
-          {/* Dynamic Scientific & Standard Grid Dashboard Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-10 gap-3">
-            
-            {/* Scientific keys section: 6-cols wide on md screens */}
-            <div className={`md:col-span-6 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-3 gap-2.5 font-mono ${
-              activeTab === "scientific" ? "grid" : "hidden md:grid"
-            }`}>
-              
-              {/* Trigonometry */}
-              <button
-                onClick={() => handleFunc("sin")}
-                type="button"
-                className={functionKeyClass}
-              >
-                sin
-              </button>
-              <button
-                onClick={() => handleFunc("cos")}
-                type="button"
-                className={functionKeyClass}
-              >
-                cos
-              </button>
-              <button
-                onClick={() => handleFunc("tan")}
-                type="button"
-                className={functionKeyClass}
-              >
-                tan
-              </button>
-              <button
-                onClick={() => handleFunc("asin")}
-                type="button"
-                className={functionKeyClass}
-              >
-                asin
-              </button>
-              <button
-                onClick={() => handleFunc("acos")}
-                type="button"
-                className={functionKeyClass}
-              >
-                acos
-              </button>
-              <button
-                onClick={() => handleFunc("atan")}
-                type="button"
-                className={functionKeyClass}
-              >
-                atan
-              </button>
-
-              {/* Exponentials & Logs */}
-              <button
-                onClick={() => handleFunc("ln")}
-                type="button"
-                className={functionKeyClass}
-              >
-                ln
-              </button>
-              <button
-                onClick={() => handleFunc("log")}
-                type="button"
-                className={functionKeyClass}
-              >
-                log
-              </button>
-              <button
-                onClick={() => handleFunc("exp")}
-                type="button"
-                className={functionKeyClass}
-              >
-                eˣ
-              </button>
-              <button
-                onClick={handleReciprocal}
-                type="button"
-                className={functionKeyClass}
-              >
-                1/x
-              </button>
-
-              {/* Powers & Roots */}
-              <button
-                onClick={() => handleDigit("^2")}
-                type="button"
-                className={functionKeyClass}
-              >
-                x²
-              </button>
-              <button
-                onClick={() => handleDigit("^3")}
-                type="button"
-                className={functionKeyClass}
-              >
-                x³
-              </button>
-              <button
-                onClick={() => handleDigit("^")}
-                type="button"
-                className={functionKeyClass}
-              >
-                xʸ
-              </button>
-              <button
-                onClick={() => handleFunc("sqrt")}
-                type="button"
-                className={functionKeyClass}
-              >
-                √x
-              </button>
-              <button
-                onClick={() => handleFunc("cbrt")}
-                type="button"
-                className={functionKeyClass}
-              >
-                ∛x
-              </button>
-              <button
-                onClick={() => handleFunc("yroot")}
-                type="button"
-                className={functionKeyClass}
-                aria-label="n-th root"
-              >
-                y√x
-              </button>
-
-              {/* Constants & Custom Operations */}
-              <button
-                onClick={() => handleConstant("π")}
-                type="button"
-                className={functionKeyClass}
-              >
-                π
-              </button>
-              <button
-                onClick={() => handleConstant("e")}
-                type="button"
-                className={functionKeyClass}
-              >
-                e
-              </button>
-              <button
-                onClick={() => handleDigit("!")}
-                type="button"
-                className={functionKeyClass}
-              >
-                n!
-              </button>
-              <button
-                onClick={handleAbs}
-                type="button"
-                className={functionKeyClass}
-              >
-                |x|
-              </button>
-              <button
-                onClick={handleMod}
-                type="button"
-                className={functionKeyClass}
-              >
-                mod
-              </button>
-              <button
-                onClick={handleRand}
-                type="button"
-                className={functionKeyClass}
-              >
-                Rand
-              </button>
-
-            </div>
-
-            {/* Standard keys section: 4-cols wide on md screens */}
-            <div className={`md:col-span-4 grid grid-cols-4 gap-2.5 font-mono ${
-              activeTab === "basic" ? "grid" : "hidden md:grid"
-            }`}>
-              
-              {/* Row 1 */}
-              <button
-                onClick={handleClear}
-                type="button"
-                className="h-10 rounded-xl text-xs sm:text-sm font-bold bg-destructive/10 border border-destructive/25 text-destructive hover:bg-destructive hover:text-white transition-all duration-150 active:scale-[0.95]"
-              >
-                C
-              </button>
-              <button
-                onClick={handleBackspace}
-                type="button"
-                className="h-10 rounded-xl text-xs sm:text-sm font-bold bg-muted/40 border border-border/30 text-foreground hover:bg-muted/60 transition-all duration-150 active:scale-[0.95] flex items-center justify-center"
-              >
-                <Delete className="h-4 w-4" />
-              </button>
-              <button
-                onClick={handlePercent}
-                type="button"
-                className={operatorKeyClass}
-              >
-                %
-              </button>
-              <button
-                onClick={() => handleOperator("÷")}
-                type="button"
-                className={operatorKeyClass}
-              >
-                ÷
-              </button>
-
-              {/* Row 2 */}
-              <button
-                onClick={() => handleDigit("7")}
-                type="button"
-                className={numberKeyClass}
-              >
-                7
-              </button>
-              <button
-                onClick={() => handleDigit("8")}
-                type="button"
-                className={numberKeyClass}
-              >
-                8
-              </button>
-              <button
-                onClick={() => handleDigit("9")}
-                type="button"
-                className={numberKeyClass}
-              >
-                9
-              </button>
-              <button
-                onClick={() => handleOperator("×")}
-                type="button"
-                className={operatorKeyClass}
-              >
-                ×
-              </button>
-
-              {/* Row 3 */}
-              <button
-                onClick={() => handleDigit("4")}
-                type="button"
-                className={numberKeyClass}
-              >
-                4
-              </button>
-              <button
-                onClick={() => handleDigit("5")}
-                type="button"
-                className={numberKeyClass}
-              >
-                5
-              </button>
-              <button
-                onClick={() => handleDigit("6")}
-                type="button"
-                className={numberKeyClass}
-              >
-                6
-              </button>
-              <button
-                onClick={() => handleOperator("-")}
-                type="button"
-                className={operatorKeyClass}
-              >
-                -
-              </button>
-
-              {/* Row 4 */}
-              <button
-                onClick={() => handleDigit("1")}
-                type="button"
-                className={numberKeyClass}
-              >
-                1
-              </button>
-              <button
-                onClick={() => handleDigit("2")}
-                type="button"
-                className={numberKeyClass}
-              >
-                2
-              </button>
-              <button
-                onClick={() => handleDigit("3")}
-                type="button"
-                className={numberKeyClass}
-              >
-                3
-              </button>
-              <button
-                onClick={() => handleOperator("+")}
-                type="button"
-                className={operatorKeyClass}
-              >
-                +
-              </button>
-
-              {/* Row 5 */}
-              <button
-                onClick={() => handleParenthesis("(")}
-                type="button"
-                className={numberKeyClass}
-              >
-                (
-              </button>
-              <button
-                onClick={() => handleParenthesis(")")}
-                type="button"
-                className={numberKeyClass}
-              >
-                )
-              </button>
-              <button
-                onClick={() => handleDigit("0")}
-                type="button"
-                className={numberKeyClass}
-              >
-                0
-              </button>
-              <button
-                onClick={() => handleDigit(".")}
-                type="button"
-                className={numberKeyClass}
-              >
-                .
-              </button>
-
-              {/* Double-width equal key */}
-              <button
-                onClick={handleEqual}
-                type="button"
-                className={equalKeyClass}
-              >
-                =
-              </button>
-
-            </div>
-
-          </div>
-
         </div>
 
-        {/* RIGHT PANEL: SESSION HISTORY SIDEBAR & PDF */}
-        {hasResult && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="overflow-hidden"
-          >
-            <div className="flex flex-col min-w-0 bg-card/25 border border-border/70 rounded-2xl p-4 sm:p-5 shadow-card select-text">
-              <header className="flex items-center justify-between pb-3.5 border-b border-border/30 mb-4 select-none">
-                <h3 className="font-bold text-sm tracking-tight text-foreground flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4 text-accent shrink-0" />
-                  Scientific History
-                </h3>
-                
-                {history.length > 0 && (
-                  <button
-                    onClick={handleClearHistory}
-                    type="button"
-                    className="text-[11px] font-bold text-destructive flex items-center gap-1 min-h-[2.25rem] px-2 py-0.5 rounded bg-destructive/10 border border-destructive/20 hover:bg-destructive hover:text-white transition-all"
-                  >
-                    <Trash2 className="h-3 w-3" />
-                    Clear
-                  </button>
-                )}
-              </header>
-
-              {/* History Item Entries (Animated) */}
-              <div className="flex-1 overflow-y-auto max-h-[16rem] sm:max-h-[18rem] md:max-h-[22rem] pr-1 space-y-3 scrollbar-none">
-                <AnimatePresence initial={false}>
-                  {history.length === 0 ? (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 0.6 }}
-                      exit={{ opacity: 0 }}
-                      className="py-10 text-center flex flex-col items-center gap-2 select-none"
+        {/* RIGHT COLUMN: SESSION HISTORY SIDEBAR */}
+        <div className="flex-1 min-w-0 sm:min-w-[350px]">
+          <div className={`w-full h-full flex flex-col min-w-0 border rounded-[24px] p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)] dark:shadow-sm select-text justify-between transition-colors duration-200 ${
+            isDark
+              ? "bg-card border-border text-card-foreground"
+              : "bg-white border-[#e5e7eb] text-[#0f172a]"
+          }`}>
+            <div className="flex flex-col h-full justify-between flex-1 min-h-0">
+              <div className="flex flex-col flex-1 min-h-0">
+                <header className="flex items-center justify-between pb-3 border-b border-border mb-3 select-none shrink-0">
+                  <h3 className="font-bold text-xs tracking-tight text-card-foreground">
+                    Recent Calculations
+                  </h3>
+                  
+                  {history.length > 0 && (
+                    <button
+                      onClick={handleClearHistory}
+                      type="button"
+                      className="text-[10px] font-medium text-muted-foreground hover:text-foreground transition-all"
                     >
-                      <HelpCircle className="h-7 w-7 text-muted-foreground opacity-60" />
-                      <p className="text-xs text-muted-foreground font-normal leading-relaxed">
-                        No scientific operations performed during this session.
-                      </p>
-                    </motion.div>
-                  ) : (
-                    history.map((item, idx) => (
-                      <motion.div
-                        key={item.id}
-                        initial={{ opacity: 0, x: -10, y: -2 }}
-                        animate={{ opacity: 1, x: 0, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.25, delay: idx * 0.02 }}
-                        onClick={() => handleLoadHistoryItem(item)}
-                        className="p-3 bg-muted/10 border border-border/40 hover:border-accent/50 hover:bg-accent/5 transition-all rounded-xl text-left flex flex-col justify-between shadow-soft select-copy cursor-pointer active:scale-[0.98]"
-                      >
-                        <div className="flex items-center justify-between text-[9px] font-bold text-muted-foreground select-none mb-1 uppercase tracking-wider">
-                          <span className="flex items-center gap-1">
-                            Entry #{history.length - idx}
-                            <span className="text-[8px] font-extrabold px-1 rounded bg-accent/15 border border-accent/20 text-accent uppercase">
-                              {item.angleMode}
-                            </span>
-                          </span>
-                          <span>{item.timestamp}</span>
-                        </div>
-                        <div className="text-xs text-muted-foreground/95 truncate font-mono select-copy">
-                          {item.expression}
-                        </div>
-                        <div className="text-sm font-extrabold text-foreground mt-0.5 font-mono select-copy">
-                          = {item.result}
-                        </div>
-                      </motion.div>
-                    ))
+                      Clear
+                    </button>
                   )}
-                </AnimatePresence>
+                </header>
+
+                {/* History Item Entries (Animated) */}
+                <div className="overflow-y-auto max-h-[22rem] pr-1 space-y-2.5 scrollbar-none flex-1 min-h-0">
+                  <AnimatePresence initial={false}>
+                    {history.length === 0 ? (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.6 }}
+                        exit={{ opacity: 0 }}
+                        className="h-full flex flex-col items-center justify-center text-center select-none py-12"
+                      >
+                        <Clock className="h-7 w-7 text-muted-foreground opacity-60 mb-2.5" />
+                        <h4 className="font-bold text-xs text-card-foreground">
+                          No calculations yet
+                        </h4>
+                        <p className="text-[10px] text-muted-foreground font-normal leading-relaxed mt-1 max-w-[170px] mx-auto">
+                          Start calculating to build your history.
+                        </p>
+                      </motion.div>
+                    ) : (
+                      history.map((item, idx) => (
+                        <motion.div
+                          key={item.id}
+                          initial={{ opacity: 0, x: -10, y: -2 }}
+                          animate={{ opacity: 1, x: 0, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.25, delay: idx * 0.02 }}
+                          onClick={() => handleLoadHistoryItem(item)}
+                          className="p-4 bg-muted/40 border border-border/40 hover:border-accent/30 hover:bg-accent/[0.01] transition-all rounded-[14px] text-left flex flex-col justify-between shadow-sm select-copy cursor-pointer active:scale-[0.98] group relative"
+                        >
+                          <div className="text-[11px] text-muted-foreground truncate font-mono select-copy pr-8">
+                            {item.expression}
+                          </div>
+                          <div className="text-xs font-bold text-card-foreground mt-0.5 font-mono select-copy">
+                            = {item.result}
+                          </div>
+                          <div className="flex items-center justify-between mt-3 min-h-[16px] select-none text-[10px] font-bold">
+                            <span className="text-muted-foreground font-medium flex items-center gap-1.5">
+                              <span>{item.timestamp}</span>
+                              <span className="px-1.5 py-0.5 rounded bg-sky-500/10 border border-sky-500/20 text-sky-600 dark:text-sky-400 uppercase text-[8px] tracking-wider font-extrabold">
+                                {item.angleMode}
+                              </span>
+                            </span>
+                            
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleLoadHistoryItem(item);
+                                }}
+                                type="button"
+                                className="text-accent hover:text-accent/80"
+                              >
+                                Reuse
+                              </button>
+                              <span className="text-border">|</span>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleCopy(item.id, item.result);
+                                }}
+                                type="button"
+                                className="text-accent hover:text-accent/80 flex items-center gap-0.5"
+                              >
+                                {copiedId === item.id ? (
+                                  <>
+                                    <Check className="h-2.5 w-2.5" />
+                                    Copied
+                                  </>
+                                ) : (
+                                  <>
+                                    <Copy className="h-2.5 w-2.5" />
+                                    Copy
+                                  </>
+                                )}
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
 
               {/* Branded PDF Download Button */}
-              <div className="mt-5 border-t border-border/30 pt-4 flex flex-col">
-                <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
+              <div className="mt-3 border-t border-border/35 pt-3 flex flex-col select-none shrink-0">
+                <CalculatorPdfExport pdfData={pdfData} />
               </div>
             </div>
-          </motion.div>
-        )}
+          </div>
+        </div>
 
       </div>
     </CalculatorPageLayout>

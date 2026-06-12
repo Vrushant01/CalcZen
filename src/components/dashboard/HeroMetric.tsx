@@ -21,7 +21,7 @@ const badgeColors = {
 
 export function HeroMetric({ label, value, sub, badge, glow, className }: Props) {
   return (
-    <div className={cn("relative rounded-2xl border border-border/60 bg-card px-6 py-5 shadow-soft overflow-hidden", className)}>
+    <div className={cn("dashboard-hero-metric relative rounded-2xl border border-border/60 bg-card px-6 py-5 shadow-soft overflow-hidden", className)}>
       {glow && (
         <div
           className="pointer-events-none absolute inset-0 opacity-10 blur-2xl -z-10"
@@ -29,7 +29,7 @@ export function HeroMetric({ label, value, sub, badge, glow, className }: Props)
         />
       )}
 
-      <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+      <div className="dashboard-hero-label text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
         {label}
       </div>
 
@@ -38,14 +38,14 @@ export function HeroMetric({ label, value, sub, badge, glow, className }: Props)
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4, type: "spring", stiffness: 200, damping: 20 }}
-          className="text-gradient text-4xl font-extrabold leading-none tracking-tight"
+          className="dashboard-hero-value text-gradient text-4xl font-extrabold leading-none tracking-tight"
         >
           {value}
         </motion.div>
 
         {badge && (
           <span className={cn(
-            "mb-0.5 rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wide",
+            "dashboard-hero-badge mb-0.5 rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wide",
             badgeColors[badge.color ?? "default"]
           )}>
             {badge.text}
@@ -54,7 +54,7 @@ export function HeroMetric({ label, value, sub, badge, glow, className }: Props)
       </div>
 
       {sub && (
-        <div className="mt-2 text-sm text-muted-foreground">{sub}</div>
+        <div className="dashboard-hero-sub mt-2 text-sm text-muted-foreground">{sub}</div>
       )}
     </div>
   );

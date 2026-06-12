@@ -23,8 +23,9 @@ export const Route = createFileRoute("/calculators")({
 });
 
 function AllCalculators() {
-  const [q, setQ] = useState("");
-  const [cat, setCat] = useState<string>("all");
+  const searchParams = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
+  const [q, setQ] = useState(searchParams.get("q") || "");
+  const [cat, setCat] = useState<string>(searchParams.get("cat") || "all");
 
   const filtered = useMemo(() => {
     const s = q.toLowerCase().trim();

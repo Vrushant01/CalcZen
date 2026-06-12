@@ -101,6 +101,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+function getCanonicalUrl(pathname: string, searchStr: string): string {
+  const base = "https://calczen.com";
+  // Strip trailing slash except for the root path
+  const urlPath = pathname === "/" || pathname === "" ? "/" : (pathname.endsWith("/") ? pathname.slice(0, -1) : pathname);
+  
+  if (!searchStr) {
+    return `${base}${urlPath}`;
+  }
+  
+  const params = new URLSearchParams(searchStr);
+  const trackingParams = ["utm_source", "utm_medium", "utm_campaign", "fbclid", "gclid"];
+  trackingParams.forEach((p) => params.delete(p));
+  
+  const cleanSearch = params.toString();
+  return cleanSearch ? `${base}${urlPath}?${cleanSearch}` : `${base}${urlPath}`;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
@@ -154,6 +171,22 @@ function RootComponent() {
       document.head.appendChild(descMeta);
     }
     descMeta.setAttribute("content", description);
+
+    // Update or create canonical link tag
+    // Remove any extra/duplicate canonical tags first
+    const existingCanonicals = document.querySelectorAll('link[rel="canonical"]');
+    existingCanonicals.forEach((el, index) => {
+      if (index > 0) el.remove();
+    });
+
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement("link");
+      canonicalLink.setAttribute("rel", "canonical");
+      document.head.appendChild(canonicalLink);
+    }
+    const canonicalUrl = getCanonicalUrl(window.location.pathname, window.location.search);
+    canonicalLink.setAttribute("href", canonicalUrl);
   }, [state.matches, router]);
 
   return (

@@ -15,9 +15,9 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Suggest a calculator, report an issue, or say hello. The CalcZen team replies within 48 hours." },
       { property: "og:title", content: "Contact CalcZen" },
       { property: "og:description", content: "Suggest a calculator or report an issue." },
-      { property: "og:url", content: "/contact" },
+      { property: "og:url", content: "https://calczen.com/contact" },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: "https://calczen.com/contact" }],
   }),
   component: Contact,
 });

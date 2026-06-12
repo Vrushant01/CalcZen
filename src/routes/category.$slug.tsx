@@ -17,14 +17,15 @@ export const Route = createFileRoute("/category/$slug")({
     if (!cat) return {};
     const title = `${cat.name} Calculators | CalcZen`;
     const desc = `${cat.description}. Free online ${cat.name.toLowerCase()} calculators with formulas, examples and instant results.`;
+    const url = `https://calczen.com/category/${cat.slug}`;
     return {
       meta: [
         { title }, { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
-        { property: "og:url", content: `/category/${cat.slug}` },
+        { property: "og:url", content: url },
       ],
-      links: [{ rel: "canonical", href: `/category/${cat.slug}` }],
+      links: [{ rel: "canonical", href: url }],
     };
   },
   component: CategoryPage,

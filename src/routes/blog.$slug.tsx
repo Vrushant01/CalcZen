@@ -34,8 +34,8 @@ export const Route = createFileRoute("/blog/$slug")({
     if (!blog) return {};
     const title = blog.metaTitle || `${blog.title} | CalcZen Blog`;
     const desc = blog.metaDescription || blog.excerpt;
-    const siteUrl = "https://www.calczen.in"; // Fallback production URL
-    const canonical = `/blog/${blog.slug}`;
+    const siteUrl = "https://calczen.com";
+    const canonical = `${siteUrl}/blog/${blog.slug}`;
     const keys = blog.keywords && blog.keywords.length > 0 ? blog.keywords.join(", ") : blog.tags.join(", ");
 
     return {

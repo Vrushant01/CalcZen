@@ -74,9 +74,9 @@ export const Route = createFileRoute("/blog/")({
       { property: "og:title", content: "CalcZen Blog — Expert Insights" },
       { property: "og:description", content: "Expert guides on finance, home loans, BMI, calories, percentages, and daily math." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/blog" },
+      { property: "og:url", content: "https://calczen.com/blog" },
     ],
-    links: [{ rel: "canonical", href: "/blog" }],
+    links: [{ rel: "canonical", href: "https://calczen.com/blog" }],
   }),
   component: BlogHomepage,
 });

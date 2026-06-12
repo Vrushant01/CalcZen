@@ -90,28 +90,30 @@ export function Header() {
       <div
         id="mobile-nav"
         className={cn(
-          "md:hidden border-t border-border/60 bg-background/98 backdrop-blur-xl overflow-hidden transition-[max-height,opacity] duration-300 ease-out",
-          open ? "max-h-[min(85dvh,28rem)] opacity-100" : "max-h-0 opacity-0 border-t-transparent",
+          "fixed inset-0 top-[3.5rem] sm:top-[4rem] z-40 md:hidden bg-background/98 backdrop-blur-2xl transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]",
+          open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none",
         )}
         aria-hidden={!open}
       >
-        <nav className="page-container flex flex-col gap-0.5 !py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        <nav className="h-full flex flex-col justify-start px-6 py-8 gap-2.5 overflow-y-auto">
           <Link
             to="/calculators"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 rounded-lg px-3 py-3 text-sm font-medium text-foreground bg-muted/50 active:bg-muted"
+            className="flex items-center gap-3 rounded-xl px-4 py-4 text-base font-semibold text-foreground bg-accent/10 border border-accent/20 active:scale-[0.98] transition-transform shadow-soft mb-2"
           >
-            <Search className="h-4 w-4 text-accent shrink-0" />
+            <Search className="h-5 w-5 text-accent shrink-0" />
             Search calculators
           </Link>
+          <div className="w-full h-px bg-border/40 my-3 shrink-0" />
           {nav.map((n) => (
             <Link
               key={n.to}
               to={n.to}
               onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/80 active:bg-muted min-h-[2.75rem] flex items-center"
+              className="rounded-xl px-4 py-4 text-lg font-medium text-muted-foreground hover:text-foreground active:bg-muted/70 transition-all flex items-center justify-between group min-h-[3.25rem]"
             >
-              {n.label}
+              <span>{n.label}</span>
+              <span className="text-muted-foreground/40 group-active:text-accent group-active:translate-x-1 transition-all duration-200">→</span>
             </Link>
           ))}
         </nav>

@@ -15,9 +15,9 @@ export const Route = createFileRoute("/calculators")({
       { name: "description", content: "Browse and search every CalcZen calculator. Finance, health, math and everyday tools — all free, all instant." },
       { property: "og:title", content: "All Calculators | CalcZen" },
       { property: "og:description", content: "Browse every CalcZen calculator." },
-      { property: "og:url", content: "/calculators" },
+      { property: "og:url", content: "https://calczen.com/calculators" },
     ],
-    links: [{ rel: "canonical", href: "/calculators" }],
+    links: [{ rel: "canonical", href: "https://calczen.com/calculators" }],
   }),
   component: AllCalculators,
 });

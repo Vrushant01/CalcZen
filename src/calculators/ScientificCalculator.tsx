@@ -72,6 +72,9 @@ function parseAndEvaluate(expr: string, angleMode: "deg" | "rad"): string {
   let cleaned = expr.trim();
   if (cleaned.length === 0) return "0";
 
+  // Normalize mathematical symbols before parentheses validation and preprocessing
+  cleaned = cleaned.replace(/√/g, "sqrt").replace(/∛/g, "cbrt");
+
   // Validate parentheses balance
   try {
     cleaned = validateAndBalanceParentheses(cleaned);
@@ -203,7 +206,7 @@ export function ScientificCalculator() {
   const calc = getCalculator("scientific-calculator")!;
   const { isDark } = useTheme();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const expressionRef = useRef<HTMLDivElement>(null);
   
   // In-memory sync state
   const [history, setHistory] = useState<ScientificHistoryItem[]>(getScientificCalculatorHistory());
@@ -233,84 +236,76 @@ export function ScientificCalculator() {
     setHistory(getScientificCalculatorHistory());
   }, []);
 
-  // Helper to insert content at current cursor position in input field
-  function insertAtCursor(text: string, autoMultiply = false) {
+  // Auto-scroll the equation display to the right when it changes
+  useEffect(() => {
+    if (expressionRef.current) {
+      expressionRef.current.scrollLeft = expressionRef.current.scrollWidth;
+    }
+  }, [equation]);
+
+  // Helper to append content to the active equation string
+  function appendToEquation(text: string, autoMultiply = false) {
     setErrorMsg("");
-    const input = inputRef.current;
-    const start = input?.selectionStart ?? equation.length;
-    const end = input?.selectionEnd ?? equation.length;
-    
     let toInsert = text;
-    if (autoMultiply && start > 0) {
-      const charBefore = equation[start - 1];
+    if (autoMultiply && equation.length > 0) {
+      const charBefore = equation[equation.length - 1];
       if (/[0-9)eπ!]/.test(charBefore)) {
         toInsert = "×" + text;
       }
     }
-    
-    const newEq = equation.substring(0, start) + toInsert + equation.substring(end);
-    setEquation(newEq);
-    
-    // Position cursor after the inserted text in next tick
-    setTimeout(() => {
-      if (input) {
-        input.focus();
-        const newCursorPos = start + toInsert.length;
-        input.setSelectionRange(newCursorPos, newCursorPos);
-      }
-    }, 0);
+    setEquation((prev) => prev + toInsert);
   }
 
   // Keyboard support event listener
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      const isInputFocused = document.activeElement === inputRef.current;
-      
-      if (isInputFocused) {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          handleEqual();
-        } else if (e.key === "Escape") {
-          e.preventDefault();
-          handleClear();
-        }
-        return;
-      }
-
       if (document.activeElement?.tagName === "INPUT" || document.activeElement?.tagName === "TEXTAREA") {
         return;
       }
       
+      // Ignore shortcut key combinations
+      if (e.ctrlKey || e.metaKey || e.altKey) {
+        return;
+      }
+
       const key = e.key;
-      if (/[0-9]/.test(key)) {
-        handleDigit(key);
-      } else if (key === ".") {
-        handleDigit(".");
-      } else if (key === "+") {
-        handleOperator("+");
-      } else if (key === "-") {
-        handleOperator("-");
-      } else if (key === "*") {
-        handleOperator("×");
-      } else if (key === "/") {
-        e.preventDefault();
-        handleOperator("÷");
-      } else if (key === "%") {
-        handlePercent();
-      } else if (key === "(" || key === ")") {
-        handleParenthesis(key as "(" | ")");
-      } else if (key === "^") {
-        handleDigit("^");
-      } else if (key === "!") {
-        handleDigit("!");
-      } else if (key === "Enter" || key === "=") {
+      
+      if (key === "Enter" || key === "=") {
         e.preventDefault();
         handleEqual();
       } else if (key === "Backspace") {
         e.preventDefault();
         handleBackspace();
       } else if (key === "Escape" || key.toLowerCase() === "c" || key === "Delete") {
+        e.preventDefault();
         handleClear();
+      } else if (key.length === 1 && /^[0-9+\-%*/. (),a-z√∛!^]$/i.test(key)) {
+        e.preventDefault();
+        setErrorMsg("");
+        
+        let charToInsert = key;
+        if (key === "*") charToInsert = "×";
+        else if (key === "/") charToInsert = "÷";
+        
+        if (isResetOnNext) {
+          if (/^[+\-%*/]/.test(key)) {
+            setEquation(display + charToInsert);
+            setDisplay("");
+          } else {
+            setEquation(charToInsert);
+            setDisplay(charToInsert === "π" ? "3.14159265359" : charToInsert === "e" ? "2.71828182846" : charToInsert);
+          }
+          setIsResetOnNext(false);
+        } else {
+          let autoMultiply = false;
+          if (/^[a-z√∛(]/.test(charToInsert) && equation.length > 0) {
+            const charBefore = equation[equation.length - 1];
+            if (/[0-9)eπ!]/.test(charBefore)) {
+              autoMultiply = true;
+            }
+          }
+          appendToEquation(charToInsert, autoMultiply);
+        }
       }
     }
 
@@ -323,11 +318,11 @@ export function ScientificCalculator() {
     setErrorMsg("");
     if (isResetOnNext) {
       setEquation(digit);
-      setDisplay(digit);
+      setDisplay(digit === "π" ? "3.14159265359" : digit === "e" ? "2.71828182846" : digit);
       setIsResetOnNext(false);
       return;
     }
-    insertAtCursor(digit);
+    appendToEquation(digit);
   }
 
   function handleOperator(op: string) {
@@ -338,7 +333,7 @@ export function ScientificCalculator() {
       setIsResetOnNext(false);
       return;
     }
-    insertAtCursor(op);
+    appendToEquation(op);
   }
 
   // Percent operation handler
@@ -350,7 +345,7 @@ export function ScientificCalculator() {
       setIsResetOnNext(false);
       return;
     }
-    insertAtCursor("%");
+    appendToEquation("%");
   }
 
   // Dedicated parenthesis handler
@@ -363,22 +358,29 @@ export function ScientificCalculator() {
       return;
     }
     if (char === "(") {
-      insertAtCursor("(", true);
+      appendToEquation("(", true);
     } else {
-      insertAtCursor(")");
+      appendToEquation(")");
     }
   }
 
   // Scientific function append handler
   function handleFunc(fnName: string) {
     setErrorMsg("");
+    let insertVal = fnName + "(";
+    if (fnName === "sqrt") {
+      insertVal = "√(";
+    } else if (fnName === "cbrt") {
+      insertVal = "∛(";
+    }
+    
     if (isResetOnNext) {
-      setEquation(fnName + "(");
+      setEquation(insertVal);
       setDisplay("");
       setIsResetOnNext(false);
       return;
     }
-    insertAtCursor(fnName + "(", true);
+    appendToEquation(insertVal, true);
   }
 
   // Append scientific constants
@@ -390,7 +392,7 @@ export function ScientificCalculator() {
       setIsResetOnNext(false);
       return;
     }
-    insertAtCursor(sym, true);
+    appendToEquation(sym, true);
   }
 
   // Abs value |x| helper
@@ -424,7 +426,7 @@ export function ScientificCalculator() {
       setIsResetOnNext(false);
       return;
     }
-    insertAtCursor("rand()", true);
+    appendToEquation("rand()", true);
   }
 
   // Backspace click handler
@@ -434,30 +436,7 @@ export function ScientificCalculator() {
       handleClear();
       return;
     }
-
-    const input = inputRef.current;
-    if (!input) {
-      setEquation((prev) => prev.slice(0, -1));
-      return;
-    }
-    
-    const start = input.selectionStart ?? equation.length;
-    const end = input.selectionEnd ?? equation.length;
-    
-    let newEq = equation;
-    let newCursorPos = start;
-    if (start !== end) {
-      newEq = equation.substring(0, start) + equation.substring(end);
-    } else if (start > 0) {
-      newEq = equation.substring(0, start - 1) + equation.substring(start);
-      newCursorPos = start - 1;
-    }
-    
-    setEquation(newEq);
-    setTimeout(() => {
-      input.focus();
-      input.setSelectionRange(newCursorPos, newCursorPos);
-    }, 0);
+    setEquation((prev) => prev.slice(0, -1));
   }
 
   // Clear/Reset current display
@@ -579,10 +558,14 @@ ln(e) = 1
 5^3 = 125
 5! = 120`}
       faqs={[
-        { q: "What is the difference between Degree (DEG) and Radian (RAD) mode?", a: "Degree mode evaluates angles in standard geometry scale (0 to 360), which is widely used in physics and navigation. Radian mode evaluates angles naturally relative to circle radius coordinates, standard in calculus and engineering." },
-        { q: "How are factorials computed?", a: "Clicking the '!' button appends a factorial operator which computes the product of all positive integers less than or equal to that base (e.g. 5! = 120)." },
-        { q: "Does the calculation history survive browser navigations?", a: "Yes. All calculation history remains fully accessible as you navigate CalcZen pages and calculators. It will be naturally wiped upon page reload (F5) or closing the tab for security." },
-        { q: "Does resetting the calculator clear my history?", a: "No. Clicking 'C' clears the display screen but preserves the calculation history panel completely intact." }
+        { q: "What functions does a scientific calculator support?", a: "A scientific calculator supports a wide range of advanced mathematical operations including trigonometry (sin, cos, tan), inverse trigonometry, logarithmic functions (log, ln), exponents, roots, factorials, and mathematical constants like Pi and e. It handles multi-step equations and algebraic order of operations (PEMDAS) for complex academic, scientific, or engineering calculations, making math much easier." },
+        { q: "Can it solve trigonometric equations?", a: "Yes, it can easily evaluate trigonometric functions and inverse trigonometric equations for any given angle parameter. You must ensure the calculator is set to the correct active mode (Degree or Radian) depending on the equation's formatting to prevent calculation errors. If you need simple arithmetic, use our <a href=\"/calculator/standard-calculator\" class=\"text-primary hover:underline\">Standard Calculator</a>." },
+        { q: "Does it support radians and degrees?", a: "Yes, our online scientific calculator features a convenient toggle switch to transition between Degree (DEG) and Radian (RAD) modes. Degree mode is standard for basic geometry, trigonometry, and physics, while Radian mode is essential for calculus, advanced physics, and engineering equations that involve circular motion and wave functions, ensuring accuracy." },
+        { q: "What is scientific notation?", a: "Scientific notation is a mathematical method of writing very large or very small numbers using powers of 10 (for example, 6.02 x 10^23). It simplifies calculations in chemistry, physics, and astronomy, allowing scientists, engineers, and students to write values without long, cumbersome strings of placeholder zeros, which improves overall calculation clarity." },
+        { q: "Can students use it for exams?", a: "Yes, online scientific calculators are excellent study tools for homework, test preparation, and exams in courses like algebra, chemistry, and calculus. However, for physical classroom exams, standard academic rules typically require standalone physical hardware for security. Check percentage ratios for test grading with our <a href=\"/calculator/percentage-calculator\" class=\"text-primary hover:underline\">Percentage Calculator</a> to track academic performance." },
+        { q: "What is the difference between log and ln?", a: "Log (common logarithm) calculates exponents using a base of 10, whereas Ln (natural logarithm) calculates exponents using the mathematical constant e (approximately 2.718). Common logarithms are standard in everyday scaling like pH or decibels, while natural logarithms are vital in calculus, physics, and natural growth modeling across various scientific and engineering disciplines." },
+        { q: "How do parentheses affect the order of operations?", a: "Parentheses tell the calculator to evaluate the enclosed mathematical expression first, overriding standard algebraic precedence rules (PEMDAS). Using parentheses is critical when grouping multiple terms in fraction numerators or exponent bases to ensure the calculator evaluates the mathematical expression exactly as you intended, preventing common computation errors in your academic and professional work." },
+        { q: "Does this calculator preserve calculation history?", a: "Yes, our scientific calculator features an interactive session history panel that logs your equations and results. You can easily reuse previous calculations or copy results directly to your clipboard. This prevents manual copy errors during multi-step science or math problems, letting you focus entirely on solving the complex equations without distraction." }
       ]}
       blog={<CalculatorBlog content={blogContent.scientific} />}
     >
@@ -605,25 +588,12 @@ ln(e) = 1
                   </span>
                 </div>
 
-                {/* Expression display (Interactive Input) */}
-                <div className="min-h-[1.5rem] pl-16 text-right flex justify-end items-center">
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={equation}
-                    onChange={(e) => {
-                      setErrorMsg("");
-                      setEquation(e.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") { e.preventDefault(); handleEqual(); }
-                      if (e.key === "Escape") { e.preventDefault(); handleClear(); }
-                    }}
-                    placeholder="Type an expression…"
-                    spellCheck={false}
-                    autoComplete="off"
-                    className="w-full bg-transparent text-right text-xs sm:text-sm text-slate-300 font-normal font-mono outline-none border-0 focus:ring-0 p-0 placeholder:text-slate-500 caret-sky-500"
-                  />
+                {/* Expression display */}
+                <div
+                  ref={expressionRef}
+                  className="min-h-[1.5rem] pl-16 text-right flex justify-end items-center overflow-x-auto scrollbar-none whitespace-nowrap text-xs sm:text-sm text-slate-300 font-normal font-mono select-none"
+                >
+                  {equation}
                 </div>
                 
                 {/* Result display */}

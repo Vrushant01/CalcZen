@@ -63,6 +63,7 @@ export type CalculatorMeta = {
   metaDescription?: string;
   calculatorType?: string;
   useCases?: string[];
+  h1: string;
 };
 
 export const calculators: CalculatorMeta[] = [
@@ -77,6 +78,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Calculate monthly mortgage payments, interest rates, taxes, and HOA fees instantly. Estimate your home loan costs and budget with our free calculator.",
     calculatorType: "financial",
     useCases: ["home buying planning", "mortgage loan comparison", "monthly property budget estimation"],
+    h1: "Mortgage Calculator for Monthly Home Loan Payments",
   },
   {
     slug: "compound-interest-calculator",
@@ -89,6 +91,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Calculate compound interest growth for your savings and investments. See detailed annual compound schedules and charts to visualize your future wealth.",
     calculatorType: "investment",
     useCases: ["retirement savings planning", "investment growth forecasting", "compound wealth calculations"],
+    h1: "Compound Interest Calculator for Investment Growth",
   },
   {
     slug: "loan-emi-calculator",
@@ -101,6 +104,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Calculate your monthly loan EMI payouts, interest payable, and total loan payment instantly. Plan home, car, or personal loan budgets with our tool.",
     calculatorType: "borrowing",
     useCases: ["personal loan estimation", "car financing comparison", "student debt planning"],
+    h1: "EMI Calculator for Monthly Loan Repayment Estimates",
   },
   {
     slug: "retirement-calculator",
@@ -110,9 +114,10 @@ export const calculators: CalculatorMeta[] = [
     keywords: ["retirement calculator", "retirement savings planner", "retirement corpus", "nest egg", "pension planner"],
     icon: Coins, popular: true, trending: true,
     metaTitle: "Retirement Calculator – Plan Your Future Retirement Savings | CalcZen",
-    metaDescription: "Estimate your retirement corpus requirements, projected growth, and withdrawal timelines. Simulate inflation, taxes, and market scenarios to secure your future.",
+    metaDescription: "Estimate retirement savings goals, corpus growth, and projected withdrawals. Simulate inflation and taxes to plan your long-term financial independence.",
     calculatorType: "financial planning",
     useCases: ["nest egg estimation", "retirement savings targets", "withdrawal timeline mapping"],
+    h1: "Retirement Calculator for Long-Term Financial Planning",
   },
   {
     slug: "401k-calculator",
@@ -125,6 +130,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Estimate 401(k) balance growth, compound investment returns, and employer match limits. Plan your retirement with advanced growth and inflation options.",
     calculatorType: "retirement",
     useCases: ["employer match optimization", "salary deferral planning", "401k growth estimation"],
+    h1: "401(k) Calculator for Retirement Savings and Match",
   },
   {
     slug: "bmi-calculator",
@@ -137,6 +143,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Calculate your Body Mass Index (BMI) instantly. Understand your healthy weight category and track your health fitness metrics online with our tool.",
     calculatorType: "anthropometric",
     useCases: ["body mass index tracking", "weight category assessment", "general fitness monitoring"],
+    h1: "BMI Calculator for Body Mass Index Calculation",
   },
   {
     slug: "calorie-calculator",
@@ -149,6 +156,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Estimate daily calorie needs for weight loss, gain, or maintenance. Calculate your TDEE based on height, weight, activity, and fitness goals easily.",
     calculatorType: "nutritional",
     useCases: ["daily calorie target estimation", "weight management planning", "total daily energy expenditure calculation"],
+    h1: "Calorie Calculator for Daily Caloric Intake Targets",
   },
   {
     slug: "water-intake-calculator",
@@ -161,6 +169,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Calculate your daily water intake needs based on weight, exercise time, and climate. Keep hydrated and track your daily hydration goals with ease.",
     calculatorType: "hydration",
     useCases: ["daily water intake tracking", "exercise hydration planning", "healthy lifestyle habits"],
+    h1: "Water Intake Calculator for Daily Hydration Needs",
   },
   {
     slug: "pregnancy-due-date-calculator",
@@ -173,6 +182,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Estimate your baby's due date, gestational age, and pregnancy progress timeline instantly. Track your pregnancy milestones online using clinical metrics.",
     calculatorType: "obstetric",
     useCases: ["gestational age estimation", "baby due date calculation", "pregnancy milestone planning"],
+    h1: "Pregnancy Due Date Calculator and Timeline Estimator",
   },
   {
     slug: "scientific-calculator",
@@ -184,9 +194,10 @@ export const calculators: CalculatorMeta[] = [
     popular: true,
     trending: true,
     metaTitle: "Free Online Scientific Calculator | Advanced Math Solver | CalcZen",
-    metaDescription: "Solve complex algebraic, trigonometric, logarithmic, and exponential equations with our free, high-performance online scientific calculator. Instant session history, radian/degree support, and PDF exports.",
+    metaDescription: "Perform advanced calculations including trigonometry, logarithms, exponents, roots, and scientific functions using our free online calculator.",
     calculatorType: "mathematical",
     useCases: ["trigonometric problem solving", "logarithmic calculations", "academic homework assistance"],
+    h1: "Scientific Calculator for Advanced Mathematical Operations",
   },
   {
     slug: "percentage-calculator",
@@ -199,6 +210,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Calculate percentage increases, decreases, differences, and fractional shifts instantly. Solve school or business percent math equations in seconds.",
     calculatorType: "arithmetic",
     useCases: ["shopping discount calculation", "finance ratio analysis", "percentage shift analysis"],
+    h1: "Percentage Calculator for Increases, Decreases, and Discounts",
   },
   {
     slug: "age-calculator",
@@ -211,6 +223,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Calculate your exact age in years, months, days, minutes, and seconds from your birthdate. Find the time remaining until your next birthday instantly.",
     calculatorType: "chronological",
     useCases: ["exact age calculation", "birthday countdown tracking", "time interval measurement"],
+    h1: "Age Calculator for Birthdays and Exact Time Elapsed",
   },
   {
     slug: "standard-calculator",
@@ -224,6 +237,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Use our free online standard calculator for fast addition, subtraction, multiplication, division, fractions, and percentage operations with session history.",
     calculatorType: "arithmetic",
     useCases: ["basic math computations", "receipt verification", "daily math helpers"],
+    h1: "Standard Calculator for Everyday Arithmetic",
   },
   {
     slug: "tip-calculator",
@@ -236,6 +250,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Calculate tip percentages and split restaurant bills evenly among friends in seconds. Manage tipping amounts and group payment transactions fairly.",
     calculatorType: "lifestyle billing",
     useCases: ["restaurant tip splitting", "group bill division", "gratuity calculations"],
+    h1: "Tip Calculator for Bill Splitting and Gratuity Math",
   },
   {
     slug: "bmr-calculator",
@@ -248,6 +263,7 @@ export const calculators: CalculatorMeta[] = [
     metaDescription: "Calculate your Basal Metabolic Rate (BMR) instantly. Estimate calories burned at rest based on height, weight, gender, and age for fitness planning.",
     calculatorType: "metabolic",
     useCases: ["basal metabolic rate estimation", "resting energy expenditure tracking", "diet and nutrition planning"],
+    h1: "BMR Calculator for Basal Metabolic Rate Estimation",
   },
 ];
 

@@ -1,0 +1,47 @@
+# CalcZen
+
+Website: https://calczen.in
+
+Description:
+CalcZen is a free online calculator platform offering finance, health, scientific, math, and everyday calculators with formulas, examples, FAQs, and educational explanations.
+
+Categories:
+
+* Finance Calculators
+* Health Calculators
+* Scientific Calculators
+* Math Calculators
+* Everyday Calculators
+
+Popular Calculators:
+
+* Mortgage Calculator
+* Loan EMI Calculator
+* Compound Interest Calculator
+* Retirement Calculator
+* BMI Calculator
+* Calorie Calculator
+* BMR Calculator
+* Water Intake Calculator
+* Scientific Calculator
+* Standard Calculator
+* Percentage Calculator
+* Age Calculator
+
+Important Pages:
+
+https://calczen.in
+https://calczen.in/about
+https://calczen.in/blog
+
+Purpose:
+
+Provide accurate, free, mobile-friendly calculators and educational resources for students, professionals, businesses, investors, and everyday users.
+
+Content Types:
+
+* Calculator Tools
+* Formula Explanations
+* Examples
+* FAQs
+* Educational Articles

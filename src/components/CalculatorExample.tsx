@@ -17,7 +17,7 @@ export function CalculatorExample({ example }: Props) {
           <Lightbulb className="h-5 w-5" />
         </span>
         <h2 id="calc-example-heading" className="calc-formula-title">
-          Worked example
+          Example Calculation
         </h2>
       </div>
       <ol className="calc-example-steps">

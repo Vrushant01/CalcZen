@@ -7,19 +7,46 @@ export const Route = createFileRoute("/disclaimer")({
   head: () => ({
     meta: [
       { title: "Disclaimer — Calculator Use & Limitations | CalcZen" },
-      {
-        name: "description",
-        content:
-          "CalcZen Disclaimer: free online calculators are for informational use only—not financial, medical, or legal advice. Read before relying on results.",
-      },
+      { name: "description", content: "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results." },
       { property: "og:title", content: "CalcZen Disclaimer" },
-      {
-        property: "og:description",
-        content: "Important limits on how CalcZen finance, health, and math calculator results should be used.",
-      },
+      { property: "og:description", content: "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results." },
+      { name: "twitter:description", content: "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results." },
       { property: "og:url", content: "https://calczen.com/disclaimer" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.com/disclaimer" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Disclaimer — Calculator Use & Limitations | CalcZen",
+          "description": "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results.",
+          "url": "https://calczen.com/disclaimer"
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://calczen.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Disclaimer",
+              "item": "https://calczen.com/disclaimer"
+            }
+          ]
+        }),
+      }
+    ],
   }),
   component: DisclaimerPage,
 });

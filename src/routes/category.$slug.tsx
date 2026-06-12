@@ -23,6 +23,7 @@ export const Route = createFileRoute("/category/$slug")({
         { title }, { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
+        { name: "twitter:description", content: desc },
         { property: "og:url", content: url },
       ],
       links: [{ rel: "canonical", href: url }],
@@ -159,7 +160,13 @@ function CategoryPage() {
 
         <header className="mb-6 sm:mb-8 min-w-0">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-balance">
-            {cat.name} calculators
+            {cat.slug === "finance" 
+              ? "Personal Finance, Investment, and Loan Calculators"
+              : cat.slug === "health"
+                ? "Scientific Health, Fitness, and Wellness Calculators"
+                : cat.slug === "math"
+                  ? "Free Math, Percentage, and Everyday Arithmetic Calculators"
+                  : "Useful Lifestyle, Bill Splitting, and Date Calculators"}
           </h1>
           <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-4xl leading-relaxed">
             {data.intro}
@@ -168,6 +175,7 @@ function CategoryPage() {
 
         {/* Dynamic Calculator Grid */}
         <section className="min-w-0" aria-label={`${cat.name} Tools`}>
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Available {cat.name} Calculators</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 min-w-0">
             {list.map((c, i) => (
               <CalculatorCard key={c.slug} calc={c} index={i} />
@@ -188,9 +196,9 @@ function CategoryPage() {
         {/* Cross-Category Internal Linking */}
         {data.relatedCategories.length > 0 && (
           <section className="min-w-0 mt-8 sm:mt-12 pt-6 border-t border-border/40">
-            <h3 className="font-semibold text-sm sm:text-base text-foreground mb-3">
+            <h2 className="font-semibold text-sm sm:text-base text-foreground mb-3">
               Explore More Categories
-            </h3>
+            </h2>
             <div className="flex flex-wrap gap-2.5">
               {data.relatedCategories.map((rc) => (
                 <Link
@@ -216,8 +224,24 @@ function CategoryPage() {
             "@graph": [
               {
                 "@context": "https://schema.org",
+                "@type": "WebPage",
+                "@id": `https://calczen.com/category/${cat.slug}#webpage`,
+                "name": `${cat.name} Calculators | CalcZen`,
+                "description": `Browse free online ${cat.name} calculators. Fast, accurate, and easy to use with step-by-step solutions.`,
+                "url": `https://calczen.com/category/${cat.slug}`
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "CollectionPage",
+                "@id": `https://calczen.com/category/${cat.slug}#collection`,
+                "name": `${cat.name} Calculators`,
+                "description": `Browse our complete list of free online ${cat.name} calculators.`,
+                "url": `https://calczen.com/category/${cat.slug}`
+              },
+              {
+                "@context": "https://schema.org",
                 "@type": "FAQPage",
-                "@id": `https://www.calczen.in/category/${cat.slug}#faq`,
+                "@id": `https://calczen.com/category/${cat.slug}#faq`,
                 "mainEntity": data.faqs.map((f) => ({
                   "@type": "Question",
                   "name": f.q,
@@ -230,19 +254,19 @@ function CategoryPage() {
               {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
-                "@id": `https://www.calczen.in/category/${cat.slug}#breadcrumb`,
+                "@id": `https://calczen.com/category/${cat.slug}#breadcrumb`,
                 "itemListElement": [
                   {
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Home",
-                    "item": "https://www.calczen.in",
+                    "item": "https://calczen.com",
                   },
                   {
                     "@type": "ListItem",
                     "position": 2,
                     "name": cat.name,
-                    "item": `https://www.calczen.in/category/${cat.slug}`,
+                    "item": `https://calczen.com/category/${cat.slug}`,
                   },
                 ],
               },

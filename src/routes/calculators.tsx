@@ -12,12 +12,46 @@ export const Route = createFileRoute("/calculators")({
   head: () => ({
     meta: [
       { title: "All Calculators — Browse Every Tool | CalcZen" },
-      { name: "description", content: "Browse and search every CalcZen calculator. Finance, health, math and everyday tools — all free, all instant." },
+      { name: "description", content: "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results." },
       { property: "og:title", content: "All Calculators | CalcZen" },
-      { property: "og:description", content: "Browse every CalcZen calculator." },
+      { property: "og:description", content: "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results." },
+      { name: "twitter:description", content: "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results." },
       { property: "og:url", content: "https://calczen.com/calculators" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.com/calculators" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "All Calculators — Browse Every Tool | CalcZen",
+          "description": "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
+          "url": "https://calczen.com/calculators"
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://calczen.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Calculators",
+              "item": "https://calczen.com/calculators"
+            }
+          ]
+        }),
+      }
+    ],
   }),
   component: AllCalculators,
 });
@@ -40,7 +74,7 @@ function AllCalculators() {
     <PageShell>
       <PageContainer>
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-balance">
-          All calculators
+          Browse Our Full List of Free Online Calculators
         </h1>
         <p className="mt-2 text-sm sm:text-base text-muted-foreground">
           Search by name, keyword or filter by category.
@@ -56,26 +90,30 @@ function AllCalculators() {
               className="pl-10 h-11 w-full"
             />
           </div>
-          <div className="scroll-touch-x flex gap-2 pb-1 -mx-1 px-1">
-            {[{ slug: "all", name: "All" }, ...categories].map((c) => (
-              <button
-                key={c.slug}
-                type="button"
-                onClick={() => setCat(c.slug)}
-                className={cn(
-                  "shrink-0 px-3.5 py-2.5 rounded-lg text-sm font-medium border whitespace-nowrap min-h-[2.75rem] transition-[color,background-color,border-color,box-shadow] duration-300 ease-out",
-                  cat === c.slug
-                    ? "bg-primary text-primary-foreground border-primary shadow-soft"
-                    : "border-border/60 bg-card/50 hover:bg-muted/80 hover:border-accent/25",
-                )}
-              >
-                {c.name}
-              </button>
-            ))}
+          <div>
+            <h2 className="text-sm font-semibold text-foreground mb-2">Filter by Category</h2>
+            <div className="scroll-touch-x flex gap-2 pb-1 -mx-1 px-1">
+              {[{ slug: "all", name: "All" }, ...categories].map((c) => (
+                <button
+                  key={c.slug}
+                  type="button"
+                  onClick={() => setCat(c.slug)}
+                  className={cn(
+                    "shrink-0 px-3.5 py-2.5 rounded-lg text-sm font-medium border whitespace-nowrap min-h-[2.75rem] transition-[color,background-color,border-color,box-shadow] duration-300 ease-out",
+                    cat === c.slug
+                      ? "bg-primary text-primary-foreground border-primary shadow-soft"
+                      : "border-border/60 bg-card/50 hover:bg-muted/80 hover:border-accent/25",
+                  )}
+                >
+                  {c.name}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 min-w-0">
+        <h2 className="text-lg font-bold text-foreground mt-8 mb-4">All Available Calculators</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 min-w-0">
           {filtered.map((c, i) => (
             <CalculatorCard key={c.slug} calc={c} index={i} />
           ))}

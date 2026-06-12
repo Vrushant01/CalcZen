@@ -20,9 +20,9 @@ function FooterAccordion({ title, isOpen, onToggle, children }: FooterAccordionP
         <span>{title}</span>
         <span className="text-sm font-normal text-muted-foreground/50">{isOpen ? "−" : "+"}</span>
       </button>
-      <h2 className="hidden sm:block text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground mb-2.5">
+      <div className="hidden sm:block text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground mb-2.5">
         {title}
-      </h2>
+      </div>
       <div
         className={`sm:block overflow-hidden transition-all duration-300 ${
           isOpen ? "max-h-96 opacity-100 mt-1" : "max-h-0 sm:max-h-none opacity-0 sm:opacity-100"

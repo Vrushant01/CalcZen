@@ -172,6 +172,24 @@ function RootComponent() {
     }
     descMeta.setAttribute("content", description);
 
+    // Update og:description
+    let ogDescMeta = document.querySelector('meta[property="og:description"]');
+    if (!ogDescMeta) {
+      ogDescMeta = document.createElement("meta");
+      ogDescMeta.setAttribute("property", "og:description");
+      document.head.appendChild(ogDescMeta);
+    }
+    ogDescMeta.setAttribute("content", description);
+
+    // Update twitter:description
+    let twDescMeta = document.querySelector('meta[name="twitter:description"]');
+    if (!twDescMeta) {
+      twDescMeta = document.createElement("meta");
+      twDescMeta.setAttribute("name", "twitter:description");
+      document.head.appendChild(twDescMeta);
+    }
+    twDescMeta.setAttribute("content", description);
+
     // Update or create canonical link tag
     // Remove any extra/duplicate canonical tags first
     const existingCanonicals = document.querySelectorAll('link[rel="canonical"]');

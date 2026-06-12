@@ -89,7 +89,7 @@ export function CalculatorFormula({ formula }: Props) {
           <FunctionSquare className="h-5 w-5" />
         </span>
         <h2 id="calc-formula-heading" className="calc-formula-title">
-          Formula
+          Formula Used
         </h2>
       </div>
 

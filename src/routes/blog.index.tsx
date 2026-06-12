@@ -38,10 +38,10 @@ function SidebarNewsletter() {
       <div className="absolute -right-6 -bottom-6 opacity-10 text-indigo-400">
         <Mail size={120} />
       </div>
-      <h3 className="font-semibold text-base flex items-center gap-1.5 text-white">
+      <div className="font-semibold text-base flex items-center gap-1.5 text-white">
         <Sparkles size={16} className="text-indigo-400 shrink-0" />
         Get Updates
-      </h3>
+      </div>
       <p className="mt-1.5 text-xs text-white/80 leading-relaxed">
         Stay updated with our latest calculators, financial updates, and helpful articles. No spam.
       </p>
@@ -70,13 +70,47 @@ export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
       { title: "CalcZen Blog — Financial Insights, Health Tips & Math Guides" },
-      { name: "description", content: "Explore the CalcZen Blog for expert tips, financial guides, health calculators breakdowns, tax tips, and online tools calculations guides." },
+      { name: "description", content: "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations." },
       { property: "og:title", content: "CalcZen Blog — Expert Insights" },
-      { property: "og:description", content: "Expert guides on finance, home loans, BMI, calories, percentages, and daily math." },
+      { property: "og:description", content: "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations." },
+      { name: "twitter:description", content: "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://calczen.com/blog" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.com/blog" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "CalcZen Blog — Financial Insights, Health Tips & Math Guides",
+          "description": "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations.",
+          "url": "https://calczen.com/blog"
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://calczen.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://calczen.com/blog"
+            }
+          ]
+        }),
+      }
+    ],
   }),
   component: BlogHomepage,
 });
@@ -156,9 +190,9 @@ function BlogHomepage() {
               Insights & Guides
             </span>
             <h1 className="text-[1.85rem] leading-[1.1] sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white text-balance">
-              The{" "}
+              Financial Insights,{" "}
               <span className="text-gradient bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
-                CalcZen Blog
+                Health Guides, and Calculation Tips
               </span>
             </h1>
             <p className="mt-3 text-sm sm:text-base md:text-lg text-white/80 leading-relaxed max-w-lg mx-auto">
@@ -286,9 +320,9 @@ function BlogHomepage() {
 
                 {/* Recent Blogs Grid */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-bold tracking-tight text-foreground border-b border-border/40 pb-2">
+                  <h2 className="text-lg font-bold tracking-tight text-foreground border-b border-border/40 pb-2">
                     {search ? "Search Results" : "Recent Publications"}
-                  </h3>
+                  </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
                     <AnimatePresence mode="popLayout">
                       {blogs
@@ -323,9 +357,9 @@ function BlogHomepage() {
                               </div>
                               <div className="p-4 sm:p-5 flex flex-col justify-between flex-1 min-w-0">
                                 <div className="min-w-0">
-                                  <h4 className="font-semibold text-sm sm:text-base text-foreground group-hover:text-accent transition-colors line-clamp-2 leading-snug">
+                                  <h3 className="font-semibold text-sm sm:text-base text-foreground group-hover:text-accent transition-colors line-clamp-2 leading-snug">
                                     {b.title}
-                                  </h4>
+                                  </h3>
                                   <p className="text-xs sm:text-sm text-muted-foreground mt-2 line-clamp-2 leading-relaxed">
                                     {b.excerpt}
                                   </p>
@@ -384,9 +418,9 @@ function BlogHomepage() {
 
             {popularBlogs.length > 0 && (
               <div className="rounded-2xl border border-border bg-card/25 p-5 min-w-0">
-                <h3 className="font-bold text-sm tracking-tight text-foreground mb-4 border-b border-border/40 pb-2">
+                <h2 className="font-bold text-sm tracking-tight text-foreground mb-4 border-b border-border/40 pb-2">
                   Popular Reading
-                </h3>
+                </h2>
                 <div className="space-y-4">
                   {popularBlogs.map((pop) => (
                     <Link
@@ -407,9 +441,9 @@ function BlogHomepage() {
                         />
                       </div>
                       <div className="min-w-0">
-                        <h4 className="font-semibold text-xs sm:text-sm text-foreground group-hover:text-accent transition-colors line-clamp-2 leading-snug">
+                        <h3 className="font-semibold text-xs sm:text-sm text-foreground group-hover:text-accent transition-colors line-clamp-2 leading-snug">
                           {pop.title}
-                        </h4>
+                        </h3>
                         <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground mt-1">
                           <Eye size={10} />
                           {pop.views.toLocaleString()} views
@@ -423,10 +457,10 @@ function BlogHomepage() {
 
             {trendingCalculators.length > 0 && (
               <div className="rounded-2xl border border-border bg-card/25 p-5 min-w-0">
-                <h3 className="font-bold text-sm tracking-tight text-foreground mb-4 border-b border-border/40 pb-2 flex items-center gap-1.5">
+                <h2 className="font-bold text-sm tracking-tight text-foreground mb-4 border-b border-border/40 pb-2 flex items-center gap-1.5">
                   <TrendingUp size={15} className="text-accent" />
                   Trending Calculations
-                </h3>
+                </h2>
                 <div className="space-y-3">
                   {trendingCalculators.map((c) => {
                     const CalcIcon = c.icon;

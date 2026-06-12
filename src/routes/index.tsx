@@ -64,23 +64,108 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "CalcZen — Free Online Calculators for Finance, Health, Math & More" },
-      { name: "description", content: "Use fast and accurate online calculators for finance, health, mathematics, and daily calculations. Simple tools designed for quick results and easy use." },
+      { name: "description", content: "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results." },
       { property: "og:title", content: "CalcZen — Free Online Calculators" },
-      { property: "og:description", content: "Online calculators for finance, health, math, and everyday use. Fast, accurate, and free." },
+      { property: "og:description", content: "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results." },
+      { name: "twitter:description", content: "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://calczen.com/" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.com/" }],
-    scripts: [{
-      type: "application/ld+json",
-      children: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: "CalcZen",
-        url: "https://calczen.com/",
-        potentialAction: { "@type": "SearchAction", target: "https://calczen.com/calculators?q={query}", "query-input": "required name=query" },
-      }),
-    }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "CalcZen",
+          "url": "https://calczen.com",
+          "logo": "https://calczen.com/logo.png",
+          "sameAs": []
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "CalcZen",
+          "url": "https://calczen.com",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://calczen.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Free Online Calculators",
+          "description": "Free online calculators for finance, health, math and everyday calculations."
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://calczen.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What calculators are available on CalcZen?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "CalcZen offers a comprehensive suite of free online tools categorized under finance, health, math, and everyday helpers. You can calculate mortgages, compound interest, personal loan EMIs, daily calorie needs, percentage changes, age countdowns, restaurant tips, and perform advanced operations using our scientific calculator. We continually add new calculators to expand our offerings."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are these calculators free to use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all calculators on CalcZen are completely free and require no account registration, subscriptions, or hidden fees. You can access tools like our mortgage calculator, BMI calculator, and standard calculator instantly on any device without restrictions. We keep the platform accessible to everyone by relying on unobtrusive, privacy-friendly advertising."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How accurate are the calculator results?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our calculators use industry-standard formulas, such as the fixed-rate amortization equation for mortgages or the Harris-Benedict formula for BMR. While these calculations provide highly accurate estimates for planning, actual financial or health metrics may vary based on individual circumstances, local taxes, lender terms, or medical factors. Always consult a professional for critical decisions."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use these calculators on mobile devices?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, the entire CalcZen platform is optimized for mobile responsiveness. Whether you are using a smartphone, tablet, or desktop computer, the layouts adapt automatically to provide a premium, touch-friendly user experience. All inputs, buttons, and charts are designed to be fully functional on smaller touchscreens, allowing you to calculate on the go."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do these calculators store my personal data?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, we value your privacy. All inputs entered into our tools are processed locally in your browser during your session and are never stored on our servers, shared with third parties, or used for tracking. You can use our financial and health calculators with complete peace of mind, knowing your data remains entirely private."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which calculator should I use for my needs?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "If you are looking to buy a home or evaluate debt, start with our Mortgage Calculator or Loan EMI Calculator. For fitness and weight management goals, explore our BMI Calculator and Calorie Calculator to track daily targets. If you need general calculations, our Percentage Calculator and Scientific Calculator are excellent choices for quick math."
+              }
+            }
+          ]
+        }),
+      }
+    ],
   }),
   component: Index,
 });
@@ -150,9 +235,9 @@ function Index() {
             <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
               {/* Headline */}
               <h1 className="hero-headline text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.1] text-balance">
-                Calculate Smarter.<br className="hidden sm:inline" />
+                Free Online Calculators<br className="hidden sm:inline" />
                 <span className="text-gradient bg-gradient-to-r from-accent via-[#38bdf8] to-[#a78bfa] bg-clip-text text-transparent">
-                  Make Better Decisions.
+                  for Finance, Health, and Math
                 </span>
               </h1>
 
@@ -346,7 +431,7 @@ function Index() {
       <section id="category-section" className="page-container mt-0 pt-8 sm:pt-28 md:pt-32 relative z-10 scroll-mt-20">
         <div className="text-center mb-6 sm:mb-14 max-w-2xl mx-auto">
           <h2 className="text-xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-            Explore Categories
+            Calculator Categories
           </h2>
           <p className="text-xs sm:text-base text-muted-foreground mt-1.5">
             Choose the area you want to calculate in.
@@ -398,7 +483,7 @@ function Index() {
           <div className="min-w-0">
             <div className="flex items-center gap-2.5 mb-1.5">
               <Sparkles className="h-5.5 w-5.5 text-accent shrink-0 animate-pulse" />
-              <h2 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight">Popular calculators</h2>
+              <h2 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight">Popular Calculators</h2>
             </div>
             <p className="text-xs sm:text-base text-muted-foreground">The ones our visitors use the most.</p>
           </div>
@@ -418,20 +503,106 @@ function Index() {
 
       <BlogSection />
 
-      {/* About Section */}
-      <section className="page-container mt-8 sm:mt-32 md:mt-36 max-w-4xl min-w-0">
-        <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4 sm:mb-6">
-          Free online calculators for everyday decisions
+      {/* Why Use Online Calculators Section */}
+      <section className="page-container mt-8 sm:mt-32 md:mt-36 max-w-4xl min-w-0 text-left">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4 sm:mb-6">
+          Why Use Online Calculators?
         </h2>
-        <div className="space-y-4.5 sm:space-y-5 text-xs sm:text-base text-muted-foreground leading-[1.8] font-normal">
+        <div className="space-y-5 text-sm sm:text-base text-muted-foreground leading-[1.8] font-normal">
           <p>
-            From planning a home purchase to checking your daily calorie target, CalcZen gives you a clean, modern set of online calculators that work on any device.
-            Every tool explains its formula, shows worked examples, and includes answers to the most common questions — so you understand the math, not just the answer.
+            In today's fast-paced digital world, making informed decisions often requires dealing with complex numbers. Whether you are navigating personal finance, tracking fitness goals, solving mathematical equations, or handling everyday lifestyle tasks, online calculators provide a fast, accurate, and reliable solution. They remove human error, translate complex algebraic formulas into instant results, and offer visual clarity so you can take control of your planning.
           </p>
+          
+          <h3 className="text-base sm:text-lg font-semibold text-foreground mt-6 mb-2">
+            1. Smart Financial Planning and Borrowing
+          </h3>
           <p>
-            Our finance calculators help with mortgages, loans, EMI schedules and compound interest growth. Health tools cover BMI, calories, BMR and hydration.
-            Math and everyday helpers — percentage, age, and tip calculators — make quick work of the small calculations that come up daily.
+            Managing money is one of the most critical aspects of daily life. Financial calculators, such as mortgage planners and loan EMI tools, allow you to visualize long-term debt and interest payments before committing to a bank. By testing different down payments, loan terms, and annual interest rates, you can evaluate borrowing costs and safeguard your household budget. Compound interest and 401(k) calculators show the power of long-term savings growth, helping you map out a secure path toward retirement.
           </p>
+          
+          <h3 className="text-base sm:text-lg font-semibold text-foreground mt-6 mb-2">
+            2. Scientific Tracking of Health and Wellness
+          </h3>
+          <p>
+            Health decisions should be backed by objective data. Wellness calculators, including Body Mass Index (BMI), Basal Metabolic Rate (BMR), and daily calorie planners, offer personalized physiological estimates based on height, weight, age, and activity level. These metrics serve as a starting point for body weight management, fat loss, or muscle gain. Similarly, hydration calculators determine daily water intake targets based on climate and exercise, ensuring you maintain physical and cognitive peak performance.
+          </p>
+          
+          <h3 className="text-base sm:text-lg font-semibold text-foreground mt-6 mb-2">
+            3. Instant Mathematical and Percentage Solutions
+          </h3>
+          <p>
+            From school homework to business ratio analysis, mathematical calculators simplify everyday computations. Percentage calculators help you find markups, discounts, and percentage shifts instantly—essential for shopping smart or assessing investment returns. For complex technical problems, online scientific calculators provide advanced trigonometric, logarithmic, and exponential functions, making engineering calculations accessible from any web browser without standalone hardware.
+          </p>
+          
+          <h3 className="text-base sm:text-lg font-semibold text-foreground mt-6 mb-2">
+            4. Streamlining Everyday Lifestyle Decisions
+          </h3>
+          <p>
+            A large part of our day involves quick math that we often guess. Tip calculators ensure dining bills are split fairly among friends with custom gratuity percentages factored in. Age calculators solve exact duration intervals for milestones, while date planners simplify project tracking. By replacing estimates with precise math, CalcZen helps you save time, make smarter choices, and understand the core formulas behind every result.
+          </p>
+        </div>
+      </section>
+
+      {/* Homepage FAQ Section */}
+      <section id="faq-section" className="page-container mt-8 sm:mt-28 md:mt-32 max-w-4xl min-w-0 text-left">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4 sm:mb-6">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <h3 className="font-semibold text-base sm:text-lg text-foreground flex items-start gap-2">
+              <span className="text-primary font-bold">Q.</span>
+              What calculators are available on CalcZen?
+            </h3>
+            <p className="text-sm sm:text-base text-muted-foreground/90 leading-relaxed pl-5">
+              CalcZen offers a comprehensive suite of free online tools categorized under finance, health, math, and everyday helpers. You can calculate mortgages, compound interest, personal loan EMIs, daily calorie needs, percentage changes, age countdowns, restaurant tips, and perform advanced operations using our scientific calculator. We continually add new calculators to expand our offerings.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold text-base sm:text-lg text-foreground flex items-start gap-2">
+              <span className="text-primary font-bold">Q.</span>
+              Are these calculators free to use?
+            </h3>
+            <p className="text-sm sm:text-base text-muted-foreground/90 leading-relaxed pl-5">
+              Yes, all calculators on CalcZen are completely free and require no account registration, subscriptions, or hidden fees. You can access tools like our mortgage calculator, BMI calculator, and standard calculator instantly on any device without restrictions. We keep the platform accessible to everyone by relying on unobtrusive, privacy-friendly advertising.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold text-base sm:text-lg text-foreground flex items-start gap-2">
+              <span className="text-primary font-bold">Q.</span>
+              How accurate are the calculator results?
+            </h3>
+            <p className="text-sm sm:text-base text-muted-foreground/90 leading-relaxed pl-5">
+              Our calculators use industry-standard formulas, such as the fixed-rate amortization equation for mortgages or the Harris-Benedict formula for BMR. While these calculations provide highly accurate estimates for planning, actual financial or health metrics may vary based on individual circumstances, local taxes, lender terms, or medical factors. Always consult a professional for critical decisions.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold text-base sm:text-lg text-foreground flex items-start gap-2">
+              <span className="text-primary font-bold">Q.</span>
+              Can I use these calculators on mobile devices?
+            </h3>
+            <p className="text-sm sm:text-base text-muted-foreground/90 leading-relaxed pl-5">
+              Yes, the entire CalcZen platform is optimized for mobile responsiveness. Whether you are using a smartphone, tablet, or desktop computer, the layouts adapt automatically to provide a premium, touch-friendly user experience. All inputs, buttons, and charts are designed to be fully functional on smaller touchscreens, allowing you to calculate on the go.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold text-base sm:text-lg text-foreground flex items-start gap-2">
+              <span className="text-primary font-bold">Q.</span>
+              Do these calculators store my personal data?
+            </h3>
+            <p className="text-sm sm:text-base text-muted-foreground/90 leading-relaxed pl-5">
+              No, we value your privacy. All inputs entered into our tools are processed locally in your browser during your session and are never stored on our servers, shared with third parties, or used for tracking. You can use our financial and health calculators with complete peace of mind, knowing your data remains entirely private.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold text-base sm:text-lg text-foreground flex items-start gap-2">
+              <span className="text-primary font-bold">Q.</span>
+              Which calculator should I use for my needs?
+            </h3>
+            <p className="text-sm sm:text-base text-muted-foreground/90 leading-relaxed pl-5">
+              If you are looking to buy a home or evaluate debt, start with our Mortgage Calculator or Loan EMI Calculator. For fitness and weight management goals, explore our BMI Calculator and Calorie Calculator to track daily targets. If you need general calculations, our Percentage Calculator and Scientific Calculator are excellent choices for quick math.
+            </p>
+          </div>
         </div>
       </section>
 

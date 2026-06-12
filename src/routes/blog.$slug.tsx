@@ -63,21 +63,21 @@ export const Route = createFileRoute("/blog/$slug")({
           children: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
-            headline: blog.title,
-            image: blog.thumbnail || "",
-            genre: blog.category,
-            keywords: keys,
-            publisher: {
+            "headline": blog.title,
+            "image": blog.thumbnail || "",
+            "genre": blog.category,
+            "keywords": keys,
+            "publisher": {
               "@type": "Organization",
-              name: "CalcZen",
-              logo: { "@type": "ImageObject", url: `${siteUrl}/brand-logo.png` },
+              "name": "CalcZen",
+              "logo": { "@type": "ImageObject", url: `${siteUrl}/brand-logo.png` },
             },
-            url: `${siteUrl}/blog/${blog.slug}`,
-            datePublished: blog.publishDate || blog.createdAt,
-            dateModified: blog.updatedAt,
-            author: { "@type": "Person", name: blog.author },
-            description: blog.excerpt,
-            mainEntityOfPage: {
+            "url": `${siteUrl}/blog/${blog.slug}`,
+            "datePublished": blog.publishDate || blog.createdAt,
+            "dateModified": blog.updatedAt,
+            "author": { "@type": "Organization", "name": "CalcZen" },
+            "description": blog.excerpt || desc,
+            "mainEntityOfPage": {
               "@type": "WebPage",
               "@id": `${siteUrl}/blog/${blog.slug}`,
             },
@@ -87,8 +87,19 @@ export const Route = createFileRoute("/blog/$slug")({
           type: "application/ld+json",
           children: JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": `${siteUrl}/blog/${blog.slug}#webpage`,
+            "name": title,
+            "description": desc,
+            "url": `${siteUrl}/blog/${blog.slug}`
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "BreadcrumbList",
-            itemListElement: [
+            "itemListElement": [
               { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
               { "@type": "ListItem", position: 2, name: "Blog", item: `${siteUrl}/blog` },
               { "@type": "ListItem", position: 3, name: blog.title, item: `${siteUrl}/blog/${blog.slug}` },
@@ -238,7 +249,7 @@ function BlogPage() {
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
           </div>
           <div class="min-w-0">
-            <h4 class="font-bold text-white text-base leading-tight">Try Our ${calc.name} →</h4>
+            <div class="font-bold text-white text-base leading-tight">Try Our ${calc.name} →</div>
             <p class="text-xs text-slate-400 mt-1 line-clamp-1">${calc.description}</p>
           </div>
         </div>
@@ -283,7 +294,7 @@ function BlogPage() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
                 </div>
                 <div class="min-w-0">
-                  <h5 class="font-semibold text-xs sm:text-sm text-foreground leading-tight">Featured Calculator: ${calc.name}</h5>
+                  <div class="font-semibold text-xs sm:text-sm text-foreground leading-tight">Featured Calculator: ${calc.name}</div>
                   <p class="text-[10px] sm:text-xs text-muted-foreground mt-0.5 truncate">${calc.description}</p>
                 </div>
               </div>
@@ -421,7 +432,7 @@ function BlogPage() {
                 CZ
               </div>
               <div className="min-w-0">
-                <h4 className="font-semibold text-sm text-foreground">{blog.author}</h4>
+                <div className="font-semibold text-sm text-foreground">{blog.author}</div>
                 <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                   CalcZen content team provides premium, mathematical, and simulation models tutorials that simplify complex computations for everyday finance, taxes, fitness, and calculations.
                 </p>
@@ -434,10 +445,10 @@ function BlogPage() {
             {/* Table of Contents Widget */}
             {toc.length > 0 && (
               <div className="rounded-2xl border border-border/60 bg-card/25 p-5 min-w-0">
-                <h3 className="font-bold text-sm tracking-tight text-foreground mb-3 border-b border-border/40 pb-2 flex items-center gap-1.5">
+                <h2 className="font-bold text-sm tracking-tight text-foreground mb-3 border-b border-border/40 pb-2 flex items-center gap-1.5">
                   <BookOpen size={14} className="text-indigo-400" />
                   Table of Contents
-                </h3>
+                </h2>
                 <nav className="space-y-2">
                   {toc.map((item) => (
                     <a
@@ -455,10 +466,10 @@ function BlogPage() {
             {/* Related Tools Recommendation Sidebar Widget */}
             {sidebarCalculators.length > 0 && (
               <div className="rounded-2xl border border-border/60 bg-card/25 p-5 min-w-0">
-                <h3 className="font-bold text-sm tracking-tight text-foreground mb-3 border-b border-border/40 pb-2 flex items-center gap-1.5">
+                <h2 className="font-bold text-sm tracking-tight text-foreground mb-3 border-b border-border/40 pb-2 flex items-center gap-1.5">
                   <Sparkles size={14} className="text-accent" />
                   Related Calculators
-                </h3>
+                </h2>
                 <div className="space-y-3">
                   {sidebarCalculators.map((c) => {
                     const CalcIcon = c.icon;
@@ -490,9 +501,9 @@ function BlogPage() {
         {/* Footer Similar/Related Articles Grid */}
         {relatedBlogs.length > 0 && (
           <div className="mt-16 border-t border-border/40 pt-10 pb-6 min-w-0">
-            <h3 className="font-bold text-xl sm:text-2xl tracking-tight text-foreground mb-6">
+            <h2 className="font-bold text-xl sm:text-2xl tracking-tight text-foreground mb-6">
               Similar Reading You Might Enjoy
-            </h3>
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl">
               {relatedBlogs.map((r) => (
                 <div
@@ -515,9 +526,9 @@ function BlogPage() {
                       <span className="text-[10px] text-accent font-bold uppercase tracking-wider">
                         {r.category}
                       </span>
-                      <h4 className="font-bold text-sm sm:text-base text-foreground mt-1 group-hover:text-accent transition-colors truncate">
+                      <h3 className="font-bold text-sm sm:text-base text-foreground mt-1 group-hover:text-accent transition-colors truncate">
                         {r.title}
-                      </h4>
+                      </h3>
                       <p className="text-xs sm:text-sm text-muted-foreground mt-2 line-clamp-2 leading-relaxed">
                         {r.excerpt}
                       </p>

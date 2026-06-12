@@ -7,20 +7,46 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About CalcZen — Free Online Calculators for Finance, Health & Math" },
-      {
-        name: "description",
-        content:
-          "About CalcZen: free, accurate online calculators for finance, health, math, and everyday use. Transparent formulas and a clean experience on any device.",
-      },
+      { name: "description", content: "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience." },
       { property: "og:title", content: "About CalcZen — Free Online Calculators" },
-      {
-        property: "og:description",
-        content:
-          "Learn how CalcZen delivers fast, accurate calculator tools with clear methods and a distraction-free experience.",
-      },
+      { property: "og:description", content: "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience." },
+      { name: "twitter:description", content: "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience." },
       { property: "og:url", content: "https://calczen.com/about" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.com/about" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "name": "About CalcZen — Free Online Calculators for Finance, Health & Math",
+          "description": "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience.",
+          "url": "https://calczen.com/about"
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://calczen.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "About Us",
+              "item": "https://calczen.com/about"
+            }
+          ]
+        }),
+      }
+    ],
   }),
   component: AboutPage,
 });

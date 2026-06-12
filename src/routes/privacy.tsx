@@ -7,19 +7,46 @@ export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
       { title: "Privacy Policy — How CalcZen Handles Your Data" },
-      {
-        name: "description",
-        content:
-          "CalcZen Privacy Policy: what data we collect, cookies, Google Analytics, Google AdSense, your rights, and how we protect information when you use our free online calculators.",
-      },
+      { name: "description", content: "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights." },
       { property: "og:title", content: "CalcZen Privacy Policy" },
-      {
-        property: "og:description",
-        content: "How CalcZen handles data, cookies, analytics, and advertising on our calculator platform.",
-      },
+      { property: "og:description", content: "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights." },
+      { name: "twitter:description", content: "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights." },
       { property: "og:url", content: "https://calczen.com/privacy" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.com/privacy" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Privacy Policy — How CalcZen Handles Your Data",
+          "description": "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.",
+          "url": "https://calczen.com/privacy"
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://calczen.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Privacy Policy",
+              "item": "https://calczen.com/privacy"
+            }
+          ]
+        }),
+      }
+    ],
   }),
   component: PrivacyPage,
 });

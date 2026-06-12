@@ -71,10 +71,10 @@ export default function CalculatorBlog({ content }: Props) {
       {/* 4. Table of Contents / Scannability index */}
       {content.sections.length > 0 && (
         <div className="rounded-xl border border-border/60 bg-muted/10 p-4 sm:p-5 mt-6 mb-16 w-full select-none">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80 mb-3 flex items-center gap-2">
+          <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80 mb-3 flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
             Quick Navigation Index
-          </h4>
+          </div>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
             {content.sections.map((s, idx) => (
               <li key={idx}>
@@ -221,10 +221,10 @@ export default function CalculatorBlog({ content }: Props) {
             {/* Optional Step-by-Step Example Box */}
             {s.exampleBox && (
               <div className="my-10 rounded-xl border border-border bg-card/45 p-6 sm:p-8 w-full shadow-soft">
-                <h4 className="text-sm sm:text-base font-semibold text-foreground flex items-center gap-2 mb-5 border-b border-border/40 pb-3">
+                <div className="text-sm sm:text-base font-semibold text-foreground flex items-center gap-2 mb-5 border-b border-border/40 pb-3">
                   <CheckCircle2 size={16} className="text-primary shrink-0" />
                   {s.exampleBox.title}
-                </h4>
+                </div>
                 
                 {/* Inputs list */}
                 <div className="text-xs sm:text-sm text-muted-foreground mb-6">

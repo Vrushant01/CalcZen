@@ -43,6 +43,16 @@ const CALCULATOR_SLUGS = [
   "scientific-calculator",
   "retirement-calculator",
   "401k-calculator",
+  "sip-calculator",
+  "fd-calculator",
+  "gst-calculator",
+  "attendance-calculator",
+  "cgpa-calculator",
+  "body-fat-calculator",
+  "protein-calculator",
+  "inflation-calculator",
+  "loan-eligibility-calculator",
+  "credit-card-emi-calculator",
 ];
 
 async function generateSitemap() {

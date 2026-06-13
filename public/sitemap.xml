@@ -27,7 +27,18 @@
   <url><loc>http://localhost:8080/calculator/scientific-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/retirement-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/401k-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/sip-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/fd-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/gst-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/attendance-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/cgpa-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/body-fat-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/protein-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/inflation-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/loan-eligibility-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/credit-card-emi-calculator</loc></url>
   <url><loc>http://localhost:8080/blog/pregnancy-due-date-calculator-estimate-your-babys-arrival-date-accurately</loc></url>
   <url><loc>http://localhost:8080/blog/water-intake-calculator-how-much-water-should-you-drink-each-day</loc></url>
-  <url><loc>http://localhost:8080/blog/us-mortgage-rates-drop-in-2026-what-home-buyers-should-do-now</loc></url>
+  <url><loc>http://localhost:8080/blog/current-mortgage-rates-in-2026-what-homebuyers-are-facing-right-now</loc></url>
+  <url><loc>http://localhost:8080/blog/basal-metabolic-rate-calculator</loc></url>
 </urlset>

@@ -5,25 +5,19 @@ import { cn } from "@/lib/utils";
 
 type MoneyFieldProps = {
   label: string;
-  value: number;
-  onChange: (value: number) => void;
+  value: number | "";
+  onChange: (value: number | "") => void;
   step?: number;
   className?: string;
   id?: string;
 };
 
 /** Currency-aware money input with dynamic symbol prefix */
-export function MoneyField({
-  label,
-  value,
-  onChange,
-  step = 1,
-  className,
-  id,
-}: MoneyFieldProps) {
+export function MoneyField({ label, value, onChange, step = 1, className, id }: MoneyFieldProps) {
   const { symbol } = useCurrency();
   const fieldId = id ?? label.toLowerCase().replace(/\s+/g, "-");
-  const prefixLen = symbol.length > 3 ? "pl-14 sm:pl-12" : symbol.length > 1 ? "pl-10 sm:pl-8" : "pl-8";
+  const prefixLen =
+    symbol.length > 3 ? "pl-14 sm:pl-12" : symbol.length > 1 ? "pl-10 sm:pl-8" : "pl-8";
 
   return (
     <div className={className}>
@@ -42,7 +36,10 @@ export function MoneyField({
           type="number"
           step={step}
           value={value}
-          onChange={(e) => onChange(Number(e.target.value) || 0)}
+          onChange={(e) => {
+            const v = e.target.value;
+            onChange(v === "" ? "" : Number(v));
+          }}
           className={cn(prefixLen)}
         />
       </div>

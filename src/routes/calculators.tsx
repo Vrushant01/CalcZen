@@ -12,10 +12,22 @@ export const Route = createFileRoute("/calculators")({
   head: () => ({
     meta: [
       { title: "All Calculators — Browse Every Tool | CalcZen" },
-      { name: "description", content: "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results." },
+      {
+        name: "description",
+        content:
+          "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
+      },
       { property: "og:title", content: "All Calculators | CalcZen" },
-      { property: "og:description", content: "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results." },
-      { name: "twitter:description", content: "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results." },
+      {
+        property: "og:description",
+        content:
+          "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
+      },
       { property: "og:url", content: "https://calczen.in/calculators" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.in/calculators" }],
@@ -25,9 +37,10 @@ export const Route = createFileRoute("/calculators")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "All Calculators — Browse Every Tool | CalcZen",
-          "description": "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
-          "url": "https://calczen.in/calculators"
+          name: "All Calculators — Browse Every Tool | CalcZen",
+          description:
+            "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
+          url: "https://calczen.in/calculators",
         }),
       },
       {
@@ -35,29 +48,31 @@ export const Route = createFileRoute("/calculators")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
-          "itemListElement": [
+          itemListElement: [
             {
               "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://calczen.in"
+              position: 1,
+              name: "Home",
+              item: "https://calczen.in",
             },
             {
               "@type": "ListItem",
-              "position": 2,
-              "name": "Calculators",
-              "item": "https://calczen.in/calculators"
-            }
-          ]
+              position: 2,
+              name: "Calculators",
+              item: "https://calczen.in/calculators",
+            },
+          ],
         }),
-      }
+      },
     ],
   }),
   component: AllCalculators,
 });
 
 function AllCalculators() {
-  const searchParams = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
+  const searchParams = new URLSearchParams(
+    typeof window !== "undefined" ? window.location.search : "",
+  );
   const [q, setQ] = useState(searchParams.get("q") || "");
   const [cat, setCat] = useState<string>(searchParams.get("cat") || "all");
 
@@ -120,7 +135,9 @@ function AllCalculators() {
         </div>
 
         {filtered.length === 0 && (
-          <p className="text-center text-muted-foreground py-12 sm:py-16">No calculators match your search.</p>
+          <p className="text-center text-muted-foreground py-12 sm:py-16">
+            No calculators match your search.
+          </p>
         )}
       </PageContainer>
     </PageShell>

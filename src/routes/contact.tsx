@@ -12,10 +12,22 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact CalcZen — We'd Love to Hear From You" },
-      { name: "description", content: "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours." },
+      {
+        name: "description",
+        content:
+          "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours.",
+      },
       { property: "og:title", content: "Contact CalcZen" },
-      { property: "og:description", content: "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours." },
-      { name: "twitter:description", content: "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours." },
+      {
+        property: "og:description",
+        content:
+          "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours.",
+      },
       { property: "og:url", content: "https://calczen.in/contact" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.in/contact" }],
@@ -25,9 +37,10 @@ export const Route = createFileRoute("/contact")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ContactPage",
-          "name": "Contact CalcZen — We'd Love to Hear From You",
-          "description": "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours.",
-          "url": "https://calczen.in/contact"
+          name: "Contact CalcZen — We'd Love to Hear From You",
+          description:
+            "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours.",
+          url: "https://calczen.in/contact",
         }),
       },
       {
@@ -35,22 +48,22 @@ export const Route = createFileRoute("/contact")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
-          "itemListElement": [
+          itemListElement: [
             {
               "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://calczen.in"
+              position: 1,
+              name: "Home",
+              item: "https://calczen.in",
             },
             {
               "@type": "ListItem",
-              "position": 2,
-              "name": "Contact Us",
-              "item": "https://calczen.in/contact"
-            }
-          ]
+              position: 2,
+              name: "Contact Us",
+              item: "https://calczen.in/contact",
+            },
+          ],
         }),
-      }
+      },
     ],
   }),
   component: Contact,
@@ -113,8 +126,12 @@ function Contact() {
   return (
     <PageShell>
       <div className="page-container max-w-2xl py-10 sm:py-16 min-w-0">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-balance">Contact us</h1>
-        <p className="mt-2 text-sm sm:text-base text-muted-foreground">Have a calculator request or feedback? Drop us a line.</p>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-balance">
+          Contact us
+        </h1>
+        <p className="mt-2 text-sm sm:text-base text-muted-foreground">
+          Have a calculator request or feedback? Drop us a line.
+        </p>
         <h2 className="text-lg font-semibold text-foreground mt-8 mb-4">Send Us a Message</h2>
         {sent ? (
           <div
@@ -166,7 +183,10 @@ function Contact() {
         <div className="mt-12 border-t border-border/40 pt-8">
           <h2 className="text-lg font-semibold text-foreground mb-3">Response Times & Support</h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            We value your feedback and suggestion requests. Our team reviews every submission and typically replies within 24 to 48 business hours. For general inquiries, reporting calculator errors, or suggesting new mathematical or financial simulation tools, please fill out the form above.
+            We value your feedback and suggestion requests. Our team reviews every submission and
+            typically replies within 24 to 48 business hours. For general inquiries, reporting
+            calculator errors, or suggesting new mathematical or financial simulation tools, please
+            fill out the form above.
           </p>
         </div>
       </div>

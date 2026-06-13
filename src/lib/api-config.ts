@@ -22,14 +22,14 @@ export function buildApiUrl(path: string): string {
   let base = getApiBaseUrl();
   base = base.replace(/\/$/, "");
   let cleanPath = path.startsWith("/") ? path : `/${path}`;
-  
+
   // Prevent duplicate "/api/api" prefixing and handle absolute vs relative mismatches
   if (base.endsWith("/api") && cleanPath.startsWith("/api/")) {
     cleanPath = cleanPath.substring(4);
   } else if (!base.endsWith("/api") && !cleanPath.startsWith("/api/")) {
     cleanPath = `/api${cleanPath}`;
   }
-  
+
   return `${base}${cleanPath}`;
 }
 
@@ -43,7 +43,7 @@ export async function apiFetch(path: string, init?: RequestInit): Promise<Respon
       ...init,
       signal: init?.signal ?? controller.signal,
     });
-    
+
     return res;
   } catch (err) {
     console.error(`[API ERROR] Exception during fetch to ${resolvedUrl}:`, err);
@@ -62,4 +62,3 @@ export function getNetworkErrorMessage(err: unknown): string {
   }
   return err instanceof Error ? err.message : "Something went wrong. Please try again.";
 }
-

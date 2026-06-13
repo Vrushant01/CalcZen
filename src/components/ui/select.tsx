@@ -32,7 +32,10 @@ const SelectScrollUpButton = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.ScrollUpButton
     ref={ref}
-    className={cn("flex cursor-default items-center justify-center py-1.5 text-muted-foreground", className)}
+    className={cn(
+      "flex cursor-default items-center justify-center py-1.5 text-muted-foreground",
+      className,
+    )}
     {...props}
   >
     <ChevronUp className="h-4 w-4" />
@@ -46,7 +49,10 @@ const SelectScrollDownButton = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.ScrollDownButton
     ref={ref}
-    className={cn("flex cursor-default items-center justify-center py-1.5 text-muted-foreground", className)}
+    className={cn(
+      "flex cursor-default items-center justify-center py-1.5 text-muted-foreground",
+      className,
+    )}
     {...props}
   >
     <ChevronDown className="h-4 w-4" />
@@ -64,7 +70,11 @@ const SelectContent = React.forwardRef<
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
-      className={cn(selectContentClassName, position === "popper" && "data-[side=bottom]:translate-y-1", className)}
+      className={cn(
+        selectContentClassName,
+        position === "popper" && "data-[side=bottom]:translate-y-1",
+        className,
+      )}
       position={position}
       {...props}
     >
@@ -82,7 +92,10 @@ const SelectLabel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn("px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground", className)}
+    className={cn(
+      "px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground",
+      className,
+    )}
     {...props}
   />
 ));
@@ -110,7 +123,11 @@ const SelectSeparator = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
 >(({ className, ...props }, ref) => (
-  <SelectPrimitive.Separator ref={ref} className={cn("-mx-1 my-1 h-px bg-border/60", className)} {...props} />
+  <SelectPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-border/60", className)}
+    {...props}
+  />
 ));
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 

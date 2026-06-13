@@ -60,7 +60,6 @@ export default function SavePDFButton({ pdfData, disabled }: Props) {
           setProgress(0);
         }, 2200);
       }, 180);
-
     } catch (err) {
       clearInterval(progressInterval);
       setExportState("idle");
@@ -88,39 +87,31 @@ export default function SavePDFButton({ pdfData, disabled }: Props) {
       // Smooth width layout updates driven by text change
       layout
       transition={
-        prefersReducedMotion
-          ? { duration: 0 }
-          : { type: "spring", stiffness: 380, damping: 30 }
+        prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 30 }
       }
       whileHover={
-        !disabled && exportState === "idle" && !prefersReducedMotion
-          ? { scale: 1.01, y: -2 }
-          : {}
+        !disabled && exportState === "idle" && !prefersReducedMotion ? { scale: 1.01, y: -2 } : {}
       }
-      whileTap={
-        !disabled && exportState === "idle" && !prefersReducedMotion
-          ? { scale: 0.97 }
-          : {}
-      }
+      whileTap={!disabled && exportState === "idle" && !prefersReducedMotion ? { scale: 0.97 } : {}}
       className={cn(
         "inline-flex shrink-0 items-center justify-center gap-2.5 rounded-lg border px-5 py-2.5 text-sm font-semibold select-none cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
-        
+
         // IDLE STATE COLORS
         exportState === "idle" && "pdf-btn-idle",
-        
+
         // EXPORTING STATE COLORS
         exportState === "exporting" && [
           "border-slate-200 bg-slate-50/70 text-slate-500 cursor-wait",
-          "dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-400"
+          "dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-400",
         ],
-        
+
         // SUCCESS STATE COLORS (with soft success glow pulse)
         exportState === "success" && [
           "border-emerald-500 bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.35)]",
-          "dark:border-emerald-600 dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_20px_rgba(16,185,129,0.45)]"
+          "dark:border-emerald-600 dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_20px_rgba(16,185,129,0.45)]",
         ],
-        
-        disabled && "cursor-not-allowed opacity-50"
+
+        disabled && "cursor-not-allowed opacity-50",
       )}
     >
       {/* Icon Wrapper (transitions between Down, Progress ring, and Checkmark) */}
@@ -170,7 +161,9 @@ export default function SavePDFButton({ pdfData, disabled }: Props) {
                   strokeLinecap="round"
                   strokeDasharray={47.12} // 2 * Math.PI * 7.5
                   animate={{ strokeDashoffset: 47.12 - (progress / 100) * 47.12 }}
-                  transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.1, ease: "linear" }}
+                  transition={
+                    prefersReducedMotion ? { duration: 0 } : { duration: 0.1, ease: "linear" }
+                  }
                   style={{ rotate: -90, transformOrigin: "50% 50%" }}
                 />
               </svg>
@@ -190,14 +183,22 @@ export default function SavePDFButton({ pdfData, disabled }: Props) {
               className="flex items-center justify-center"
             >
               {/* Self-drawing SVG checkmark */}
-              <svg className="w-5 h-5 text-white" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <svg
+                className="w-5 h-5 text-white"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
                 <motion.path
                   d="M4.5 10l3.5 3.5L15.5 6.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   initial={prefersReducedMotion ? { pathLength: 1 } : { pathLength: 0 }}
                   animate={{ pathLength: 1 }}
-                  transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.35, delay: 0.05 }}
+                  transition={
+                    prefersReducedMotion ? { duration: 0 } : { duration: 0.35, delay: 0.05 }
+                  }
                 />
               </svg>
             </motion.div>
@@ -219,7 +220,7 @@ export default function SavePDFButton({ pdfData, disabled }: Props) {
               Save as PDF
             </motion.span>
           )}
-          
+
           {exportState === "exporting" && (
             <motion.span
               key="exporting"
@@ -231,7 +232,7 @@ export default function SavePDFButton({ pdfData, disabled }: Props) {
               Saving PDF...
             </motion.span>
           )}
-          
+
           {exportState === "success" && (
             <motion.span
               key="success"

@@ -32,14 +32,18 @@ export function RecommendationList({ items }: Props) {
           <div
             className={cn(
               "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white mt-0.5",
-              accentColors[i % accentColors.length]
+              accentColors[i % accentColors.length],
             )}
           >
-            {item.icon ?? (i + 1)}
+            {item.icon ?? i + 1}
           </div>
           <div className="min-w-0">
-            <div className="dashboard-recommendation-title text-sm font-semibold text-foreground">{item.title}</div>
-            <div className="dashboard-recommendation-description mt-0.5 text-xs leading-relaxed text-muted-foreground">{item.description}</div>
+            <div className="dashboard-recommendation-title text-sm font-semibold text-foreground">
+              {item.title}
+            </div>
+            <div className="dashboard-recommendation-description mt-0.5 text-xs leading-relaxed text-muted-foreground">
+              {item.description}
+            </div>
           </div>
         </motion.div>
       ))}

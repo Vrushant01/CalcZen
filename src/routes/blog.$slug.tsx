@@ -37,7 +37,8 @@ export const Route = createFileRoute("/blog/$slug")({
     const desc = blog.metaDescription || blog.excerpt;
     const siteUrl = "https://calczen.in";
     const canonical = `${siteUrl}/blog/${blog.slug}`;
-    const keys = blog.keywords && blog.keywords.length > 0 ? blog.keywords.join(", ") : blog.tags.join(", ");
+    const keys =
+      blog.keywords && blog.keywords.length > 0 ? blog.keywords.join(", ") : blog.tags.join(", ");
 
     return {
       meta: [
@@ -64,21 +65,21 @@ export const Route = createFileRoute("/blog/$slug")({
           children: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
-            "headline": blog.title,
-            "image": blog.thumbnail || "",
-            "genre": blog.category,
-            "keywords": keys,
-            "publisher": {
+            headline: blog.title,
+            image: blog.thumbnail || "",
+            genre: blog.category,
+            keywords: keys,
+            publisher: {
               "@type": "Organization",
-              "name": "CalcZen",
-              "logo": { "@type": "ImageObject", url: `${siteUrl}/brand-logo.png` },
+              name: "CalcZen",
+              logo: { "@type": "ImageObject", url: `${siteUrl}/brand-logo.png` },
             },
-            "url": `${siteUrl}/blog/${blog.slug}`,
-            "datePublished": blog.publishDate || blog.createdAt,
-            "dateModified": blog.updatedAt,
-            "author": { "@type": "Organization", "name": "CalcZen" },
-            "description": blog.excerpt || desc,
-            "mainEntityOfPage": {
+            url: `${siteUrl}/blog/${blog.slug}`,
+            datePublished: blog.publishDate || blog.createdAt,
+            dateModified: blog.updatedAt,
+            author: { "@type": "Organization", name: "CalcZen" },
+            description: blog.excerpt || desc,
+            mainEntityOfPage: {
               "@type": "WebPage",
               "@id": `${siteUrl}/blog/${blog.slug}`,
             },
@@ -90,9 +91,9 @@ export const Route = createFileRoute("/blog/$slug")({
             "@context": "https://schema.org",
             "@type": "WebPage",
             "@id": `${siteUrl}/blog/${blog.slug}#webpage`,
-            "name": title,
-            "description": desc,
-            "url": `${siteUrl}/blog/${blog.slug}`
+            name: title,
+            description: desc,
+            url: `${siteUrl}/blog/${blog.slug}`,
           }),
         },
         {
@@ -100,28 +101,37 @@ export const Route = createFileRoute("/blog/$slug")({
           children: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
-            "itemListElement": [
+            itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
               { "@type": "ListItem", position: 2, name: "Blog", item: `${siteUrl}/blog` },
-              { "@type": "ListItem", position: 3, name: blog.title, item: `${siteUrl}/blog/${blog.slug}` },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: blog.title,
+                item: `${siteUrl}/blog/${blog.slug}`,
+              },
             ],
           }),
         },
-        ...(blog.faqs && blog.faqs.length > 0 ? [{
-          type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": blog.faqs.map(faq => ({
-              "@type": "Question",
-              "name": faq.question,
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.answer
-              }
-            }))
-          }),
-        }] : []),
+        ...(blog.faqs && blog.faqs.length > 0
+          ? [
+              {
+                type: "application/ld+json",
+                children: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: blog.faqs.map((faq) => ({
+                    "@type": "Question",
+                    name: faq.question,
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: faq.answer,
+                    },
+                  })),
+                }),
+              },
+            ]
+          : []),
       ],
     };
   },
@@ -131,7 +141,8 @@ export const Route = createFileRoute("/blog/$slug")({
       <div className="page-container max-w-3xl py-24 text-center">
         <h1 className="text-3xl font-bold text-foreground">Article not found</h1>
         <p className="mt-4 text-base text-muted-foreground">
-          We couldn't find the blog post you're looking for. It may have been relocated or unpublished.
+          We couldn't find the blog post you're looking for. It may have been relocated or
+          unpublished.
         </p>
         <Link
           to="/blog"
@@ -239,7 +250,7 @@ function BlogPage() {
   // 6. INTERNAL CALCULATOR LINKING ENGINE
   // Parsers raw HTML to inject interactive calculators cards and highlights keywords.
   const renderedContent = useMemo(() => {
-    let parsedContent = blog.content;
+    const parsedContent = blog.content;
 
     // 6.1 Render Custom Embed Inserters [calculator slug="x"] or CTA blocks from visual editor
     // We already inserted visual editor block `<div class="calc-cta-block" data-slug="...">`
@@ -271,7 +282,8 @@ function BlogPage() {
         </div>
         <a href="/calculator/${calc.slug}" class="rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs px-4 py-2 hover:scale-[1.015] active:scale-[0.985] transition-all shrink-0 text-center w-full sm:w-auto" style="text-decoration: none !important;">Calculate Free</a>
       `;
-      el.className = "calc-cta-block rounded-xl border border-indigo-500/25 bg-gradient-hero p-5 my-6 flex flex-col sm:flex-row items-center justify-between gap-4 select-none";
+      el.className =
+        "calc-cta-block rounded-xl border border-indigo-500/25 bg-gradient-hero p-5 my-6 flex flex-col sm:flex-row items-center justify-between gap-4 select-none";
     });
 
     // Inject heading IDs for smooth anchors in Toc navigation
@@ -303,7 +315,8 @@ function BlogPage() {
 
             // Inject an elegant CTA box immediately following the paragraph
             const ctaBox = doc.createElement("div");
-            ctaBox.className = "calc-keyword-cta rounded-xl border border-border/80 bg-card/65 p-4.5 my-5 flex items-center justify-between gap-4 select-none border-l-4 border-l-indigo-500";
+            ctaBox.className =
+              "calc-keyword-cta rounded-xl border border-border/80 bg-card/65 p-4.5 my-5 flex items-center justify-between gap-4 select-none border-l-4 border-l-indigo-500";
             ctaBox.innerHTML = `
               <div class="flex items-center gap-3 min-w-0">
                 <div class="h-9 w-9 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0">
@@ -450,7 +463,9 @@ function BlogPage() {
               <div className="min-w-0">
                 <div className="font-semibold text-sm text-foreground">{blog.author}</div>
                 <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                  CalcZen content team provides premium, mathematical, and simulation models tutorials that simplify complex computations for everyday finance, taxes, fitness, and calculations.
+                  CalcZen content team provides premium, mathematical, and simulation models
+                  tutorials that simplify complex computations for everyday finance, taxes, fitness,
+                  and calculations.
                 </p>
               </div>
             </div>
@@ -462,7 +477,7 @@ function BlogPage() {
                   <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
                     Frequently Asked Questions
                   </h2>
-                  <FaqAccordion faqs={blog.faqs.map(f => ({ q: f.question, a: f.answer }))} />
+                  <FaqAccordion faqs={blog.faqs.map((f) => ({ q: f.question, a: f.answer }))} />
                 </div>
               </div>
             )}
@@ -516,7 +531,10 @@ function BlogPage() {
                             {c.name}
                           </span>
                         </div>
-                        <ArrowRight size={12} className="text-[var(--color-muted)] group-hover:text-accent group-hover:translate-x-0.5 transition-all shrink-0" />
+                        <ArrowRight
+                          size={12}
+                          className="text-[var(--color-muted)] group-hover:text-accent group-hover:translate-x-0.5 transition-all shrink-0"
+                        />
                       </Link>
                     );
                   })}
@@ -538,7 +556,11 @@ function BlogPage() {
                   key={r._id}
                   className="group border border-border/80 bg-card/25 rounded-2xl overflow-hidden hover:-translate-y-0.5 hover:border-accent/40 shadow-soft transition-all duration-300"
                 >
-                  <Link to={`/blog/$slug`} params={{ slug: r.slug }} className="flex flex-col h-full">
+                  <Link
+                    to={`/blog/$slug`}
+                    params={{ slug: r.slug }}
+                    className="flex flex-col h-full"
+                  >
                     <div className="h-40 bg-black overflow-hidden relative">
                       <img
                         src={r.thumbnail || ""}

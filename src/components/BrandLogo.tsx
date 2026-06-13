@@ -27,12 +27,21 @@ export function BrandLogo({
       />
       {showLabel ? (
         isDefaultWordmark ? (
-          <span className={cn("truncate text-base sm:text-lg font-bold tracking-tight", labelClassName)}>
+          <span
+            className={cn("truncate text-base sm:text-lg font-bold tracking-tight", labelClassName)}
+          >
             <span className="text-foreground">Calc</span>
-            <span className="bg-gradient-to-r from-[#1D56D8] via-[#177FE8] to-[#1BC8FF] bg-clip-text text-transparent">Zen</span>
+            <span className="bg-gradient-to-r from-[#1D56D8] via-[#177FE8] to-[#1BC8FF] bg-clip-text text-transparent">
+              Zen
+            </span>
           </span>
         ) : (
-          <span className={cn("truncate text-base sm:text-lg font-bold tracking-tight text-foreground", labelClassName)}>
+          <span
+            className={cn(
+              "truncate text-base sm:text-lg font-bold tracking-tight text-foreground",
+              labelClassName,
+            )}
+          >
             {label}
           </span>
         )

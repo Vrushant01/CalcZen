@@ -186,10 +186,7 @@ export default function CalculatorBlog({ content }: Props) {
                     <thead className="bg-muted/40 border-b border-border/80">
                       <tr>
                         {s.table.headers.map((h, hIdx) => (
-                          <th
-                            key={hIdx}
-                            className="px-4.5 py-3 font-semibold text-foreground"
-                          >
+                          <th key={hIdx} className="px-4.5 py-3 font-semibold text-foreground">
                             {h}
                           </th>
                         ))}
@@ -216,8 +213,6 @@ export default function CalculatorBlog({ content }: Props) {
               </div>
             )}
 
-
-
             {/* Optional Step-by-Step Example Box */}
             {s.exampleBox && (
               <div className="my-10 rounded-xl border border-border bg-card/45 p-6 sm:p-8 w-full shadow-soft">
@@ -225,7 +220,7 @@ export default function CalculatorBlog({ content }: Props) {
                   <CheckCircle2 size={16} className="text-primary shrink-0" />
                   {s.exampleBox.title}
                 </div>
-                
+
                 {/* Inputs list */}
                 <div className="text-xs sm:text-sm text-muted-foreground mb-6">
                   <div className="font-semibold text-foreground mb-3 select-none">

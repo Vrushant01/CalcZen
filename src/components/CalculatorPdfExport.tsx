@@ -12,7 +12,7 @@ export function CalculatorPdfExport({ pdfData }: Props) {
     siteName: "CalcZen",
     siteUrl: "https://www.calczen.in",
     inputs: [],
-    results: []
+    results: [],
   };
 
   return (

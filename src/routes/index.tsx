@@ -16,28 +16,28 @@ import { subscribeEmail } from "@/lib/subscribe-api";
 const homeFaqs = [
   {
     q: "What calculators are available on CalcZen?",
-    a: "CalcZen offers a comprehensive suite of free online tools categorized under finance, health, math, and everyday helpers. You can calculate mortgages, compound interest, personal loan EMIs, daily calorie needs, percentage changes, age countdowns, restaurant tips, and perform advanced operations using our scientific calculator. We continually add new calculators to expand our offerings."
+    a: "CalcZen offers a comprehensive suite of free online tools categorized under finance, health, math, and everyday helpers. You can calculate mortgages, compound interest, personal loan EMIs, daily calorie needs, percentage changes, age countdowns, restaurant tips, and perform advanced operations using our scientific calculator. We continually add new calculators to expand our offerings.",
   },
   {
     q: "Are these calculators free to use?",
-    a: "Yes, all calculators on CalcZen are completely free and require no account registration, subscriptions, or hidden fees. You can access tools like our mortgage calculator, BMI calculator, and standard calculator instantly on any device without restrictions. We keep the platform accessible to everyone by relying on unobtrusive, privacy-friendly advertising."
+    a: "Yes, all calculators on CalcZen are completely free and require no account registration, subscriptions, or hidden fees. You can access tools like our mortgage calculator, BMI calculator, and standard calculator instantly on any device without restrictions. We keep the platform accessible to everyone by relying on unobtrusive, privacy-friendly advertising.",
   },
   {
     q: "How accurate are the calculator results?",
-    a: "Our calculators use industry-standard formulas, such as the fixed-rate amortization equation for mortgages or the Harris-Benedict formula for BMR. While these calculations provide highly accurate estimates for planning, actual financial or health metrics may vary based on individual circumstances, local taxes, lender terms, or medical factors. Always consult a professional for critical decisions."
+    a: "Our calculators use industry-standard formulas, such as the fixed-rate amortization equation for mortgages or the Harris-Benedict formula for BMR. While these calculations provide highly accurate estimates for planning, actual financial or health metrics may vary based on individual circumstances, local taxes, lender terms, or medical factors. Always consult a professional for critical decisions.",
   },
   {
     q: "Can I use these calculators on mobile devices?",
-    a: "Yes, the entire CalcZen platform is optimized for mobile responsiveness. Whether you are using a smartphone, tablet, or desktop computer, the layouts adapt automatically to provide a premium, touch-friendly user experience. All inputs, buttons, and charts are designed to be fully functional on smaller touchscreens, allowing you to calculate on the go."
+    a: "Yes, the entire CalcZen platform is optimized for mobile responsiveness. Whether you are using a smartphone, tablet, or desktop computer, the layouts adapt automatically to provide a premium, touch-friendly user experience. All inputs, buttons, and charts are designed to be fully functional on smaller touchscreens, allowing you to calculate on the go.",
   },
   {
     q: "Do these calculators store my personal data?",
-    a: "No, we value your privacy. All inputs entered into our tools are processed locally in your browser during your session and are never stored on our servers, shared with third parties, or used for tracking. You can use our financial and health calculators with complete peace of mind, knowing your data remains entirely private."
+    a: "No, we value your privacy. All inputs entered into our tools are processed locally in your browser during your session and are never stored on our servers, shared with third parties, or used for tracking. You can use our financial and health calculators with complete peace of mind, knowing your data remains entirely private.",
   },
   {
     q: "Which calculator should I use for my needs?",
-    a: "If you are looking to buy a home or evaluate debt, start with our Mortgage Calculator or Loan EMI Calculator. For fitness and weight management goals, explore our BMI Calculator and Calorie Calculator to track daily targets. If you need general calculations, our Percentage Calculator and Scientific Calculator are excellent choices for quick math."
-  }
+    a: "If you are looking to buy a home or evaluate debt, start with our Mortgage Calculator or Loan EMI Calculator. For fitness and weight management goals, explore our BMI Calculator and Calorie Calculator to track daily targets. If you need general calculations, our Percentage Calculator and Scientific Calculator are excellent choices for quick math.",
+  },
 ];
 
 function NewsletterSubscribe() {
@@ -74,7 +74,7 @@ function NewsletterSubscribe() {
           required
           disabled={loading}
           placeholder="you@example.com"
-          className="bg-white/95 border-0 h-11 w-full min-w-0 text-slate-900 placeholder:text-slate-500"
+          className="bg-white/95 border-0 h-11 w-full px-4 min-w-0 text-slate-900 placeholder:text-slate-500"
         />
         <Button
           type="submit"
@@ -92,10 +92,22 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "CalcZen — Free Online Calculators for Finance, Health, Math & More" },
-      { name: "description", content: "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results." },
+      {
+        name: "description",
+        content:
+          "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results.",
+      },
       { property: "og:title", content: "CalcZen — Free Online Calculators" },
-      { property: "og:description", content: "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results." },
-      { name: "twitter:description", content: "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results." },
+      {
+        property: "og:description",
+        content:
+          "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://calczen.com/" },
     ],
@@ -106,10 +118,10 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "CalcZen",
-          "url": "https://calczen.com",
-          "logo": "https://calczen.com/logo.png",
-          "sameAs": []
+          name: "CalcZen",
+          url: "https://calczen.com",
+          logo: "https://calczen.com/logo.png",
+          sameAs: [],
         }),
       },
       {
@@ -117,13 +129,13 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebSite",
-          "name": "CalcZen",
-          "url": "https://calczen.com",
-          "potentialAction": {
+          name: "CalcZen",
+          url: "https://calczen.com",
+          potentialAction: {
             "@type": "SearchAction",
-            "target": "https://calczen.com/search?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
+            target: "https://calczen.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
         }),
       },
       {
@@ -131,8 +143,9 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "Free Online Calculators",
-          "description": "Free online calculators for finance, health, math and everyday calculations."
+          name: "Free Online Calculators",
+          description:
+            "Free online calculators for finance, health, math and everyday calculations.",
         }),
       },
       {
@@ -141,58 +154,58 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "FAQPage",
           "@id": "https://calczen.com/#faq",
-          "mainEntity": [
+          mainEntity: [
             {
               "@type": "Question",
-              "name": "What calculators are available on CalcZen?",
-              "acceptedAnswer": {
+              name: "What calculators are available on CalcZen?",
+              acceptedAnswer: {
                 "@type": "Answer",
-                "text": "CalcZen offers a comprehensive suite of free online tools categorized under finance, health, math, and everyday helpers. You can calculate mortgages, compound interest, personal loan EMIs, daily calorie needs, percentage changes, age countdowns, restaurant tips, and perform advanced operations using our scientific calculator. We continually add new calculators to expand our offerings."
-              }
+                text: "CalcZen offers a comprehensive suite of free online tools categorized under finance, health, math, and everyday helpers. You can calculate mortgages, compound interest, personal loan EMIs, daily calorie needs, percentage changes, age countdowns, restaurant tips, and perform advanced operations using our scientific calculator. We continually add new calculators to expand our offerings.",
+              },
             },
             {
               "@type": "Question",
-              "name": "Are these calculators free to use?",
-              "acceptedAnswer": {
+              name: "Are these calculators free to use?",
+              acceptedAnswer: {
                 "@type": "Answer",
-                "text": "Yes, all calculators on CalcZen are completely free and require no account registration, subscriptions, or hidden fees. You can access tools like our mortgage calculator, BMI calculator, and standard calculator instantly on any device without restrictions. We keep the platform accessible to everyone by relying on unobtrusive, privacy-friendly advertising."
-              }
+                text: "Yes, all calculators on CalcZen are completely free and require no account registration, subscriptions, or hidden fees. You can access tools like our mortgage calculator, BMI calculator, and standard calculator instantly on any device without restrictions. We keep the platform accessible to everyone by relying on unobtrusive, privacy-friendly advertising.",
+              },
             },
             {
               "@type": "Question",
-              "name": "How accurate are the calculator results?",
-              "acceptedAnswer": {
+              name: "How accurate are the calculator results?",
+              acceptedAnswer: {
                 "@type": "Answer",
-                "text": "Our calculators use industry-standard formulas, such as the fixed-rate amortization equation for mortgages or the Harris-Benedict formula for BMR. While these calculations provide highly accurate estimates for planning, actual financial or health metrics may vary based on individual circumstances, local taxes, lender terms, or medical factors. Always consult a professional for critical decisions."
-              }
+                text: "Our calculators use industry-standard formulas, such as the fixed-rate amortization equation for mortgages or the Harris-Benedict formula for BMR. While these calculations provide highly accurate estimates for planning, actual financial or health metrics may vary based on individual circumstances, local taxes, lender terms, or medical factors. Always consult a professional for critical decisions.",
+              },
             },
             {
               "@type": "Question",
-              "name": "Can I use these calculators on mobile devices?",
-              "acceptedAnswer": {
+              name: "Can I use these calculators on mobile devices?",
+              acceptedAnswer: {
                 "@type": "Answer",
-                "text": "Yes, the entire CalcZen platform is optimized for mobile responsiveness. Whether you are using a smartphone, tablet, or desktop computer, the layouts adapt automatically to provide a premium, touch-friendly user experience. All inputs, buttons, and charts are designed to be fully functional on smaller touchscreens, allowing you to calculate on the go."
-              }
+                text: "Yes, the entire CalcZen platform is optimized for mobile responsiveness. Whether you are using a smartphone, tablet, or desktop computer, the layouts adapt automatically to provide a premium, touch-friendly user experience. All inputs, buttons, and charts are designed to be fully functional on smaller touchscreens, allowing you to calculate on the go.",
+              },
             },
             {
               "@type": "Question",
-              "name": "Do these calculators store my personal data?",
-              "acceptedAnswer": {
+              name: "Do these calculators store my personal data?",
+              acceptedAnswer: {
                 "@type": "Answer",
-                "text": "No, we value your privacy. All inputs entered into our tools are processed locally in your browser during your session and are never stored on our servers, shared with third parties, or used for tracking. You can use our financial and health calculators with complete peace of mind, knowing your data remains entirely private."
-              }
+                text: "No, we value your privacy. All inputs entered into our tools are processed locally in your browser during your session and are never stored on our servers, shared with third parties, or used for tracking. You can use our financial and health calculators with complete peace of mind, knowing your data remains entirely private.",
+              },
             },
             {
               "@type": "Question",
-              "name": "Which calculator should I use for my needs?",
-              "acceptedAnswer": {
+              name: "Which calculator should I use for my needs?",
+              acceptedAnswer: {
                 "@type": "Answer",
-                "text": "If you are looking to buy a home or evaluate debt, start with our Mortgage Calculator or Loan EMI Calculator. For fitness and weight management goals, explore our BMI Calculator and Calorie Calculator to track daily targets. If you need general calculations, our Percentage Calculator and Scientific Calculator are excellent choices for quick math."
-              }
-            }
-          ]
+                text: "If you are looking to buy a home or evaluate debt, start with our Mortgage Calculator or Loan EMI Calculator. For fitness and weight management goals, explore our BMI Calculator and Calorie Calculator to track daily targets. If you need general calculations, our Percentage Calculator and Scientific Calculator are excellent choices for quick math.",
+              },
+            },
+          ],
         }),
-      }
+      },
     ],
   }),
   component: Index,
@@ -208,11 +221,11 @@ function Index() {
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-    
+
     // Max 3.5 degrees rotation
     const degX = -(y / (rect.height / 2)) * 3.5;
     const degY = (x / (rect.width / 2)) * 3.5;
-    
+
     setRotateX(degX);
     setRotateY(degY);
   };
@@ -227,7 +240,7 @@ function Index() {
       {/* Redesigned Premium SaaS Hero Section */}
       <section className="hero-section relative flex flex-col justify-center items-center overflow-hidden bg-gradient-hero">
         <div className="absolute inset-0 bg-gradient-mesh opacity-90" />
-        
+
         {/* Ambient floating glow effects - breathing life */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <motion.div
@@ -258,12 +271,12 @@ function Index() {
 
         <div className="relative page-container hero-container w-full z-10 px-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 lg:gap-8 items-center">
-            
             {/* LEFT SIDE: Content Area */}
             <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
               {/* Headline */}
               <h1 className="hero-headline text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.1] text-balance">
-                Free Online Calculators<br className="hidden sm:inline" />
+                Free Online Calculators
+                <br className="hidden sm:inline" />
                 <span className="text-gradient bg-gradient-to-r from-accent via-[#38bdf8] to-[#a78bfa] bg-clip-text text-transparent">
                   for Finance, Health, and Math
                 </span>
@@ -271,13 +284,17 @@ function Index() {
 
               {/* Description */}
               <p className="hero-description mt-5 text-base sm:text-lg text-white/80 dark:text-slate-300 leading-relaxed font-normal max-w-xl">
-                Fast, accurate online calculators for finance, health, and daily math. Simple tools designed for speed and clarity.
+                Fast, accurate online calculators for finance, health, and daily math. Simple tools
+                designed for speed and clarity.
               </p>
 
               {/* CTA Section */}
               <div className="hero-button-container mt-8 items-center">
                 <Link to="/calculators" className="hero-button-link">
-                  <Button size="lg" className="hero-button h-11 px-6 bg-accent text-accent-foreground hover:bg-accent/90 shadow-[0_4px_16px_rgba(14,165,233,0.25)] font-semibold text-sm rounded-xl transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0">
+                  <Button
+                    size="lg"
+                    className="hero-button h-11 px-6 bg-accent text-accent-foreground hover:bg-accent/90 shadow-[0_4px_16px_rgba(14,165,233,0.25)] font-semibold text-sm rounded-xl transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+                  >
                     Explore Calculators
                   </Button>
                 </Link>
@@ -285,47 +302,37 @@ function Index() {
                   variant="outline"
                   size="lg"
                   onClick={() => {
-                    document.getElementById("category-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    document
+                      .getElementById("category-section")
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
                   className="hero-button h-11 px-6 border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm rounded-xl transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 backdrop-blur-sm shadow-soft"
                 >
                   Browse Categories
                 </Button>
               </div>
-
-              {/* Bouncing chevron scroll indicator (Mobile) */}
-              <motion.div
-                animate={{ y: [0, 6, 0] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                className="hero-scroll-indicator-mobile z-20 cursor-pointer select-none group"
-                onClick={() => {
-                  document.getElementById("category-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}
-              >
-                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-sm group-hover:border-accent group-hover:bg-white/10 transition-all duration-300 shadow-md">
-                  <ChevronDown className="h-5 w-5 text-white/60 group-hover:text-accent transition-colors duration-300" />
-                </div>
-              </motion.div>
             </div>
 
             {/* RIGHT SIDE: Floating Product Showcase */}
             <div className="hero-mockup-section lg:col-span-5 w-full flex justify-center lg:justify-end">
-              <div className="hero-mockup relative w-full aspect-square flex items-center justify-center select-none" style={{ perspective: 1000 }}>
-                
+              <div
+                className="hero-mockup relative w-full aspect-square flex items-center justify-center select-none"
+                style={{ perspective: 1000 }}
+              >
                 {/* Slow breathing ambient glow behind the showcase */}
                 <motion.div
                   animate={{
                     scale: [1, 1.05, 1],
-                    opacity: [0.6, 0.8, 0.6]
+                    opacity: [0.6, 0.8, 0.6],
                   }}
                   transition={{
                     duration: 8,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: "easeInOut",
                   }}
                   className="absolute inset-0 bg-gradient-to-tr from-[#0ea5e9]/25 via-transparent to-[#8b5cf6]/20 blur-[60px] rounded-full pointer-events-none"
                 />
-                
+
                 {/* Main Dashboard Card Mockup */}
                 <motion.div
                   onMouseMove={handleMouseMove}
@@ -340,13 +347,13 @@ function Index() {
                     y: {
                       duration: 6,
                       repeat: Infinity,
-                      ease: "easeInOut"
+                      ease: "easeInOut",
                     },
                     default: {
                       type: "spring",
                       stiffness: 150,
-                      damping: 25
-                    }
+                      damping: 25,
+                    },
                   }}
                   className="relative z-10 w-full bg-gradient-to-br from-slate-900/50 to-slate-950/80 backdrop-blur-2xl border border-white/[0.08] rounded-2xl p-4 sm:p-5 md:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.4),0_16px_40px_rgba(0,0,0,0.3),0_0_50px_rgba(14,165,233,0.12)] cursor-default"
                 >
@@ -354,7 +361,9 @@ function Index() {
                   <div className="flex items-center justify-between pb-3.5 border-b border-white/10 mb-5">
                     <div className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse shadow-[0_0_8px_rgba(14,165,233,0.8)]" />
-                      <span className="text-[10px] font-bold text-white/80 tracking-widest uppercase">Loan EMI Calculator</span>
+                      <span className="text-[10px] font-bold text-white/80 tracking-widest uppercase">
+                        Loan EMI Calculator
+                      </span>
                     </div>
                     <div className="flex gap-1.5">
                       <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
@@ -398,8 +407,12 @@ function Index() {
                   {/* Monthly Payment Focal Box */}
                   <div className="flex items-center justify-between gap-3 sm:gap-4 bg-slate-900/50 backdrop-blur-md border border-white/[0.08] rounded-xl p-3.5 sm:p-4 shadow-[inset_0_1px_2px_rgba(255,255,255,0.1),0_8px_24px_rgba(0,0,0,0.3)]">
                     <div className="flex-1">
-                      <div className="text-[10px] text-white/50 tracking-wider uppercase font-semibold">Monthly Payment</div>
-                      <div className="text-2xl font-black text-white tracking-tight mt-0.5">$1,466</div>
+                      <div className="text-[10px] text-white/50 tracking-wider uppercase font-semibold">
+                        Monthly Payment
+                      </div>
+                      <div className="text-2xl font-black text-white tracking-tight mt-0.5">
+                        $1,466
+                      </div>
                       <div className="text-[10px] text-emerald-400 mt-1 font-medium flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                         <span>Est. Interest: $122,860</span>
@@ -407,7 +420,15 @@ function Index() {
                     </div>
                     <div className="relative w-14 h-14 flex items-center justify-center shrink-0">
                       <svg className="w-full h-full transform -rotate-90">
-                        <circle cx="28" cy="28" r="22" stroke="currentColor" className="text-white/5" strokeWidth="4.5" fill="transparent" />
+                        <circle
+                          cx="28"
+                          cy="28"
+                          r="22"
+                          stroke="currentColor"
+                          className="text-white/5"
+                          strokeWidth="4.5"
+                          fill="transparent"
+                        />
                         <motion.circle
                           cx="28"
                           cy="28"
@@ -429,34 +450,47 @@ function Index() {
                 </motion.div>
               </div>
             </div>
-
           </div>
         </div>
 
-        {/* Bouncing chevron scroll indicator (Desktop/Tablet) */}
+        {/* Bouncing chevron scroll indicator (Unified) */}
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="hero-scroll-indicator-desktop select-none group"
-          onClick={() => {
-            document.getElementById("category-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
-          }}
+          className="hero-scroll-indicator select-none pointer-events-none"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-sm group-hover:border-accent group-hover:bg-white/10 transition-all duration-300 shadow-md">
+          <div
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:border-accent hover:bg-white/10 transition-all duration-300 shadow-md cursor-pointer group pointer-events-auto"
+            onClick={() => {
+              document
+                .getElementById("category-section")
+                ?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          >
             <ChevronDown className="h-5 w-5 text-white/60 group-hover:text-accent transition-colors duration-300" />
           </div>
         </motion.div>
 
         {/* Subtle curved transition at the bottom */}
         <div className="absolute bottom-0 left-0 right-0 overflow-hidden line-height-0 pointer-events-none">
-          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-[calc(100%+1.3px)] h-[52px] sm:h-[72px] text-[var(--background)] fill-current transition-colors duration-500">
-            <path d="M0,0 C350,105 550,105 600,105 C650,105 850,105 1200,0 L1200,120 L0,120 Z" fill="currentColor" />
+          <svg
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            className="relative block w-[calc(100%+1.3px)] h-[52px] sm:h-[72px] text-[var(--background)] fill-current transition-colors duration-500"
+          >
+            <path
+              d="M0,0 C350,105 550,105 600,105 C650,105 850,105 1200,0 L1200,120 L0,120 Z"
+              fill="currentColor"
+            />
           </svg>
         </div>
       </section>
 
       {/* Category Section - Revealed on Scroll */}
-      <section id="category-section" className="page-container mt-0 pt-8 sm:pt-28 md:pt-32 relative z-10 scroll-mt-20">
+      <section
+        id="category-section"
+        className="page-container mt-0 pt-8 sm:pt-28 md:pt-32 relative z-10 scroll-mt-20"
+      >
         <div className="text-center mb-6 sm:mb-14 max-w-2xl mx-auto">
           <h2 className="text-xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
             Calculator Categories
@@ -511,7 +545,9 @@ function Index() {
           <div className="flex items-center justify-between gap-4 mb-1.5">
             <div className="flex items-center gap-2.5 min-w-0">
               <Sparkles className="h-5 sm:h-5.5 w-5 sm:w-5.5 text-accent shrink-0 animate-pulse" />
-              <h2 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight truncate">Popular Calculators</h2>
+              <h2 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight truncate">
+                Popular Calculators
+              </h2>
             </div>
             <Link
               to="/calculators"
@@ -520,7 +556,9 @@ function Index() {
               See all <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
             </Link>
           </div>
-          <p className="text-xs sm:text-base text-muted-foreground">The ones our visitors use the most.</p>
+          <p className="text-xs sm:text-base text-muted-foreground">
+            The ones our visitors use the most.
+          </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 min-w-0">
           {popular.map((c, i) => (
@@ -538,41 +576,68 @@ function Index() {
         </h2>
         <div className="space-y-5 text-sm sm:text-base text-muted-foreground leading-[1.8] font-normal">
           <p>
-            In today's fast-paced digital world, making informed decisions often requires dealing with complex numbers. Whether you are navigating personal finance, tracking fitness goals, solving mathematical equations, or handling everyday lifestyle tasks, online calculators provide a fast, accurate, and reliable solution. They remove human error, translate complex algebraic formulas into instant results, and offer visual clarity so you can take control of your planning.
+            In today's fast-paced digital world, making informed decisions often requires dealing
+            with complex numbers. Whether you are navigating personal finance, tracking fitness
+            goals, solving mathematical equations, or handling everyday lifestyle tasks, online
+            calculators provide a fast, accurate, and reliable solution. They remove human error,
+            translate complex algebraic formulas into instant results, and offer visual clarity so
+            you can take control of your planning.
           </p>
-          
+
           <h3 className="text-base sm:text-lg font-semibold text-foreground mt-6 mb-2">
             1. Smart Financial Planning and Borrowing
           </h3>
           <p>
-            Managing money is one of the most critical aspects of daily life. Financial calculators, such as mortgage planners and loan EMI tools, allow you to visualize long-term debt and interest payments before committing to a bank. By testing different down payments, loan terms, and annual interest rates, you can evaluate borrowing costs and safeguard your household budget. Compound interest and 401(k) calculators show the power of long-term savings growth, helping you map out a secure path toward retirement.
+            Managing money is one of the most critical aspects of daily life. Financial calculators,
+            such as mortgage planners and loan EMI tools, allow you to visualize long-term debt and
+            interest payments before committing to a bank. By testing different down payments, loan
+            terms, and annual interest rates, you can evaluate borrowing costs and safeguard your
+            household budget. Compound interest and 401(k) calculators show the power of long-term
+            savings growth, helping you map out a secure path toward retirement.
           </p>
-          
+
           <h3 className="text-base sm:text-lg font-semibold text-foreground mt-6 mb-2">
             2. Scientific Tracking of Health and Wellness
           </h3>
           <p>
-            Health decisions should be backed by objective data. Wellness calculators, including Body Mass Index (BMI), Basal Metabolic Rate (BMR), and daily calorie planners, offer personalized physiological estimates based on height, weight, age, and activity level. These metrics serve as a starting point for body weight management, fat loss, or muscle gain. Similarly, hydration calculators determine daily water intake targets based on climate and exercise, ensuring you maintain physical and cognitive peak performance.
+            Health decisions should be backed by objective data. Wellness calculators, including
+            Body Mass Index (BMI), Basal Metabolic Rate (BMR), and daily calorie planners, offer
+            personalized physiological estimates based on height, weight, age, and activity level.
+            These metrics serve as a starting point for body weight management, fat loss, or muscle
+            gain. Similarly, hydration calculators determine daily water intake targets based on
+            climate and exercise, ensuring you maintain physical and cognitive peak performance.
           </p>
-          
+
           <h3 className="text-base sm:text-lg font-semibold text-foreground mt-6 mb-2">
             3. Instant Mathematical and Percentage Solutions
           </h3>
           <p>
-            From school homework to business ratio analysis, mathematical calculators simplify everyday computations. Percentage calculators help you find markups, discounts, and percentage shifts instantly—essential for shopping smart or assessing investment returns. For complex technical problems, online scientific calculators provide advanced trigonometric, logarithmic, and exponential functions, making engineering calculations accessible from any web browser without standalone hardware.
+            From school homework to business ratio analysis, mathematical calculators simplify
+            everyday computations. Percentage calculators help you find markups, discounts, and
+            percentage shifts instantly—essential for shopping smart or assessing investment
+            returns. For complex technical problems, online scientific calculators provide advanced
+            trigonometric, logarithmic, and exponential functions, making engineering calculations
+            accessible from any web browser without standalone hardware.
           </p>
-          
+
           <h3 className="text-base sm:text-lg font-semibold text-foreground mt-6 mb-2">
             4. Streamlining Everyday Lifestyle Decisions
           </h3>
           <p>
-            A large part of our day involves quick math that we often guess. Tip calculators ensure dining bills are split fairly among friends with custom gratuity percentages factored in. Age calculators solve exact duration intervals for milestones, while date planners simplify project tracking. By replacing estimates with precise math, CalcZen helps you save time, make smarter choices, and understand the core formulas behind every result.
+            A large part of our day involves quick math that we often guess. Tip calculators ensure
+            dining bills are split fairly among friends with custom gratuity percentages factored
+            in. Age calculators solve exact duration intervals for milestones, while date planners
+            simplify project tracking. By replacing estimates with precise math, CalcZen helps you
+            save time, make smarter choices, and understand the core formulas behind every result.
           </p>
         </div>
       </section>
 
       {/* Homepage FAQ Section */}
-      <section id="faq-section" className="page-container mt-8 sm:mt-28 md:mt-32 max-w-4xl min-w-0 text-left">
+      <section
+        id="faq-section"
+        className="page-container mt-8 sm:mt-28 md:mt-32 max-w-4xl min-w-0 text-left"
+      >
         <div className="surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4 sm:mb-6">
             Frequently Asked Questions
@@ -592,13 +657,15 @@ function Index() {
             background: `
               radial-gradient(circle at center, rgba(56, 189, 248, 0.08) 0%, transparent 55%),
               linear-gradient(135deg, #0f172a 0%, #12335c 35%, #155e95 100%)
-            `
+            `,
           }}
         >
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white text-balance">
             Get new calculators in your inbox
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-white/80">One short email a month. New tools, finance tips, no spam.</p>
+          <p className="mt-2 text-sm sm:text-base text-white/80">
+            One short email a month. New tools, finance tips, no spam.
+          </p>
           <NewsletterSubscribe />
         </div>
       </section>

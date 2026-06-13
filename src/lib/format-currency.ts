@@ -12,8 +12,7 @@ export function formatCurrencyAmount(
 ): string {
   const maxDigits = options?.maximumFractionDigits ?? currency.fractionDigits;
   const minDigits =
-    options?.minimumFractionDigits ??
-    (currency.fractionDigits === 0 ? 0 : Math.min(2, maxDigits));
+    options?.minimumFractionDigits ?? (currency.fractionDigits === 0 ? 0 : Math.min(2, maxDigits));
 
   return new Intl.NumberFormat(currency.locale, {
     style: "currency",

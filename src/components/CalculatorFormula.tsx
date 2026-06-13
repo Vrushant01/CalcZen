@@ -66,10 +66,7 @@ function parseFormulaText(raw: string): ParsedLine[] {
 }
 
 function formatMath(text: string): string {
-  return text
-    .replace(/\*/g, "×")
-    .replace(/\-/g, "−")
-    .replace(/sqrt/g, "√");
+  return text.replace(/\*/g, "×").replace(/\-/g, "−").replace(/sqrt/g, "√");
 }
 
 type Props = {

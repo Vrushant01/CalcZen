@@ -10,8 +10,10 @@ const MOCK_BLOGS = [
     _id: "mock-2",
     title: "Understanding BMI: Metrics vs. Muscular Health",
     slug: "bmi-calculator",
-    excerpt: "Explore how the Body Mass Index is calculated, and why it sometimes misclassifies high muscle density.",
-    thumbnail: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80",
+    excerpt:
+      "Explore how the Body Mass Index is calculated, and why it sometimes misclassifies high muscle density.",
+    thumbnail:
+      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80",
     category: "Health",
     readingTime: 5,
     publishDate: "2026-05-22T00:00:00.000Z",
@@ -20,8 +22,10 @@ const MOCK_BLOGS = [
     _id: "mock-3",
     title: "The 28%/36% Rule: How Much Mortgage Can You Afford?",
     slug: "mortgage-calculator",
-    excerpt: "Lenders use precise debt ratios to calculate your home loan limit. Master the calculations before shopping.",
-    thumbnail: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&auto=format&fit=crop&q=80",
+    excerpt:
+      "Lenders use precise debt ratios to calculate your home loan limit. Master the calculations before shopping.",
+    thumbnail:
+      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&auto=format&fit=crop&q=80",
     category: "Finance",
     readingTime: 6,
     publishDate: "2026-05-29T00:00:00.000Z",
@@ -151,7 +155,9 @@ export function BlogSection() {
                   }}
                 />
                 {/* Floating category badge on image overlay */}
-                <span className={`absolute bottom-3 left-3 rounded-md px-2.5 py-0.5 font-bold text-[9px] uppercase tracking-wider select-none shadow-soft backdrop-blur-md border ${getCategoryStyle(b.category)}`}>
+                <span
+                  className={`absolute bottom-3 left-3 rounded-md px-2.5 py-0.5 font-bold text-[9px] uppercase tracking-wider select-none shadow-soft backdrop-blur-md border ${getCategoryStyle(b.category)}`}
+                >
                   {b.category}
                 </span>
               </div>
@@ -167,7 +173,7 @@ export function BlogSection() {
                   <h3 className="text-base sm:text-[17px] font-extrabold text-foreground group-hover:text-accent transition-colors duration-300 line-clamp-2 leading-snug mb-2">
                     {b.title}
                   </h3>
-                  
+
                   <p className="text-xs sm:text-sm text-muted-foreground/80 leading-relaxed line-clamp-2 font-normal">
                     {b.excerpt}
                   </p>
@@ -179,11 +185,15 @@ export function BlogSection() {
                     <Calendar className="h-3.5 w-3.5 text-muted-foreground/60 shrink-0" />
                     <time dateTime={b.publishDate || ""}>
                       {b.publishDate
-                        ? new Date(b.publishDate).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+                        ? new Date(b.publishDate).toLocaleDateString(undefined, {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })
                         : "Soon"}
                     </time>
                   </span>
-                  
+
                   <span className="text-accent group-hover:text-accent/90 transition-all font-bold flex items-center gap-0.5 shrink-0">
                     Read Article
                     <ArrowRight className="h-3.5 w-3.5 transform translate-x-0 group-hover:translate-x-0.5 transition-transform duration-300" />

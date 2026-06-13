@@ -7,10 +7,22 @@ export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
       { title: "Terms of Service — Using CalcZen Calculators" },
-      { name: "description", content: "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability." },
+      {
+        name: "description",
+        content:
+          "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability.",
+      },
       { property: "og:title", content: "CalcZen Terms of Service" },
-      { property: "og:description", content: "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability." },
-      { name: "twitter:description", content: "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability." },
+      {
+        property: "og:description",
+        content:
+          "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability.",
+      },
       { property: "og:url", content: "https://calczen.in/terms" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.in/terms" }],
@@ -20,9 +32,10 @@ export const Route = createFileRoute("/terms")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "Terms of Service — Using CalcZen Calculators",
-          "description": "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability.",
-          "url": "https://calczen.in/terms"
+          name: "Terms of Service — Using CalcZen Calculators",
+          description:
+            "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability.",
+          url: "https://calczen.in/terms",
         }),
       },
       {
@@ -30,22 +43,22 @@ export const Route = createFileRoute("/terms")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
-          "itemListElement": [
+          itemListElement: [
             {
               "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://calczen.in"
+              position: 1,
+              name: "Home",
+              item: "https://calczen.in",
             },
             {
               "@type": "ListItem",
-              "position": 2,
-              "name": "Terms of Service",
-              "item": "https://calczen.in/terms"
-            }
-          ]
+              position: 2,
+              name: "Terms of Service",
+              item: "https://calczen.in/terms",
+            },
+          ],
         }),
-      }
+      },
     ],
   }),
   component: TermsPage,
@@ -61,8 +74,8 @@ function TermsPage() {
       >
         <LegalSection title="About CalcZen">
           <p>
-            CalcZen provides free calculator tools for finance, health, math, and everyday use,
-            for informational and educational purposes. These Terms apply to all visitors.
+            CalcZen provides free calculator tools for finance, health, math, and everyday use, for
+            informational and educational purposes. These Terms apply to all visitors.
           </p>
         </LegalSection>
 
@@ -113,7 +126,8 @@ function TermsPage() {
           </p>
           <p>
             Personal, non-commercial use is permitted in line with these Terms. Commercial copying,
-            modification, or distribution requires prior written permission, except as allowed by law.
+            modification, or distribution requires prior written permission, except as allowed by
+            law.
           </p>
           <p>
             Third-party names and trademarks belong to their owners. References to analytics or ad
@@ -144,8 +158,8 @@ function TermsPage() {
           </p>
           <p>
             Total liability for any claim shall not exceed the greater of (a) amounts you paid us in
-            the twelve months before the claim (typically zero) or (b) one hundred U.S. dollars
-            (USD $100), where permitted.
+            the twelve months before the claim (typically zero) or (b) one hundred U.S. dollars (USD
+            $100), where permitted.
           </p>
         </LegalSection>
 
@@ -158,8 +172,8 @@ function TermsPage() {
 
         <LegalSection title="Privacy">
           <p>
-            Data practices are described in our <Link to="/privacy">Privacy Policy</Link>, incorporated
-            into these Terms by reference.
+            Data practices are described in our <Link to="/privacy">Privacy Policy</Link>,
+            incorporated into these Terms by reference.
           </p>
         </LegalSection>
 

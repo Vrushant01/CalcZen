@@ -31,14 +31,8 @@ export function CurrencySelector({ className, compact }: CurrencySelectorProps) 
   const [open, setOpen] = useState(false);
   const selected = getCurrencyByCode(code);
 
-  const popular = useMemo(
-    () => POPULAR_CURRENCY_CODES.map((c) => getCurrencyByCode(c)),
-    [],
-  );
-  const others = useMemo(
-    () => CURRENCIES.filter((c) => !c.popular),
-    [],
-  );
+  const popular = useMemo(() => POPULAR_CURRENCY_CODES.map((c) => getCurrencyByCode(c)), []);
+  const others = useMemo(() => CURRENCIES.filter((c) => !c.popular), []);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -135,7 +129,9 @@ function CurrencyCommandItem({
           {currency.name} ({currency.symbol})
         </span>
       </span>
-      <Check className={cn("h-4 w-4 shrink-0 text-accent", selected ? "opacity-100" : "opacity-0")} />
+      <Check
+        className={cn("h-4 w-4 shrink-0 text-accent", selected ? "opacity-100" : "opacity-0")}
+      />
     </CommandItem>
   );
 }

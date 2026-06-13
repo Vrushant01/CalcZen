@@ -10,21 +10,55 @@ import { CalculateButton } from "@/components/CalculateButton";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { AlertCircle } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell } from "recharts";
 import { motion } from "framer-motion";
 import {
-  HeroMetric, StatCard, DashboardSection, InsightCard,
-  ComparisonTable, RecommendationList,
+  HeroMetric,
+  StatCard,
+  DashboardSection,
+  InsightCard,
+  ComparisonTable,
+  RecommendationList,
 } from "@/components/dashboard";
 
-type BmiCategory = { label: string; color: string; badgeColor: "green" | "blue" | "amber" | "red" | "purple" | "default"; accent: "green" | "blue" | "amber" | "red" | "purple" | "cyan" | "default" };
+type BmiCategory = {
+  label: string;
+  color: string;
+  badgeColor: "green" | "blue" | "amber" | "red" | "purple" | "default";
+  accent: "green" | "blue" | "amber" | "red" | "purple" | "cyan" | "default";
+};
 
 function getBmiCategory(bmi: number): BmiCategory {
-  if (bmi <= 0) return { label: "—", color: "text-muted-foreground", badgeColor: "default", accent: "default" };
-  if (bmi < 18.5) return { label: "Underweight", color: "text-blue-600 dark:text-blue-400", badgeColor: "blue", accent: "blue" };
-  if (bmi < 25) return { label: "Normal Weight", color: "text-emerald-600 dark:text-emerald-400", badgeColor: "green", accent: "green" };
-  if (bmi < 30) return { label: "Overweight", color: "text-amber-600 dark:text-amber-400", badgeColor: "amber", accent: "amber" };
-  return { label: "Obese", color: "text-red-600 dark:text-red-400", badgeColor: "red", accent: "red" };
+  if (bmi <= 0)
+    return { label: "—", color: "text-muted-foreground", badgeColor: "default", accent: "default" };
+  if (bmi < 18.5)
+    return {
+      label: "Underweight",
+      color: "text-blue-600 dark:text-blue-400",
+      badgeColor: "blue",
+      accent: "blue",
+    };
+  if (bmi < 25)
+    return {
+      label: "Normal Weight",
+      color: "text-emerald-600 dark:text-emerald-400",
+      badgeColor: "green",
+      accent: "green",
+    };
+  if (bmi < 30)
+    return {
+      label: "Overweight",
+      color: "text-amber-600 dark:text-amber-400",
+      badgeColor: "amber",
+      accent: "amber",
+    };
+  return {
+    label: "Obese",
+    color: "text-red-600 dark:text-red-400",
+    badgeColor: "red",
+    accent: "red",
+  };
 }
 
 export function BMICalculator() {
@@ -44,7 +78,8 @@ export function BMICalculator() {
   const [calcWeightLb, setCalcWeightLb] = useState<number>(160);
 
   const { bmi, heightM, category, healthyMin, healthyMax, bmiPrime, idealWeight } = useMemo(() => {
-    let bmi = 0, heightM = 0;
+    let bmi = 0,
+      heightM = 0;
     if (calcUnit === "metric") {
       heightM = calcHeightCm / 100;
       bmi = heightM > 0 ? calcWeightKg / (heightM * heightM) : 0;
@@ -62,15 +97,20 @@ export function BMICalculator() {
 
   const currentWeightKg = calcUnit === "metric" ? calcWeightKg : calcWeightLb / 2.20462;
   const diffFromIdeal = currentWeightKg - idealWeight;
-  const weightRangeLabel = calcUnit === "metric"
-    ? `${healthyMin.toFixed(1)}–${healthyMax.toFixed(1)} kg`
-    : `${(healthyMin * 2.20462).toFixed(0)}–${(healthyMax * 2.20462).toFixed(0)} lb`;
-  const idealWeightLabel = calcUnit === "metric"
-    ? `${idealWeight.toFixed(1)} kg`
-    : `${(idealWeight * 2.20462).toFixed(0)} lb`;
-  const diffLabel = Math.abs(diffFromIdeal) < 0.5 ? "At ideal weight"
-    : diffFromIdeal > 0 ? `-${Math.abs(diffFromIdeal).toFixed(1)} kg to reach ideal`
-    : `+${Math.abs(diffFromIdeal).toFixed(1)} kg to reach ideal`;
+  const weightRangeLabel =
+    calcUnit === "metric"
+      ? `${healthyMin.toFixed(1)}–${healthyMax.toFixed(1)} kg`
+      : `${(healthyMin * 2.20462).toFixed(0)}–${(healthyMax * 2.20462).toFixed(0)} lb`;
+  const idealWeightLabel =
+    calcUnit === "metric"
+      ? `${idealWeight.toFixed(1)} kg`
+      : `${(idealWeight * 2.20462).toFixed(0)} lb`;
+  const diffLabel =
+    Math.abs(diffFromIdeal) < 0.5
+      ? "At ideal weight"
+      : diffFromIdeal > 0
+        ? `-${Math.abs(diffFromIdeal).toFixed(1)} kg to reach ideal`
+        : `+${Math.abs(diffFromIdeal).toFixed(1)} kg to reach ideal`;
 
   // BMI scale for visualization
   const bmiGaugeData = [
@@ -95,50 +135,78 @@ export function BMICalculator() {
     };
   });
 
-  const pdfData = hasResult && bmi > 0
-    ? {
-        calculatorName: "BMI Calculator",
-        calculatorSlug: "bmi-calculator",
-        siteName: PDF_SITE_NAME,
-        siteUrl: PDF_SITE_URL,
-        inputs: [
-          { label: "Unit System", value: calcUnit === "metric" ? "Metric" : "Imperial" },
-          ...(calcUnit === "metric"
-            ? [{ label: "Height", value: `${calcHeightCm} cm` }, { label: "Weight", value: `${calcWeightKg} kg` }]
-            : [{ label: "Height", value: `${calcHeightIn} in` }, { label: "Weight", value: `${calcWeightLb} lb` }]),
-        ],
-        results: [
-          { label: "BMI Score", value: bmi.toFixed(1), highlight: true },
-          { label: "Category", value: category.label, highlight: true },
-          { label: "Healthy Weight Range", value: weightRangeLabel, highlight: false },
-          { label: "BMI Prime", value: bmiPrime.toFixed(2), highlight: false },
-        ],
-        summary: `Your BMI of ${bmi.toFixed(1)} places you in the ${category.label.toLowerCase()} range. A healthy BMI for your height is between 18.5 and 24.9, corresponding to ${weightRangeLabel}. This is a screening tool only — always consult your doctor for a full health assessment.`,
-      }
-    : null;
+  const pdfData =
+    hasResult && bmi > 0
+      ? {
+          calculatorName: "BMI Calculator",
+          calculatorSlug: "bmi-calculator",
+          siteName: PDF_SITE_NAME,
+          siteUrl: PDF_SITE_URL,
+          inputs: [
+            { label: "Unit System", value: calcUnit === "metric" ? "Metric" : "Imperial" },
+            ...(calcUnit === "metric"
+              ? [
+                  { label: "Height", value: `${calcHeightCm} cm` },
+                  { label: "Weight", value: `${calcWeightKg} kg` },
+                ]
+              : [
+                  { label: "Height", value: `${calcHeightIn} in` },
+                  { label: "Weight", value: `${calcWeightLb} lb` },
+                ]),
+          ],
+          results: [
+            { label: "BMI Score", value: bmi.toFixed(1), highlight: true },
+            { label: "Category", value: category.label, highlight: true },
+            { label: "Healthy Weight Range", value: weightRangeLabel, highlight: false },
+            { label: "BMI Prime", value: bmiPrime.toFixed(2), highlight: false },
+          ],
+          summary: `Your BMI of ${bmi.toFixed(1)} places you in the ${category.label.toLowerCase()} range. A healthy BMI for your height is between 18.5 and 24.9, corresponding to ${weightRangeLabel}. This is a screening tool only — always consult your doctor for a full health assessment.`,
+        }
+      : null;
 
-  const isButtonDisabled = unit === "metric"
-    ? !heightCm || !weightKg || heightCm <= 0 || weightKg <= 0
-    : !heightIn || !weightLb || heightIn <= 0 || weightLb <= 0;
+  const isButtonDisabled =
+    unit === "metric"
+      ? !heightCm || !weightKg || heightCm <= 0 || weightKg <= 0
+      : !heightIn || !weightLb || heightIn <= 0 || weightLb <= 0;
 
   const handleCalculate = () => {
     if (isButtonDisabled) return;
     setCalcUnit(unit);
-    if (unit === "metric") { setCalcHeightCm(Number(heightCm)); setCalcWeightKg(Number(weightKg)); }
-    else { setCalcHeightIn(Number(heightIn)); setCalcWeightLb(Number(weightLb)); }
+    if (unit === "metric") {
+      setCalcHeightCm(Number(heightCm));
+      setCalcWeightKg(Number(weightKg));
+    } else {
+      setCalcHeightIn(Number(heightIn));
+      setCalcWeightLb(Number(weightLb));
+    }
     markCalculated();
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => { if (e.key === "Enter" && !isButtonDisabled) handleCalculate(); };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !isButtonDisabled) handleCalculate();
+  };
 
   const handleReset = () => {
-    setHeightCm(175); setWeightKg(72); setHeightIn(69); setWeightLb(160); setUnit("metric");
-    setCalcHeightCm(175); setCalcWeightKg(72); setCalcHeightIn(69); setCalcWeightLb(160); setCalcUnit("metric");
+    setHeightCm(175);
+    setWeightKg(72);
+    setHeightIn(69);
+    setWeightLb(160);
+    setUnit("metric");
+    setCalcHeightCm(175);
+    setCalcWeightKg(72);
+    setCalcHeightIn(69);
+    setCalcWeightLb(160);
+    setCalcUnit("metric");
     resetCalculated();
   };
 
   const tooltipStyle = {
-    contentStyle: { background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px", fontSize: 12 },
+    contentStyle: {
+      background: "var(--color-card)",
+      borderColor: "var(--color-border)",
+      borderRadius: "8px",
+      fontSize: 12,
+    },
     labelStyle: { color: "var(--color-foreground)" },
     itemStyle: { color: "var(--color-foreground)" },
   };
@@ -153,14 +221,38 @@ export function BMICalculator() {
       formula={`Metric: BMI = weight (kg) ÷ height (m)²\nImperial: BMI = 703 × weight (lb) ÷ height (in)²`}
       example={`175 cm tall and 72 kg.\nBMI = 72 ÷ (1.75)² ≈ 23.5 (normal weight range).`}
       faqs={[
-        { q: "What is BMI?", a: "Body Mass Index (BMI) is a medical screening metric that estimates your body fat relative to your height and weight. It is calculated by dividing your weight in kilograms by the square of your height in meters. It places individuals into clinical categories like underweight, healthy weight, overweight, or obese to screen for risks." },
-        { q: "Is BMI accurate?", a: "BMI is generally accurate as a population-level screening tool, but it does have limitations for individuals. Because it does not distinguish between muscle mass and fat mass, highly muscular athletes or bodybuilders can be classified as overweight. It should be evaluated alongside other health indicators, such as those estimated in our <a href=\"/calculator/bmr-calculator\" class=\"text-primary hover:underline\">BMR Calculator</a>." },
-        { q: "What is a healthy BMI range?", a: "For most adults, a healthy BMI range is between 18.5 and 24.9. A score below 18.5 is considered underweight, 25 to 29.9 is overweight, and 30 or above is obese. Maintaining a healthy BMI reduces the risk of cardiovascular disease, type 2 diabetes, and hypertension. Track your daily nutrition targets with our <a href=\"/calculator/calorie-calculator\" class=\"text-primary hover:underline\">Calorie Calculator</a>." },
-        { q: "Can athletes use BMI?", a: "Athletes can use BMI, but they must interpret the results with caution. Since muscle tissue is denser than fat tissue, muscular athletes may have a high BMI that suggests they are overweight or obese, despite having very low body fat. They should combine BMI with body fat percentage measurements for a complete picture." },
-        { q: "Does age affect BMI?", a: "Age does not change the basic BMI formula, but it does affect how BMI categories are interpreted. Older adults naturally lose muscle mass and gain fat, meaning a slightly higher BMI (25-27) may actually be healthier for them. For children and teens, BMI is plotted on growth percentiles to account for age and sex development." },
-        { q: "How does BMI relate to overall body weight?", a: "BMI estimates your body weight category to help you understand if your weight is appropriate for your height. Being underweight or obese carries metabolic health risks. If you are adjusting your physical activity or dietary habits to modify your weight, keeping track of your hydration using our <a href=\"/calculator/water-intake-calculator\" class=\"text-primary hover:underline\">Water Intake Calculator</a> is also recommended." },
-        { q: "What is the difference between BMI and BMI Prime?", a: "BMI is the standard ratio of weight to height, while BMI Prime is a ratio of your actual BMI to the upper limit of the healthy range (25). A BMI Prime of 1.0 or lower is healthy, while anything above 1.0 indicates you are overweight. It provides a quick look at how far you deviate from healthy limits." },
-        { q: "How does body composition influence my health metrics?", a: "Body composition&mdash;the ratio of fat, muscle, bone, and water in your body&mdash;is a much more detailed health indicator than BMI alone. Two people with the same BMI can have completely different body composition profiles and health risks. Understanding your body's energy consumption at rest can be further explored using our metabolic <a href=\"/calculator/bmr-calculator\" class=\"text-primary hover:underline\">BMR Calculator</a>." }
+        {
+          q: "What is BMI?",
+          a: "Body Mass Index (BMI) is a medical screening metric that estimates your body fat relative to your height and weight. It is calculated by dividing your weight in kilograms by the square of your height in meters. It places individuals into clinical categories like underweight, healthy weight, overweight, or obese to screen for risks.",
+        },
+        {
+          q: "Is BMI accurate?",
+          a: 'BMI is generally accurate as a population-level screening tool, but it does have limitations for individuals. Because it does not distinguish between muscle mass and fat mass, highly muscular athletes or bodybuilders can be classified as overweight. It should be evaluated alongside other health indicators, such as those estimated in our <a href="/calculator/bmr-calculator" class="text-primary hover:underline">BMR Calculator</a>.',
+        },
+        {
+          q: "What is a healthy BMI range?",
+          a: 'For most adults, a healthy BMI range is between 18.5 and 24.9. A score below 18.5 is considered underweight, 25 to 29.9 is overweight, and 30 or above is obese. Maintaining a healthy BMI reduces the risk of cardiovascular disease, type 2 diabetes, and hypertension. Track your daily nutrition targets with our <a href="/calculator/calorie-calculator" class="text-primary hover:underline">Calorie Calculator</a>.',
+        },
+        {
+          q: "Can athletes use BMI?",
+          a: "Athletes can use BMI, but they must interpret the results with caution. Since muscle tissue is denser than fat tissue, muscular athletes may have a high BMI that suggests they are overweight or obese, despite having very low body fat. They should combine BMI with body fat percentage measurements for a complete picture.",
+        },
+        {
+          q: "Does age affect BMI?",
+          a: "Age does not change the basic BMI formula, but it does affect how BMI categories are interpreted. Older adults naturally lose muscle mass and gain fat, meaning a slightly higher BMI (25-27) may actually be healthier for them. For children and teens, BMI is plotted on growth percentiles to account for age and sex development.",
+        },
+        {
+          q: "How does BMI relate to overall body weight?",
+          a: 'BMI estimates your body weight category to help you understand if your weight is appropriate for your height. Being underweight or obese carries metabolic health risks. If you are adjusting your physical activity or dietary habits to modify your weight, keeping track of your hydration using our <a href="/calculator/water-intake-calculator" class="text-primary hover:underline">Water Intake Calculator</a> is also recommended.',
+        },
+        {
+          q: "What is the difference between BMI and BMI Prime?",
+          a: "BMI is the standard ratio of weight to height, while BMI Prime is a ratio of your actual BMI to the upper limit of the healthy range (25). A BMI Prime of 1.0 or lower is healthy, while anything above 1.0 indicates you are overweight. It provides a quick look at how far you deviate from healthy limits.",
+        },
+        {
+          q: "How does body composition influence my health metrics?",
+          a: 'Body composition&mdash;the ratio of fat, muscle, bone, and water in your body&mdash;is a much more detailed health indicator than BMI alone. Two people with the same BMI can have completely different body composition profiles and health risks. Understanding your body\'s energy consumption at rest can be further explored using our metabolic <a href="/calculator/bmr-calculator" class="text-primary hover:underline">BMR Calculator</a>.',
+        },
       ]}
       blog={<CalculatorBlog content={blogContent.bmi} />}
     >
@@ -168,8 +260,12 @@ export function BMICalculator() {
         <div className="calc-input-column">
           <div className="inline-flex rounded-lg bg-muted p-1 self-start">
             {(["metric", "imperial"] as const).map((u) => (
-              <button key={u} type="button" onClick={() => setUnit(u)}
-                className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${unit === u ? "bg-background shadow-sm" : "text-muted-foreground"}`}>
+              <button
+                key={u}
+                type="button"
+                onClick={() => setUnit(u)}
+                className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${unit === u ? "bg-background shadow-sm" : "text-muted-foreground"}`}
+              >
                 {u === "metric" ? "Metric" : "Imperial"}
               </button>
             ))}
@@ -177,19 +273,48 @@ export function BMICalculator() {
 
           {unit === "metric" ? (
             <div className="calc-field-grid-2">
-              <Field label="Height (cm)" value={heightCm} onChange={(v) => setHeightCm(v)} onKeyDown={handleKeyDown} />
-              <Field label="Weight (kg)" value={weightKg} onChange={(v) => setWeightKg(v)} onKeyDown={handleKeyDown} />
+              <Field
+                label="Height (cm)"
+                value={heightCm}
+                onChange={(v) => setHeightCm(v)}
+                onKeyDown={handleKeyDown}
+              />
+              <Field
+                label="Weight (kg)"
+                value={weightKg}
+                onChange={(v) => setWeightKg(v)}
+                onKeyDown={handleKeyDown}
+              />
             </div>
           ) : (
             <div className="calc-field-grid-2">
-              <Field label="Height (in)" value={heightIn} onChange={(v) => setHeightIn(v)} onKeyDown={handleKeyDown} />
-              <Field label="Weight (lb)" value={weightLb} onChange={(v) => setWeightLb(v)} onKeyDown={handleKeyDown} />
+              <Field
+                label="Height (in)"
+                value={heightIn}
+                onChange={(v) => setHeightIn(v)}
+                onKeyDown={handleKeyDown}
+              />
+              <Field
+                label="Weight (lb)"
+                value={weightLb}
+                onChange={(v) => setWeightLb(v)}
+                onKeyDown={handleKeyDown}
+              />
             </div>
           )}
 
           <div className="flex flex-row gap-3 mt-4">
-            <CalculateButton category="health" className="flex-1 min-h-11" disabled={isButtonDisabled} onClick={handleCalculate}>Calculate</CalculateButton>
-            <Button variant="outline" className="flex-1 min-h-11" onClick={handleReset}>Reset</Button>
+            <CalculateButton
+              category="health"
+              className="flex-1 min-h-11"
+              disabled={isButtonDisabled}
+              onClick={handleCalculate}
+            >
+              Calculate
+            </CalculateButton>
+            <Button variant="outline" className="flex-1 min-h-11" onClick={handleReset}>
+              Reset
+            </Button>
           </div>
         </div>
 
@@ -200,6 +325,14 @@ export function BMICalculator() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-2 flex flex-col gap-6"
           >
+            {/* Medical Disclaimer Banner */}
+            <div className="medical-alert border rounded-lg p-4 flex gap-3 text-sm">
+              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 medical-alert-icon" />
+              <div className="medical-alert-text">
+                <strong className="medical-alert-title mr-1">Medical Disclaimer:</strong> This calculator provides estimates for informational and fitness tracking purposes only. It is not intended as medical advice or a substitute for professional health assessment. Always consult with a healthcare professional or registered dietitian before starting any weight loss, fitness, or diet regimen.
+              </div>
+            </div>
+
             {/* Hero */}
             <HeroMetric
               label="BMI Score"
@@ -212,13 +345,54 @@ export function BMICalculator() {
             {/* Key Metrics */}
             <DashboardSection title="Key Metrics">
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                <StatCard index={0} label="Weight Category" value={category.label} accent={category.accent} />
-                <StatCard index={1} label="Healthy Weight Range" value={weightRangeLabel} accent="green" />
-                <StatCard index={2} label="Ideal Weight" value={idealWeightLabel} accent="cyan" subValue="BMI 22 midpoint" />
-                <StatCard index={3} label="Difference from Ideal" value={diffLabel} accent={Math.abs(diffFromIdeal) < 1 ? "green" : diffFromIdeal > 0 ? "red" : "blue"} />
-                <StatCard index={4} label="BMI Prime" value={bmiPrime.toFixed(2)} accent={bmiPrime > 1.2 ? "red" : bmiPrime < 0.74 ? "blue" : "green"} subValue="> 1.0 = overweight" />
-                <StatCard index={5} label="Risk Assessment" value={bmi < 18.5 ? "Nutritional Risk" : bmi < 25 ? "Low Risk" : bmi < 30 ? "Moderate Risk" : "High Risk"}
-                  accent={bmi < 18.5 ? "blue" : bmi < 25 ? "green" : bmi < 30 ? "amber" : "red"} />
+                <StatCard
+                  index={0}
+                  label="Weight Category"
+                  value={category.label}
+                  accent={category.accent}
+                />
+                <StatCard
+                  index={1}
+                  label="Healthy Weight Range"
+                  value={weightRangeLabel}
+                  accent="green"
+                />
+                <StatCard
+                  index={2}
+                  label="Ideal Weight"
+                  value={idealWeightLabel}
+                  accent="cyan"
+                  subValue="BMI 22 midpoint"
+                />
+                <StatCard
+                  index={3}
+                  label="Difference from Ideal"
+                  value={diffLabel}
+                  accent={
+                    Math.abs(diffFromIdeal) < 1 ? "green" : diffFromIdeal > 0 ? "red" : "blue"
+                  }
+                />
+                <StatCard
+                  index={4}
+                  label="BMI Prime"
+                  value={bmiPrime.toFixed(2)}
+                  accent={bmiPrime > 1.2 ? "red" : bmiPrime < 0.74 ? "blue" : "green"}
+                  subValue="> 1.0 = overweight"
+                />
+                <StatCard
+                  index={5}
+                  label="Risk Assessment"
+                  value={
+                    bmi < 18.5
+                      ? "Nutritional Risk"
+                      : bmi < 25
+                        ? "Low Risk"
+                        : bmi < 30
+                          ? "Moderate Risk"
+                          : "High Risk"
+                  }
+                  accent={bmi < 18.5 ? "blue" : bmi < 25 ? "green" : bmi < 30 ? "amber" : "red"}
+                />
               </div>
             </DashboardSection>
 
@@ -252,13 +426,29 @@ export function BMICalculator() {
                 {/* Category breakdown bar chart */}
                 <div className="mt-4 h-28">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={bmiGaugeData} layout="vertical" margin={{ top: 0, right: 40, left: 0, bottom: 0 }}>
+                    <BarChart
+                      data={bmiGaugeData}
+                      layout="vertical"
+                      margin={{ top: 0, right: 40, left: 0, bottom: 0 }}
+                    >
                       <XAxis type="number" hide />
-                      <YAxis type="category" dataKey="name" width={90} tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }} />
-                      <Tooltip {...tooltipStyle} formatter={(v, _name, props) => [props.payload.range, "Range"]} />
+                      <YAxis
+                        type="category"
+                        dataKey="name"
+                        width={90}
+                        tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }}
+                      />
+                      <Tooltip
+                        {...tooltipStyle}
+                        formatter={(v, _name, props) => [props.payload.range, "Range"]}
+                      />
                       <Bar dataKey="value" radius={4}>
                         {bmiGaugeData.map((entry, i) => (
-                          <Cell key={i} fill={entry.fill} opacity={entry.name === category.label ? 1 : 0.35} />
+                          <Cell
+                            key={i}
+                            fill={entry.fill}
+                            opacity={entry.name === category.label ? 1 : 0.35}
+                          />
                         ))}
                       </Bar>
                     </BarChart>
@@ -279,26 +469,49 @@ export function BMICalculator() {
             {/* Insights */}
             <DashboardSection title="Smart Insights">
               <div className="flex flex-col gap-2">
-                <InsightCard index={0} tone={bmi >= 18.5 && bmi < 25 ? "success" : "info"}
-                  text={`Your BMI of ${bmi.toFixed(1)} places you in the ${category.label.toLowerCase()} range. ${bmi >= 18.5 && bmi < 25 ? "You're within the healthy range — great job maintaining your weight." : `To reach the healthy range, a weight change of ${Math.abs(diffFromIdeal).toFixed(1)} kg would be needed.`}`} />
-                <InsightCard index={1} tone="info"
-                  text={`Your BMI Prime is ${bmiPrime.toFixed(2)}. A value of exactly 1.0 means you're at the upper boundary of normal weight. Values below 0.74 indicate underweight; above 1.0 indicates overweight.`} />
-                <InsightCard index={2} tone="tip"
-                  text="BMI is a population-level screening tool and doesn't account for muscle mass, bone density, age, or ethnicity. Always combine BMI readings with professional medical assessment." />
+                <InsightCard
+                  index={0}
+                  tone={bmi >= 18.5 && bmi < 25 ? "success" : "info"}
+                  text={`Your BMI of ${bmi.toFixed(1)} places you in the ${category.label.toLowerCase()} range. ${bmi >= 18.5 && bmi < 25 ? "You're within the healthy range — great job maintaining your weight." : `To reach the healthy range, a weight change of ${Math.abs(diffFromIdeal).toFixed(1)} kg would be needed.`}`}
+                />
+                <InsightCard
+                  index={1}
+                  tone="info"
+                  text={`Your BMI Prime is ${bmiPrime.toFixed(2)}. A value of exactly 1.0 means you're at the upper boundary of normal weight. Values below 0.74 indicate underweight; above 1.0 indicates overweight.`}
+                />
+                <InsightCard
+                  index={2}
+                  tone="tip"
+                  text="BMI is a population-level screening tool and doesn't account for muscle mass, bone density, age, or ethnicity. Always combine BMI readings with professional medical assessment."
+                />
               </div>
             </DashboardSection>
 
             {/* Recommendations */}
             <DashboardSection title="Recommendations">
-              <RecommendationList items={[
-                { title: "Consult a healthcare professional", description: "BMI is a starting point, not a diagnosis. A doctor or registered dietitian can provide a comprehensive health assessment including body composition." },
-                { title: "Track trends, not single readings", description: "BMI fluctuates with hydration, time of day, and clothing. Track it monthly rather than daily, and look for trends over 3–6 months." },
-                { title: "Combine with waist circumference", description: "Waist circumference is a stronger predictor of metabolic risk than BMI alone. For men, keep below 94 cm; for women, below 80 cm." },
-              ]} />
+              <RecommendationList
+                items={[
+                  {
+                    title: "Consult a healthcare professional",
+                    description:
+                      "BMI is a starting point, not a diagnosis. A doctor or registered dietitian can provide a comprehensive health assessment including body composition.",
+                  },
+                  {
+                    title: "Track trends, not single readings",
+                    description:
+                      "BMI fluctuates with hydration, time of day, and clothing. Track it monthly rather than daily, and look for trends over 3–6 months.",
+                  },
+                  {
+                    title: "Combine with waist circumference",
+                    description:
+                      "Waist circumference is a stronger predictor of metabolic risk than BMI alone. For men, keep below 94 cm; for women, below 80 cm.",
+                  },
+                ]}
+              />
             </DashboardSection>
 
             <div className="flex flex-col">
-              <CalculatorPdfExport hasResult={hasResult && bmi > 0} pdfData={pdfData} />
+              {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
             </div>
           </motion.div>
         )}
@@ -307,14 +520,30 @@ export function BMICalculator() {
   );
 }
 
-function Field({ label, value, onChange, onKeyDown }: {
-  label: string; value: number | ""; onChange: (n: number | "") => void; onKeyDown?: (e: React.KeyboardEvent) => void;
+function Field({
+  label,
+  value,
+  onChange,
+  onKeyDown,
+}: {
+  label: string;
+  value: number | "";
+  onChange: (n: number | "") => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
 }) {
   return (
     <div>
       <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
-      <Input type="number" value={value} onChange={(e) => { const val = e.target.value; onChange(val === "" ? "" : Number(val)); }}
-        onKeyDown={onKeyDown} className="mt-1" />
+      <Input
+        type="number"
+        value={value}
+        onChange={(e) => {
+          const val = e.target.value;
+          onChange(val === "" ? "" : Number(val));
+        }}
+        onKeyDown={onKeyDown}
+        className="mt-1"
+      />
     </div>
   );
 }

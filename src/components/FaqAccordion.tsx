@@ -56,18 +56,23 @@ function FaqItem({ q, a, isOpen, onToggle, answerClassName }: FaqItemProps) {
         <ChevronRight
           className={cn(
             "h-4 w-4 shrink-0 mt-0.5 transition-transform duration-300",
-            isOpen && "rotate-90"
+            isOpen && "rotate-90",
           )}
         />
       </summary>
       <div
         className={cn(
           "grid transition-all duration-300 ease-in-out",
-          isOpen && isTransitioning ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          isOpen && isTransitioning ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
         )}
       >
         <div className="overflow-hidden min-h-0">
-          <p className={cn("mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed", answerClassName)}>
+          <p
+            className={cn(
+              "mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed",
+              answerClassName,
+            )}
+          >
             {a}
           </p>
         </div>

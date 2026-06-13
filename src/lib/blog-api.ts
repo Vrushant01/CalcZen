@@ -69,7 +69,7 @@ export async function fetchPublishedBlogs(params?: {
 }
 
 export async function fetchBlogBySlug(
-  slug: string
+  slug: string,
 ): Promise<{ ok: true; data: Blog } | { ok: false; message: string }> {
   try {
     const res = await apiFetch(`/api/blogs/${slug}`);

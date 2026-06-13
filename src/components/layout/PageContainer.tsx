@@ -15,7 +15,5 @@ export function PageContainer({ children, className, spacing = "default" }: Page
     legal: "py-10 sm:py-14 md:py-16",
   }[spacing];
 
-  return (
-    <div className={cn("page-container min-w-0", spacingClass, className)}>{children}</div>
-  );
+  return <div className={cn("page-container min-w-0", spacingClass, className)}>{children}</div>;
 }

@@ -31,8 +31,7 @@ export function ComparisonTable({ headers, rows, highlightColIndex, caption }: P
                 className={cn(
                   "px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground",
                   i > 0 && "text-right",
-                  highlightColIndex !== undefined && i === highlightColIndex + 1 &&
-                    "text-accent"
+                  highlightColIndex !== undefined && i === highlightColIndex + 1 && "text-accent",
                 )}
               >
                 {h}
@@ -46,9 +45,7 @@ export function ComparisonTable({ headers, rows, highlightColIndex, caption }: P
               key={ri}
               className={cn(
                 "border-b border-border/30 transition-colors last:border-0",
-                row.highlight
-                  ? "bg-accent/8 font-semibold"
-                  : "hover:bg-muted/20"
+                row.highlight ? "bg-accent/8 font-semibold" : "hover:bg-muted/20",
               )}
             >
               <td className="px-4 py-2.5 text-sm font-medium text-foreground">{row.label}</td>
@@ -58,8 +55,9 @@ export function ComparisonTable({ headers, rows, highlightColIndex, caption }: P
                   className={cn(
                     "px-4 py-2.5 text-right tabular-nums",
                     row.highlight ? "text-foreground font-bold" : "text-muted-foreground",
-                    highlightColIndex !== undefined && vi === highlightColIndex &&
-                      "text-accent font-semibold"
+                    highlightColIndex !== undefined &&
+                      vi === highlightColIndex &&
+                      "text-accent font-semibold",
                   )}
                 >
                   {v}

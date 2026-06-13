@@ -7,9 +7,7 @@ export type ContactPayload = {
   _gotcha?: string;
 };
 
-export type ContactResult =
-  | { ok: true; message: string }
-  | { ok: false; message: string };
+export type ContactResult = { ok: true; message: string } | { ok: false; message: string };
 
 export async function submitContactForm(payload: ContactPayload): Promise<ContactResult> {
   try {

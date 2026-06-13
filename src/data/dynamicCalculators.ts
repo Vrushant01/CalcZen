@@ -34,8 +34,24 @@ export const dynamicCalculators: CalculatorConfig[] = [
     category: "health",
     description: "Check your Body Mass Index (BMI) and understand your healthy weight category.",
     fields: [
-      { id: "height", label: "Height (cm)", type: "number", defaultValue: 175, min: 50, max: 250, suffix: "cm" },
-      { id: "weight", label: "Weight (kg)", type: "number", defaultValue: 72, min: 10, max: 300, suffix: "kg" },
+      {
+        id: "height",
+        label: "Height (cm)",
+        type: "number",
+        defaultValue: 175,
+        min: 50,
+        max: 250,
+        suffix: "cm",
+      },
+      {
+        id: "weight",
+        label: "Weight (kg)",
+        type: "number",
+        defaultValue: 72,
+        min: 10,
+        max: 300,
+        suffix: "kg",
+      },
     ],
     calculate: (inputs) => {
       const height = Number(inputs.height) || 175;
@@ -86,19 +102,26 @@ export const dynamicCalculators: CalculatorConfig[] = [
         mainResult: { label: "BMI Score", value: bmi.toFixed(1), highlight: true },
         secondaryMetrics: [
           { label: "Category", value: category, highlight: true },
-          { label: "Healthy Weight Range", value: `${healthyMin.toFixed(1)}–${healthyMax.toFixed(1)} kg` },
+          {
+            label: "Healthy Weight Range",
+            value: `${healthyMin.toFixed(1)}–${healthyMax.toFixed(1)} kg`,
+          },
           { label: "BMI Prime", value: (bmi / 25).toFixed(2) },
         ],
         insights: tips,
-        graphData: [
-          { name: "BMI", value: Number(bmi.toFixed(1)) }
-        ],
+        graphData: [{ name: "BMI", value: Number(bmi.toFixed(1)) }],
         graphType: "gauge",
       };
     },
     tips: [
-      { q: "What is a healthy BMI range?", a: "For most adults, a BMI between 18.5 and 24.9 is considered healthy. Below 18.5 is underweight, 25-29.9 is overweight, and 30+ is obese." },
-      { q: "Does BMI work for athletes?", a: "BMI does not distinguish muscle from fat, so very muscular individuals can read as overweight even when healthy. Use it alongside body-fat measurements for a fuller picture." },
+      {
+        q: "What is a healthy BMI range?",
+        a: "For most adults, a BMI between 18.5 and 24.9 is considered healthy. Below 18.5 is underweight, 25-29.9 is overweight, and 30+ is obese.",
+      },
+      {
+        q: "Does BMI work for athletes?",
+        a: "BMI does not distinguish muscle from fat, so very muscular individuals can read as overweight even when healthy. Use it alongside body-fat measurements for a fuller picture.",
+      },
     ],
   },
   {
@@ -108,9 +131,34 @@ export const dynamicCalculators: CalculatorConfig[] = [
     description: "Estimate your daily calorie needs based on goals and physical activity level.",
     fields: [
       { id: "age", label: "Age (years)", type: "number", defaultValue: 30, min: 1, max: 120 },
-      { id: "sex", label: "Sex", type: "select", defaultValue: "male", options: [{ label: "Male", value: "male" }, { label: "Female", value: "female" }] },
-      { id: "height", label: "Height (cm)", type: "number", defaultValue: 175, min: 50, max: 250, suffix: "cm" },
-      { id: "weight", label: "Weight (kg)", type: "number", defaultValue: 72, min: 10, max: 300, suffix: "kg" },
+      {
+        id: "sex",
+        label: "Sex",
+        type: "select",
+        defaultValue: "male",
+        options: [
+          { label: "Male", value: "male" },
+          { label: "Female", value: "female" },
+        ],
+      },
+      {
+        id: "height",
+        label: "Height (cm)",
+        type: "number",
+        defaultValue: 175,
+        min: 50,
+        max: 250,
+        suffix: "cm",
+      },
+      {
+        id: "weight",
+        label: "Weight (kg)",
+        type: "number",
+        defaultValue: 72,
+        min: 10,
+        max: 300,
+        suffix: "kg",
+      },
       {
         id: "activity",
         label: "Activity Level",
@@ -159,11 +207,23 @@ export const dynamicCalculators: CalculatorConfig[] = [
       ];
 
       return {
-        mainResult: { label: "Daily Calorie Target", value: `${Math.round(target)} kcal`, highlight: true },
+        mainResult: {
+          label: "Daily Calorie Target",
+          value: `${Math.round(target)} kcal`,
+          highlight: true,
+        },
         secondaryMetrics: [
           { label: "BMR (at rest)", value: `${Math.round(bmr)} kcal` },
           { label: "TDEE (maintenance)", value: `${Math.round(tdee)} kcal` },
-          { label: "Goal Action", value: goal === "lose" ? "Calorie Deficit" : goal === "gain" ? "Calorie Surplus" : "Maintenance" },
+          {
+            label: "Goal Action",
+            value:
+              goal === "lose"
+                ? "Calorie Deficit"
+                : goal === "gain"
+                  ? "Calorie Surplus"
+                  : "Maintenance",
+          },
         ],
         insights,
         graphData: [
@@ -175,19 +235,39 @@ export const dynamicCalculators: CalculatorConfig[] = [
       };
     },
     tips: [
-      { q: "Why a 500-calorie deficit for weight loss?", a: "A daily 500-calorie deficit creates roughly a 0.5 kg (≈1 lb) loss per week, which is a safe, sustainable rate recommended by most health authorities." },
-      { q: "What activity level should I pick?", a: "Sedentary = desk job, no exercise. Moderate = workouts 3–5 days/week. Very active = intense daily training or physical labor." },
+      {
+        q: "Why a 500-calorie deficit for weight loss?",
+        a: "A daily 500-calorie deficit creates roughly a 0.5 kg (≈1 lb) loss per week, which is a safe, sustainable rate recommended by most health authorities.",
+      },
+      {
+        q: "What activity level should I pick?",
+        a: "Sedentary = desk job, no exercise. Moderate = workouts 3–5 days/week. Very active = intense daily training or physical labor.",
+      },
     ],
   },
   {
     slug: "loan-emi-calculator",
     name: "Loan EMI Calculator",
     category: "finance",
-    description: "Calculate your Equated Monthly Installment (EMI) for any personal, car, or home loan.",
+    description:
+      "Calculate your Equated Monthly Installment (EMI) for any personal, car, or home loan.",
     fields: [
       { id: "amount", label: "Loan Amount ($)", type: "number", defaultValue: 20000, suffix: "$" },
-      { id: "rate", label: "Interest Rate (% per year)", type: "number", defaultValue: 9, step: 0.1, suffix: "%" },
-      { id: "months", label: "Tenure (months)", type: "number", defaultValue: 60, suffix: "months" },
+      {
+        id: "rate",
+        label: "Interest Rate (% per year)",
+        type: "number",
+        defaultValue: 9,
+        step: 0.1,
+        suffix: "%",
+      },
+      {
+        id: "months",
+        label: "Tenure (months)",
+        type: "number",
+        defaultValue: 60,
+        suffix: "months",
+      },
     ],
     calculate: (inputs) => {
       const amount = Number(inputs.amount) || 20000;
@@ -195,13 +275,20 @@ export const dynamicCalculators: CalculatorConfig[] = [
       const months = Number(inputs.months) || 60;
 
       const r = rate / 100 / 12;
-      const emi = r === 0 ? amount / months : (amount * r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
+      const emi =
+        r === 0
+          ? amount / months
+          : (amount * r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
       const totalPay = emi * months;
       const totalInterest = totalPay - amount;
       const interestPct = amount > 0 ? (totalInterest / amount) * 100 : 0;
 
       const formatCurrency = (val: number) =>
-        new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(val);
+        new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 0,
+        }).format(val);
 
       const insights = [
         `Your monthly EMI is ${formatCurrency(emi)}.`,
@@ -225,20 +312,52 @@ export const dynamicCalculators: CalculatorConfig[] = [
       };
     },
     tips: [
-      { q: "What does EMI stand for?", a: "EMI stands for Equated Monthly Installment — a fixed payment amount made by a borrower to a lender at a specified date each calendar month." },
-      { q: "How can I reduce the interest payable on my loan?", a: "You can reduce interest by choosing a shorter loan tenure, negotiating a lower interest rate, or making prepayment principal payments whenever possible." },
+      {
+        q: "What does EMI stand for?",
+        a: "EMI stands for Equated Monthly Installment — a fixed payment amount made by a borrower to a lender at a specified date each calendar month.",
+      },
+      {
+        q: "How can I reduce the interest payable on my loan?",
+        a: "You can reduce interest by choosing a shorter loan tenure, negotiating a lower interest rate, or making prepayment principal payments whenever possible.",
+      },
     ],
   },
   {
     slug: "compound-interest-calculator",
     name: "Compound Interest Calculator",
     category: "finance",
-    description: "Project how your savings or investments grow with compounding interest and recurring contributions.",
+    description:
+      "Project how your savings or investments grow with compounding interest and recurring contributions.",
     fields: [
-      { id: "principal", label: "Initial Investment ($)", type: "number", defaultValue: 5000, suffix: "$" },
-      { id: "rate", label: "Annual Interest Rate (%)", type: "number", defaultValue: 8, step: 0.1, suffix: "%" },
-      { id: "years", label: "Time Period (years)", type: "number", defaultValue: 10, suffix: "years" },
-      { id: "contribution", label: "Monthly Contribution ($)", type: "number", defaultValue: 200, suffix: "$" },
+      {
+        id: "principal",
+        label: "Initial Investment ($)",
+        type: "number",
+        defaultValue: 5000,
+        suffix: "$",
+      },
+      {
+        id: "rate",
+        label: "Annual Interest Rate (%)",
+        type: "number",
+        defaultValue: 8,
+        step: 0.1,
+        suffix: "%",
+      },
+      {
+        id: "years",
+        label: "Time Period (years)",
+        type: "number",
+        defaultValue: 10,
+        suffix: "years",
+      },
+      {
+        id: "contribution",
+        label: "Monthly Contribution ($)",
+        type: "number",
+        defaultValue: 200,
+        suffix: "$",
+      },
     ],
     calculate: (inputs) => {
       const principal = Number(inputs.principal) || 5000;
@@ -249,7 +368,9 @@ export const dynamicCalculators: CalculatorConfig[] = [
       const rateMonthly = rate / 12 / 100;
       let balance = principal;
       let invested = principal;
-      const graphData = [{ year: 0, balance: Math.round(principal), invested: Math.round(principal) }];
+      const graphData = [
+        { year: 0, balance: Math.round(principal), invested: Math.round(principal) },
+      ];
 
       for (let y = 1; y <= years; y++) {
         for (let m = 0; m < 12; m++) {
@@ -267,7 +388,11 @@ export const dynamicCalculators: CalculatorConfig[] = [
       const growthPercent = invested > 0 ? (totalProfit / invested) * 100 : 0;
 
       const formatCurrency = (val: number) =>
-        new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(val);
+        new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 0,
+        }).format(val);
 
       const insights = [
         `In ${years} years, your portfolio will grow to ${formatCurrency(balance)}.`,
@@ -288,18 +413,23 @@ export const dynamicCalculators: CalculatorConfig[] = [
       };
     },
     tips: [
-      { q: "What is compound interest?", a: "Compound interest is the interest on a loan or deposit calculated based on both the initial principal and the accumulated interest from previous periods." },
-      { q: "How does the frequency of compounding impact returns?", a: "The more frequently interest is compounded (e.g. daily vs. annually), the faster your money grows. Our model assumes monthly interest compounding." },
+      {
+        q: "What is compound interest?",
+        a: "Compound interest is the interest on a loan or deposit calculated based on both the initial principal and the accumulated interest from previous periods.",
+      },
+      {
+        q: "How does the frequency of compounding impact returns?",
+        a: "The more frequently interest is compounded (e.g. daily vs. annually), the faster your money grows. Our model assumes monthly interest compounding.",
+      },
     ],
   },
   {
     slug: "age-calculator",
     name: "Age Calculator",
     category: "math",
-    description: "Determine your exact age in years, months, days, and discover your birth timeline.",
-    fields: [
-      { id: "birthDate", label: "Date of Birth", type: "date", defaultValue: "1995-06-15" },
-    ],
+    description:
+      "Determine your exact age in years, months, days, and discover your birth timeline.",
+    fields: [{ id: "birthDate", label: "Date of Birth", type: "date", defaultValue: "1995-06-15" }],
     calculate: (inputs) => {
       const birthStr = inputs.birthDate || "1995-06-15";
       const birth = new Date(birthStr);
@@ -330,7 +460,9 @@ export const dynamicCalculators: CalculatorConfig[] = [
       if (nextBirthday < now) {
         nextBirthday.setFullYear(now.getFullYear() + 1);
       }
-      const daysToBirthday = Math.ceil((nextBirthday.getTime() - now.getTime()) / 1000 / 60 / 60 / 24);
+      const daysToBirthday = Math.ceil(
+        (nextBirthday.getTime() - now.getTime()) / 1000 / 60 / 60 / 24,
+      );
 
       const insights = [
         `You have lived for over ${totalDays.toLocaleString()} total days!`,
@@ -348,7 +480,11 @@ export const dynamicCalculators: CalculatorConfig[] = [
       ];
 
       return {
-        mainResult: { label: "Exact Age", value: `${years} yrs, ${months} mos, ${days} days`, highlight: true },
+        mainResult: {
+          label: "Exact Age",
+          value: `${years} yrs, ${months} mos, ${days} days`,
+          highlight: true,
+        },
         secondaryMetrics: [
           { label: "Countdown to Birthday", value: `${daysToBirthday} Days` },
           { label: "Total Days Lived", value: `${totalDays.toLocaleString()} Days` },
@@ -360,18 +496,38 @@ export const dynamicCalculators: CalculatorConfig[] = [
       };
     },
     tips: [
-      { q: "Is this age calculator timezone aware?", a: "The calculator runs on your local system time, comparing your input birthdate with the current clock date in your web browser." },
-      { q: "What is a birth milestone?", a: "Timelines help map human lifespan stages. Most demographics divide these into infancy (0-3), childhood/youth (4-18), adulthood (19-65), and senior years (65+)." },
+      {
+        q: "Is this age calculator timezone aware?",
+        a: "The calculator runs on your local system time, comparing your input birthdate with the current clock date in your web browser.",
+      },
+      {
+        q: "What is a birth milestone?",
+        a: "Timelines help map human lifespan stages. Most demographics divide these into infancy (0-3), childhood/youth (4-18), adulthood (19-65), and senior years (65+).",
+      },
     ],
   },
   {
     slug: "investment-return-calculator",
     name: "Investment Return Calculator",
     category: "finance",
-    description: "Calculate potential portfolio return, capital invested, and growth gains over time.",
+    description:
+      "Calculate potential portfolio return, capital invested, and growth gains over time.",
     fields: [
-      { id: "initial", label: "Initial Principal ($)", type: "number", defaultValue: 10000, suffix: "$" },
-      { id: "returnRate", label: "Annual Rate of Return (%)", type: "number", defaultValue: 10, step: 0.1, suffix: "%" },
+      {
+        id: "initial",
+        label: "Initial Principal ($)",
+        type: "number",
+        defaultValue: 10000,
+        suffix: "$",
+      },
+      {
+        id: "returnRate",
+        label: "Annual Rate of Return (%)",
+        type: "number",
+        defaultValue: 10,
+        step: 0.1,
+        suffix: "%",
+      },
       { id: "years", label: "Duration (years)", type: "number", defaultValue: 10, suffix: "years" },
     ],
     calculate: (inputs) => {
@@ -396,7 +552,11 @@ export const dynamicCalculators: CalculatorConfig[] = [
       const growthPercent = initial > 0 ? (totalProfit / initial) * 100 : 0;
 
       const formatCurrency = (val: number) =>
-        new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(val);
+        new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 0,
+        }).format(val);
 
       const insights = [
         `With an annual return rate of ${rate}%, your portfolio grows from ${formatCurrency(initial)} to ${formatCurrency(balance)}.`,
@@ -405,7 +565,11 @@ export const dynamicCalculators: CalculatorConfig[] = [
       ];
 
       return {
-        mainResult: { label: "Estimated Portfolio Value", value: formatCurrency(balance), highlight: true },
+        mainResult: {
+          label: "Estimated Portfolio Value",
+          value: formatCurrency(balance),
+          highlight: true,
+        },
         secondaryMetrics: [
           { label: "Capital Invested", value: formatCurrency(initial) },
           { label: "Capital Gains (Profit)", value: formatCurrency(totalProfit) },
@@ -417,15 +581,22 @@ export const dynamicCalculators: CalculatorConfig[] = [
       };
     },
     tips: [
-      { q: "What is capital appreciation?", a: "Capital appreciation refers to an increase in the market price of an asset, which is the primary source of portfolio gains alongside dividends." },
-      { q: "Does this account for inflation or taxes?", a: "This is a gross return projection calculator. Taxes, capital gains fees, and inflation will eat into real purchasing power over time." },
+      {
+        q: "What is capital appreciation?",
+        a: "Capital appreciation refers to an increase in the market price of an asset, which is the primary source of portfolio gains alongside dividends.",
+      },
+      {
+        q: "Does this account for inflation or taxes?",
+        a: "This is a gross return projection calculator. Taxes, capital gains fees, and inflation will eat into real purchasing power over time.",
+      },
     ],
   },
   {
     slug: "placeholder-calculator",
     name: "[CALCULATOR_TYPE_NAME]",
     category: "everyday",
-    description: "Placeholder demonstrating the system's modular scalability. Easily add new modules via configuration.",
+    description:
+      "Placeholder demonstrating the system's modular scalability. Easily add new modules via configuration.",
     fields: [
       { id: "input_a", label: "[INPUT_FIELD_NAME] A", type: "number", defaultValue: 100 },
       { id: "input_b", label: "[INPUT_FIELD_NAME] B", type: "number", defaultValue: 50 },
@@ -436,7 +607,11 @@ export const dynamicCalculators: CalculatorConfig[] = [
       const sum = a + b;
 
       return {
-        mainResult: { label: "Calculation Output", value: `${sum.toFixed(0)} units`, highlight: true },
+        mainResult: {
+          label: "Calculation Output",
+          value: `${sum.toFixed(0)} units`,
+          highlight: true,
+        },
         secondaryMetrics: [
           { label: "Difference", value: `${Math.abs(a - b).toFixed(0)} units` },
           { label: "Product", value: `${(a * b).toLocaleString()} units` },
@@ -454,7 +629,10 @@ export const dynamicCalculators: CalculatorConfig[] = [
       };
     },
     tips: [
-      { q: "How do you add new calculators?", a: "Simply add a new config object to the `dynamicCalculators` list. The system dynamically generates inputs, logic, and visual graphics automatically." },
+      {
+        q: "How do you add new calculators?",
+        a: "Simply add a new config object to the `dynamicCalculators` list. The system dynamically generates inputs, logic, and visual graphics automatically.",
+      },
     ],
   },
 ];

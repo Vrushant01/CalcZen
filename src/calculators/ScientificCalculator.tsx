@@ -5,30 +5,30 @@ import { blogContent } from "@/data/blogContent";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
-import { getScientificCalculatorHistory, 
-  addScientificCalculatorHistory, 
-  clearScientificCalculatorHistory, 
-  type ScientificHistoryItem 
+import {
+  getScientificCalculatorHistory,
+  addScientificCalculatorHistory,
+  clearScientificCalculatorHistory,
+  type ScientificHistoryItem,
 } from "@/utils/scientificCalculatorHistory";
 import { HelpCircle, Delete, Clock, Copy, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/hooks/use-theme";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 
-
 // Helper to balance missing closing parentheses and validate their order
 function validateAndBalanceParentheses(expr: string): string {
   let openCount = 0;
-  for (let char of expr) {
-    if (char === '(') openCount++;
-    if (char === ')') {
+  for (const char of expr) {
+    if (char === "(") openCount++;
+    if (char === ")") {
       openCount--;
       if (openCount < 0) {
         throw new Error("Parenthesis imbalance");
       }
     }
   }
-  
+
   let balanced = expr;
   if (openCount > 0) {
     balanced += ")".repeat(openCount);
@@ -39,7 +39,7 @@ function validateAndBalanceParentheses(expr: string): string {
 // Preprocessor to inject implicit multiplication operations
 function preprocessExpression(expr: string): string {
   let s = expr.trim();
-  
+
   // Normalize spaces
   s = s.replace(/\s+/g, "");
 
@@ -111,10 +111,24 @@ function parseAndEvaluate(expr: string, angleMode: "deg" | "rad"): string {
   let fn;
   try {
     fn = new Function(
-      "sin", "cos", "tan", "asin", "acos", "atan", "log", "ln", "sqrt", "cbrt", "abs", "exp", "fact", "yroot", "rand",
+      "sin",
+      "cos",
+      "tan",
+      "asin",
+      "acos",
+      "atan",
+      "log",
+      "ln",
+      "sqrt",
+      "cbrt",
+      "abs",
+      "exp",
+      "fact",
+      "yroot",
+      "rand",
       `"use strict"; 
        const Math = globalThis.Math;
-       return (${cleaned});`
+       return (${cleaned});`,
     );
   } catch (err) {
     throw new Error("Invalid Expression");
@@ -129,24 +143,25 @@ function parseAndEvaluate(expr: string, angleMode: "deg" | "rad"): string {
     return res;
   };
 
-  const sinFn = (x: number) => angleMode === "deg" ? Math.sin(x * Math.PI / 180) : Math.sin(x);
-  const cosFn = (x: number) => angleMode === "deg" ? Math.cos(x * Math.PI / 180) : Math.cos(x);
+  const sinFn = (x: number) => (angleMode === "deg" ? Math.sin((x * Math.PI) / 180) : Math.sin(x));
+  const cosFn = (x: number) => (angleMode === "deg" ? Math.cos((x * Math.PI) / 180) : Math.cos(x));
   const tanFn = (x: number) => {
     if (angleMode === "deg" && (Math.abs(x) - 90) % 180 === 0) {
       throw new Error("Math Domain Error");
     }
-    return angleMode === "deg" ? Math.tan(x * Math.PI / 180) : Math.tan(x);
+    return angleMode === "deg" ? Math.tan((x * Math.PI) / 180) : Math.tan(x);
   };
   const asinFn = (x: number) => {
     if (x < -1 || x > 1) throw new Error("Math Domain Error");
-    return angleMode === "deg" ? Math.asin(x) * 180 / Math.PI : Math.asin(x);
+    return angleMode === "deg" ? (Math.asin(x) * 180) / Math.PI : Math.asin(x);
   };
   const acosFn = (x: number) => {
     if (x < -1 || x > 1) throw new Error("Math Domain Error");
-    return angleMode === "deg" ? Math.acos(x) * 180 / Math.PI : Math.acos(x);
+    return angleMode === "deg" ? (Math.acos(x) * 180) / Math.PI : Math.acos(x);
   };
-  const atanFn = (x: number) => angleMode === "deg" ? Math.atan(x) * 180 / Math.PI : Math.atan(x);
-  
+  const atanFn = (x: number) =>
+    angleMode === "deg" ? (Math.atan(x) * 180) / Math.PI : Math.atan(x);
+
   const logFn = (x: number) => {
     if (x <= 0) throw new Error("Math Domain Error");
     return Math.log10(x);
@@ -172,10 +187,29 @@ function parseAndEvaluate(expr: string, angleMode: "deg" | "rad"): string {
   let result;
   try {
     result = fn(
-      sinFn, cosFn, tanFn, asinFn, acosFn, atanFn, logFn, lnFn, sqrtFn, cbrtFn, absFn, expFn, fact, yrootFn, randFn
+      sinFn,
+      cosFn,
+      tanFn,
+      asinFn,
+      acosFn,
+      atanFn,
+      logFn,
+      lnFn,
+      sqrtFn,
+      cbrtFn,
+      absFn,
+      expFn,
+      fact,
+      yrootFn,
+      randFn,
     );
   } catch (err: any) {
-    if (err.message && (err.message.includes("Divide") || err.message.includes("Factorial") || err.message.includes("Domain"))) {
+    if (
+      err.message &&
+      (err.message.includes("Divide") ||
+        err.message.includes("Factorial") ||
+        err.message.includes("Domain"))
+    ) {
       throw err;
     }
     throw new Error("Invalid Expression");
@@ -207,10 +241,10 @@ export function ScientificCalculator() {
   const { isDark } = useTheme();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
   const expressionRef = useRef<HTMLDivElement>(null);
-  
+
   // In-memory sync state
   const [history, setHistory] = useState<ScientificHistoryItem[]>(getScientificCalculatorHistory());
-  
+
   // Calculator display & mode state
   const [display, setDisplay] = useState("0");
   const [equation, setEquation] = useState("");
@@ -259,17 +293,20 @@ export function ScientificCalculator() {
   // Keyboard support event listener
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (document.activeElement?.tagName === "INPUT" || document.activeElement?.tagName === "TEXTAREA") {
+      if (
+        document.activeElement?.tagName === "INPUT" ||
+        document.activeElement?.tagName === "TEXTAREA"
+      ) {
         return;
       }
-      
+
       // Ignore shortcut key combinations
       if (e.ctrlKey || e.metaKey || e.altKey) {
         return;
       }
 
       const key = e.key;
-      
+
       if (key === "Enter" || key === "=") {
         e.preventDefault();
         handleEqual();
@@ -282,18 +319,24 @@ export function ScientificCalculator() {
       } else if (key.length === 1 && /^[0-9+\-%*/. (),a-z√∛!^]$/i.test(key)) {
         e.preventDefault();
         setErrorMsg("");
-        
+
         let charToInsert = key;
         if (key === "*") charToInsert = "×";
         else if (key === "/") charToInsert = "÷";
-        
+
         if (isResetOnNext) {
           if (/^[+\-%*/]/.test(key)) {
             setEquation(display + charToInsert);
             setDisplay("");
           } else {
             setEquation(charToInsert);
-            setDisplay(charToInsert === "π" ? "3.14159265359" : charToInsert === "e" ? "2.71828182846" : charToInsert);
+            setDisplay(
+              charToInsert === "π"
+                ? "3.14159265359"
+                : charToInsert === "e"
+                  ? "2.71828182846"
+                  : charToInsert,
+            );
           }
           setIsResetOnNext(false);
         } else {
@@ -373,7 +416,7 @@ export function ScientificCalculator() {
     } else if (fnName === "cbrt") {
       insertVal = "∛(";
     }
-    
+
     if (isResetOnNext) {
       setEquation(insertVal);
       setDisplay("");
@@ -455,14 +498,14 @@ export function ScientificCalculator() {
 
     try {
       const result = parseAndEvaluate(equation, angleMode);
-      
+
       // Save calculation to independent history singleton
       addScientificCalculatorHistory(equation, result, angleMode);
-      
+
       // Update display states
       setDisplay(result);
       setIsResetOnNext(true);
-      
+
       // Sync local component lists
       setHistory(getScientificCalculatorHistory());
       markCalculated();
@@ -522,26 +565,28 @@ export function ScientificCalculator() {
       calculatorSlug: "scientific-calculator",
       siteName: PDF_SITE_NAME,
       siteUrl: PDF_SITE_URL,
-      inputs: hasCurrent ? [
-        { label: "Expression Evaluated", value: formattedEq || "0" },
-        { label: "Angle Mode Used", value: angleMode.toUpperCase() },
-      ] : [],
-      results: hasCurrent ? [
-        { label: "Final Result", value: display, highlight: true },
-      ] : [],
-      summary: hasCurrent 
+      inputs: hasCurrent
+        ? [
+            { label: "Expression Evaluated", value: formattedEq || "0" },
+            { label: "Angle Mode Used", value: angleMode.toUpperCase() },
+          ]
+        : [],
+      results: hasCurrent ? [{ label: "Final Result", value: display, highlight: true }] : [],
+      summary: hasCurrent
         ? `A high-precision scientific calculation completed on CalcZen. Target formula: ${formattedEq || "0"} = ${display} using the ${angleMode.toUpperCase()} angle system. Complete calculation history details are included in the tabular report below.`
         : `A scientific calculator calculation session on CalcZen. Complete calculation history details are included in the tabular report below.`,
-      tableData: hasHistory ? {
-        title: "CALCULATION HISTORY (CURRENT SESSION)",
-        headers: ["Timestamp", "Angle Mode", "Expression", "Result"],
-        rows: history.map((item) => [
-          item.timestamp,
-          item.angleMode.toUpperCase(),
-          item.expression,
-          item.result
-        ])
-      } : null,
+      tableData: hasHistory
+        ? {
+            title: "CALCULATION HISTORY (CURRENT SESSION)",
+            headers: ["Timestamp", "Angle Mode", "Expression", "Result"],
+            rows: history.map((item) => [
+              item.timestamp,
+              item.angleMode.toUpperCase(),
+              item.expression,
+              item.result,
+            ]),
+          }
+        : null,
     };
   }, [hasResult, display, equation, history, angleMode, errorMsg]);
 
@@ -558,26 +603,51 @@ ln(e) = 1
 5^3 = 125
 5! = 120`}
       faqs={[
-        { q: "What functions does a scientific calculator support?", a: "A scientific calculator supports a wide range of advanced mathematical operations including trigonometry (sin, cos, tan), inverse trigonometry, logarithmic functions (log, ln), exponents, roots, factorials, and mathematical constants like Pi and e. It handles multi-step equations and algebraic order of operations (PEMDAS) for complex academic, scientific, or engineering calculations, making math much easier." },
-        { q: "Can it solve trigonometric equations?", a: "Yes, it can easily evaluate trigonometric functions and inverse trigonometric equations for any given angle parameter. You must ensure the calculator is set to the correct active mode (Degree or Radian) depending on the equation's formatting to prevent calculation errors. If you need simple arithmetic, use our <a href=\"/calculator/standard-calculator\" class=\"text-primary hover:underline\">Standard Calculator</a>." },
-        { q: "Does it support radians and degrees?", a: "Yes, our online scientific calculator features a convenient toggle switch to transition between Degree (DEG) and Radian (RAD) modes. Degree mode is standard for basic geometry, trigonometry, and physics, while Radian mode is essential for calculus, advanced physics, and engineering equations that involve circular motion and wave functions, ensuring accuracy." },
-        { q: "What is scientific notation?", a: "Scientific notation is a mathematical method of writing very large or very small numbers using powers of 10 (for example, 6.02 x 10^23). It simplifies calculations in chemistry, physics, and astronomy, allowing scientists, engineers, and students to write values without long, cumbersome strings of placeholder zeros, which improves overall calculation clarity." },
-        { q: "Can students use it for exams?", a: "Yes, online scientific calculators are excellent study tools for homework, test preparation, and exams in courses like algebra, chemistry, and calculus. However, for physical classroom exams, standard academic rules typically require standalone physical hardware for security. Check percentage ratios for test grading with our <a href=\"/calculator/percentage-calculator\" class=\"text-primary hover:underline\">Percentage Calculator</a> to track academic performance." },
-        { q: "What is the difference between log and ln?", a: "Log (common logarithm) calculates exponents using a base of 10, whereas Ln (natural logarithm) calculates exponents using the mathematical constant e (approximately 2.718). Common logarithms are standard in everyday scaling like pH or decibels, while natural logarithms are vital in calculus, physics, and natural growth modeling across various scientific and engineering disciplines." },
-        { q: "How do parentheses affect the order of operations?", a: "Parentheses tell the calculator to evaluate the enclosed mathematical expression first, overriding standard algebraic precedence rules (PEMDAS). Using parentheses is critical when grouping multiple terms in fraction numerators or exponent bases to ensure the calculator evaluates the mathematical expression exactly as you intended, preventing common computation errors in your academic and professional work." },
-        { q: "Does this calculator preserve calculation history?", a: "Yes, our scientific calculator features an interactive session history panel that logs your equations and results. You can easily reuse previous calculations or copy results directly to your clipboard. This prevents manual copy errors during multi-step science or math problems, letting you focus entirely on solving the complex equations without distraction." }
+        {
+          q: "What functions does a scientific calculator support?",
+          a: "A scientific calculator supports a wide range of advanced mathematical operations including trigonometry (sin, cos, tan), inverse trigonometry, logarithmic functions (log, ln), exponents, roots, factorials, and mathematical constants like Pi and e. It handles multi-step equations and algebraic order of operations (PEMDAS) for complex academic, scientific, or engineering calculations, making math much easier.",
+        },
+        {
+          q: "Can it solve trigonometric equations?",
+          a: 'Yes, it can easily evaluate trigonometric functions and inverse trigonometric equations for any given angle parameter. You must ensure the calculator is set to the correct active mode (Degree or Radian) depending on the equation\'s formatting to prevent calculation errors. If you need simple arithmetic, use our <a href="/calculator/standard-calculator" class="text-primary hover:underline">Standard Calculator</a>.',
+        },
+        {
+          q: "Does it support radians and degrees?",
+          a: "Yes, our online scientific calculator features a convenient toggle switch to transition between Degree (DEG) and Radian (RAD) modes. Degree mode is standard for basic geometry, trigonometry, and physics, while Radian mode is essential for calculus, advanced physics, and engineering equations that involve circular motion and wave functions, ensuring accuracy.",
+        },
+        {
+          q: "What is scientific notation?",
+          a: "Scientific notation is a mathematical method of writing very large or very small numbers using powers of 10 (for example, 6.02 x 10^23). It simplifies calculations in chemistry, physics, and astronomy, allowing scientists, engineers, and students to write values without long, cumbersome strings of placeholder zeros, which improves overall calculation clarity.",
+        },
+        {
+          q: "Can students use it for exams?",
+          a: 'Yes, online scientific calculators are excellent study tools for homework, test preparation, and exams in courses like algebra, chemistry, and calculus. However, for physical classroom exams, standard academic rules typically require standalone physical hardware for security. Check percentage ratios for test grading with our <a href="/calculator/percentage-calculator" class="text-primary hover:underline">Percentage Calculator</a> to track academic performance.',
+        },
+        {
+          q: "What is the difference between log and ln?",
+          a: "Log (common logarithm) calculates exponents using a base of 10, whereas Ln (natural logarithm) calculates exponents using the mathematical constant e (approximately 2.718). Common logarithms are standard in everyday scaling like pH or decibels, while natural logarithms are vital in calculus, physics, and natural growth modeling across various scientific and engineering disciplines.",
+        },
+        {
+          q: "How do parentheses affect the order of operations?",
+          a: "Parentheses tell the calculator to evaluate the enclosed mathematical expression first, overriding standard algebraic precedence rules (PEMDAS). Using parentheses is critical when grouping multiple terms in fraction numerators or exponent bases to ensure the calculator evaluates the mathematical expression exactly as you intended, preventing common computation errors in your academic and professional work.",
+        },
+        {
+          q: "Does this calculator preserve calculation history?",
+          a: "Yes, our scientific calculator features an interactive session history panel that logs your equations and results. You can easily reuse previous calculations or copy results directly to your clipboard. This prevents manual copy errors during multi-step science or math problems, letting you focus entirely on solving the complex equations without distraction.",
+        },
       ]}
       blog={<CalculatorBlog content={blogContent.scientific} />}
     >
       <div className="flex flex-col xl:flex-row gap-6 w-full items-stretch justify-start">
-        
         {/* LEFT COLUMN: CALCULATOR CARD */}
         <div className="w-full xl:w-[760px] shrink-0">
-          <div className={`calc-input-column flex flex-col min-w-0 rounded-2xl p-5 select-none h-full justify-between transition-colors duration-200 ${
-            isDark 
-              ? "bg-[#111827] border border-white/[0.08] shadow-sm" 
-              : "bg-[#f0f0f0] border border-[#d4d4d4] shadow-[6px_6px_18px_rgba(0,0,0,0.14),-4px_-4px_12px_rgba(255,255,255,0.9)]"
-          }`}>
+          <div
+            className={`calc-input-column flex flex-col min-w-0 rounded-2xl p-5 select-none h-full justify-between transition-colors duration-200 ${
+              isDark
+                ? "bg-[#111827] border border-white/[0.08] shadow-sm"
+                : "bg-[#f0f0f0] border border-[#d4d4d4] shadow-[6px_6px_18px_rgba(0,0,0,0.14),-4px_-4px_12px_rgba(255,255,255,0.9)]"
+            }`}
+          >
             <div>
               {/* LCD Calculator Screen */}
               <div className="relative bg-slate-900 border border-border/40 rounded-xl py-3.5 px-4 text-right font-mono h-[105px] flex flex-col justify-between mb-3.5 shadow-inner overflow-hidden">
@@ -595,20 +665,24 @@ ln(e) = 1
                 >
                   {equation}
                 </div>
-                
+
                 {/* Result display */}
-                <div className={`text-2xl sm:text-3xl font-extrabold tracking-tight select-text text-right mt-2 leading-none transition-colors overflow-x-auto scrollbar-none whitespace-nowrap ${
-                  errorMsg ? "text-destructive" : "text-white"
-                }`}>
+                <div
+                  className={`text-2xl sm:text-3xl font-extrabold tracking-tight select-text text-right mt-2 leading-none transition-colors overflow-x-auto scrollbar-none whitespace-nowrap ${
+                    errorMsg ? "text-destructive" : "text-white"
+                  }`}
+                >
                   {errorMsg || display || "0"}
                 </div>
               </div>
 
               {/* Mode Selectors Row */}
               <div className="flex items-center justify-between gap-2 mb-3.5">
-                <div className={`flex items-center gap-1 flex-1 max-w-[150px] rounded-lg p-0.5 transition-colors ${
-                  isDark ? "bg-white/[0.05]" : "bg-[#e2e8f0]"
-                }`}>
+                <div
+                  className={`flex items-center gap-1 flex-1 max-w-[150px] rounded-lg p-0.5 transition-colors ${
+                    isDark ? "bg-white/[0.05]" : "bg-[#e2e8f0]"
+                  }`}
+                >
                   <button
                     onClick={() => setAngleMode("deg")}
                     type="button"
@@ -640,7 +714,6 @@ ln(e) = 1
 
               {/* Keypad Grid split in two side-by-side columns on tablet/desktop, stacked on mobile */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
                 {/* Left Column: Scientific Functions & Constants */}
                 <div className="space-y-4">
                   {/* SECTION 1: Scientific Functions */}
@@ -649,24 +722,124 @@ ln(e) = 1
                       Scientific Functions
                     </span>
                     <div className="grid grid-cols-3 gap-[5px] font-mono">
-                      <button onClick={() => handleFunc("sin")} type="button" className={functionKeyClass}>sin</button>
-                      <button onClick={() => handleFunc("cos")} type="button" className={functionKeyClass}>cos</button>
-                      <button onClick={() => handleFunc("tan")} type="button" className={functionKeyClass}>tan</button>
-                      <button onClick={() => handleFunc("asin")} type="button" className={functionKeyClass}>asin</button>
-                      <button onClick={() => handleFunc("acos")} type="button" className={functionKeyClass}>acos</button>
-                      <button onClick={() => handleFunc("atan")} type="button" className={functionKeyClass}>atan</button>
-                      <button onClick={() => handleFunc("ln")} type="button" className={functionKeyClass}>ln</button>
-                      <button onClick={() => handleFunc("log")} type="button" className={functionKeyClass}>log</button>
-                      <button onClick={() => handleFunc("exp")} type="button" className={functionKeyClass}>eˣ</button>
-                      <button onClick={() => handleDigit("^2")} type="button" className={functionKeyClass}>x²</button>
-                      <button onClick={() => handleDigit("^3")} type="button" className={functionKeyClass}>x³</button>
-                      <button onClick={() => handleDigit("^")} type="button" className={functionKeyClass}>xʸ</button>
-                      <button onClick={() => handleFunc("sqrt")} type="button" className={functionKeyClass}>√x</button>
-                      <button onClick={() => handleFunc("cbrt")} type="button" className={functionKeyClass}>∛x</button>
-                      <button onClick={handleReciprocal} type="button" className={functionKeyClass}>1/x</button>
-                      <button onClick={() => handleFunc("yroot")} type="button" className={functionKeyClass}>y√x</button>
-                      <button onClick={() => handleDigit("!")} type="button" className={functionKeyClass}>n!</button>
-                      <button onClick={handleAbs} type="button" className={functionKeyClass}>|x|</button>
+                      <button
+                        onClick={() => handleFunc("sin")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        sin
+                      </button>
+                      <button
+                        onClick={() => handleFunc("cos")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        cos
+                      </button>
+                      <button
+                        onClick={() => handleFunc("tan")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        tan
+                      </button>
+                      <button
+                        onClick={() => handleFunc("asin")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        asin
+                      </button>
+                      <button
+                        onClick={() => handleFunc("acos")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        acos
+                      </button>
+                      <button
+                        onClick={() => handleFunc("atan")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        atan
+                      </button>
+                      <button
+                        onClick={() => handleFunc("ln")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        ln
+                      </button>
+                      <button
+                        onClick={() => handleFunc("log")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        log
+                      </button>
+                      <button
+                        onClick={() => handleFunc("exp")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        eˣ
+                      </button>
+                      <button
+                        onClick={() => handleDigit("^2")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        x²
+                      </button>
+                      <button
+                        onClick={() => handleDigit("^3")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        x³
+                      </button>
+                      <button
+                        onClick={() => handleDigit("^")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        xʸ
+                      </button>
+                      <button
+                        onClick={() => handleFunc("sqrt")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        √x
+                      </button>
+                      <button
+                        onClick={() => handleFunc("cbrt")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        ∛x
+                      </button>
+                      <button onClick={handleReciprocal} type="button" className={functionKeyClass}>
+                        1/x
+                      </button>
+                      <button
+                        onClick={() => handleFunc("yroot")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        y√x
+                      </button>
+                      <button
+                        onClick={() => handleDigit("!")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        n!
+                      </button>
+                      <button onClick={handleAbs} type="button" className={functionKeyClass}>
+                        |x|
+                      </button>
                     </div>
                   </div>
 
@@ -676,10 +849,26 @@ ln(e) = 1
                       Constants
                     </span>
                     <div className="grid grid-cols-4 gap-[5px] font-mono">
-                      <button onClick={() => handleConstant("π")} type="button" className={functionKeyClass}>π</button>
-                      <button onClick={() => handleConstant("e")} type="button" className={functionKeyClass}>e</button>
-                      <button onClick={handleRand} type="button" className={functionKeyClass}>Rand</button>
-                      <button onClick={handleMod} type="button" className={functionKeyClass}>mod</button>
+                      <button
+                        onClick={() => handleConstant("π")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        π
+                      </button>
+                      <button
+                        onClick={() => handleConstant("e")}
+                        type="button"
+                        className={functionKeyClass}
+                      >
+                        e
+                      </button>
+                      <button onClick={handleRand} type="button" className={functionKeyClass}>
+                        Rand
+                      </button>
+                      <button onClick={handleMod} type="button" className={functionKeyClass}>
+                        mod
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -705,44 +894,143 @@ ln(e) = 1
                     >
                       <Delete className="h-4 w-4" />
                     </button>
-                    <button onClick={() => handleParenthesis("(")} type="button" className={numberKeyClass}>(</button>
-                    <button onClick={() => handleParenthesis(")")} type="button" className={numberKeyClass}>)</button>
+                    <button
+                      onClick={() => handleParenthesis("(")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      (
+                    </button>
+                    <button
+                      onClick={() => handleParenthesis(")")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      )
+                    </button>
 
                     {/* Row 2 */}
-                    <button onClick={() => handleDigit("7")} type="button" className={numberKeyClass}>7</button>
-                    <button onClick={() => handleDigit("8")} type="button" className={numberKeyClass}>8</button>
-                    <button onClick={() => handleDigit("9")} type="button" className={numberKeyClass}>9</button>
-                    <button onClick={() => handleOperator("÷")} type="button" className={operatorKeyClass}>÷</button>
+                    <button
+                      onClick={() => handleDigit("7")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      7
+                    </button>
+                    <button
+                      onClick={() => handleDigit("8")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      8
+                    </button>
+                    <button
+                      onClick={() => handleDigit("9")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      9
+                    </button>
+                    <button
+                      onClick={() => handleOperator("÷")}
+                      type="button"
+                      className={operatorKeyClass}
+                    >
+                      ÷
+                    </button>
 
                     {/* Row 3 */}
-                    <button onClick={() => handleDigit("4")} type="button" className={numberKeyClass}>4</button>
-                    <button onClick={() => handleDigit("5")} type="button" className={numberKeyClass}>5</button>
-                    <button onClick={() => handleDigit("6")} type="button" className={numberKeyClass}>6</button>
-                    <button onClick={() => handleOperator("×")} type="button" className={operatorKeyClass}>×</button>
+                    <button
+                      onClick={() => handleDigit("4")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      4
+                    </button>
+                    <button
+                      onClick={() => handleDigit("5")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      5
+                    </button>
+                    <button
+                      onClick={() => handleDigit("6")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      6
+                    </button>
+                    <button
+                      onClick={() => handleOperator("×")}
+                      type="button"
+                      className={operatorKeyClass}
+                    >
+                      ×
+                    </button>
 
                     {/* Row 4 */}
-                    <button onClick={() => handleDigit("1")} type="button" className={numberKeyClass}>1</button>
-                    <button onClick={() => handleDigit("2")} type="button" className={numberKeyClass}>2</button>
-                    <button onClick={() => handleDigit("3")} type="button" className={numberKeyClass}>3</button>
-                    <button onClick={() => handleOperator("-")} type="button" className={operatorKeyClass}>-</button>
+                    <button
+                      onClick={() => handleDigit("1")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      1
+                    </button>
+                    <button
+                      onClick={() => handleDigit("2")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      2
+                    </button>
+                    <button
+                      onClick={() => handleDigit("3")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      3
+                    </button>
+                    <button
+                      onClick={() => handleOperator("-")}
+                      type="button"
+                      className={operatorKeyClass}
+                    >
+                      -
+                    </button>
 
                     {/* Row 5 */}
-                    <button onClick={() => handleDigit("0")} type="button" className={numberKeyClass}>0</button>
-                    <button onClick={() => handleDigit(".")} type="button" className={numberKeyClass}>.</button>
-                    <button onClick={handlePercent} type="button" className={numberKeyClass}>%</button>
-                    <button onClick={() => handleOperator("+")} type="button" className={operatorKeyClass}>+</button>
+                    <button
+                      onClick={() => handleDigit("0")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      0
+                    </button>
+                    <button
+                      onClick={() => handleDigit(".")}
+                      type="button"
+                      className={numberKeyClass}
+                    >
+                      .
+                    </button>
+                    <button onClick={handlePercent} type="button" className={numberKeyClass}>
+                      %
+                    </button>
+                    <button
+                      onClick={() => handleOperator("+")}
+                      type="button"
+                      className={operatorKeyClass}
+                    >
+                      +
+                    </button>
 
                     {/* Equal Button */}
-                    <button
-                      onClick={handleEqual}
-                      type="button"
-                      className={equalKeyClass}
-                    >
+                    <button onClick={handleEqual} type="button" className={equalKeyClass}>
                       =
                     </button>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -750,18 +1038,20 @@ ln(e) = 1
 
         {/* RIGHT COLUMN: SESSION HISTORY SIDEBAR */}
         <div className="flex-1 min-w-0 sm:min-w-[350px]">
-          <div className={`w-full h-full flex flex-col min-w-0 border rounded-[24px] p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)] dark:shadow-sm select-text justify-between transition-colors duration-200 ${
-            isDark
-              ? "bg-card border-border text-card-foreground"
-              : "bg-white border-[#e5e7eb] text-[#0f172a]"
-          }`}>
+          <div
+            className={`w-full h-full flex flex-col min-w-0 border rounded-[24px] p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)] dark:shadow-sm select-text justify-between transition-colors duration-200 ${
+              isDark
+                ? "bg-card border-border text-card-foreground"
+                : "bg-white border-[#e5e7eb] text-[#0f172a]"
+            }`}
+          >
             <div className="flex flex-col h-full justify-between flex-1 min-h-0">
               <div className="flex flex-col flex-1 min-h-0">
                 <header className="flex items-center justify-between pb-3 border-b border-border mb-3 select-none shrink-0">
                   <h3 className="font-bold text-xs tracking-tight text-card-foreground">
                     Recent Calculations
                   </h3>
-                  
+
                   {history.length > 0 && (
                     <button
                       onClick={handleClearHistory}
@@ -815,7 +1105,7 @@ ln(e) = 1
                                 {item.angleMode}
                               </span>
                             </span>
-                            
+
                             <div className="flex items-center gap-2">
                               <button
                                 onClick={(e) => {
@@ -864,7 +1154,6 @@ ln(e) = 1
             </div>
           </div>
         </div>
-
       </div>
     </CalculatorPageLayout>
   );

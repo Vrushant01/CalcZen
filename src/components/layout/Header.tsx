@@ -91,7 +91,7 @@ export function Header() {
       <div
         className={cn(
           "fixed inset-0 top-[3.5rem] sm:top-[4rem] z-30 md:hidden bg-background/40 backdrop-blur-sm transition-opacity duration-300",
-          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
         )}
         onClick={() => setOpen(false)}
         aria-hidden="true"
@@ -102,7 +102,7 @@ export function Header() {
         id="mobile-nav"
         className={cn(
           "absolute left-0 right-0 top-full z-40 md:hidden bg-background/98 backdrop-blur-2xl border-b border-border/40 shadow-xl transition-all duration-200 ease-out origin-top",
-          open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3 pointer-events-none"
+          open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3 pointer-events-none",
         )}
         aria-hidden={!open}
       >
@@ -115,9 +115,9 @@ export function Header() {
             <Search className="h-4 w-4 text-accent shrink-0" />
             Search Calculators
           </Link>
-          
+
           <div className="w-full h-px bg-border/40 mb-1.5 shrink-0" />
-          
+
           {nav.map((n) => (
             <Link
               key={n.to}

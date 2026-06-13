@@ -1,4 +1,3 @@
-
 export interface CalculatorEducationalContent {
   whatItDoes: string;
   howItWorks: string;

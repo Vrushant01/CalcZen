@@ -118,12 +118,12 @@ export function CalculateButton({
     for (let i = 0; i < count; i++) {
       // Perfect radial distribution for even spread
       const angle = (i / count) * Math.PI * 2 + (Math.random() * 0.1 - 0.05);
-      
+
       // Strict travel distance: 75px to 105px (stays strictly within 120px radius)
       const travelDistance = 75 + Math.random() * 30;
       const targetX = Math.cos(angle) * travelDistance;
       const targetY = Math.sin(angle) * travelDistance;
-      
+
       // Short elegant arc Peak
       const arcY = targetY * 0.6 - 8;
 
@@ -176,7 +176,9 @@ export function CalculateButton({
         "📈",
         <Coins className="w-full h-full text-amber-500 fill-amber-400/90" key="c" />,
         <TrendingUp className="w-full h-full text-emerald-500 stroke-[2]" key="t" />,
-        <span className="font-bold leading-none select-none text-sky-400" key="d">$</span>,
+        <span className="font-bold leading-none select-none text-sky-400" key="d">
+          $
+        </span>,
       ];
       return items[index % items.length];
     } else if (cat === "math") {
@@ -226,11 +228,7 @@ export function CalculateButton({
       {/* Button press briefly compresses (scale 0.98) */}
       <motion.div
         className="w-full h-full"
-        animate={
-          isBursting && !prefersReducedMotion
-            ? { scale: [1, 0.98, 1] }
-            : { scale: 1 }
-        }
+        animate={isBursting && !prefersReducedMotion ? { scale: [1, 0.98, 1] } : { scale: 1 }}
         transition={{ duration: 0.25, ease: "easeInOut" }}
       >
         <Button
@@ -275,7 +273,10 @@ export function CalculateButton({
                 }}
               >
                 {isText ? (
-                  <span className="leading-none font-sans select-none block" style={{ fontSize: `${p.size * 0.9}px` }}>
+                  <span
+                    className="leading-none font-sans select-none block"
+                    style={{ fontSize: `${p.size * 0.9}px` }}
+                  >
                     {p.icon}
                   </span>
                 ) : (

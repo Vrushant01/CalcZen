@@ -7,10 +7,22 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About CalcZen — Free Online Calculators for Finance, Health & Math" },
-      { name: "description", content: "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience." },
+      {
+        name: "description",
+        content:
+          "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience.",
+      },
       { property: "og:title", content: "About CalcZen — Free Online Calculators" },
-      { property: "og:description", content: "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience." },
-      { name: "twitter:description", content: "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience." },
+      {
+        property: "og:description",
+        content:
+          "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience.",
+      },
       { property: "og:url", content: "https://calczen.in/about" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.in/about" }],
@@ -20,9 +32,10 @@ export const Route = createFileRoute("/about")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "AboutPage",
-          "name": "About CalcZen — Free Online Calculators for Finance, Health & Math",
-          "description": "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience.",
-          "url": "https://calczen.in/about"
+          name: "About CalcZen — Free Online Calculators for Finance, Health & Math",
+          description:
+            "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience.",
+          url: "https://calczen.in/about",
         }),
       },
       {
@@ -30,22 +43,22 @@ export const Route = createFileRoute("/about")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
-          "itemListElement": [
+          itemListElement: [
             {
               "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://calczen.in"
+              position: 1,
+              name: "Home",
+              item: "https://calczen.in",
             },
             {
               "@type": "ListItem",
-              "position": 2,
-              "name": "About Us",
-              "item": "https://calczen.in/about"
-            }
-          ]
+              position: 2,
+              name: "About Us",
+              item: "https://calczen.in/about",
+            },
+          ],
         }),
-      }
+      },
     ],
   }),
   component: AboutPage,
@@ -60,8 +73,8 @@ function AboutPage() {
       >
         <LegalSection title="Our mission">
           <p>
-            Calculator sites are often cluttered or opaque. CalcZen focuses on what matters: a
-            clean interface, standard formulas, and results you can understand—not just copy.
+            Calculator sites are often cluttered or opaque. CalcZen focuses on what matters: a clean
+            interface, standard formulas, and results you can understand—not just copy.
           </p>
           <p>
             Whether you estimate a mortgage payment, check calorie needs, or solve a quick
@@ -99,8 +112,8 @@ function AboutPage() {
           </p>
           <p>
             Results are estimates. Taxes, fees, health conditions, and personal circumstances can
-            change real outcomes. Use CalcZen as a starting point—not a substitute for
-            professional advice when stakes are high.
+            change real outcomes. Use CalcZen as a starting point—not a substitute for professional
+            advice when stakes are high.
           </p>
         </LegalSection>
 
@@ -125,8 +138,8 @@ function AboutPage() {
 
         <LegalSection title="How we stay free">
           <p>
-            CalcZen is supported by advertising and privacy-conscious analytics. We do not sell
-            your personal data. Details on cookies, Google Analytics, and Google AdSense are in our{" "}
+            CalcZen is supported by advertising and privacy-conscious analytics. We do not sell your
+            personal data. Details on cookies, Google Analytics, and Google AdSense are in our{" "}
             <Link to="/privacy">Privacy Policy</Link>.
           </p>
         </LegalSection>

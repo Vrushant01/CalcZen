@@ -10,7 +10,7 @@ export async function generateCalculatorPDF(pdfData = {}) {
   // 1. Establish basic variables
   const siteName = pdfData.siteName || "CalcZen";
   const siteUrl = pdfData.siteUrl || "www.calczen.in";
-  
+
   // Try to find the calculator name from the DOM first, fallback to pdfData, then default
   const docTitle = document.querySelector("h1")?.innerText.trim();
   const calculatorName = pdfData.calculatorName || docTitle || "Calculator";
@@ -73,28 +73,30 @@ export async function generateCalculatorPDF(pdfData = {}) {
   });
 
   // Scrape button toggles
-  container.querySelectorAll(".inline-flex.rounded-lg.bg-muted, .flex.rounded-lg.bg-muted").forEach((group) => {
-    const activeButton = group.querySelector(".bg-background, .bg-card, [class*='active']");
-    if (activeButton) {
-      let labelText = "";
-      const parent = group.parentElement;
-      if (parent) {
-        const label = parent.querySelector("label");
-        if (label) labelText = label.innerText.trim();
+  container
+    .querySelectorAll(".inline-flex.rounded-lg.bg-muted, .flex.rounded-lg.bg-muted")
+    .forEach((group) => {
+      const activeButton = group.querySelector(".bg-background, .bg-card, [class*='active']");
+      if (activeButton) {
+        let labelText = "";
+        const parent = group.parentElement;
+        if (parent) {
+          const label = parent.querySelector("label");
+          if (label) labelText = label.innerText.trim();
+        }
+        if (!labelText) labelText = "Option";
+        scrapedInputs.push({
+          label: labelText.replace(/:$/, "").trim(),
+          value: activeButton.innerText.trim(),
+        });
       }
-      if (!labelText) labelText = "Option";
-      scrapedInputs.push({
-        label: labelText.replace(/:$/, "").trim(),
-        value: activeButton.innerText.trim()
-      });
-    }
-  });
+    });
 
   // Merge scraped inputs with pdfData.inputs
   const finalInputs = [...(pdfData.inputs || [])];
   scrapedInputs.forEach((sInp) => {
     const exists = finalInputs.some(
-      (fInp) => fInp.label.toLowerCase() === sInp.label.toLowerCase()
+      (fInp) => fInp.label.toLowerCase() === sInp.label.toLowerCase(),
     );
     if (!exists) {
       finalInputs.push(sInp);
@@ -103,21 +105,21 @@ export async function generateCalculatorPDF(pdfData = {}) {
 
   // 3. SCRAPE RESULTS FROM DOM
   const scrapedResults = [];
-  
+
   // Hero Metrics
   container.querySelectorAll(".dashboard-hero-metric").forEach((hero) => {
     const labelEl = hero.querySelector(".dashboard-hero-label");
     const valueEl = hero.querySelector(".dashboard-hero-value");
     const subEl = hero.querySelector(".dashboard-hero-sub");
     const badgeEl = hero.querySelector(".dashboard-hero-badge");
-    
+
     if (labelEl && valueEl) {
       const badgeText = badgeEl ? ` (${badgeEl.innerText.trim()})` : "";
       scrapedResults.push({
         label: labelEl.innerText.trim(),
         value: valueEl.innerText.trim() + badgeText,
         sub: subEl ? subEl.innerText.trim() : "",
-        highlight: true
+        highlight: true,
       });
     }
   });
@@ -126,16 +128,18 @@ export async function generateCalculatorPDF(pdfData = {}) {
   container.querySelectorAll(".dashboard-stat-card").forEach((card) => {
     const labelEl = card.querySelector(".dashboard-stat-label");
     const valueEl = card.querySelector(".dashboard-stat-value");
-    const subEl = card.querySelector(".dashboard-stat-sub, .text-muted-foreground, [class*='text-xs']");
+    const subEl = card.querySelector(
+      ".dashboard-stat-sub, .text-muted-foreground, [class*='text-xs']",
+    );
     const badgeEl = card.querySelector(".dashboard-stat-badge");
-    
+
     if (labelEl && valueEl) {
       const badgeText = badgeEl ? ` (${badgeEl.innerText.trim()})` : "";
       scrapedResults.push({
         label: labelEl.innerText.trim(),
         value: valueEl.innerText.trim() + badgeText,
         sub: subEl ? subEl.innerText.trim() : "",
-        highlight: false
+        highlight: false,
       });
     }
   });
@@ -144,12 +148,14 @@ export async function generateCalculatorPDF(pdfData = {}) {
   const finalResults = [...(pdfData.results || [])];
   scrapedResults.forEach((sRes) => {
     const exists = finalResults.some(
-      (fRes) => fRes.label.toLowerCase() === sRes.label.toLowerCase()
+      (fRes) => fRes.label.toLowerCase() === sRes.label.toLowerCase(),
     );
     if (!exists) {
       finalResults.push(sRes);
     } else {
-      const match = finalResults.find((fRes) => fRes.label.toLowerCase() === sRes.label.toLowerCase());
+      const match = finalResults.find(
+        (fRes) => fRes.label.toLowerCase() === sRes.label.toLowerCase(),
+      );
       if (match) {
         if (!match.sub && sRes.sub) match.sub = sRes.sub;
         if (sRes.highlight) match.highlight = true;
@@ -164,7 +170,7 @@ export async function generateCalculatorPDF(pdfData = {}) {
     if (textEl) {
       scrapedInsights.push({
         text: textEl.innerText.trim(),
-        tone: card.getAttribute("data-tone") || "info"
+        tone: card.getAttribute("data-tone") || "info",
       });
     }
   });
@@ -177,7 +183,7 @@ export async function generateCalculatorPDF(pdfData = {}) {
     if (titleEl && descEl) {
       scrapedRecs.push({
         title: titleEl.innerText.trim(),
-        description: descEl.innerText.trim()
+        description: descEl.innerText.trim(),
       });
     }
   });
@@ -241,14 +247,16 @@ export async function generateCalculatorPDF(pdfData = {}) {
 
     if (headers.length > 0 && rows.length > 0) {
       // Check for duplicate tables by checking if headers are identical
-      const isDuplicate = finalTables.some((t) => 
-        t.headers.length === headers.length &&
-        t.headers.every((h, idx) => h.toLowerCase() === headers[idx].toLowerCase())
+      const isDuplicate = finalTables.some(
+        (t) =>
+          t.headers.length === headers.length &&
+          t.headers.every((h, idx) => h.toLowerCase() === headers[idx].toLowerCase()),
       );
 
       if (!isDuplicate) {
-        const titleEl = tableEl.closest(".dashboard-section")?.querySelector(".dashboard-section-title") 
-          || tableEl.closest("section")?.querySelector("h2, h3");
+        const titleEl =
+          tableEl.closest(".dashboard-section")?.querySelector(".dashboard-section-title") ||
+          tableEl.closest("section")?.querySelector("h2, h3");
         const title = titleEl ? titleEl.innerText.trim() : "DETAILED BREAKDOWN";
         finalTables.push({ title, headers, rows });
       }
@@ -544,7 +552,11 @@ export async function generateCalculatorPDF(pdfData = {}) {
       addNewPageIfNeeded(finalHeight + 20);
 
       setFont("bold", 10, teal);
-      doc.text(capturedCharts.length > 1 ? `VISUALIZATION ${cIdx + 1}` : "VISUALIZATION", margin, y);
+      doc.text(
+        capturedCharts.length > 1 ? `VISUALIZATION ${cIdx + 1}` : "VISUALIZATION",
+        margin,
+        y,
+      );
       y += 5;
       drawLine(y);
       y += 5;
@@ -602,11 +614,12 @@ export async function generateCalculatorPDF(pdfData = {}) {
   doc.text("DISCLAIMER", margin + 4, y + 6);
 
   setFont("normal", 6.5, midGray);
-  const disc = pdfData.disclaimer ||
+  const disc =
+    pdfData.disclaimer ||
     `This calculation is provided for informational and educational purposes only. It is not financial, legal, or tax advice. ` +
-    `Results are estimates based on the inputs provided and may not reflect actual rates, fees, or real-world outcomes. ` +
-    `Always consult a qualified financial advisor, accountant, or legal professional before making financial decisions. ` +
-    `${siteName} (${siteUrl}) is not responsible for decisions made based on these calculations.`;
+      `Results are estimates based on the inputs provided and may not reflect actual rates, fees, or real-world outcomes. ` +
+      `Always consult a qualified financial advisor, accountant, or legal professional before making financial decisions. ` +
+      `${siteName} (${siteUrl}) is not responsible for decisions made based on these calculations.`;
   const discLines = doc.splitTextToSize(disc, contentWidth - 8);
   doc.text(discLines, margin + 4, y + 11);
   y += 26;

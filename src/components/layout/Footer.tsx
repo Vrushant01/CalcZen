@@ -50,8 +50,14 @@ export function Footer() {
       <div className="page-container">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-y-6 sm:gap-x-10 lg:gap-x-14 py-6 sm:py-8">
           <div className="sm:col-span-2 lg:col-span-4 min-w-0">
-            <Link to="/" className="inline-flex items-center gap-2.5 group touch-target !min-w-0 !justify-start">
-              <BrandLogo imgClassName="h-8 w-8" labelClassName="text-base font-semibold tracking-tight" />
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2.5 group touch-target !min-w-0 !justify-start"
+            >
+              <BrandLogo
+                imgClassName="h-8 w-8"
+                labelClassName="text-base font-semibold tracking-tight"
+              />
             </Link>
             <p className="mt-2.5 text-sm text-muted-foreground/90 leading-relaxed max-w-sm">
               Fast, reliable calculators for finance, health, math, and everyday use.
@@ -105,7 +111,11 @@ export function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/calculators" className={linkClass} onClick={() => setOpenSection(null)}>
+                    <Link
+                      to="/calculators"
+                      className={linkClass}
+                      onClick={() => setOpenSection(null)}
+                    >
                       All calculators
                     </Link>
                   </li>
@@ -131,7 +141,11 @@ export function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/disclaimer" className={linkClass} onClick={() => setOpenSection(null)}>
+                    <Link
+                      to="/disclaimer"
+                      className={linkClass}
+                      onClick={() => setOpenSection(null)}
+                    >
                       Disclaimer
                     </Link>
                   </li>
@@ -144,9 +158,7 @@ export function Footer() {
 
       <div className="border-t border-border/50">
         <div className="page-container py-4 sm:py-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-muted-foreground/75 tabular-nums">
-            © {year} CalcZen
-          </p>
+          <p className="text-xs text-muted-foreground/75 tabular-nums">© {year} CalcZen</p>
           <p className="text-xs text-muted-foreground/75 leading-relaxed sm:text-right max-w-md">
             For informational use only—not professional advice.
           </p>

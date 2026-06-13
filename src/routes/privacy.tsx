@@ -7,10 +7,22 @@ export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
       { title: "Privacy Policy — How CalcZen Handles Your Data" },
-      { name: "description", content: "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights." },
+      {
+        name: "description",
+        content:
+          "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.",
+      },
       { property: "og:title", content: "CalcZen Privacy Policy" },
-      { property: "og:description", content: "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights." },
-      { name: "twitter:description", content: "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights." },
+      {
+        property: "og:description",
+        content:
+          "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.",
+      },
       { property: "og:url", content: "https://calczen.in/privacy" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.in/privacy" }],
@@ -20,9 +32,10 @@ export const Route = createFileRoute("/privacy")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "Privacy Policy — How CalcZen Handles Your Data",
-          "description": "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.",
-          "url": "https://calczen.in/privacy"
+          name: "Privacy Policy — How CalcZen Handles Your Data",
+          description:
+            "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.",
+          url: "https://calczen.in/privacy",
         }),
       },
       {
@@ -30,22 +43,22 @@ export const Route = createFileRoute("/privacy")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
-          "itemListElement": [
+          itemListElement: [
             {
               "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://calczen.in"
+              position: 1,
+              name: "Home",
+              item: "https://calczen.in",
             },
             {
               "@type": "ListItem",
-              "position": 2,
-              "name": "Privacy Policy",
-              "item": "https://calczen.in/privacy"
-            }
-          ]
+              position: 2,
+              name: "Privacy Policy",
+              item: "https://calczen.in/privacy",
+            },
+          ],
         }),
-      }
+      },
     ],
   }),
   component: PrivacyPage,
@@ -61,14 +74,13 @@ function PrivacyPage() {
       >
         <LegalSection title="Overview">
           <p>
-            You can use CalcZen without an account. Calculator inputs are processed in your
-            browser; we do not require you to submit personal financial or health data to use our
-            tools.
+            You can use CalcZen without an account. Calculator inputs are processed in your browser;
+            we do not require you to submit personal financial or health data to use our tools.
           </p>
           <p>
             Like most websites, we use limited technical data and cookies to operate the site,
-            understand usage, and (where enabled) display advertising that helps keep our calculators
-            free.
+            understand usage, and (where enabled) display advertising that helps keep our
+            calculators free.
           </p>
         </LegalSection>
 
@@ -137,8 +149,8 @@ function PrivacyPage() {
             statistics—such as which finance, health, or math calculator pages are visited.
           </p>
           <p>
-            Data is used in summary form to improve content and performance. Where supported, we
-            use settings intended to reduce individual identification (e.g. IP anonymization).
+            Data is used in summary form to improve content and performance. Where supported, we use
+            settings intended to reduce individual identification (e.g. IP anonymization).
           </p>
         </LegalSection>
 
@@ -157,7 +169,9 @@ function PrivacyPage() {
             elsewhere. Learn more via Google’s privacy and ads settings; you may opt out of
             personalized ads through your Google Account or industry tools where available.
           </p>
-          <p>Ad vendors are responsible for their own practices—review their policies when relevant.</p>
+          <p>
+            Ad vendors are responsible for their own practices—review their policies when relevant.
+          </p>
         </LegalSection>
 
         <LegalSection title="Third-party services">
@@ -197,9 +211,9 @@ function PrivacyPage() {
 
         <LegalSection title="Children and international visitors">
           <p>
-            CalcZen is for a general audience. We do not knowingly collect personal information
-            from children under 13 (or the applicable age in your region). Contact us if you believe
-            a child has submitted data.
+            CalcZen is for a general audience. We do not knowingly collect personal information from
+            children under 13 (or the applicable age in your region). Contact us if you believe a
+            child has submitted data.
           </p>
           <p>
             If you access the site from abroad, data may be processed where our providers operate,

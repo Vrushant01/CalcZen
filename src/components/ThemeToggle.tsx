@@ -38,14 +38,18 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         aria-hidden
         className={cn(
           "pointer-events-none absolute left-2.5 z-0 h-3 w-3 transition-all duration-500 ease-in-out",
-          isDark ? "scale-50 opacity-20 text-muted-foreground" : "scale-90 opacity-40 text-amber-500/80",
+          isDark
+            ? "scale-50 opacity-20 text-muted-foreground"
+            : "scale-90 opacity-40 text-amber-500/80",
         )}
       />
       <Moon
         aria-hidden
         className={cn(
           "pointer-events-none absolute right-2.5 z-0 h-3 w-3 transition-all duration-500 ease-in-out",
-          isDark ? "scale-90 opacity-40 text-accent/80" : "scale-50 opacity-20 text-muted-foreground",
+          isDark
+            ? "scale-90 opacity-40 text-accent/80"
+            : "scale-50 opacity-20 text-muted-foreground",
         )}
       />
 

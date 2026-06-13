@@ -7,11 +7,11 @@ import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
 import { useTheme } from "@/hooks/use-theme";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
-import { 
-  getStandardCalculatorHistory, 
-  addStandardCalculatorHistory, 
-  clearStandardCalculatorHistory, 
-  type HistoryItem 
+import {
+  getStandardCalculatorHistory,
+  addStandardCalculatorHistory,
+  clearStandardCalculatorHistory,
+  type HistoryItem,
 } from "@/utils/standardCalculatorHistory";
 import { Calendar, Trash2, RotateCcw, HelpCircle, Delete, Clock, Copy, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,7 +19,7 @@ import { motion, AnimatePresence } from "framer-motion";
 // Safe mathematical parser supporting advanced percentage calculations
 function parseAndEvaluate(expr: string): string {
   let cleaned = expr.trim();
-  
+
   // Replace mathematical display symbols with javascript equivalents
   cleaned = cleaned.replace(/×/g, "*").replace(/÷/g, "/");
 
@@ -47,11 +47,11 @@ function parseAndEvaluate(expr: string): string {
   // Evaluate safely inside a function sandbox
   const fn = new Function(`"use strict"; return (${cleaned})`);
   const result = fn();
-  
+
   if (typeof result !== "number" || isNaN(result) || !isFinite(result)) {
     throw new Error("Calculation error");
   }
-  
+
   // Correct standard floating-point precision issues (e.g. 0.1 + 0.2 = 0.3)
   return String(Math.round(result * 1e12) / 1e12);
 }
@@ -60,10 +60,10 @@ export function StandardCalculator() {
   const calc = getCalculator("standard-calculator")!;
   const { isDark } = useTheme();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  
+
   // In-memory sync state
   const [history, setHistory] = useState<HistoryItem[]>(getStandardCalculatorHistory());
-  
+
   // Calculator display state machine
   const [display, setDisplay] = useState("0");
   const [equation, setEquation] = useState("");
@@ -77,9 +77,9 @@ export function StandardCalculator() {
     setTimeout(() => setCopiedId(null), 1500);
   };
 
-  const numberKeyClass = "calc-btn calc-btn-number h-11 text-sm sm:text-base"
-  const operatorKeyClass = "calc-btn calc-btn-operator h-11 text-base"
-  const equalKeyClass = "calc-btn calc-btn-equal col-span-4 h-11 text-sm sm:text-base"
+  const numberKeyClass = "calc-btn calc-btn-number h-11 text-sm sm:text-base";
+  const operatorKeyClass = "calc-btn calc-btn-operator h-11 text-base";
+  const equalKeyClass = "calc-btn calc-btn-equal col-span-4 h-11 text-sm sm:text-base";
 
   // Sync state with singleton store on initialization
   useEffect(() => {
@@ -89,10 +89,13 @@ export function StandardCalculator() {
   // Keyboard support event listener
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (document.activeElement?.tagName === "INPUT" || document.activeElement?.tagName === "TEXTAREA") {
+      if (
+        document.activeElement?.tagName === "INPUT" ||
+        document.activeElement?.tagName === "TEXTAREA"
+      ) {
         return;
       }
-      
+
       const key = e.key;
       if (/[0-9]/.test(key)) {
         handleDigit(key);
@@ -129,7 +132,7 @@ export function StandardCalculator() {
   // Click digit handler
   function handleDigit(digit: string) {
     setErrorMsg("");
-    
+
     if (isResetOnNext) {
       setDisplay(digit);
       setEquation(digit);
@@ -259,15 +262,15 @@ export function StandardCalculator() {
 
     try {
       const result = parseAndEvaluate(equation);
-      
+
       // Save expression to singleton store list
       addStandardCalculatorHistory(equation, result);
-      
+
       // Update displays
       setDisplay(result);
       setEquation((prev) => prev + " = ");
       setIsResetOnNext(true);
-      
+
       // Update local react components
       setHistory(getStandardCalculatorHistory());
       markCalculated();
@@ -302,30 +305,24 @@ export function StandardCalculator() {
     if (!hasCurrent && !hasHistory) return null;
 
     const formattedEq = equation.includes("=") ? equation.split("=")[0].trim() : equation;
-    
+
     return {
       calculatorName: "Standard Calculator",
       calculatorSlug: "standard-calculator",
       siteName: PDF_SITE_NAME,
       siteUrl: PDF_SITE_URL,
-      inputs: hasCurrent ? [
-        { label: "Expression Evaluated", value: formattedEq || "0" },
-      ] : [],
-      results: hasCurrent ? [
-        { label: "Final Result", value: display, highlight: true },
-      ] : [],
-      summary: hasCurrent 
+      inputs: hasCurrent ? [{ label: "Expression Evaluated", value: formattedEq || "0" }] : [],
+      results: hasCurrent ? [{ label: "Final Result", value: display, highlight: true }] : [],
+      summary: hasCurrent
         ? `A standard calculator calculation performed on CalcZen. Current formula: ${formattedEq || "0"} = ${display}. Complete calculation history details are included in the tabular report below.`
         : `A standard calculator calculation session on CalcZen. Complete calculation history details are included in the tabular report below.`,
-      tableData: hasHistory ? {
-        title: "CALCULATION HISTORY (CURRENT SESSION)",
-        headers: ["Timestamp", "Expression", "Result"],
-        rows: history.map((item) => [
-          item.timestamp,
-          item.expression,
-          item.result
-        ])
-      } : null,
+      tableData: hasHistory
+        ? {
+            title: "CALCULATION HISTORY (CURRENT SESSION)",
+            headers: ["Timestamp", "Expression", "Result"],
+            rows: history.map((item) => [item.timestamp, item.expression, item.result]),
+          }
+        : null,
     };
   }, [hasResult, display, equation, history]);
 
@@ -340,26 +337,51 @@ Percentage multiplication = A × (B ÷ 100)`}
 (12 + 5) × 3 = 51
 7.5 ÷ 2.5 = 3`}
       faqs={[
-        { q: "What is a standard calculator?", a: "A standard calculator is a basic mathematical tool designed to perform everyday arithmetic operations, including addition, subtraction, multiplication, and division. It features a simple, clean layout and an interactive session history to track calculations, making it perfect for quick receipts, everyday tasks, grocery shopping, checking business invoices, and household budgeting needs." },
-        { q: "Does the calculation history persist?", a: "Yes, your calculation history persists dynamically in-memory as you navigate across different calculator pages during your active session. You can easily copy previous results to your clipboard or clear the history log. If you require advanced mathematical functions like trigonometry or logarithms, you can explore our advanced <a href=\"/calculator/scientific-calculator\" class=\"text-primary hover:underline\">Scientific Calculator</a>." },
-        { q: "How do keyboard key mappings work?", a: "Our standard calculator supports direct keyboard inputs for rapid calculations. Simply click anywhere on the active page and type numbers, decimal points, or basic mathematical operators (+, -, *, /) on your keyboard. Pressing the Enter key evaluates the equation, while pressing the Escape key clears the display screen, making everyday math fast and seamless." },
-        { q: "How do percentage calculations work?", a: "On this standard calculator, percentage operations calculate relative shifts or fractional portions dynamically. For example, typing '100 + 5%' adds 5% of 100, resulting in 105. For detailed percentage differences, business markups, or shopping discounts, we highly recommend using our specialized and comprehensive <a href=\"/calculator/percentage-calculator\" class=\"text-primary hover:underline\">Percentage Calculator</a> to obtain accurate figures." },
-        { q: "What happens if I divide by zero?", a: "Dividing by zero is mathematically undefined and cannot be evaluated. If you attempt this division operation on our standard calculator, the display screen will show a division error message. This is because standard arithmetic rules dictate that you cannot partition a finite quantity into zero equal parts, preventing any valid numerical outcome." },
-        { q: "How is a standard calculator different from a scientific one?", a: "A standard calculator focuses solely on basic arithmetic operations like addition, subtraction, multiplication, division, and basic percentage calculations. In contrast, a scientific calculator supports advanced math functions like trigonometry, logarithms, exponents, roots, factorials, scientific notation, and variable storage, which are required for algebra, physics, engineering, and chemistry courses in school." },
-        { q: "Can I use this calculator for business accounting?", a: "Yes, you can certainly use the standard calculator for simple business accounting tasks like totaling invoices, verifying expense reports, summing up monthly overheads, or checking receipts. For complex compound interest calculations, long-term wealth projections, or monthly borrowing amortization breakdowns, we recommend using our financial <a href=\"/calculator/loan-emi-calculator\" class=\"text-primary hover:underline\">Loan EMI Calculator</a>." },
-        { q: "Does clicking C clear my history?", a: "No, clicking the clear button (C) only clears the current active display screen so you can begin a new math calculation, but it preserves your session history log. You can review past calculations in the sidebar, manually delete individual history entries, or wipe the entire history list by clicking the clear option." }
+        {
+          q: "What is a standard calculator?",
+          a: "A standard calculator is a basic mathematical tool designed to perform everyday arithmetic operations, including addition, subtraction, multiplication, and division. It features a simple, clean layout and an interactive session history to track calculations, making it perfect for quick receipts, everyday tasks, grocery shopping, checking business invoices, and household budgeting needs.",
+        },
+        {
+          q: "Does the calculation history persist?",
+          a: 'Yes, your calculation history persists dynamically in-memory as you navigate across different calculator pages during your active session. You can easily copy previous results to your clipboard or clear the history log. If you require advanced mathematical functions like trigonometry or logarithms, you can explore our advanced <a href="/calculator/scientific-calculator" class="text-primary hover:underline">Scientific Calculator</a>.',
+        },
+        {
+          q: "How do keyboard key mappings work?",
+          a: "Our standard calculator supports direct keyboard inputs for rapid calculations. Simply click anywhere on the active page and type numbers, decimal points, or basic mathematical operators (+, -, *, /) on your keyboard. Pressing the Enter key evaluates the equation, while pressing the Escape key clears the display screen, making everyday math fast and seamless.",
+        },
+        {
+          q: "How do percentage calculations work?",
+          a: 'On this standard calculator, percentage operations calculate relative shifts or fractional portions dynamically. For example, typing \'100 + 5%\' adds 5% of 100, resulting in 105. For detailed percentage differences, business markups, or shopping discounts, we highly recommend using our specialized and comprehensive <a href="/calculator/percentage-calculator" class="text-primary hover:underline">Percentage Calculator</a> to obtain accurate figures.',
+        },
+        {
+          q: "What happens if I divide by zero?",
+          a: "Dividing by zero is mathematically undefined and cannot be evaluated. If you attempt this division operation on our standard calculator, the display screen will show a division error message. This is because standard arithmetic rules dictate that you cannot partition a finite quantity into zero equal parts, preventing any valid numerical outcome.",
+        },
+        {
+          q: "How is a standard calculator different from a scientific one?",
+          a: "A standard calculator focuses solely on basic arithmetic operations like addition, subtraction, multiplication, division, and basic percentage calculations. In contrast, a scientific calculator supports advanced math functions like trigonometry, logarithms, exponents, roots, factorials, scientific notation, and variable storage, which are required for algebra, physics, engineering, and chemistry courses in school.",
+        },
+        {
+          q: "Can I use this calculator for business accounting?",
+          a: 'Yes, you can certainly use the standard calculator for simple business accounting tasks like totaling invoices, verifying expense reports, summing up monthly overheads, or checking receipts. For complex compound interest calculations, long-term wealth projections, or monthly borrowing amortization breakdowns, we recommend using our financial <a href="/calculator/loan-emi-calculator" class="text-primary hover:underline">Loan EMI Calculator</a>.',
+        },
+        {
+          q: "Does clicking C clear my history?",
+          a: "No, clicking the clear button (C) only clears the current active display screen so you can begin a new math calculation, but it preserves your session history log. You can review past calculations in the sidebar, manually delete individual history entries, or wipe the entire history list by clicking the clear option.",
+        },
       ]}
       blog={<CalculatorBlog content={blogContent.standard} />}
     >
       <div className="flex flex-col lg:flex-row gap-6 w-full items-stretch justify-start">
-        
         {/* LEFT COLUMN: CALCULATOR CARD */}
         <div className="w-full lg:w-[400px] shrink-0">
-          <div className={`calc-input-column flex flex-col min-w-0 rounded-2xl p-5 select-none h-full justify-between transition-colors duration-200 ${
-            isDark 
-              ? "bg-[#111827] border border-white/[0.08] shadow-sm" 
-              : "bg-[#f0f0f0] border border-[#d4d4d4] shadow-[6px_6px_18px_rgba(0,0,0,0.14),-4px_-4px_12px_rgba(255,255,255,0.9)]"
-          }`}>
+          <div
+            className={`calc-input-column flex flex-col min-w-0 rounded-2xl p-5 select-none h-full justify-between transition-colors duration-200 ${
+              isDark
+                ? "bg-[#111827] border border-white/[0.08] shadow-sm"
+                : "bg-[#f0f0f0] border border-[#d4d4d4] shadow-[6px_6px_18px_rgba(0,0,0,0.14),-4px_-4px_12px_rgba(255,255,255,0.9)]"
+            }`}
+          >
             <div>
               {/* LCD Calculator Screen */}
               <div className="bg-slate-900 border border-border/40 rounded-xl py-3.5 px-4 text-right font-mono h-[100px] flex flex-col justify-between mb-3.5 shadow-inner overflow-hidden">
@@ -368,7 +390,9 @@ Percentage multiplication = A × (B ÷ 100)`}
                   {equation || <span className="opacity-0">0</span>}
                 </div>
                 {/* Current value bottom line */}
-                <div className={`text-2xl sm:text-3xl font-extrabold tracking-tight select-text overflow-x-auto scrollbar-none whitespace-nowrap ${errorMsg ? "text-destructive" : "text-white"}`}>
+                <div
+                  className={`text-2xl sm:text-3xl font-extrabold tracking-tight select-text overflow-x-auto scrollbar-none whitespace-nowrap ${errorMsg ? "text-destructive" : "text-white"}`}
+                >
                   {errorMsg || display || "0"}
                 </div>
               </div>
@@ -391,11 +415,7 @@ Percentage multiplication = A × (B ÷ 100)`}
                 >
                   <Delete className="h-4.5 w-4.5" />
                 </button>
-                <button
-                  onClick={handlePercent}
-                  type="button"
-                  className={operatorKeyClass}
-                >
+                <button onClick={handlePercent} type="button" className={operatorKeyClass}>
                   %
                 </button>
                 <button
@@ -407,25 +427,13 @@ Percentage multiplication = A × (B ÷ 100)`}
                 </button>
 
                 {/* Row 2 */}
-                <button
-                  onClick={() => handleDigit("7")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit("7")} type="button" className={numberKeyClass}>
                   7
                 </button>
-                <button
-                  onClick={() => handleDigit("8")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit("8")} type="button" className={numberKeyClass}>
                   8
                 </button>
-                <button
-                  onClick={() => handleDigit("9")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit("9")} type="button" className={numberKeyClass}>
                   9
                 </button>
                 <button
@@ -437,25 +445,13 @@ Percentage multiplication = A × (B ÷ 100)`}
                 </button>
 
                 {/* Row 3 */}
-                <button
-                  onClick={() => handleDigit("4")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit("4")} type="button" className={numberKeyClass}>
                   4
                 </button>
-                <button
-                  onClick={() => handleDigit("5")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit("5")} type="button" className={numberKeyClass}>
                   5
                 </button>
-                <button
-                  onClick={() => handleDigit("6")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit("6")} type="button" className={numberKeyClass}>
                   6
                 </button>
                 <button
@@ -467,25 +463,13 @@ Percentage multiplication = A × (B ÷ 100)`}
                 </button>
 
                 {/* Row 4 */}
-                <button
-                  onClick={() => handleDigit("1")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit("1")} type="button" className={numberKeyClass}>
                   1
                 </button>
-                <button
-                  onClick={() => handleDigit("2")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit("2")} type="button" className={numberKeyClass}>
                   2
                 </button>
-                <button
-                  onClick={() => handleDigit("3")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit("3")} type="button" className={numberKeyClass}>
                   3
                 </button>
                 <button
@@ -497,32 +481,16 @@ Percentage multiplication = A × (B ÷ 100)`}
                 </button>
 
                 {/* Row 5 */}
-                <button
-                  onClick={handleParenthesis}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={handleParenthesis} type="button" className={numberKeyClass}>
                   ( )
                 </button>
-                <button
-                  onClick={() => handleDigit("0")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit("0")} type="button" className={numberKeyClass}>
                   0
                 </button>
-                <button
-                  onClick={() => handleDigit(".")}
-                  type="button"
-                  className={numberKeyClass}
-                >
+                <button onClick={() => handleDigit(".")} type="button" className={numberKeyClass}>
                   .
                 </button>
-                <button
-                  onClick={handleEqual}
-                  type="button"
-                  className={equalKeyClass}
-                >
+                <button onClick={handleEqual} type="button" className={equalKeyClass}>
                   =
                 </button>
               </div>
@@ -539,7 +507,7 @@ Percentage multiplication = A × (B ÷ 100)`}
                   <h3 className="font-bold text-xs tracking-tight text-card-foreground">
                     Recent Calculations
                   </h3>
-                  
+
                   {history.length > 0 && (
                     <button
                       onClick={handleClearHistory}
@@ -550,7 +518,6 @@ Percentage multiplication = A × (B ÷ 100)`}
                     </button>
                   )}
                 </header>
-
                 {/* History Item Entries (Animated) */}
                 <div className="overflow-y-auto max-h-[20rem] pr-1 space-y-2.5 scrollbar-none flex-1 min-h-0">
                   <AnimatePresence initial={false}>
@@ -587,8 +554,10 @@ Percentage multiplication = A × (B ÷ 100)`}
                             = {item.result}
                           </div>
                           <div className="flex items-center justify-between mt-3 min-h-[16px] select-none text-[10px] font-bold">
-                            <span className="text-muted-foreground font-medium">{item.timestamp}</span>
-                            
+                            <span className="text-muted-foreground font-medium">
+                              {item.timestamp}
+                            </span>
+
                             <div className="flex items-center gap-2">
                               <button
                                 onClick={(e) => {
@@ -627,16 +596,17 @@ Percentage multiplication = A × (B ÷ 100)`}
                       ))
                     )}
                   </AnimatePresence>
-                </div>              </div>
+                </div>{" "}
               </div>
+            </div>
 
-              {/* Branded PDF Download Button */}
-              <div className="mt-3 border-t border-border/35 pt-3 flex flex-col select-none shrink-0">
-                <CalculatorPdfExport pdfData={pdfData} />
-              </div>
+            {/* Branded PDF Download Button */}
+            <div className="mt-3 border-t border-border/35 pt-3 flex flex-col select-none shrink-0">
+              <CalculatorPdfExport pdfData={pdfData} />
             </div>
           </div>
         </div>
-      </CalculatorPageLayout>
+      </div>
+    </CalculatorPageLayout>
   );
 }

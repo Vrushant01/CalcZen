@@ -1,8 +1,6 @@
 import { apiFetch, getNetworkErrorMessage } from "@/lib/api-config";
 
-export type SubscribeResult =
-  | { ok: true; message: string }
-  | { ok: false; message: string };
+export type SubscribeResult = { ok: true; message: string } | { ok: false; message: string };
 
 export async function subscribeEmail(email: string): Promise<SubscribeResult> {
   try {

@@ -9,12 +9,32 @@ import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
 import { Button } from "@/components/ui/button";
 import { CalculateButton } from "@/components/CalculateButton";
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, BarChart, Bar, Legend
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  Legend,
 } from "recharts";
 import {
-  Calendar, Percent, HelpCircle, DollarSign, ArrowUpRight,
-  TrendingUp, Sparkles, Sliders, Info, ShieldCheck, ChevronRight
+  Calendar,
+  Percent,
+  HelpCircle,
+  DollarSign,
+  ArrowUpRight,
+  TrendingUp,
+  Sparkles,
+  Sliders,
+  Info,
+  ShieldCheck,
+  ChevronRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -27,7 +47,7 @@ export function Four01kCalculator() {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(val);
   }
 
@@ -46,8 +66,12 @@ export function Four01kCalculator() {
   const [inflationRate, setInflationRate] = useState<number | "">(2.5);
 
   // Advanced Planning & Scenarios
-  const [inflationScenario, setInflationScenario] = useState<"conservative" | "moderate" | "aggressive">("moderate");
-  const [marketPerformance, setMarketPerformance] = useState<"bear" | "average" | "bull">("average");
+  const [inflationScenario, setInflationScenario] = useState<
+    "conservative" | "moderate" | "aggressive"
+  >("moderate");
+  const [marketPerformance, setMarketPerformance] = useState<"bear" | "average" | "bull">(
+    "average",
+  );
 
   // Sync inflation changes to manual settings
   useEffect(() => {
@@ -73,8 +97,12 @@ export function Four01kCalculator() {
   const [calcSalaryGrowthPct, setCalcSalaryGrowthPct] = useState(3);
   const [calcExpectedReturn, setCalcExpectedReturn] = useState(8);
   const [calcInflationRate, setCalcInflationRate] = useState(2.5);
-  const [calcInflationScenario, setCalcInflationScenario] = useState<"conservative" | "moderate" | "aggressive">("moderate");
-  const [calcMarketPerformance, setCalcMarketPerformance] = useState<"bear" | "average" | "bull">("average");
+  const [calcInflationScenario, setCalcInflationScenario] = useState<
+    "conservative" | "moderate" | "aggressive"
+  >("moderate");
+  const [calcMarketPerformance, setCalcMarketPerformance] = useState<"bear" | "average" | "bull">(
+    "average",
+  );
 
   // Adjust returns based on market performance
   const resolvedExpectedReturn = useMemo(() => {
@@ -93,16 +121,17 @@ export function Four01kCalculator() {
     let totalEmployeeContributions = 0;
     let totalEmployerContributions = 0;
     let currentSalary = calcSalary;
-    
+
     const growthData: any[] = [];
 
     for (let year = 1; year <= yearsToRetire; year++) {
       const annualSalary = currentSalary;
       const employeeAnnualContrib = annualSalary * (calcEmployeeContrPct / 100);
-      
+
       // Employer match matching cents on employee percentage limit
       const matchLimitPercentage = Math.min(calcEmployeeContrPct, calcEmployerLimitPct);
-      const employerAnnualContrib = annualSalary * (matchLimitPercentage / 100) * (calcEmployerMatchPct / 100);
+      const employerAnnualContrib =
+        annualSalary * (matchLimitPercentage / 100) * (calcEmployerMatchPct / 100);
 
       // Monthly compounding
       const monthlyRate = resolvedExpectedReturn / 100 / 12;
@@ -117,26 +146,31 @@ export function Four01kCalculator() {
       totalEmployeeContributions += employeeAnnualContrib;
       totalEmployerContributions += employerAnnualContrib;
 
-      const totalContributions = calcCurrentSavings + totalEmployeeContributions + totalEmployerContributions;
+      const totalContributions =
+        calcCurrentSavings + totalEmployeeContributions + totalEmployerContributions;
       const totalGrowth = balance - totalContributions;
 
       growthData.push({
         age: calcCurrentAge + year,
         Contributions: Math.round(totalContributions),
         Growth: Math.round(totalGrowth),
-        Balance: Math.round(balance)
+        Balance: Math.round(balance),
       });
 
       // Grow salary annually
-      currentSalary *= (1 + calcSalaryGrowthPct / 100);
+      currentSalary *= 1 + calcSalaryGrowthPct / 100;
     }
 
     const inflationAdjusted = balance / Math.pow(1 + calcInflationRate / 100, yearsToRetire);
-    const investmentGrowth = balance - (calcCurrentSavings + totalEmployeeContributions + totalEmployerContributions);
+    const investmentGrowth =
+      balance - (calcCurrentSavings + totalEmployeeContributions + totalEmployerContributions);
 
     // Readiness score dynamically mapped based on balance target (standard 8x salary benchmark at retirement)
     const targetBenchmark = calcSalary * 8;
-    const readinessScore = Math.min(100, Math.round((balance / Math.max(1, targetBenchmark)) * 100));
+    const readinessScore = Math.min(
+      100,
+      Math.round((balance / Math.max(1, targetBenchmark)) * 100),
+    );
 
     return {
       totalRetirementBalance: balance,
@@ -146,11 +180,19 @@ export function Four01kCalculator() {
       investmentGrowth,
       inflationAdjustedValue: inflationAdjusted,
       readinessScore,
-      growthData
+      growthData,
     };
   }, [
-    calcCurrentAge, calcRetirementAge, calcCurrentSavings, calcSalary, calcEmployeeContrPct,
-    calcEmployerMatchPct, calcEmployerLimitPct, calcSalaryGrowthPct, resolvedExpectedReturn, calcInflationRate
+    calcCurrentAge,
+    calcRetirementAge,
+    calcCurrentSavings,
+    calcSalary,
+    calcEmployeeContrPct,
+    calcEmployerMatchPct,
+    calcEmployerLimitPct,
+    calcSalaryGrowthPct,
+    resolvedExpectedReturn,
+    calcInflationRate,
   ]);
 
   // ----------------------------------------------------
@@ -162,20 +204,28 @@ export function Four01kCalculator() {
 
     const { totalRetirementBalance, employerContributions } = results401k;
 
-    list.push(`🚀 Your 401(k) is projected to accumulate a total balance of ${formatCurrency(totalRetirementBalance)} by retirement.`);
-    
+    list.push(
+      `🚀 Your 401(k) is projected to accumulate a total balance of ${formatCurrency(totalRetirementBalance)} by retirement.`,
+    );
+
     if (employerContributions > 0) {
-      list.push(`🎁 Free Money Captured: You will secure ${formatCurrency(employerContributions)} in total employer matched contributions.`);
+      list.push(
+        `🎁 Free Money Captured: You will secure ${formatCurrency(employerContributions)} in total employer matched contributions.`,
+      );
     }
 
     if (calcEmployeeContrPct < calcEmployerLimitPct) {
-      list.push(`💡 Contribution Tip: You are contributing ${calcEmployeeContrPct}%, but your employer matches up to ${calcEmployerLimitPct}%. Raise your savings to ${calcEmployerLimitPct}% to capture all available matched capital.`);
+      list.push(
+        `💡 Contribution Tip: You are contributing ${calcEmployeeContrPct}%, but your employer matches up to ${calcEmployerLimitPct}%. Raise your savings to ${calcEmployerLimitPct}% to capture all available matched capital.`,
+      );
     } else {
       list.push(`🌟 Outstanding: You are fully maximizing your employer's matched contributions.`);
     }
 
     const powerOfOne = totalRetirementBalance * 0.15; // 1% extra approximation
-    list.push(`📈 Compound Acceleration: Raising your employee contribution by just 1% could compound an extra ${formatCurrency(powerOfOne)} at retirement.`);
+    list.push(
+      `📈 Compound Acceleration: Raising your employee contribution by just 1% could compound an extra ${formatCurrency(powerOfOne)} at retirement.`,
+    );
 
     return list;
   }, [results401k, calcEmployeeContrPct, calcEmployerLimitPct]);
@@ -190,7 +240,7 @@ export function Four01kCalculator() {
       { name: "Initial Balance", value: calcCurrentSavings, color: "#1a1a2e" },
       { name: "Employee Contributions", value: employeeContributions, color: "#0f9e75" },
       { name: "Employer Match", value: employerContributions, color: "#3b82f6" },
-      { name: "Investment Growth", value: investmentGrowth, color: "#d97706" }
+      { name: "Investment Growth", value: investmentGrowth, color: "#d97706" },
     ];
   }, [results401k, calcCurrentSavings]);
 
@@ -203,13 +253,13 @@ export function Four01kCalculator() {
       {
         name: "Without Match",
         Balance: Math.round(results401k.totalBalanceNoMatch),
-        color: "#d97706"
+        color: "#d97706",
       },
       {
         name: "With Match",
         Balance: Math.round(results401k.totalRetirementBalance),
-        color: "#0f9e75"
-      }
+        color: "#0f9e75",
+      },
     ];
   }, [results401k]);
 
@@ -218,7 +268,14 @@ export function Four01kCalculator() {
   // ----------------------------------------------------
   const pdfData = useMemo(() => {
     if (!hasResult || !results401k) return null;
-    const { totalRetirementBalance, employeeContributions, employerContributions, investmentGrowth, inflationAdjustedValue, readinessScore } = results401k;
+    const {
+      totalRetirementBalance,
+      employeeContributions,
+      employerContributions,
+      investmentGrowth,
+      inflationAdjustedValue,
+      readinessScore,
+    } = results401k;
     return {
       calculatorName: "401(k) Calculator",
       calculatorSlug: "401k-calculator",
@@ -233,44 +290,73 @@ export function Four01kCalculator() {
         { label: "Employer Match Limit", value: `${calcEmployerLimitPct}%` },
         { label: "Salary Growth Rate", value: `${calcSalaryGrowthPct}%` },
         { label: "Expected Market Return", value: `${calcExpectedReturn}%` },
-        { label: "Inflation Rate", value: `${calcInflationRate}%` }
+        { label: "Inflation Rate", value: `${calcInflationRate}%` },
       ],
       results: [
-        { label: "Total Retirement 401(k) Balance", value: formatCurrency(totalRetirementBalance), highlight: true },
+        {
+          label: "Total Retirement 401(k) Balance",
+          value: formatCurrency(totalRetirementBalance),
+          highlight: true,
+        },
         { label: "Personal Employee Contributions", value: formatCurrency(employeeContributions) },
         { label: "Employer Matched Contributions", value: formatCurrency(employerContributions) },
         { label: "Interest Investment Growth", value: formatCurrency(investmentGrowth) },
         { label: "Inflation-Adjusted Value", value: formatCurrency(inflationAdjustedValue) },
-        { label: "Retirement Readiness Score", value: `${readinessScore}/100` }
+        { label: "Retirement Readiness Score", value: `${readinessScore}/100` },
       ],
       summary: `401(k) Contribution Matching & Growth report compiled on CalcZen. With an employee savings rate of ${calcEmployeeContrPct}% and employer limit of ${calcEmployerLimitPct}%, your 401(k) account balance is projected to compound to a nominal value of ${formatCurrency(totalRetirementBalance)} (Inflation-Adjusted: ${formatCurrency(inflationAdjustedValue)}) by age ${calcRetirementAge}.`,
-      tableData: results401k.growthData.length > 0 ? {
-        title: "ANNUAL 401(K) GROWTH TRANSITIONS",
-        headers: ["Age", "Total Contributions", "Investment Growth", "Projected Balance"],
-        rows: results401k.growthData.filter((_, i) => i % 5 === 0 || i === results401k.growthData.length - 1).map((item) => [
-          String(item.age),
-          formatCurrency(item.Contributions),
-          formatCurrency(item.Growth),
-          formatCurrency(item.Balance)
-        ])
-      } : null
+      tableData:
+        results401k.growthData.length > 0
+          ? {
+              title: "ANNUAL 401(K) GROWTH TRANSITIONS",
+              headers: ["Age", "Total Contributions", "Investment Growth", "Projected Balance"],
+              rows: results401k.growthData
+                .filter((_, i) => i % 5 === 0 || i === results401k.growthData.length - 1)
+                .map((item) => [
+                  String(item.age),
+                  formatCurrency(item.Contributions),
+                  formatCurrency(item.Growth),
+                  formatCurrency(item.Balance),
+                ]),
+            }
+          : null,
     };
   }, [
-    hasResult, calcCurrentAge, calcRetirementAge, calcCurrentSavings, calcSalary, calcEmployeeContrPct,
-    calcEmployerMatchPct, calcEmployerLimitPct, calcSalaryGrowthPct, calcExpectedReturn,
-    calcInflationRate, results401k
+    hasResult,
+    calcCurrentAge,
+    calcRetirementAge,
+    calcCurrentSavings,
+    calcSalary,
+    calcEmployeeContrPct,
+    calcEmployerMatchPct,
+    calcEmployerLimitPct,
+    calcSalaryGrowthPct,
+    calcExpectedReturn,
+    calcInflationRate,
+    results401k,
   ]);
 
-  const isButtonDisabled = 
-    currentAge === "" || retirementAge === "" || currentSavings === "" ||
-    salary === "" || employeeContrPct === "" || employerMatchPct === "" ||
-    employerLimitPct === "" || salaryGrowthPct === "" || expectedReturn === "" ||
+  const isButtonDisabled =
+    currentAge === "" ||
+    retirementAge === "" ||
+    currentSavings === "" ||
+    salary === "" ||
+    employeeContrPct === "" ||
+    employerMatchPct === "" ||
+    employerLimitPct === "" ||
+    salaryGrowthPct === "" ||
+    expectedReturn === "" ||
     inflationRate === "" ||
-    Number(currentAge) <= 0 || Number(retirementAge) <= Number(currentAge) ||
-    Number(currentSavings) < 0 || Number(salary) <= 0 ||
-    Number(employeeContrPct) < 0 || Number(employerMatchPct) < 0 ||
-    Number(employerLimitPct) < 0 || Number(salaryGrowthPct) < 0 ||
-    Number(expectedReturn) < 0 || Number(inflationRate) < 0;
+    Number(currentAge) <= 0 ||
+    Number(retirementAge) <= Number(currentAge) ||
+    Number(currentSavings) < 0 ||
+    Number(salary) <= 0 ||
+    Number(employeeContrPct) < 0 ||
+    Number(employerMatchPct) < 0 ||
+    Number(employerLimitPct) < 0 ||
+    Number(salaryGrowthPct) < 0 ||
+    Number(expectedReturn) < 0 ||
+    Number(inflationRate) < 0;
 
   const handleCalculate = () => {
     if (isButtonDisabled) return;
@@ -333,21 +419,44 @@ Employer Match = Salary × min(EmployeePct, LimitPct) × MatchPct
 Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
       example={`Annual salary $80,000 contributing 6% employee, 50% match up to 6% employer limit over 35 years at 8% return results in over $1.52M compounded.`}
       faqs={[
-        { q: "What is a 401(k) calculator?", a: "A 401(k) calculator is an online retirement planning tool that projects the future value of your employer-sponsored retirement account based on your salary, personal contributions, investment returns, and employer matching rules. It helps you visualize how compounding interest, regular salary deferrals, and employer match contributions grow your retirement nest egg over many years." },
-        { q: "How does an employer match work?", a: "An employer match is when your employer contributes money to your 401(k) based on your own contribution rate. Typically, they match a percentage of your salary up to a certain limit (e.g., 50% of your contributions up to 6% of your salary). This represents free money and immediate returns on your savings." },
-        { q: "What are the contribution limits for a 401(k)?", a: "The IRS sets annual contribution limits for 401(k) accounts, which adjust periodically for inflation. For 2024, the basic employee deferral limit is $23,000, while individuals aged 50 or older can make an additional catch-up contribution of $7,500. Total employer plus employee contributions are also subject to combined annual limits set by the government." },
-        { q: "What is the difference between a traditional and Roth 401(k)?", a: "A traditional 401(k) uses pre-tax contributions, which lowers your taxable income today, but you pay ordinary income tax on withdrawals in retirement. A Roth 401(k) uses after-tax contributions, meaning you get no tax break now, but all qualifying withdrawals in retirement are entirely tax-free. Choose based on your current tax bracket." },
-        { q: "How does compounding interest affect my 401(k) balance?", a: "Compounding interest is the powerful financial process where your investment earnings generate their own earnings over time. By reinvesting dividends and capital gains back into your account, your 401(k) balance grows exponentially. Starting to invest early is critical for your retirement plan, as a few extra years of compounding can result in hundreds of thousands of dollars in additional retirement wealth." },
-        { q: "Should I maximize my 401(k) contributions?", a: "You should aim to contribute at least enough to receive your employer's full matching contribution, as this is equivalent to a 100% return on your investment. If your budget allows, maximizing your contributions up to the IRS limit helps secure your long-term financial independence and reduces your current income tax burden." },
-        { q: "What happens if I withdraw money early from my 401(k)?", a: "If you withdraw money from a traditional 401(k) before age 59&frac12;, you will generally face a 10% IRS early withdrawal penalty on top of paying standard federal and state income taxes on the distributed amount. Some exceptions apply for hardships or first-time home purchases, but early withdrawals severely disrupt compounding growth." },
-        { q: "How do salary increases affect my retirement savings?", a: "When your salary increases, your 401(k) contributions grow proportionally if you save a fixed percentage of your income. To accelerate your wealth, you can implement 'contribution rate matching' by allocating a portion of your raise directly to your retirement savings rate, as modeled in our <a href=\"/calculator/retirement-calculator\" class=\"text-primary hover:underline\">Retirement Calculator</a>." }
+        {
+          q: "What is a 401(k) calculator?",
+          a: "A 401(k) calculator is an online retirement planning tool that projects the future value of your employer-sponsored retirement account based on your salary, personal contributions, investment returns, and employer matching rules. It helps you visualize how compounding interest, regular salary deferrals, and employer match contributions grow your retirement nest egg over many years.",
+        },
+        {
+          q: "How does an employer match work?",
+          a: "An employer match is when your employer contributes money to your 401(k) based on your own contribution rate. Typically, they match a percentage of your salary up to a certain limit (e.g., 50% of your contributions up to 6% of your salary). This represents free money and immediate returns on your savings.",
+        },
+        {
+          q: "What are the contribution limits for a 401(k)?",
+          a: "The IRS sets annual contribution limits for 401(k) accounts, which adjust periodically for inflation. For 2024, the basic employee deferral limit is $23,000, while individuals aged 50 or older can make an additional catch-up contribution of $7,500. Total employer plus employee contributions are also subject to combined annual limits set by the government.",
+        },
+        {
+          q: "What is the difference between a traditional and Roth 401(k)?",
+          a: "A traditional 401(k) uses pre-tax contributions, which lowers your taxable income today, but you pay ordinary income tax on withdrawals in retirement. A Roth 401(k) uses after-tax contributions, meaning you get no tax break now, but all qualifying withdrawals in retirement are entirely tax-free. Choose based on your current tax bracket.",
+        },
+        {
+          q: "How does compounding interest affect my 401(k) balance?",
+          a: "Compounding interest is the powerful financial process where your investment earnings generate their own earnings over time. By reinvesting dividends and capital gains back into your account, your 401(k) balance grows exponentially. Starting to invest early is critical for your retirement plan, as a few extra years of compounding can result in hundreds of thousands of dollars in additional retirement wealth.",
+        },
+        {
+          q: "Should I maximize my 401(k) contributions?",
+          a: "You should aim to contribute at least enough to receive your employer's full matching contribution, as this is equivalent to a 100% return on your investment. If your budget allows, maximizing your contributions up to the IRS limit helps secure your long-term financial independence and reduces your current income tax burden.",
+        },
+        {
+          q: "What happens if I withdraw money early from my 401(k)?",
+          a: "If you withdraw money from a traditional 401(k) before age 59&frac12;, you will generally face a 10% IRS early withdrawal penalty on top of paying standard federal and state income taxes on the distributed amount. Some exceptions apply for hardships or first-time home purchases, but early withdrawals severely disrupt compounding growth.",
+        },
+        {
+          q: "How do salary increases affect my retirement savings?",
+          a: 'When your salary increases, your 401(k) contributions grow proportionally if you save a fixed percentage of your income. To accelerate your wealth, you can implement \'contribution rate matching\' by allocating a portion of your raise directly to your retirement savings rate, as modeled in our <a href="/calculator/retirement-calculator" class="text-primary hover:underline">Retirement Calculator</a>.',
+        },
       ]}
       blog={<CalculatorBlog content={blogContent["401k"]} />}
     >
       <div className="flex flex-col gap-6">
         {/* LEFT COLUMN: FINANCIAL INPUTS */}
         <div className="calc-input-column space-y-6">
-          
           {/* Core Inputs Card */}
           <div className="bg-card/20 border border-border/70 rounded-2xl p-5 sm:p-6 shadow-card">
             <h3 className="text-base font-bold text-foreground mb-5 flex items-center gap-2 select-none border-b border-border/20 pb-3">
@@ -362,7 +471,10 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
                   <span className="text-foreground">{currentAge} yrs</span>
                 </label>
                 <input
-                  type="range" min="18" max="80" value={currentAge}
+                  type="range"
+                  min="18"
+                  max="80"
+                  value={currentAge}
                   onChange={(e) => setCurrentAge(Number(e.target.value))}
                   className="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-muted"
                 />
@@ -374,18 +486,26 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
                   <span className="text-foreground">{retirementAge} yrs</span>
                 </label>
                 <input
-                  type="range" min={Math.max(18, currentAge + 1)} max="95" value={retirementAge}
+                  type="range"
+                  min={Math.max(18, currentAge + 1)}
+                  max="95"
+                  value={retirementAge}
                   onChange={(e) => setRetirementAge(Number(e.target.value))}
                   className="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-muted"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Current 401(k) Balance</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Current 401(k) Balance
+                </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">
+                    $
+                  </span>
                   <input
-                    type="number" value={currentSavings}
+                    type="number"
+                    value={currentSavings}
                     onChange={(e) => {
                       const val = e.target.value;
                       setCurrentSavings(val === "" ? "" : Math.max(0, Number(val)));
@@ -399,9 +519,12 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-bold text-muted-foreground">Annual Salary</label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">
+                    $
+                  </span>
                   <input
-                    type="number" value={salary}
+                    type="number"
+                    value={salary}
                     onChange={(e) => {
                       const val = e.target.value;
                       setSalary(val === "" ? "" : Math.max(0, Number(val)));
@@ -413,9 +536,12 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Employee Contribution (%)</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Employee Contribution (%)
+                </label>
                 <input
-                  type="number" value={employeeContrPct}
+                  type="number"
+                  value={employeeContrPct}
                   onChange={(e) => {
                     const val = e.target.value;
                     setEmployeeContrPct(val === "" ? "" : Math.max(0, Number(val)));
@@ -426,9 +552,12 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Employer Match Ratio (%)</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Employer Match Ratio (%)
+                </label>
                 <input
-                  type="number" value={employerMatchPct}
+                  type="number"
+                  value={employerMatchPct}
                   onChange={(e) => {
                     const val = e.target.value;
                     setEmployerMatchPct(val === "" ? "" : Math.max(0, Number(val)));
@@ -439,9 +568,12 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Employer Match Limit (%)</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Employer Match Limit (%)
+                </label>
                 <input
-                  type="number" value={employerLimitPct}
+                  type="number"
+                  value={employerLimitPct}
                   onChange={(e) => {
                     const val = e.target.value;
                     setEmployerLimitPct(val === "" ? "" : Math.max(0, Number(val)));
@@ -452,9 +584,12 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Annual Salary Growth (%)</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Annual Salary Growth (%)
+                </label>
                 <input
-                  type="number" value={salaryGrowthPct}
+                  type="number"
+                  value={salaryGrowthPct}
                   onChange={(e) => {
                     const val = e.target.value;
                     setSalaryGrowthPct(val === "" ? "" : Math.max(0, Number(val)));
@@ -465,9 +600,13 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Expected Investment Return (%)</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Expected Investment Return (%)
+                </label>
                 <input
-                  type="number" step="0.1" value={expectedReturn}
+                  type="number"
+                  step="0.1"
+                  value={expectedReturn}
                   onChange={(e) => {
                     const val = e.target.value;
                     setExpectedReturn(val === "" ? "" : Math.max(0, Number(val)));
@@ -478,9 +617,13 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Inflation Rate (%)</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Inflation Rate (%)
+                </label>
                 <input
-                  type="number" step="0.1" value={inflationRate}
+                  type="number"
+                  step="0.1"
+                  value={inflationRate}
                   onChange={(e) => {
                     const val = e.target.value;
                     setInflationRate(val === "" ? "" : Math.max(0, Number(val)));
@@ -501,11 +644,14 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5.5">
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-muted-foreground">Inflation Plan Scenario</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Inflation Plan Scenario
+                </label>
                 <div className="flex gap-2">
                   {["conservative", "moderate", "aggressive"].map((scen) => (
                     <button
-                      key={scen} onClick={() => setInflationScenario(scen as any)}
+                      key={scen}
+                      onClick={() => setInflationScenario(scen as any)}
                       type="button"
                       className={`flex-1 h-9 rounded-lg text-xs font-bold border transition-all uppercase ${
                         inflationScenario === scen
@@ -520,11 +666,14 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-muted-foreground">Market Performance Scenario</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Market Performance Scenario
+                </label>
                 <div className="flex gap-2">
                   {["bear", "average", "bull"].map((perf) => (
                     <button
-                      key={perf} onClick={() => setMarketPerformance(perf as any)}
+                      key={perf}
+                      onClick={() => setMarketPerformance(perf as any)}
                       type="button"
                       className={`flex-1 h-9 rounded-lg text-xs font-bold border transition-all uppercase ${
                         marketPerformance === perf
@@ -550,11 +699,7 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
             >
               Calculate
             </CalculateButton>
-            <Button
-              variant="outline"
-              className="flex-1 min-h-11"
-              onClick={handleReset}
-            >
+            <Button variant="outline" className="flex-1 min-h-11" onClick={handleReset}>
               Reset
             </Button>
           </div>
@@ -568,10 +713,10 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
             transition={{ duration: 0.55, ease: "easeOut" }}
             className="mt-6 pt-6 border-t border-border space-y-6 overflow-hidden relative"
           >
-            <div 
+            <div
               className="absolute inset-0 pointer-events-none blur-3xl opacity-15 -z-10"
               style={{
-                background: "radial-gradient(circle at 50% 50%, #0ea5e9, transparent 65%)"
+                background: "radial-gradient(circle at 50% 50%, #0ea5e9, transparent 65%)",
               }}
             />
             <div>
@@ -580,7 +725,7 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
                 <div className="absolute right-0 top-0 h-16 w-16 bg-accent/5 rounded-bl-full flex items-center justify-center">
                   <Sparkles className="h-6 w-6 text-accent/25" />
                 </div>
-                
+
                 <h3 className="text-xs font-extrabold tracking-widest text-muted-foreground uppercase mb-3.5 flex items-center gap-1.5">
                   <ShieldCheck className="h-4 w-4 text-accent" />
                   Retirement Readiness Score
@@ -601,14 +746,19 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
                   return (
                     <div className="flex items-center gap-4 mb-5">
                       <div className="h-20 w-20 sm:h-22 sm:w-22 rounded-full border-4 border-muted flex flex-col items-center justify-center relative">
-                        <span className="text-xl sm:text-2xl font-extrabold text-foreground">{score}%</span>
+                        <span className="text-xl sm:text-2xl font-extrabold text-foreground">
+                          {score}%
+                        </span>
                       </div>
                       <div>
-                        <div className={`px-3 py-1 text-[11px] font-extrabold border rounded-lg uppercase tracking-wider tracking-tight ${colorClass}`}>
+                        <div
+                          className={`px-3 py-1 text-[11px] font-extrabold border rounded-lg uppercase tracking-wider tracking-tight ${colorClass}`}
+                        >
                           {statusText}
                         </div>
                         <p className="text-xs text-muted-foreground mt-2 max-w-[13rem]">
-                          Simulated score based on your active contributions, matched caps, and scenario constraints.
+                          Simulated score based on your active contributions, matched caps, and
+                          scenario constraints.
                         </p>
                       </div>
                     </div>
@@ -618,24 +768,44 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
                 {/* 401(K) CORE METRICS */}
                 <div className="space-y-3.5 border-t border-border/20 pt-4.5">
                   <div className="flex justify-between items-center py-0.5">
-                    <span className="text-xs font-bold text-muted-foreground">Total Personal Contribution</span>
-                    <span className="text-sm font-extrabold text-foreground">{formatCurrency(results401k.employeeContributions)}</span>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      Total Personal Contribution
+                    </span>
+                    <span className="text-sm font-extrabold text-foreground">
+                      {formatCurrency(results401k.employeeContributions)}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center py-0.5">
-                    <span className="text-xs font-bold text-muted-foreground">Employer Match Contribution</span>
-                    <span className="text-sm font-extrabold text-foreground">{formatCurrency(results401k.employerContributions)}</span>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      Employer Match Contribution
+                    </span>
+                    <span className="text-sm font-extrabold text-foreground">
+                      {formatCurrency(results401k.employerContributions)}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center py-0.5">
-                    <span className="text-xs font-bold text-muted-foreground">Investment Compound Growth</span>
-                    <span className="text-sm font-extrabold text-foreground">{formatCurrency(results401k.investmentGrowth)}</span>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      Investment Compound Growth
+                    </span>
+                    <span className="text-sm font-extrabold text-foreground">
+                      {formatCurrency(results401k.investmentGrowth)}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center py-0.5 border-t border-border/20 pt-3">
-                    <span className="text-xs font-bold text-muted-foreground">Projected 401(k) Balance</span>
-                    <span className="text-lg font-black text-accent">{formatCurrency(results401k.totalRetirementBalance)}</span>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      Projected 401(k) Balance
+                    </span>
+                    <span className="text-lg font-black text-accent">
+                      {formatCurrency(results401k.totalRetirementBalance)}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center py-0.5">
-                    <span className="text-xs font-bold text-muted-foreground">Inflation Adjusted Value</span>
-                    <span className="text-sm font-extrabold text-accent/90">{formatCurrency(results401k.inflationAdjustedValue)}</span>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      Inflation Adjusted Value
+                    </span>
+                    <span className="text-sm font-extrabold text-accent/90">
+                      {formatCurrency(results401k.inflationAdjustedValue)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -643,15 +813,19 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
 
             {/* CONTRIBUTION VS GROWTH BREAKDOWN PIE CHART */}
             <div>
-              <h3 className="text-base font-semibold text-foreground mb-3">Contribution vs Growth Breakdown</h3>
+              <h3 className="text-base font-semibold text-foreground mb-3">
+                Contribution vs Growth Breakdown
+              </h3>
               <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
                 <div className="h-56 w-full flex items-center justify-center relative">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
                         data={doughnutData}
-                        cx="50%" cy="50%"
-                        innerRadius={55} outerRadius={80}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={55}
+                        outerRadius={80}
                         paddingAngle={4}
                         dataKey="value"
                       >
@@ -659,23 +833,38 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} itemStyle={{ color: "var(--color-foreground)" }} labelStyle={{ color: "var(--color-foreground)" }} wrapperStyle={{ zIndex: 50 }} />
+                      <Tooltip
+                        formatter={(value) => formatCurrency(Number(value))}
+                        contentStyle={{
+                          background: "var(--color-card)",
+                          borderColor: "var(--color-border)",
+                          borderRadius: "8px",
+                        }}
+                        itemStyle={{ color: "var(--color-foreground)" }}
+                        labelStyle={{ color: "var(--color-foreground)" }}
+                        wrapperStyle={{ zIndex: 50 }}
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                   {/* Center Text Indicator */}
                   <div className="absolute flex flex-col items-center justify-center pointer-events-none select-none z-0">
-                    <span className="text-[10px] uppercase tracking-wider font-extrabold text-muted-foreground">Balance</span>
+                    <span className="text-[10px] uppercase tracking-wider font-extrabold text-muted-foreground">
+                      Balance
+                    </span>
                     <span className="text-base font-extrabold text-foreground">
                       {formatCurrency(results401k.totalRetirementBalance)}
                     </span>
                   </div>
                 </div>
-                
+
                 {/* Legend grid */}
                 <div className="grid grid-cols-2 gap-2 text-[10px] font-bold text-muted-foreground mt-3">
                   {doughnutData.map((item) => (
                     <div key={item.name} className="flex items-center gap-1.5 truncate">
-                      <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                      <span
+                        className="h-2.5 w-2.5 rounded-full shrink-0"
+                        style={{ backgroundColor: item.color }}
+                      />
                       <span className="truncate">{item.name}</span>
                     </div>
                   ))}
@@ -685,28 +874,72 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
 
             {/* 401(K) GROWTH PROJECTION CHART */}
             <div>
-              <h3 className="text-base font-semibold text-foreground mb-3">Visualization (Growth Projection)</h3>
+              <h3 className="text-base font-semibold text-foreground mb-3">
+                Visualization (Growth Projection)
+              </h3>
               <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
                 <div className="h-64 sm:h-76 w-full pr-4 text-xs font-semibold">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={results401k.growthData}>
                       <defs>
                         <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#d97706" stopOpacity={0.65}/>
-                          <stop offset="95%" stopColor="#d97706" stopOpacity={0.0}/>
+                          <stop offset="5%" stopColor="#d97706" stopOpacity={0.65} />
+                          <stop offset="95%" stopColor="#d97706" stopOpacity={0.0} />
                         </linearGradient>
                         <linearGradient id="colorContrib" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#0f9e75" stopOpacity={0.65}/>
-                          <stop offset="95%" stopColor="#0f9e75" stopOpacity={0.0}/>
+                          <stop offset="5%" stopColor="#0f9e75" stopOpacity={0.65} />
+                          <stop offset="95%" stopColor="#0f9e75" stopOpacity={0.0} />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" strokeOpacity={0.3} />
-                      <XAxis dataKey="age" height={50} label={{ value: "Age", position: "insideBottom", offset: 0, fill: "var(--color-muted-foreground)", fontSize: 11, fontWeight: 600 }} stroke="var(--color-muted-foreground)" />
-                      <YAxis tickFormatter={(val) => `$${val/1000}k`} stroke="var(--color-muted-foreground)" />
-                      <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} labelStyle={{ color: "var(--color-foreground)" }} />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        stroke="var(--color-border)"
+                        strokeOpacity={0.3}
+                      />
+                      <XAxis
+                        dataKey="age"
+                        height={50}
+                        label={{
+                          value: "Age",
+                          position: "insideBottom",
+                          offset: 0,
+                          fill: "var(--color-muted-foreground)",
+                          fontSize: 11,
+                          fontWeight: 600,
+                        }}
+                        stroke="var(--color-muted-foreground)"
+                      />
+                      <YAxis
+                        tickFormatter={(val) => `$${val / 1000}k`}
+                        stroke="var(--color-muted-foreground)"
+                      />
+                      <Tooltip
+                        formatter={(value) => formatCurrency(Number(value))}
+                        contentStyle={{
+                          background: "var(--color-card)",
+                          borderColor: "var(--color-border)",
+                          borderRadius: "8px",
+                        }}
+                        labelStyle={{ color: "var(--color-foreground)" }}
+                      />
                       <Legend />
-                      <Area type="monotone" dataKey="Growth" stroke="#d97706" strokeWidth={2.5} fillOpacity={1} fill="url(#colorGrowth)" />
-                      <Area type="monotone" dataKey="Contributions" stroke="#0f9e75" strokeWidth={2.5} fillOpacity={1} fill="url(#colorContrib)" />
+                      <Area
+                        type="monotone"
+                        dataKey="Growth"
+                        stroke="#d97706"
+                        strokeWidth={2.5}
+                        fillOpacity={1}
+                        fill="url(#colorGrowth)"
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="Contributions"
+                        stroke="#0f9e75"
+                        strokeWidth={2.5}
+                        fillOpacity={1}
+                        fill="url(#colorContrib)"
+                      />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -715,15 +948,34 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
 
             {/* EMPLOYER MATCH IMPACT CHART */}
             <div>
-              <h3 className="text-base font-semibold text-foreground mb-3">Visualization (Employer Match Impact)</h3>
+              <h3 className="text-base font-semibold text-foreground mb-3">
+                Visualization (Employer Match Impact)
+              </h3>
               <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
                 <div className="h-64 sm:h-72 w-full pr-4 text-xs font-semibold">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={matchImpactData} barSize={40}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" strokeOpacity={0.3} />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        stroke="var(--color-border)"
+                        strokeOpacity={0.3}
+                      />
                       <XAxis dataKey="name" stroke="var(--color-muted-foreground)" />
-                      <YAxis tickFormatter={(val) => `$${val/1000}k`} stroke="var(--color-muted-foreground)" />
-                      <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} itemStyle={{ color: "var(--color-foreground)" }} labelStyle={{ color: "var(--color-foreground)" }} />
+                      <YAxis
+                        tickFormatter={(val) => `$${val / 1000}k`}
+                        stroke="var(--color-muted-foreground)"
+                      />
+                      <Tooltip
+                        formatter={(value) => formatCurrency(Number(value))}
+                        contentStyle={{
+                          background: "var(--color-card)",
+                          borderColor: "var(--color-border)",
+                          borderRadius: "8px",
+                        }}
+                        itemStyle={{ color: "var(--color-foreground)" }}
+                        labelStyle={{ color: "var(--color-foreground)" }}
+                      />
                       <Bar dataKey="Balance" radius={[6, 6, 0, 0]}>
                         {matchImpactData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
@@ -745,7 +997,10 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
                 </h3>
                 <ul className="space-y-3">
                   {insights.map((insight, idx) => (
-                    <li key={idx} className="flex gap-2.5 text-xs font-semibold leading-relaxed text-muted-foreground">
+                    <li
+                      key={idx}
+                      className="flex gap-2.5 text-xs font-semibold leading-relaxed text-muted-foreground"
+                    >
                       <ChevronRight className="h-4 w-4 text-accent shrink-0 mt-0.5" />
                       <span>{insight}</span>
                     </li>

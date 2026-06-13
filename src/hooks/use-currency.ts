@@ -14,11 +14,7 @@ import {
 
 export function useCurrency() {
   const code = useSyncExternalStore(subscribeCurrency, getCurrencyCode, () => getCurrencyCode());
-  const currency = useSyncExternalStore(
-    subscribeCurrency,
-    getCurrency,
-    () => getCurrency(),
-  );
+  const currency = useSyncExternalStore(subscribeCurrency, getCurrency, () => getCurrency());
 
   const setCurrency = useCallback((next: string) => {
     setCurrencyCode(next);

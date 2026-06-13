@@ -35,8 +35,7 @@ const THEME_TRANSITION_MS = 520;
 
 function prefersReducedMotion(): boolean {
   return (
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
 }
 

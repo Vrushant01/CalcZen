@@ -258,6 +258,22 @@ export function BlogEditorPage() {
     editorRef.current?.focus();
   }
 
+  function handleThumbnailUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 800 * 1024) {
+        toast.error("File is larger than 800 KB. We recommend uploading a compressed WebP/JPEG under 800 KB for optimal performance.");
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === "string") {
+          setThumbnail(reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   // Visual structures insertions
   function insertLink() {
     const url = prompt("Enter full URL (e.g. https://google.com):");
@@ -265,8 +281,25 @@ export function BlogEditorPage() {
   }
 
   function insertImage() {
-    const url = prompt("Enter image URL:");
-    if (url) execCmd("insertImage", url);
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        if (file.size > 800 * 1024) {
+          toast.error("Image file is too large (max 800 KB recommended for fast page loads).");
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (typeof reader.result === "string") {
+            execCmd("insertImage", reader.result);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    input.click();
   }
 
   function insertTable() {
@@ -775,7 +808,7 @@ export function BlogEditorPage() {
                       type="button"
                       onClick={insertImage}
                       className="p-2 rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white"
-                      title="Insert Image URL"
+                      title="Upload Image from Files"
                     >
                       <Image size={16} />
                     </button>
@@ -941,17 +974,40 @@ export function BlogEditorPage() {
 
                 <div className="space-y-3 border-t border-[var(--color-card-border)] pt-4">
                   <div>
-                    <label htmlFor="thumbnail" className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1">
-                      Cover Thumbnail URL
+                    <label className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1">
+                      Cover Thumbnail Image
                     </label>
-                    <input
-                      id="thumbnail"
-                      type="url"
-                      value={thumbnail}
-                      onChange={(e) => setThumbnail(e.target.value)}
-                      className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] placeholder:text-[var(--color-muted)]"
-                      placeholder="https://images.unsplash.com/..."
-                    />
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2">
+                        <input
+                          id="thumbnail-file"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleThumbnailUpload}
+                          className="hidden"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => document.getElementById("thumbnail-file")?.click()}
+                          className="h-9 px-3 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-colors"
+                        >
+                          Upload Cover Image
+                        </button>
+                        {thumbnail && (
+                          <button
+                            type="button"
+                            onClick={() => setThumbnail("")}
+                            className="h-9 px-3 text-xs font-semibold rounded-lg bg-zinc-800 hover:bg-zinc-700 text-red-400 hover:text-red-300 transition-colors"
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </div>
+                      <p className="text-[10px] text-[var(--color-muted)] leading-relaxed mt-1">
+                        Recommended dimensions: <strong>1200 x 630 pixels</strong> (16:9 aspect ratio) for optimal social preview. 
+                        Recommended file size: <strong>under 200 KB</strong> (maximum 800 KB, format: WebP or JPEG).
+                      </p>
+                    </div>
                   </div>
 
                   {thumbnail && (

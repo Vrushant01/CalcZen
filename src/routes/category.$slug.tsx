@@ -20,7 +20,8 @@ export const Route = createFileRoute("/category/$slug")({
     const url = `https://calczen.in/category/${cat.slug}`;
     return {
       meta: [
-        { title }, { name: "description", content: desc },
+        { title },
+        { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { name: "twitter:description", content: desc },
@@ -34,7 +35,10 @@ export const Route = createFileRoute("/category/$slug")({
     <PageShell>
       <PageContainer className="py-16 sm:py-24 text-center">
         <h1 className="text-2xl sm:text-3xl font-bold">Category not found</h1>
-        <Link to="/calculators" className="mt-6 inline-flex min-h-[2.75rem] items-center text-accent">
+        <Link
+          to="/calculators"
+          className="mt-6 inline-flex min-h-[2.75rem] items-center text-accent"
+        >
           Browse all calculators
         </Link>
       </PageContainer>
@@ -52,7 +56,8 @@ const CATEGORY_LANDING_DATA: Record<
   }
 > = {
   finance: {
-    intro: "Welcome to our comprehensive suite of personal finance, home loan, and investment calculators. These educational tools are designed to help you analyze loan payouts, estimate compound growth curves, calculate monthly EMI payouts, and plan for your long-term wealth goals. Every tool includes transparent mathematical formulas, step-by-step examples, and expert explanations to simplify your calculations.",
+    intro:
+      "Welcome to our comprehensive suite of personal finance, home loan, and investment calculators. These educational tools are designed to help you analyze loan payouts, estimate compound growth curves, calculate monthly EMI payouts, and plan for your long-term wealth goals. Every tool includes transparent mathematical formulas, step-by-step examples, and expert explanations to simplify your calculations.",
     faqs: [
       {
         q: "What is an EMI and how is it calculated?",
@@ -73,7 +78,8 @@ const CATEGORY_LANDING_DATA: Record<
     ],
   },
   health: {
-    intro: "Take control of your wellness, nutrition, and fitness goals with our scientific health calculators. Based on clinical formulas (such as the Harris-Benedict BMR equation and body mass index formulas), these tools enable you to estimate daily calorie requirements, compute your BMI category, determine optimal hydration, and track pregnancy milestones with ease. Always consult a healthcare professional for personalized medical advice.",
+    intro:
+      "Take control of your wellness, nutrition, and fitness goals with our scientific health calculators. Based on clinical formulas (such as the Harris-Benedict BMR equation and body mass index formulas), these tools enable you to estimate daily calorie requirements, compute your BMI category, determine optimal hydration, and track pregnancy milestones with ease. Always consult a healthcare professional for personalized medical advice.",
     faqs: [
       {
         q: "What is a healthy Body Mass Index (BMI) range?",
@@ -94,7 +100,8 @@ const CATEGORY_LANDING_DATA: Record<
     ],
   },
   math: {
-    intro: "Solve everyday math problems, calculate percentage ratios, and find exact age calculations instantly using our fast math calculators. Designed for students, professionals, and daily problem-solving, these educational math tools take the complexity out of calculations. From fractional percentage increases to exact interval analysis, CalcZen makes math simple and accessible.",
+    intro:
+      "Solve everyday math problems, calculate percentage ratios, and find exact age calculations instantly using our fast math calculators. Designed for students, professionals, and daily problem-solving, these educational math tools take the complexity out of calculations. From fractional percentage increases to exact interval analysis, CalcZen makes math simple and accessible.",
     faqs: [
       {
         q: "How do I calculate a percentage increase?",
@@ -115,7 +122,8 @@ const CATEGORY_LANDING_DATA: Record<
     ],
   },
   everyday: {
-    intro: "Make quick lifestyle calculations, split restaurant bills, and structure everyday decisions using our highly intuitive lifestyle calculators. Whether you are managing restaurant tipping etiquette, splitting standard group costs, or evaluating daily metrics, these tools are built to save time and prevent calculation stress.",
+    intro:
+      "Make quick lifestyle calculations, split restaurant bills, and structure everyday decisions using our highly intuitive lifestyle calculators. Whether you are managing restaurant tipping etiquette, splitting standard group costs, or evaluating daily metrics, these tools are built to save time and prevent calculation stress.",
     faqs: [
       {
         q: "What is the standard tipping rate at restaurants?",
@@ -153,14 +161,16 @@ function CategoryPage() {
           aria-label="Breadcrumb"
           className="scroll-touch-x flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4"
         >
-          <Link to="/" className="shrink-0 hover:text-foreground">Home</Link>
+          <Link to="/" className="shrink-0 hover:text-foreground">
+            Home
+          </Link>
           <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
           <span className="text-foreground font-medium truncate">{cat.name}</span>
         </nav>
 
         <header className="mb-6 sm:mb-8 min-w-0">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-balance">
-            {cat.slug === "finance" 
+            {cat.slug === "finance"
               ? "Personal Finance, Investment, and Loan Calculators"
               : cat.slug === "health"
                 ? "Scientific Health, Fitness, and Wellness Calculators"
@@ -175,7 +185,9 @@ function CategoryPage() {
 
         {/* Dynamic Calculator Grid */}
         <section className="min-w-0" aria-label={`${cat.name} Tools`}>
-          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Available {cat.name} Calculators</h2>
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+            Available {cat.name} Calculators
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 min-w-0">
             {list.map((c, i) => (
               <CalculatorCard key={c.slug} calc={c} index={i} />
@@ -226,28 +238,28 @@ function CategoryPage() {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
                 "@id": `https://calczen.in/category/${cat.slug}#webpage`,
-                "name": `${cat.name} Calculators | CalcZen`,
-                "description": `Browse free online ${cat.name} calculators. Fast, accurate, and easy to use with step-by-step solutions.`,
-                "url": `https://calczen.in/category/${cat.slug}`
+                name: `${cat.name} Calculators | CalcZen`,
+                description: `Browse free online ${cat.name} calculators. Fast, accurate, and easy to use with step-by-step solutions.`,
+                url: `https://calczen.in/category/${cat.slug}`,
               },
               {
                 "@context": "https://schema.org",
                 "@type": "CollectionPage",
                 "@id": `https://calczen.in/category/${cat.slug}#collection`,
-                "name": `${cat.name} Calculators`,
-                "description": `Browse our complete list of free online ${cat.name} calculators.`,
-                "url": `https://calczen.in/category/${cat.slug}`
+                name: `${cat.name} Calculators`,
+                description: `Browse our complete list of free online ${cat.name} calculators.`,
+                url: `https://calczen.in/category/${cat.slug}`,
               },
               {
                 "@context": "https://schema.org",
                 "@type": "FAQPage",
                 "@id": `https://calczen.in/category/${cat.slug}#faq`,
-                "mainEntity": data.faqs.map((f) => ({
+                mainEntity: data.faqs.map((f) => ({
                   "@type": "Question",
-                  "name": f.q,
-                  "acceptedAnswer": {
+                  name: f.q,
+                  acceptedAnswer: {
                     "@type": "Answer",
-                    "text": f.a,
+                    text: f.a,
                   },
                 })),
               },
@@ -255,18 +267,18 @@ function CategoryPage() {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "@id": `https://calczen.in/category/${cat.slug}#breadcrumb`,
-                "itemListElement": [
+                itemListElement: [
                   {
                     "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://calczen.in",
+                    position: 1,
+                    name: "Home",
+                    item: "https://calczen.in",
                   },
                   {
                     "@type": "ListItem",
-                    "position": 2,
-                    "name": cat.name,
-                    "item": `https://calczen.in/category/${cat.slug}`,
+                    position: 2,
+                    name: cat.name,
+                    item: `https://calczen.in/category/${cat.slug}`,
                   },
                 ],
               },

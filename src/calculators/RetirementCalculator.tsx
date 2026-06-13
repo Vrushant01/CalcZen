@@ -9,12 +9,30 @@ import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
 import { Button } from "@/components/ui/button";
 import { CalculateButton } from "@/components/CalculateButton";
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, Legend
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
 } from "recharts";
 import {
-  Calendar, Percent, HelpCircle, DollarSign, ArrowUpRight,
-  TrendingUp, Sparkles, Sliders, Info, ShieldCheck, ChevronRight
+  Calendar,
+  Percent,
+  HelpCircle,
+  DollarSign,
+  ArrowUpRight,
+  TrendingUp,
+  Sparkles,
+  Sliders,
+  Info,
+  ShieldCheck,
+  ChevronRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -27,7 +45,7 @@ export function RetirementCalculator() {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(val);
   }
 
@@ -52,8 +70,12 @@ export function RetirementCalculator() {
   // Advanced Planning & Scenarios
   const [federalTax, setFederalTax] = useState<number | "">(12);
   const [stateTax, setStateTax] = useState<number | "">(5);
-  const [inflationScenario, setInflationScenario] = useState<"conservative" | "moderate" | "aggressive">("moderate");
-  const [marketPerformance, setMarketPerformance] = useState<"bear" | "average" | "bull">("average");
+  const [inflationScenario, setInflationScenario] = useState<
+    "conservative" | "moderate" | "aggressive"
+  >("moderate");
+  const [marketPerformance, setMarketPerformance] = useState<"bear" | "average" | "bull">(
+    "average",
+  );
 
   // Sync inflation changes to manual settings
   useEffect(() => {
@@ -83,8 +105,12 @@ export function RetirementCalculator() {
   const [calcOtherIncome, setCalcOtherIncome] = useState(0);
   const [calcFederalTax, setCalcFederalTax] = useState(12);
   const [calcStateTax, setCalcStateTax] = useState(5);
-  const [calcInflationScenario, setCalcInflationScenario] = useState<"conservative" | "moderate" | "aggressive">("moderate");
-  const [calcMarketPerformance, setCalcMarketPerformance] = useState<"bear" | "average" | "bull">("average");
+  const [calcInflationScenario, setCalcInflationScenario] = useState<
+    "conservative" | "moderate" | "aggressive"
+  >("moderate");
+  const [calcMarketPerformance, setCalcMarketPerformance] = useState<"bear" | "average" | "bull">(
+    "average",
+  );
 
   // Adjust returns based on market performance
   const resolvedExpectedReturn = useMemo(() => {
@@ -99,7 +125,7 @@ export function RetirementCalculator() {
   const retirementResults = useMemo(() => {
     const yearsToRetire = Math.max(0, calcRetirementAge - calcCurrentAge);
     const yearsInRetirement = Math.max(0, calcLifeExpectancy - calcRetirementAge);
-    
+
     let savings = calcCurrentSavings;
     let totalPersonalContributions = 0;
     const growthData: any[] = [];
@@ -108,15 +134,15 @@ export function RetirementCalculator() {
     for (let year = 1; year <= yearsToRetire; year++) {
       const startBalance = savings;
       const annualContrib = calcMonthlyContribution * 12;
-      
+
       // Monthly compound interest
       const monthlyRate = resolvedExpectedReturn / 100 / 12;
       let compoundedSavings = startBalance;
 
       for (let month = 1; month <= 12; month++) {
-        compoundedSavings = compoundedSavings * (1 + monthlyRate) + (calcMonthlyContribution);
+        compoundedSavings = compoundedSavings * (1 + monthlyRate) + calcMonthlyContribution;
       }
-      
+
       savings = compoundedSavings;
       totalPersonalContributions += annualContrib;
       const totalGrowth = savings - (calcCurrentSavings + totalPersonalContributions);
@@ -125,7 +151,7 @@ export function RetirementCalculator() {
         age: calcCurrentAge + year,
         Contributions: Math.round(calcCurrentSavings + totalPersonalContributions),
         Growth: Math.round(totalGrowth),
-        Balance: Math.round(savings)
+        Balance: Math.round(savings),
       });
     }
 
@@ -133,13 +159,14 @@ export function RetirementCalculator() {
 
     // 2. Decumulation Phase loop (Income Gap & Years Money Lasts)
     let decumBalance = savings;
-    const totalAdditionalIncome = calcPension + calcSocialSecurity + calcRentalIncome + calcOtherIncome;
+    const totalAdditionalIncome =
+      calcPension + calcSocialSecurity + calcRentalIncome + calcOtherIncome;
     const taxRate = (calcFederalTax + calcStateTax) / 100;
-    
+
     // Desired withdrawals adjusted for tax rate
     const grossIncomeNeeded = calcDesiredIncome / (1 - taxRate);
     const netWithdrawalGap = Math.max(0, grossIncomeNeeded - totalAdditionalIncome);
-    
+
     let yearsMoneyLasts = 0;
     const decumulationChartData: any[] = [];
 
@@ -153,14 +180,14 @@ export function RetirementCalculator() {
         decumulationChartData.push({
           age: calcRetirementAge + year,
           Withdrawals: Math.round(realWithdrawal),
-          RemainingCorpus: Math.round(decumBalance)
+          RemainingCorpus: Math.round(decumBalance),
         });
       } else {
         if (decumBalance > 0) {
           decumulationChartData.push({
             age: calcRetirementAge + year,
             Withdrawals: Math.round(decumBalance),
-            RemainingCorpus: 0
+            RemainingCorpus: 0,
           });
           decumBalance = 0;
         }
@@ -172,11 +199,13 @@ export function RetirementCalculator() {
     let safeCorpusNeeded = 0;
     for (let year = 1; year <= yearsInRetirement; year++) {
       const inflationFactor = Math.pow(1 + calcInflationRate / 100, year);
-      safeCorpusNeeded += (netWithdrawalGap * inflationFactor) / Math.pow(1 + resolvedExpectedReturn / 100, year);
+      safeCorpusNeeded +=
+        (netWithdrawalGap * inflationFactor) / Math.pow(1 + resolvedExpectedReturn / 100, year);
     }
 
     const incomeGap = Math.max(0, safeCorpusNeeded - projectedSavingsAtRetirement);
-    const monthlyIncomeGenerated = (projectedSavingsAtRetirement * (resolvedExpectedReturn / 100)) / 12;
+    const monthlyIncomeGenerated =
+      (projectedSavingsAtRetirement * (resolvedExpectedReturn / 100)) / 12;
 
     // Readiness score index (0-100)
     let readinessScore = 0;
@@ -196,12 +225,24 @@ export function RetirementCalculator() {
       growthData,
       decumulationChartData,
       totalPersonalContributions,
-      totalGrowthEarned: projectedSavingsAtRetirement - (calcCurrentSavings + totalPersonalContributions)
+      totalGrowthEarned:
+        projectedSavingsAtRetirement - (calcCurrentSavings + totalPersonalContributions),
     };
   }, [
-    calcCurrentAge, calcRetirementAge, calcLifeExpectancy, calcCurrentSavings,
-    calcMonthlyContribution, resolvedExpectedReturn, calcInflationRate, calcDesiredIncome,
-    calcPension, calcSocialSecurity, calcRentalIncome, calcOtherIncome, calcFederalTax, calcStateTax
+    calcCurrentAge,
+    calcRetirementAge,
+    calcLifeExpectancy,
+    calcCurrentSavings,
+    calcMonthlyContribution,
+    resolvedExpectedReturn,
+    calcInflationRate,
+    calcDesiredIncome,
+    calcPension,
+    calcSocialSecurity,
+    calcRentalIncome,
+    calcOtherIncome,
+    calcFederalTax,
+    calcStateTax,
   ]);
 
   // ----------------------------------------------------
@@ -216,21 +257,34 @@ export function RetirementCalculator() {
     const yearsInRetire = calcLifeExpectancy - calcRetirementAge;
 
     if (gap <= 0) {
-      list.push(`🎉 Fantastic! Your projected retirement savings exceed your secure corpus target by ${formatCurrency(Math.abs(gap))}.`);
+      list.push(
+        `🎉 Fantastic! Your projected retirement savings exceed your secure corpus target by ${formatCurrency(Math.abs(gap))}.`,
+      );
     } else {
-      list.push(`⚠️ Shortfall Alert: You have a savings gap of ${formatCurrency(gap)} to cover your desired retirement lifestyle.`);
+      list.push(
+        `⚠️ Shortfall Alert: You have a savings gap of ${formatCurrency(gap)} to cover your desired retirement lifestyle.`,
+      );
       const extraMonthly = gap / (Math.max(1, calcRetirementAge - calcCurrentAge) * 12 * 1.5); // Simplified compound factor
-      list.push(`💡 Boosting your monthly contributions by just ${formatCurrency(extraMonthly)} could fully close your retirement savings gap.`);
+      list.push(
+        `💡 Boosting your monthly contributions by just ${formatCurrency(extraMonthly)} could fully close your retirement savings gap.`,
+      );
     }
 
     if (yearsMoneyLasts >= yearsInRetire) {
-      list.push(`🛡️ Safety Margin: Your corpus is projected to outlast your life expectancy by ${yearsMoneyLasts - yearsInRetire} years.`);
+      list.push(
+        `🛡️ Safety Margin: Your corpus is projected to outlast your life expectancy by ${yearsMoneyLasts - yearsInRetire} years.`,
+      );
     } else {
-      list.push(`⚠️ Depletion warning: Your savings are projected to run out at age ${calcRetirementAge + yearsMoneyLasts}, leaving you ${yearsInRetire - yearsMoneyLasts} years short.`);
+      list.push(
+        `⚠️ Depletion warning: Your savings are projected to run out at age ${calcRetirementAge + yearsMoneyLasts}, leaving you ${yearsInRetire - yearsMoneyLasts} years short.`,
+      );
     }
 
-    const purchasingPower = 100 / Math.pow(1 + calcInflationRate / 100, calcRetirementAge - calcCurrentAge);
-    list.push(`📈 Inflation Impact: Future inflation is projected to reduce the purchasing power of your money by ${Math.round(100 - purchasingPower)}% at retirement.`);
+    const purchasingPower =
+      100 / Math.pow(1 + calcInflationRate / 100, calcRetirementAge - calcCurrentAge);
+    list.push(
+      `📈 Inflation Impact: Future inflation is projected to reduce the purchasing power of your money by ${Math.round(100 - purchasingPower)}% at retirement.`,
+    );
 
     return list;
   }, [retirementResults, calcCurrentAge, calcRetirementAge, calcLifeExpectancy, calcInflationRate]);
@@ -244,7 +298,7 @@ export function RetirementCalculator() {
     return [
       { name: "Initial Savings", value: calcCurrentSavings, color: "#1a1a2e" },
       { name: "Personal Contributions", value: totalPersonalContributions, color: "#0f9e75" },
-      { name: "Investment Growth", value: totalGrowthEarned, color: "#d97706" }
+      { name: "Investment Growth", value: totalGrowthEarned, color: "#d97706" },
     ];
   }, [retirementResults, calcCurrentSavings]);
 
@@ -253,7 +307,13 @@ export function RetirementCalculator() {
   // ----------------------------------------------------
   const pdfData = useMemo(() => {
     if (!hasResult || !retirementResults) return null;
-    const { projectedSavingsAtRetirement, safeCorpusNeeded, incomeGap, yearsMoneyLasts, readinessScore } = retirementResults;
+    const {
+      projectedSavingsAtRetirement,
+      safeCorpusNeeded,
+      incomeGap,
+      yearsMoneyLasts,
+      readinessScore,
+    } = retirementResults;
     return {
       calculatorName: "Retirement Calculator",
       calculatorSlug: "retirement-calculator",
@@ -269,46 +329,83 @@ export function RetirementCalculator() {
         { label: "Inflation Rate", value: `${calcInflationRate}%` },
         { label: "Desired Retirement Income", value: `${formatCurrency(calcDesiredIncome)}/year` },
         { label: "Social Security Benefits", value: `${formatCurrency(calcSocialSecurity)}/year` },
-        { label: "Tax Settings (Fed + State)", value: `${calcFederalTax + calcStateTax}%` }
+        { label: "Tax Settings (Fed + State)", value: `${calcFederalTax + calcStateTax}%` },
       ],
       results: [
-        { label: "Projected Savings at Retirement", value: formatCurrency(projectedSavingsAtRetirement) },
-        { label: "Retirement Corpus Needed", value: formatCurrency(safeCorpusNeeded), highlight: true },
+        {
+          label: "Projected Savings at Retirement",
+          value: formatCurrency(projectedSavingsAtRetirement),
+        },
+        {
+          label: "Retirement Corpus Needed",
+          value: formatCurrency(safeCorpusNeeded),
+          highlight: true,
+        },
         { label: "Savings Shortfall / Income Gap", value: formatCurrency(incomeGap) },
         { label: "Retirement Readiness Score", value: `${readinessScore}/100` },
-        { label: "Years Money Will Last", value: `${yearsMoneyLasts} years` }
+        { label: "Years Money Will Last", value: `${yearsMoneyLasts} years` },
       ],
       summary: `Retirement Wealth Planning report generated on CalcZen. Based on a target retirement age of ${calcRetirementAge}, you are projected to accumulate ${formatCurrency(projectedSavingsAtRetirement)} against a desired corpus target of ${formatCurrency(safeCorpusNeeded)}. This leaves a financial coverage of ${yearsMoneyLasts} years during your retirement, resulting in a Readiness Score of ${readinessScore}%.`,
-      tableData: retirementResults.growthData.length > 0 ? {
-        title: "ANNUAL SAVINGS ACCUMULATION TIMELINE",
-        headers: ["Age", "Personal Contributions", "Investment Growth", "Projected Balance"],
-        rows: retirementResults.growthData.filter((_, i) => i % 5 === 0 || i === retirementResults.growthData.length - 1).map((item) => [
-          String(item.age),
-          formatCurrency(item.Contributions),
-          formatCurrency(item.Growth),
-          formatCurrency(item.Balance)
-        ])
-      } : null
+      tableData:
+        retirementResults.growthData.length > 0
+          ? {
+              title: "ANNUAL SAVINGS ACCUMULATION TIMELINE",
+              headers: ["Age", "Personal Contributions", "Investment Growth", "Projected Balance"],
+              rows: retirementResults.growthData
+                .filter((_, i) => i % 5 === 0 || i === retirementResults.growthData.length - 1)
+                .map((item) => [
+                  String(item.age),
+                  formatCurrency(item.Contributions),
+                  formatCurrency(item.Growth),
+                  formatCurrency(item.Balance),
+                ]),
+            }
+          : null,
     };
   }, [
-    hasResult, calcCurrentAge, calcRetirementAge, calcLifeExpectancy, calcCurrentSavings,
-    calcMonthlyContribution, calcExpectedReturn, calcInflationRate, calcDesiredIncome,
-    calcSocialSecurity, calcFederalTax, calcStateTax, retirementResults
+    hasResult,
+    calcCurrentAge,
+    calcRetirementAge,
+    calcLifeExpectancy,
+    calcCurrentSavings,
+    calcMonthlyContribution,
+    calcExpectedReturn,
+    calcInflationRate,
+    calcDesiredIncome,
+    calcSocialSecurity,
+    calcFederalTax,
+    calcStateTax,
+    retirementResults,
   ]);
 
-  const isButtonDisabled = 
-    currentAge === "" || retirementAge === "" || lifeExpectancy === "" ||
-    currentSavings === "" || monthlyContribution === "" || expectedReturn === "" ||
-    inflationRate === "" || desiredIncome === "" || pension === "" ||
-    socialSecurity === "" || rentalIncome === "" || otherIncome === "" ||
-    federalTax === "" || stateTax === "" ||
-    Number(currentAge) <= 0 || Number(retirementAge) <= Number(currentAge) ||
+  const isButtonDisabled =
+    currentAge === "" ||
+    retirementAge === "" ||
+    lifeExpectancy === "" ||
+    currentSavings === "" ||
+    monthlyContribution === "" ||
+    expectedReturn === "" ||
+    inflationRate === "" ||
+    desiredIncome === "" ||
+    pension === "" ||
+    socialSecurity === "" ||
+    rentalIncome === "" ||
+    otherIncome === "" ||
+    federalTax === "" ||
+    stateTax === "" ||
+    Number(currentAge) <= 0 ||
+    Number(retirementAge) <= Number(currentAge) ||
     Number(lifeExpectancy) <= Number(retirementAge) ||
-    Number(currentSavings) < 0 || Number(monthlyContribution) < 0 ||
-    Number(expectedReturn) < 0 || Number(inflationRate) < 0 ||
-    Number(desiredIncome) < 0 || Number(pension) < 0 ||
-    Number(socialSecurity) < 0 || Number(rentalIncome) < 0 ||
-    Number(otherIncome) < 0 || Number(federalTax) < 0 ||
+    Number(currentSavings) < 0 ||
+    Number(monthlyContribution) < 0 ||
+    Number(expectedReturn) < 0 ||
+    Number(inflationRate) < 0 ||
+    Number(desiredIncome) < 0 ||
+    Number(pension) < 0 ||
+    Number(socialSecurity) < 0 ||
+    Number(rentalIncome) < 0 ||
+    Number(otherIncome) < 0 ||
+    Number(federalTax) < 0 ||
     Number(stateTax) < 0;
 
   const handleCalculate = () => {
@@ -384,21 +481,44 @@ Income Gap = SafeCorpusNeeded − ProjectedSavingsAtRetirement
 Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)ⁿ]`}
       example={`Starting with $50,000 savings and compounding $500/month at 7% return over 35 years compiles over $1.04M at retirement.`}
       faqs={[
-        { q: "What is a retirement calculator?", a: "A retirement calculator is a financial planning tool that projects your future savings corpus and retirement readiness based on current age, retirement age, savings rate, investment yields, and inflation. It helps you determine if your current savings trajectory will support your target lifestyle and identifies adjustments needed to reach goals." },
-        { q: "What is the 4% rule in retirement?", a: "The 4% rule is a guideline stating that you can safely withdraw 4% of your retirement portfolio's value in the first year of retirement, and adjust that amount for inflation each subsequent year, without running out of money over a 30-year horizon. It helps size your required nest egg and estimate annual retirement income." },
-        { q: "How does inflation affect my retirement planning?", a: "Inflation reduces the purchasing power of your money over time, meaning you will need a much larger nominal income in retirement to maintain your current standard of living. Our online retirement calculators must factor in an average inflation rate (usually 2% to 3% annually) to project realistic future costs and savings requirements over multiple decades." },
-        { q: "How does compounding interest help my retirement fund?", a: "Compounding interest is the financial process where your savings earn investment returns, and those returns subsequently generate their own returns. Over multiple decades, this compounding creates exponential wealth growth. Starting early maximizes this effect, making it much easier to build a large retirement corpus. Learn about investment growth by using our <a href=\"/calculator/compound-interest-calculator\" class=\"text-primary hover:underline\">Compound Interest Calculator</a>." },
-        { q: "What is a Retirement Income Gap?", a: "A Retirement Income Gap is the direct financial shortfall between your projected retirement living expenses and your guaranteed retirement income sources (like Social Security or pensions) plus your portfolio withdrawals. Identifying this gap early allows you to increase savings, reduce expenses, or adjust your retirement age to prevent financial hardship in the future." },
-        { q: "Should I prioritize saving in a 401(k) or IRA?", a: "You should prioritize saving in your employer-sponsored 401(k) retirement plan at least up to the matching contribution limit, as this matching contribution is essentially free money. Additional retirement savings can be allocated to a Traditional or Roth IRA depending on your tax bracket. Explore employer matching options with our <a href=\"/calculator/401k-calculator\" class=\"text-primary hover:underline\">401(k) Calculator</a>." },
-        { q: "How does my retirement age affect my savings needs?", a: "Retiring early increases the number of years your savings must support you and reduces the time your investments have to compound. Conversely, working longer allows your savings to grow further and increases your monthly Social Security benefits. You can calculate percentage budget shifts with our <a href=\"/calculator/percentage-calculator\" class=\"text-primary hover:underline\">Percentage Calculator</a>." },
-        { q: "What is the difference between pre-tax and post-tax retirement savings?", a: "Pre-tax savings in traditional retirement accounts reduce your taxable income today, but withdrawals in retirement are taxed as ordinary income. Post-tax savings in Roth accounts provide no tax break today, but withdrawals in retirement are entirely tax-free. Evaluating your expected future tax bracket helps determine which account type is most financially advantageous for you." }
+        {
+          q: "What is a retirement calculator?",
+          a: "A retirement calculator is a financial planning tool that projects your future savings corpus and retirement readiness based on current age, retirement age, savings rate, investment yields, and inflation. It helps you determine if your current savings trajectory will support your target lifestyle and identifies adjustments needed to reach goals.",
+        },
+        {
+          q: "What is the 4% rule in retirement?",
+          a: "The 4% rule is a guideline stating that you can safely withdraw 4% of your retirement portfolio's value in the first year of retirement, and adjust that amount for inflation each subsequent year, without running out of money over a 30-year horizon. It helps size your required nest egg and estimate annual retirement income.",
+        },
+        {
+          q: "How does inflation affect my retirement planning?",
+          a: "Inflation reduces the purchasing power of your money over time, meaning you will need a much larger nominal income in retirement to maintain your current standard of living. Our online retirement calculators must factor in an average inflation rate (usually 2% to 3% annually) to project realistic future costs and savings requirements over multiple decades.",
+        },
+        {
+          q: "How does compounding interest help my retirement fund?",
+          a: 'Compounding interest is the financial process where your savings earn investment returns, and those returns subsequently generate their own returns. Over multiple decades, this compounding creates exponential wealth growth. Starting early maximizes this effect, making it much easier to build a large retirement corpus. Learn about investment growth by using our <a href="/calculator/compound-interest-calculator" class="text-primary hover:underline">Compound Interest Calculator</a>.',
+        },
+        {
+          q: "What is a Retirement Income Gap?",
+          a: "A Retirement Income Gap is the direct financial shortfall between your projected retirement living expenses and your guaranteed retirement income sources (like Social Security or pensions) plus your portfolio withdrawals. Identifying this gap early allows you to increase savings, reduce expenses, or adjust your retirement age to prevent financial hardship in the future.",
+        },
+        {
+          q: "Should I prioritize saving in a 401(k) or IRA?",
+          a: 'You should prioritize saving in your employer-sponsored 401(k) retirement plan at least up to the matching contribution limit, as this matching contribution is essentially free money. Additional retirement savings can be allocated to a Traditional or Roth IRA depending on your tax bracket. Explore employer matching options with our <a href="/calculator/401k-calculator" class="text-primary hover:underline">401(k) Calculator</a>.',
+        },
+        {
+          q: "How does my retirement age affect my savings needs?",
+          a: 'Retiring early increases the number of years your savings must support you and reduces the time your investments have to compound. Conversely, working longer allows your savings to grow further and increases your monthly Social Security benefits. You can calculate percentage budget shifts with our <a href="/calculator/percentage-calculator" class="text-primary hover:underline">Percentage Calculator</a>.',
+        },
+        {
+          q: "What is the difference between pre-tax and post-tax retirement savings?",
+          a: "Pre-tax savings in traditional retirement accounts reduce your taxable income today, but withdrawals in retirement are taxed as ordinary income. Post-tax savings in Roth accounts provide no tax break today, but withdrawals in retirement are entirely tax-free. Evaluating your expected future tax bracket helps determine which account type is most financially advantageous for you.",
+        },
       ]}
       blog={<CalculatorBlog content={blogContent.retirement} />}
     >
       <div className="flex flex-col gap-6">
         {/* LEFT COLUMN: FINANCIAL INPUTS */}
         <div className="calc-input-column space-y-6">
-          
           {/* Core Inputs Card */}
           <div className="bg-card/20 border border-border/70 rounded-2xl p-5 sm:p-6 shadow-card">
             <h3 className="text-base font-bold text-foreground mb-5 flex items-center gap-2 select-none border-b border-border/20 pb-3">
@@ -413,7 +533,10 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
                   <span className="text-foreground">{currentAge} yrs</span>
                 </label>
                 <input
-                  type="range" min="18" max="80" value={currentAge}
+                  type="range"
+                  min="18"
+                  max="80"
+                  value={currentAge}
                   onChange={(e) => setCurrentAge(Number(e.target.value))}
                   className="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-muted"
                 />
@@ -425,7 +548,10 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
                   <span className="text-foreground">{retirementAge} yrs</span>
                 </label>
                 <input
-                  type="range" min={Math.max(18, currentAge + 1)} max="95" value={retirementAge}
+                  type="range"
+                  min={Math.max(18, currentAge + 1)}
+                  max="95"
+                  value={retirementAge}
                   onChange={(e) => setRetirementAge(Number(e.target.value))}
                   className="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-muted"
                 />
@@ -437,7 +563,10 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
                   <span className="text-foreground">{lifeExpectancy} yrs</span>
                 </label>
                 <input
-                  type="range" min={Math.max(18, retirementAge + 1)} max="110" value={lifeExpectancy}
+                  type="range"
+                  min={Math.max(18, retirementAge + 1)}
+                  max="110"
+                  value={lifeExpectancy}
                   onChange={(e) => setLifeExpectancy(Number(e.target.value))}
                   className="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-muted"
                 />
@@ -446,9 +575,12 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-bold text-muted-foreground">Current Savings</label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">
+                    $
+                  </span>
                   <input
-                    type="number" value={currentSavings}
+                    type="number"
+                    value={currentSavings}
                     onChange={(e) => {
                       const val = e.target.value;
                       setCurrentSavings(val === "" ? "" : Math.max(0, Number(val)));
@@ -460,11 +592,16 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Monthly Savings Contribution</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Monthly Savings Contribution
+                </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">
+                    $
+                  </span>
                   <input
-                    type="number" value={monthlyContribution}
+                    type="number"
+                    value={monthlyContribution}
                     onChange={(e) => {
                       const val = e.target.value;
                       setMonthlyContribution(val === "" ? "" : Math.max(0, Number(val)));
@@ -476,11 +613,16 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Desired Annual Retirement Income</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Desired Annual Retirement Income
+                </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">
+                    $
+                  </span>
                   <input
-                    type="number" value={desiredIncome}
+                    type="number"
+                    value={desiredIncome}
                     onChange={(e) => {
                       const val = e.target.value;
                       setDesiredIncome(val === "" ? "" : Math.max(0, Number(val)));
@@ -492,9 +634,13 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Expected Annual Return (%)</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Expected Annual Return (%)
+                </label>
                 <input
-                  type="number" step="0.1" value={expectedReturn}
+                  type="number"
+                  step="0.1"
+                  value={expectedReturn}
                   onChange={(e) => {
                     const val = e.target.value;
                     setExpectedReturn(val === "" ? "" : Math.max(0, Number(val)));
@@ -505,9 +651,13 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Inflation Rate (%)</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Inflation Rate (%)
+                </label>
                 <input
-                  type="number" step="0.1" value={inflationRate}
+                  type="number"
+                  step="0.1"
+                  value={inflationRate}
                   onChange={(e) => {
                     const val = e.target.value;
                     setInflationRate(val === "" ? "" : Math.max(0, Number(val)));
@@ -527,11 +677,16 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-5.5">
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Social Security benefits</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Social Security benefits
+                </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">
+                    $
+                  </span>
                   <input
-                    type="number" value={socialSecurity}
+                    type="number"
+                    value={socialSecurity}
                     onChange={(e) => {
                       const val = e.target.value;
                       setSocialSecurity(val === "" ? "" : Math.max(0, Number(val)));
@@ -545,9 +700,12 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-bold text-muted-foreground">Pension payouts</label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">
+                    $
+                  </span>
                   <input
-                    type="number" value={pension}
+                    type="number"
+                    value={pension}
                     onChange={(e) => {
                       const val = e.target.value;
                       setPension(val === "" ? "" : Math.max(0, Number(val)));
@@ -559,11 +717,16 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Rental Properties income</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Rental Properties income
+                </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">
+                    $
+                  </span>
                   <input
-                    type="number" value={rentalIncome}
+                    type="number"
+                    value={rentalIncome}
                     onChange={(e) => {
                       const val = e.target.value;
                       setRentalIncome(val === "" ? "" : Math.max(0, Number(val)));
@@ -575,11 +738,16 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Other supplementary income</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Other supplementary income
+                </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">$</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-semibold">
+                    $
+                  </span>
                   <input
-                    type="number" value={otherIncome}
+                    type="number"
+                    value={otherIncome}
                     onChange={(e) => {
                       const val = e.target.value;
                       setOtherIncome(val === "" ? "" : Math.max(0, Number(val)));
@@ -601,9 +769,12 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5.5">
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Estimated Federal Tax Payout (%)</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Estimated Federal Tax Payout (%)
+                </label>
                 <input
-                  type="number" value={federalTax}
+                  type="number"
+                  value={federalTax}
                   onChange={(e) => {
                     const val = e.target.value;
                     setFederalTax(val === "" ? "" : Math.max(0, Number(val)));
@@ -614,9 +785,12 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-muted-foreground">Estimated State Tax Payout (%)</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Estimated State Tax Payout (%)
+                </label>
                 <input
-                  type="number" value={stateTax}
+                  type="number"
+                  value={stateTax}
                   onChange={(e) => {
                     const val = e.target.value;
                     setStateTax(val === "" ? "" : Math.max(0, Number(val)));
@@ -627,11 +801,14 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-muted-foreground">Inflation Plan Scenario</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Inflation Plan Scenario
+                </label>
                 <div className="flex gap-2">
                   {["conservative", "moderate", "aggressive"].map((scen) => (
                     <button
-                      key={scen} onClick={() => setInflationScenario(scen as any)}
+                      key={scen}
+                      onClick={() => setInflationScenario(scen as any)}
                       type="button"
                       className={`flex-1 h-9 rounded-lg text-xs font-bold border transition-all uppercase ${
                         inflationScenario === scen
@@ -646,11 +823,14 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-muted-foreground">Market Performance Scenario</label>
+                <label className="text-xs font-bold text-muted-foreground">
+                  Market Performance Scenario
+                </label>
                 <div className="flex gap-2">
                   {["bear", "average", "bull"].map((perf) => (
                     <button
-                      key={perf} onClick={() => setMarketPerformance(perf as any)}
+                      key={perf}
+                      onClick={() => setMarketPerformance(perf as any)}
                       type="button"
                       className={`flex-1 h-9 rounded-lg text-xs font-bold border transition-all uppercase ${
                         marketPerformance === perf
@@ -676,11 +856,7 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
             >
               Calculate
             </CalculateButton>
-            <Button
-              variant="outline"
-              className="flex-1 min-h-11"
-              onClick={handleReset}
-            >
+            <Button variant="outline" className="flex-1 min-h-11" onClick={handleReset}>
               Reset
             </Button>
           </div>
@@ -694,10 +870,10 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
             transition={{ duration: 0.55, ease: "easeOut" }}
             className="mt-6 pt-6 border-t border-border space-y-6 overflow-hidden relative"
           >
-            <div 
+            <div
               className="absolute inset-0 pointer-events-none blur-3xl opacity-15 -z-10"
               style={{
-                background: "radial-gradient(circle at 50% 50%, #0ea5e9, transparent 65%)"
+                background: "radial-gradient(circle at 50% 50%, #0ea5e9, transparent 65%)",
               }}
             />
             <div>
@@ -706,7 +882,7 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
                 <div className="absolute right-0 top-0 h-16 w-16 bg-accent/5 rounded-bl-full flex items-center justify-center">
                   <Sparkles className="h-6 w-6 text-accent/25" />
                 </div>
-                
+
                 <h3 className="text-xs font-extrabold tracking-widest text-muted-foreground uppercase mb-3.5 flex items-center gap-1.5">
                   <ShieldCheck className="h-4 w-4 text-accent" />
                   Retirement Readiness Score
@@ -727,14 +903,19 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
                   return (
                     <div className="flex items-center gap-4 mb-5">
                       <div className="h-20 w-20 sm:h-22 sm:w-22 rounded-full border-4 border-muted flex flex-col items-center justify-center relative">
-                        <span className="text-xl sm:text-2xl font-extrabold text-foreground">{score}%</span>
+                        <span className="text-xl sm:text-2xl font-extrabold text-foreground">
+                          {score}%
+                        </span>
                       </div>
                       <div>
-                        <div className={`px-3 py-1 text-[11px] font-extrabold border rounded-lg uppercase tracking-wider tracking-tight ${colorClass}`}>
+                        <div
+                          className={`px-3 py-1 text-[11px] font-extrabold border rounded-lg uppercase tracking-wider tracking-tight ${colorClass}`}
+                        >
                           {statusText}
                         </div>
                         <p className="text-xs text-muted-foreground mt-2 max-w-[13rem]">
-                          Simulated score based on your active contributions, retirement payouts, and scenario constraints.
+                          Simulated score based on your active contributions, retirement payouts,
+                          and scenario constraints.
                         </p>
                       </div>
                     </div>
@@ -744,24 +925,44 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
                 {/* RETIREMENT CORE METRICS */}
                 <div className="space-y-3.5 border-t border-border/20 pt-4.5">
                   <div className="flex justify-between items-center py-0.5">
-                    <span className="text-xs font-bold text-muted-foreground">Retirement Corpus Needed</span>
-                    <span className="text-sm font-extrabold text-foreground">{formatCurrency(retirementResults.safeCorpusNeeded)}</span>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      Retirement Corpus Needed
+                    </span>
+                    <span className="text-sm font-extrabold text-foreground">
+                      {formatCurrency(retirementResults.safeCorpusNeeded)}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center py-0.5">
-                    <span className="text-xs font-bold text-muted-foreground">Projected Savings at Retirement</span>
-                    <span className="text-sm font-extrabold text-foreground">{formatCurrency(retirementResults.projectedSavingsAtRetirement)}</span>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      Projected Savings at Retirement
+                    </span>
+                    <span className="text-sm font-extrabold text-foreground">
+                      {formatCurrency(retirementResults.projectedSavingsAtRetirement)}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center py-0.5">
-                    <span className="text-xs font-bold text-muted-foreground">Income Shortfall / Gap</span>
-                    <span className="text-sm font-extrabold text-destructive">{formatCurrency(retirementResults.incomeGap)}</span>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      Income Shortfall / Gap
+                    </span>
+                    <span className="text-sm font-extrabold text-destructive">
+                      {formatCurrency(retirementResults.incomeGap)}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center py-0.5 border-t border-border/20 pt-3">
-                    <span className="text-xs font-bold text-muted-foreground">Monthly Retirement Income</span>
-                    <span className="text-base font-extrabold text-accent">{formatCurrency(retirementResults.monthlyIncomeGenerated)}</span>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      Monthly Retirement Income
+                    </span>
+                    <span className="text-base font-extrabold text-accent">
+                      {formatCurrency(retirementResults.monthlyIncomeGenerated)}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center py-0.5">
-                    <span className="text-xs font-bold text-muted-foreground">Years Savings Will Last</span>
-                    <span className="text-base font-extrabold text-accent">{retirementResults.yearsMoneyLasts} years</span>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      Years Savings Will Last
+                    </span>
+                    <span className="text-base font-extrabold text-accent">
+                      {retirementResults.yearsMoneyLasts} years
+                    </span>
                   </div>
                 </div>
               </div>
@@ -769,15 +970,19 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
 
             {/* RETIREMENT INCOME BREAKDOWN PIE CHART */}
             <div>
-              <h3 className="text-base font-semibold text-foreground mb-3">Retirement Income Breakdown</h3>
+              <h3 className="text-base font-semibold text-foreground mb-3">
+                Retirement Income Breakdown
+              </h3>
               <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
                 <div className="h-56 w-full flex items-center justify-center relative">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
                         data={doughnutData}
-                        cx="50%" cy="50%"
-                        innerRadius={55} outerRadius={80}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={55}
+                        outerRadius={80}
                         paddingAngle={4}
                         dataKey="value"
                       >
@@ -785,23 +990,38 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} itemStyle={{ color: "var(--color-foreground)" }} labelStyle={{ color: "var(--color-foreground)" }} wrapperStyle={{ zIndex: 50 }} />
+                      <Tooltip
+                        formatter={(value) => formatCurrency(Number(value))}
+                        contentStyle={{
+                          background: "var(--color-card)",
+                          borderColor: "var(--color-border)",
+                          borderRadius: "8px",
+                        }}
+                        itemStyle={{ color: "var(--color-foreground)" }}
+                        labelStyle={{ color: "var(--color-foreground)" }}
+                        wrapperStyle={{ zIndex: 50 }}
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                   {/* Center Text Indicator */}
                   <div className="absolute flex flex-col items-center justify-center pointer-events-none select-none z-0">
-                    <span className="text-[10px] uppercase tracking-wider font-extrabold text-muted-foreground">Corpus</span>
+                    <span className="text-[10px] uppercase tracking-wider font-extrabold text-muted-foreground">
+                      Corpus
+                    </span>
                     <span className="text-base font-extrabold text-foreground">
                       {formatCurrency(retirementResults.projectedSavingsAtRetirement)}
                     </span>
                   </div>
                 </div>
-                
+
                 {/* Legend grid */}
                 <div className="grid grid-cols-2 gap-2 text-[10px] font-bold text-muted-foreground mt-3">
                   {doughnutData.map((item) => (
                     <div key={item.name} className="flex items-center gap-1.5 truncate">
-                      <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                      <span
+                        className="h-2.5 w-2.5 rounded-full shrink-0"
+                        style={{ backgroundColor: item.color }}
+                      />
                       <span className="truncate">{item.name}</span>
                     </div>
                   ))}
@@ -811,28 +1031,72 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
 
             {/* RETIREMENT SAVINGS ACCUMULATION CHART */}
             <div>
-              <h3 className="text-base font-semibold text-foreground mb-3">Visualization (Accumulation Phase)</h3>
+              <h3 className="text-base font-semibold text-foreground mb-3">
+                Visualization (Accumulation Phase)
+              </h3>
               <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
                 <div className="h-64 sm:h-76 w-full pr-4 text-xs font-semibold">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={retirementResults.growthData}>
                       <defs>
                         <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#d97706" stopOpacity={0.65}/>
-                          <stop offset="95%" stopColor="#d97706" stopOpacity={0.0}/>
+                          <stop offset="5%" stopColor="#d97706" stopOpacity={0.65} />
+                          <stop offset="95%" stopColor="#d97706" stopOpacity={0.0} />
                         </linearGradient>
                         <linearGradient id="colorContrib" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#0f9e75" stopOpacity={0.65}/>
-                          <stop offset="95%" stopColor="#0f9e75" stopOpacity={0.0}/>
+                          <stop offset="5%" stopColor="#0f9e75" stopOpacity={0.65} />
+                          <stop offset="95%" stopColor="#0f9e75" stopOpacity={0.0} />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" strokeOpacity={0.3} />
-                      <XAxis dataKey="age" height={50} label={{ value: "Age", position: "insideBottom", offset: 0, fill: "var(--color-muted-foreground)", fontSize: 11, fontWeight: 600 }} stroke="var(--color-muted-foreground)" />
-                      <YAxis tickFormatter={(val) => `$${val/1000}k`} stroke="var(--color-muted-foreground)" />
-                      <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} labelStyle={{ color: "var(--color-foreground)" }} />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        stroke="var(--color-border)"
+                        strokeOpacity={0.3}
+                      />
+                      <XAxis
+                        dataKey="age"
+                        height={50}
+                        label={{
+                          value: "Age",
+                          position: "insideBottom",
+                          offset: 0,
+                          fill: "var(--color-muted-foreground)",
+                          fontSize: 11,
+                          fontWeight: 600,
+                        }}
+                        stroke="var(--color-muted-foreground)"
+                      />
+                      <YAxis
+                        tickFormatter={(val) => `$${val / 1000}k`}
+                        stroke="var(--color-muted-foreground)"
+                      />
+                      <Tooltip
+                        formatter={(value) => formatCurrency(Number(value))}
+                        contentStyle={{
+                          background: "var(--color-card)",
+                          borderColor: "var(--color-border)",
+                          borderRadius: "8px",
+                        }}
+                        labelStyle={{ color: "var(--color-foreground)" }}
+                      />
                       <Legend />
-                      <Area type="monotone" dataKey="Growth" stroke="#d97706" strokeWidth={2.5} fillOpacity={1} fill="url(#colorGrowth)" />
-                      <Area type="monotone" dataKey="Contributions" stroke="#0f9e75" strokeWidth={2.5} fillOpacity={1} fill="url(#colorContrib)" />
+                      <Area
+                        type="monotone"
+                        dataKey="Growth"
+                        stroke="#d97706"
+                        strokeWidth={2.5}
+                        fillOpacity={1}
+                        fill="url(#colorGrowth)"
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="Contributions"
+                        stroke="#0f9e75"
+                        strokeWidth={2.5}
+                        fillOpacity={1}
+                        fill="url(#colorContrib)"
+                      />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -841,28 +1105,74 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
 
             {/* RETIREMENT DECUMULATION TIMELINE CHART */}
             <div>
-              <h3 className="text-base font-semibold text-foreground mb-3">Visualization (Decumulation Phase)</h3>
+              <h3 className="text-base font-semibold text-foreground mb-3">
+                Visualization (Decumulation Phase)
+              </h3>
               <div className="bg-card/25 border border-border/70 rounded-2xl p-5 shadow-card select-none">
                 <div className="h-64 sm:h-76 w-full pr-4 text-xs font-semibold">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={retirementResults.decumulationChartData}>
                       <defs>
                         <linearGradient id="colorRemaining" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.65}/>
-                          <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.0}/>
+                          <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.65} />
+                          <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.0} />
                         </linearGradient>
                         <linearGradient id="colorWithdrawal" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#ef4444" stopOpacity={0.65}/>
-                          <stop offset="95%" stopColor="#ef4444" stopOpacity={0.0}/>
+                          <stop offset="5%" stopColor="#ef4444" stopOpacity={0.65} />
+                          <stop offset="95%" stopColor="#ef4444" stopOpacity={0.0} />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" strokeOpacity={0.3} />
-                      <XAxis dataKey="age" height={50} label={{ value: "Age", position: "insideBottom", offset: 0, fill: "var(--color-muted-foreground)", fontSize: 11, fontWeight: 600 }} stroke="var(--color-muted-foreground)" />
-                      <YAxis tickFormatter={(val) => `$${val/1000}k`} stroke="var(--color-muted-foreground)" />
-                      <Tooltip formatter={(value) => formatCurrency(Number(value))} contentStyle={{ background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px" }} labelStyle={{ color: "var(--color-foreground)" }} />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        stroke="var(--color-border)"
+                        strokeOpacity={0.3}
+                      />
+                      <XAxis
+                        dataKey="age"
+                        height={50}
+                        label={{
+                          value: "Age",
+                          position: "insideBottom",
+                          offset: 0,
+                          fill: "var(--color-muted-foreground)",
+                          fontSize: 11,
+                          fontWeight: 600,
+                        }}
+                        stroke="var(--color-muted-foreground)"
+                      />
+                      <YAxis
+                        tickFormatter={(val) => `$${val / 1000}k`}
+                        stroke="var(--color-muted-foreground)"
+                      />
+                      <Tooltip
+                        formatter={(value) => formatCurrency(Number(value))}
+                        contentStyle={{
+                          background: "var(--color-card)",
+                          borderColor: "var(--color-border)",
+                          borderRadius: "8px",
+                        }}
+                        labelStyle={{ color: "var(--color-foreground)" }}
+                      />
                       <Legend />
-                      <Area type="monotone" dataKey="RemainingCorpus" name="Remaining Corpus" stroke="#3b82f6" strokeWidth={2.5} fillOpacity={1} fill="url(#colorRemaining)" />
-                      <Area type="monotone" dataKey="Withdrawals" name="Annual Withdrawal" stroke="#ef4444" strokeWidth={2.5} fillOpacity={1} fill="url(#colorWithdrawal)" />
+                      <Area
+                        type="monotone"
+                        dataKey="RemainingCorpus"
+                        name="Remaining Corpus"
+                        stroke="#3b82f6"
+                        strokeWidth={2.5}
+                        fillOpacity={1}
+                        fill="url(#colorRemaining)"
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="Withdrawals"
+                        name="Annual Withdrawal"
+                        stroke="#ef4444"
+                        strokeWidth={2.5}
+                        fillOpacity={1}
+                        fill="url(#colorWithdrawal)"
+                      />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -879,7 +1189,10 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
                 </h3>
                 <ul className="space-y-3">
                   {insights.map((insight, idx) => (
-                    <li key={idx} className="flex gap-2.5 text-xs font-semibold leading-relaxed text-muted-foreground">
+                    <li
+                      key={idx}
+                      className="flex gap-2.5 text-xs font-semibold leading-relaxed text-muted-foreground"
+                    >
                       <ChevronRight className="h-4 w-4 text-accent shrink-0 mt-0.5" />
                       <span>{insight}</span>
                     </li>
@@ -890,7 +1203,7 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
 
             {/* PDF Report Exporters */}
             <div className="flex flex-col">
-              <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
+              <CalculatorPdfExport pdfData={pdfData} />
             </div>
           </motion.div>
         )}

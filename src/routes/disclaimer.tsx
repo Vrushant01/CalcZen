@@ -7,10 +7,22 @@ export const Route = createFileRoute("/disclaimer")({
   head: () => ({
     meta: [
       { title: "Disclaimer — Calculator Use & Limitations | CalcZen" },
-      { name: "description", content: "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results." },
+      {
+        name: "description",
+        content:
+          "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results.",
+      },
       { property: "og:title", content: "CalcZen Disclaimer" },
-      { property: "og:description", content: "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results." },
-      { name: "twitter:description", content: "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results." },
+      {
+        property: "og:description",
+        content:
+          "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results.",
+      },
       { property: "og:url", content: "https://calczen.in/disclaimer" },
     ],
     links: [{ rel: "canonical", href: "https://calczen.in/disclaimer" }],
@@ -20,9 +32,10 @@ export const Route = createFileRoute("/disclaimer")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "Disclaimer — Calculator Use & Limitations | CalcZen",
-          "description": "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results.",
-          "url": "https://calczen.in/disclaimer"
+          name: "Disclaimer — Calculator Use & Limitations | CalcZen",
+          description:
+            "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results.",
+          url: "https://calczen.in/disclaimer",
         }),
       },
       {
@@ -30,22 +43,22 @@ export const Route = createFileRoute("/disclaimer")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
-          "itemListElement": [
+          itemListElement: [
             {
               "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://calczen.in"
+              position: 1,
+              name: "Home",
+              item: "https://calczen.in",
             },
             {
               "@type": "ListItem",
-              "position": 2,
-              "name": "Disclaimer",
-              "item": "https://calczen.in/disclaimer"
-            }
-          ]
+              position: 2,
+              name: "Disclaimer",
+              item: "https://calczen.in/disclaimer",
+            },
+          ],
         }),
-      }
+      },
     ],
   }),
   component: DisclaimerPage,
@@ -67,8 +80,8 @@ function DisclaimerPage() {
           </p>
           <p>
             By using CalcZen, you agree to this Disclaimer, our{" "}
-            <Link to="/terms">Terms of Service</Link>, and{" "}
-            <Link to="/privacy">Privacy Policy</Link>.
+            <Link to="/terms">Terms of Service</Link>, and <Link to="/privacy">Privacy Policy</Link>
+            .
           </p>
         </LegalSection>
 
@@ -109,9 +122,9 @@ function DisclaimerPage() {
 
         <LegalSection title="Health calculators">
           <p>
-            BMI, BMR, calorie, and water tools are not medical devices. Individual needs vary.
-            Speak with a healthcare provider for medical conditions, pregnancy, or major diet or
-            fitness changes.
+            BMI, BMR, calorie, and water tools are not medical devices. Individual needs vary. Speak
+            with a healthcare provider for medical conditions, pregnancy, or major diet or fitness
+            changes.
           </p>
         </LegalSection>
 

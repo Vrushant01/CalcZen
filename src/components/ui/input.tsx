@@ -9,18 +9,18 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   ({ className, type, onChange, ...props }, ref) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const originalValue = e.target.value;
-      
+
       // Determine if the value represents a numeric format (e.g. integer, float, negative, or blank)
       const isNumeric = type === "number" || (originalValue && /^-?\d*\.?\d*$/.test(originalValue));
-      
+
       if (isNumeric) {
         const sanitizedValue = originalValue.replace(/^(-?)0+(?=\d)/, "$1");
-        
+
         if (originalValue !== sanitizedValue) {
           let selectionStart: number | null = null;
           let selectionEnd: number | null = null;
           const originalLen = originalValue.length;
-          
+
           if (type !== "number") {
             try {
               selectionStart = e.target.selectionStart;
@@ -29,9 +29,9 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
               // ignore
             }
           }
-          
+
           e.target.value = sanitizedValue;
-          
+
           if (type !== "number" && selectionStart !== null && selectionEnd !== null) {
             const diff = originalLen - sanitizedValue.length;
             const newStart = Math.max(0, selectionStart - diff);
@@ -47,7 +47,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
           }
         }
       }
-      
+
       if (onChange) {
         onChange(e);
       }

@@ -1,5 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter, useRouterState } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRouteWithContext,
+  useRouter,
+  useRouterState,
+} from "@tanstack/react-router";
 import { useEffect } from "react";
 
 function NotFoundComponent() {
@@ -31,7 +37,9 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">This page didn't load</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          This page didn't load
+        </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
@@ -59,17 +67,20 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => {
-    const isProd = typeof window !== "undefined"
-      ? (window.location.hostname === "calczen.in" || window.location.hostname === "www.calczen.in")
-      : (typeof process !== "undefined" && process.env && (process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production"));
+    const isProd =
+      typeof window !== "undefined"
+        ? window.location.hostname === "calczen.in" || window.location.hostname === "www.calczen.in"
+        : typeof process !== "undefined" &&
+          process.env &&
+          (process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production");
 
     return {
       meta: [
         { charSet: "utf-8" },
         {
-  name: "robots",
-  content: "index, follow",
-},
+          name: "robots",
+          content: "index, follow",
+        },
         {
           name: "viewport",
           content: "width=device-width, initial-scale=1, viewport-fit=cover",
@@ -104,16 +115,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function getCanonicalUrl(pathname: string, searchStr: string): string {
   const base = "https://calczen.in";
   // Strip trailing slash except for the root path
-  const urlPath = pathname === "/" || pathname === "" ? "/" : (pathname.endsWith("/") ? pathname.slice(0, -1) : pathname);
-  
+  const urlPath =
+    pathname === "/" || pathname === ""
+      ? "/"
+      : pathname.endsWith("/")
+        ? pathname.slice(0, -1)
+        : pathname;
+
   if (!searchStr) {
     return `${base}${urlPath}`;
   }
-  
+
   const params = new URLSearchParams(searchStr);
   const trackingParams = ["utm_source", "utm_medium", "utm_campaign", "fbclid", "gclid"];
   trackingParams.forEach((p) => params.delete(p));
-  
+
   const cleanSearch = params.toString();
   return cleanSearch ? `${base}${urlPath}?${cleanSearch}` : `${base}${urlPath}`;
 }
@@ -133,13 +149,14 @@ function RootComponent() {
       const route = router.routesById[match.routeId];
       if (route?.options?.head) {
         try {
-          const headResult = typeof route.options.head === "function"
-            ? route.options.head({
-                loaderData: match.loaderData,
-                params: match.params,
-                context: match.context,
-              })
-            : route.options.head;
+          const headResult: any =
+            typeof route.options.head === "function"
+              ? route.options.head({
+                  loaderData: match.loaderData as any,
+                  params: match.params as any,
+                  context: match.context as any,
+                })
+              : route.options.head;
 
           if (headResult?.meta) {
             // Find title
@@ -163,7 +180,7 @@ function RootComponent() {
     // Update document title
     document.title = title;
 
-    const setMetaTag = (selector, nameOrProperty, content) => {
+    const setMetaTag = (selector: string, nameOrProperty: string, content: string) => {
       let meta = document.querySelector(`meta[${nameOrProperty}="${selector}"]`);
       if (!meta) {
         meta = document.createElement("meta");
@@ -179,8 +196,6 @@ function RootComponent() {
 
     setMetaTag("og:title", "property", title);
     setMetaTag("twitter:title", "name", title);
-
-
 
     // Update or create canonical link tag
     // Remove any extra/duplicate canonical tags first

@@ -70,10 +70,22 @@ export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
       { title: "CalcZen Blog — Financial Insights, Health Tips & Math Guides" },
-      { name: "description", content: "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations." },
+      {
+        name: "description",
+        content:
+          "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations.",
+      },
       { property: "og:title", content: "CalcZen Blog — Expert Insights" },
-      { property: "og:description", content: "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations." },
-      { name: "twitter:description", content: "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations." },
+      {
+        property: "og:description",
+        content:
+          "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://calczen.in/blog" },
     ],
@@ -84,9 +96,10 @@ export const Route = createFileRoute("/blog/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "CalcZen Blog — Financial Insights, Health Tips & Math Guides",
-          "description": "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations.",
-          "url": "https://calczen.in/blog"
+          name: "CalcZen Blog — Financial Insights, Health Tips & Math Guides",
+          description:
+            "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations.",
+          url: "https://calczen.in/blog",
         }),
       },
       {
@@ -94,22 +107,22 @@ export const Route = createFileRoute("/blog/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
-          "itemListElement": [
+          itemListElement: [
             {
               "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://calczen.in"
+              position: 1,
+              name: "Home",
+              item: "https://calczen.in",
             },
             {
               "@type": "ListItem",
-              "position": 2,
-              "name": "Blog",
-              "item": "https://calczen.in/blog"
-            }
-          ]
+              position: 2,
+              name: "Blog",
+              item: "https://calczen.in/blog",
+            },
+          ],
         }),
-      }
+      },
     ],
   }),
   component: BlogHomepage,
@@ -160,9 +173,12 @@ function BlogHomepage() {
       setLoading(false);
     }
 
-    const delayDebounceFn = setTimeout(() => {
-      loadData();
-    }, search ? 300 : 0);
+    const delayDebounceFn = setTimeout(
+      () => {
+        loadData();
+      },
+      search ? 300 : 0,
+    );
 
     return () => clearTimeout(delayDebounceFn);
   }, [selectedCategory, search, page]);
@@ -196,7 +212,8 @@ function BlogHomepage() {
               </span>
             </h1>
             <p className="mt-3 text-sm sm:text-base md:text-lg text-white/80 leading-relaxed max-w-lg mx-auto">
-              Master the calculations, equations, and financial models behind everyday decisions. Simplified mathematics, finance, and wellness guides.
+              Master the calculations, equations, and financial models behind everyday decisions.
+              Simplified mathematics, finance, and wellness guides.
             </p>
 
             <div className="relative max-w-md mx-auto mt-6 w-full px-4">
@@ -479,7 +496,10 @@ function BlogHomepage() {
                             {c.name}
                           </span>
                         </div>
-                        <ArrowRight size={12} className="text-[var(--color-muted)] group-hover:text-accent group-hover:translate-x-0.5 transition-all shrink-0" />
+                        <ArrowRight
+                          size={12}
+                          className="text-[var(--color-muted)] group-hover:text-accent group-hover:translate-x-0.5 transition-all shrink-0"
+                        />
                       </Link>
                     );
                   })}

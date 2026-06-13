@@ -54,8 +54,4 @@ function AppBoot() {
   return <RouterProvider router={router} />;
 }
 
-createRoot(rootEl).render(
-  <StrictMode>
-    {isAdminHost ? <AdminApp /> : <AppBoot />}
-  </StrictMode>,
-);
+createRoot(rootEl).render(<StrictMode>{isAdminHost ? <AdminApp /> : <AppBoot />}</StrictMode>);

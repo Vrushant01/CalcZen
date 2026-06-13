@@ -342,20 +342,7 @@ export function CalculatorPageLayout({ calc, intro, formula, example, faqs, chil
 
         <section id="faq-section" className="scroll-mt-20 surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0 text-left">
           <h2 className="text-xl sm:text-2xl font-bold mb-6 border-b border-border/40 pb-3">Frequently Asked Questions</h2>
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="space-y-2">
-                <h3 className="font-semibold text-base sm:text-lg text-foreground flex items-start gap-2">
-                  <span className="text-primary font-bold">Q.</span>
-                  {faq.q}
-                </h3>
-                <p 
-                  className="text-sm sm:text-base text-muted-foreground/90 leading-relaxed pl-5"
-                  dangerouslySetInnerHTML={{ __html: faq.a }}
-                />
-              </div>
-            ))}
-          </div>
+          <FaqAccordion faqs={faqs} />
         </section>
 
         {related.length > 0 && (

@@ -17,6 +17,7 @@ import { useEffect, useState, useMemo } from "react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { PageShell } from "@/components/layout/PageShell";
+import { FaqAccordion } from "@/components/FaqAccordion";
 import { calculators, getCalculator } from "@/data/calculators";
 import { fetchBlogBySlug, fetchPublishedBlogs, trackBlogView, type Blog } from "@/lib/blog-api";
 
@@ -457,17 +458,11 @@ function BlogPage() {
             {/* FAQs Block */}
             {blog.faqs && blog.faqs.length > 0 && (
               <div className="mt-12 border-t border-border/40 pt-10">
-                <h2 className="font-bold text-2xl tracking-tight text-foreground mb-6 flex items-center gap-2">
-                  <MessageSquare className="text-accent" />
-                  Frequently Asked Questions
-                </h2>
-                <div className="space-y-4">
-                  {blog.faqs.map((faq, idx) => (
-                    <div key={idx} className="rounded-xl border border-border/60 bg-card/25 p-5 md:p-6 shadow-sm">
-                      <h3 className="font-bold text-foreground text-base sm:text-lg">{faq.question}</h3>
-                      <p className="mt-3 text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
-                    </div>
-                  ))}
+                <div className="surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0">
+                  <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+                    Frequently Asked Questions
+                  </h2>
+                  <FaqAccordion faqs={blog.faqs.map(f => ({ q: f.question, a: f.answer }))} />
                 </div>
               </div>
             )}

@@ -1,4 +1,16 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.calczen.in/sitemap.xml
+User-agent: Googlebot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://calczen.in/sitemap.xml

@@ -11,9 +11,9 @@ export const Route = createFileRoute("/disclaimer")({
       { property: "og:title", content: "CalcZen Disclaimer" },
       { property: "og:description", content: "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results." },
       { name: "twitter:description", content: "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results." },
-      { property: "og:url", content: "https://calczen.com/disclaimer" },
+      { property: "og:url", content: "https://calczen.in/disclaimer" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.com/disclaimer" }],
+    links: [{ rel: "canonical", href: "https://calczen.in/disclaimer" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/disclaimer")({
           "@type": "WebPage",
           "name": "Disclaimer — Calculator Use & Limitations | CalcZen",
           "description": "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results.",
-          "url": "https://calczen.com/disclaimer"
+          "url": "https://calczen.in/disclaimer"
         }),
       },
       {
@@ -35,13 +35,13 @@ export const Route = createFileRoute("/disclaimer")({
               "@type": "ListItem",
               "position": 1,
               "name": "Home",
-              "item": "https://calczen.com"
+              "item": "https://calczen.in"
             },
             {
               "@type": "ListItem",
               "position": 2,
               "name": "Disclaimer",
-              "item": "https://calczen.com/disclaimer"
+              "item": "https://calczen.in/disclaimer"
             }
           ]
         }),

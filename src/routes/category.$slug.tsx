@@ -17,7 +17,7 @@ export const Route = createFileRoute("/category/$slug")({
     if (!cat) return {};
     const title = `${cat.name} Calculators | CalcZen`;
     const desc = `${cat.description}. Free online ${cat.name.toLowerCase()} calculators with formulas, examples and instant results.`;
-    const url = `https://calczen.com/category/${cat.slug}`;
+    const url = `https://calczen.in/category/${cat.slug}`;
     return {
       meta: [
         { title }, { name: "description", content: desc },
@@ -225,23 +225,23 @@ function CategoryPage() {
               {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
-                "@id": `https://calczen.com/category/${cat.slug}#webpage`,
+                "@id": `https://calczen.in/category/${cat.slug}#webpage`,
                 "name": `${cat.name} Calculators | CalcZen`,
                 "description": `Browse free online ${cat.name} calculators. Fast, accurate, and easy to use with step-by-step solutions.`,
-                "url": `https://calczen.com/category/${cat.slug}`
+                "url": `https://calczen.in/category/${cat.slug}`
               },
               {
                 "@context": "https://schema.org",
                 "@type": "CollectionPage",
-                "@id": `https://calczen.com/category/${cat.slug}#collection`,
+                "@id": `https://calczen.in/category/${cat.slug}#collection`,
                 "name": `${cat.name} Calculators`,
                 "description": `Browse our complete list of free online ${cat.name} calculators.`,
-                "url": `https://calczen.com/category/${cat.slug}`
+                "url": `https://calczen.in/category/${cat.slug}`
               },
               {
                 "@context": "https://schema.org",
                 "@type": "FAQPage",
-                "@id": `https://calczen.com/category/${cat.slug}#faq`,
+                "@id": `https://calczen.in/category/${cat.slug}#faq`,
                 "mainEntity": data.faqs.map((f) => ({
                   "@type": "Question",
                   "name": f.q,
@@ -254,19 +254,19 @@ function CategoryPage() {
               {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
-                "@id": `https://calczen.com/category/${cat.slug}#breadcrumb`,
+                "@id": `https://calczen.in/category/${cat.slug}#breadcrumb`,
                 "itemListElement": [
                   {
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Home",
-                    "item": "https://calczen.com",
+                    "item": "https://calczen.in",
                   },
                   {
                     "@type": "ListItem",
                     "position": 2,
                     "name": cat.name,
-                    "item": `https://calczen.com/category/${cat.slug}`,
+                    "item": `https://calczen.in/category/${cat.slug}`,
                   },
                 ],
               },

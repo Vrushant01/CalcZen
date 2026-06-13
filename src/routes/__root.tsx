@@ -102,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function getCanonicalUrl(pathname: string, searchStr: string): string {
-  const base = "https://calczen.com";
+  const base = "https://calczen.in";
   // Strip trailing slash except for the root path
   const urlPath = pathname === "/" || pathname === "" ? "/" : (pathname.endsWith("/") ? pathname.slice(0, -1) : pathname);
   
@@ -163,32 +163,24 @@ function RootComponent() {
     // Update document title
     document.title = title;
 
-    // Update meta description
-    let descMeta = document.querySelector('meta[name="description"]');
-    if (!descMeta) {
-      descMeta = document.createElement("meta");
-      descMeta.setAttribute("name", "description");
-      document.head.appendChild(descMeta);
-    }
-    descMeta.setAttribute("content", description);
+    const setMetaTag = (selector, nameOrProperty, content) => {
+      let meta = document.querySelector(`meta[${nameOrProperty}="${selector}"]`);
+      if (!meta) {
+        meta = document.createElement("meta");
+        meta.setAttribute(nameOrProperty, selector);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute("content", content);
+    };
 
-    // Update og:description
-    let ogDescMeta = document.querySelector('meta[property="og:description"]');
-    if (!ogDescMeta) {
-      ogDescMeta = document.createElement("meta");
-      ogDescMeta.setAttribute("property", "og:description");
-      document.head.appendChild(ogDescMeta);
-    }
-    ogDescMeta.setAttribute("content", description);
+    setMetaTag("description", "name", description);
+    setMetaTag("og:description", "property", description);
+    setMetaTag("twitter:description", "name", description);
 
-    // Update twitter:description
-    let twDescMeta = document.querySelector('meta[name="twitter:description"]');
-    if (!twDescMeta) {
-      twDescMeta = document.createElement("meta");
-      twDescMeta.setAttribute("name", "twitter:description");
-      document.head.appendChild(twDescMeta);
-    }
-    twDescMeta.setAttribute("content", description);
+    setMetaTag("og:title", "property", title);
+    setMetaTag("twitter:title", "name", title);
+
+
 
     // Update or create canonical link tag
     // Remove any extra/duplicate canonical tags first
@@ -205,6 +197,8 @@ function RootComponent() {
     }
     const canonicalUrl = getCanonicalUrl(window.location.pathname, window.location.search);
     canonicalLink.setAttribute("href", canonicalUrl);
+
+    setMetaTag("og:url", "property", canonicalUrl);
   }, [state.matches, router]);
 
   return (

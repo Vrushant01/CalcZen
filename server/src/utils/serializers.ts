@@ -76,6 +76,7 @@ export function toApiBlog(row: BlogRow): ApiBlog {
     keywords: row.keywords || [],
     author: row.author,
     calculatorLinks: row.calculator_links,
+    faqs: row.faqs || [],
     featured: row.featured,
     published: row.published,
     views: row.views,

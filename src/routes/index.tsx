@@ -69,9 +69,9 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results." },
       { name: "twitter:description", content: "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://calczen.com/" },
+      { property: "og:url", content: "https://calczen.in/" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.com/" }],
+    links: [{ rel: "canonical", href: "https://calczen.in/" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -79,8 +79,8 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "Organization",
           "name": "CalcZen",
-          "url": "https://calczen.com",
-          "logo": "https://calczen.com/logo.png",
+          "url": "https://calczen.in",
+          "logo": "https://calczen.in/logo.png",
           "sameAs": []
         }),
       },
@@ -90,10 +90,10 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "WebSite",
           "name": "CalcZen",
-          "url": "https://calczen.com",
+          "url": "https://calczen.in",
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://calczen.com/search?q={search_term_string}",
+            "target": "https://calczen.in/search?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         }),
@@ -112,7 +112,7 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          "@id": "https://calczen.com/#faq",
+          "@id": "https://calczen.in/#faq",
           "mainEntity": [
             {
               "@type": "Question",
@@ -479,20 +479,20 @@ function Index() {
 
       {/* Popular Calculators Section */}
       <section className="page-container mt-8 sm:mt-28 md:mt-32">
-        <div className="flex flex-col gap-1.5 sm:flex-row sm:items-end sm:justify-between mb-4 sm:mb-6">
-          <div className="min-w-0">
-            <div className="flex items-center gap-2.5 mb-1.5">
-              <Sparkles className="h-5.5 w-5.5 text-accent shrink-0 animate-pulse" />
-              <h2 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight">Popular Calculators</h2>
+        <div className="mb-4 sm:mb-6">
+          <div className="flex items-center justify-between gap-4 mb-1.5">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <Sparkles className="h-5 sm:h-5.5 w-5 sm:w-5.5 text-accent shrink-0 animate-pulse" />
+              <h2 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight truncate">Popular Calculators</h2>
             </div>
-            <p className="text-xs sm:text-base text-muted-foreground">The ones our visitors use the most.</p>
+            <Link
+              to="/calculators"
+              className="text-xs sm:text-sm font-medium text-accent hover:underline inline-flex items-center gap-1 shrink-0"
+            >
+              See all <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
+            </Link>
           </div>
-          <Link
-            to="/calculators"
-            className="text-xs sm:text-sm font-medium text-accent hover:underline inline-flex items-center gap-1 shrink-0 min-h-[2.5rem] sm:min-h-0 items-center"
-          >
-            See all <ArrowRight className="h-4 w-4" />
-          </Link>
+          <p className="text-xs sm:text-base text-muted-foreground">The ones our visitors use the most.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 min-w-0">
           {popular.map((c, i) => (

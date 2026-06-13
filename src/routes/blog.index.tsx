@@ -75,9 +75,9 @@ export const Route = createFileRoute("/blog/")({
       { property: "og:description", content: "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations." },
       { name: "twitter:description", content: "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://calczen.com/blog" },
+      { property: "og:url", content: "https://calczen.in/blog" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.com/blog" }],
+    links: [{ rel: "canonical", href: "https://calczen.in/blog" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -86,7 +86,7 @@ export const Route = createFileRoute("/blog/")({
           "@type": "WebPage",
           "name": "CalcZen Blog — Financial Insights, Health Tips & Math Guides",
           "description": "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations.",
-          "url": "https://calczen.com/blog"
+          "url": "https://calczen.in/blog"
         }),
       },
       {
@@ -99,13 +99,13 @@ export const Route = createFileRoute("/blog/")({
               "@type": "ListItem",
               "position": 1,
               "name": "Home",
-              "item": "https://calczen.com"
+              "item": "https://calczen.in"
             },
             {
               "@type": "ListItem",
               "position": 2,
               "name": "Blog",
-              "item": "https://calczen.com/blog"
+              "item": "https://calczen.in/blog"
             }
           ]
         }),

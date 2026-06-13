@@ -34,7 +34,7 @@ export const Route = createFileRoute("/blog/$slug")({
     if (!blog) return {};
     const title = blog.metaTitle || `${blog.title} | CalcZen Blog`;
     const desc = blog.metaDescription || blog.excerpt;
-    const siteUrl = "https://calczen.com";
+    const siteUrl = "https://calczen.in";
     const canonical = `${siteUrl}/blog/${blog.slug}`;
     const keys = blog.keywords && blog.keywords.length > 0 ? blog.keywords.join(", ") : blog.tags.join(", ");
 
@@ -106,6 +106,21 @@ export const Route = createFileRoute("/blog/$slug")({
             ],
           }),
         },
+        ...(blog.faqs && blog.faqs.length > 0 ? [{
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": blog.faqs.map(faq => ({
+              "@type": "Question",
+              "name": faq.question,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+              }
+            }))
+          }),
+        }] : []),
       ],
     };
   },
@@ -438,6 +453,24 @@ function BlogPage() {
                 </p>
               </div>
             </div>
+
+            {/* FAQs Block */}
+            {blog.faqs && blog.faqs.length > 0 && (
+              <div className="mt-12 border-t border-border/40 pt-10">
+                <h2 className="font-bold text-2xl tracking-tight text-foreground mb-6 flex items-center gap-2">
+                  <MessageSquare className="text-accent" />
+                  Frequently Asked Questions
+                </h2>
+                <div className="space-y-4">
+                  {blog.faqs.map((faq, idx) => (
+                    <div key={idx} className="rounded-xl border border-border/60 bg-card/25 p-5 md:p-6 shadow-sm">
+                      <h3 className="font-bold text-foreground text-base sm:text-lg">{faq.question}</h3>
+                      <p className="mt-3 text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Desktop Right Sidebar Widget Column */}

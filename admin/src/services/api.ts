@@ -111,6 +111,7 @@ export type Blog = {
   keywords: string[];
   author: string;
   calculatorLinks: any;
+  faqs: { question: string; answer: string }[];
   featured: boolean;
   published: boolean;
   views: number;

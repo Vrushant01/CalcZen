@@ -139,6 +139,7 @@ export async function createBlogAdmin(input: {
   featured?: boolean;
   published?: boolean;
   readingTime?: number;
+  faqs?: { question: string; answer: string }[];
 }): Promise<ApiBlog> {
   const publishDate = input.published ? new Date().toISOString() : null;
 
@@ -162,6 +163,7 @@ export async function createBlogAdmin(input: {
       views: 0,
       reading_time: input.readingTime || 0,
       publish_date: publishDate,
+      faqs: input.faqs || [],
     })
     .select("*")
     .single();
@@ -197,6 +199,7 @@ export async function updateBlogAdmin(
     featured?: boolean;
     published?: boolean;
     readingTime?: number;
+    faqs?: { question: string; answer: string }[];
   },
 ): Promise<ApiBlog> {
   // Fetch existing blog to determine publish date logic
@@ -225,6 +228,7 @@ export async function updateBlogAdmin(
   if (input.keywords !== undefined) updates.keywords = input.keywords;
   if (input.author !== undefined) updates.author = input.author;
   if (input.calculatorLinks !== undefined) updates.calculator_links = input.calculatorLinks;
+  if (input.faqs !== undefined) updates.faqs = input.faqs;
   if (input.featured !== undefined) updates.featured = input.featured;
   
   if (input.published !== undefined) {

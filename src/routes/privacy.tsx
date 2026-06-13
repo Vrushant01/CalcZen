@@ -11,9 +11,9 @@ export const Route = createFileRoute("/privacy")({
       { property: "og:title", content: "CalcZen Privacy Policy" },
       { property: "og:description", content: "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights." },
       { name: "twitter:description", content: "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights." },
-      { property: "og:url", content: "https://calczen.com/privacy" },
+      { property: "og:url", content: "https://calczen.in/privacy" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.com/privacy" }],
+    links: [{ rel: "canonical", href: "https://calczen.in/privacy" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/privacy")({
           "@type": "WebPage",
           "name": "Privacy Policy — How CalcZen Handles Your Data",
           "description": "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.",
-          "url": "https://calczen.com/privacy"
+          "url": "https://calczen.in/privacy"
         }),
       },
       {
@@ -35,13 +35,13 @@ export const Route = createFileRoute("/privacy")({
               "@type": "ListItem",
               "position": 1,
               "name": "Home",
-              "item": "https://calczen.com"
+              "item": "https://calczen.in"
             },
             {
               "@type": "ListItem",
               "position": 2,
               "name": "Privacy Policy",
-              "item": "https://calczen.com/privacy"
+              "item": "https://calczen.in/privacy"
             }
           ]
         }),

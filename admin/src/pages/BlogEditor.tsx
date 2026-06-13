@@ -72,6 +72,7 @@ export function BlogEditorPage() {
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
   const [keywords, setKeywords] = useState("");
+  const [faqs, setFaqs] = useState<{ question: string; answer: string }[]>([]);
 
   // Editor states
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
@@ -81,6 +82,42 @@ export function BlogEditorPage() {
   const [selectedCalc, setSelectedCalc] = useState(CALCULATORS[0].slug);
 
   const editorRef = useRef<HTMLDivElement>(null);
+
+  // SEO Metrics State
+  const [metrics, setMetrics] = useState({
+    wordCount: 0,
+    h2Count: 0,
+    internalLinks: 0,
+    externalLinks: 0,
+  });
+
+  // Calculate metrics periodically
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!editorRef.current) return;
+      
+      const content = editorRef.current.innerHTML;
+      const textContent = editorRef.current.innerText || "";
+      const words = textContent.trim().split(/\s+/).filter(Boolean).length;
+      
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = content;
+      
+      const h2Count = tempDiv.querySelectorAll("h2").length;
+      
+      const links = Array.from(tempDiv.querySelectorAll("a"));
+      let internal = 0;
+      let external = 0;
+      links.forEach(link => {
+        const href = link.getAttribute("href") || "";
+        if (href.startsWith("/") || href.includes("calczen.com")) internal++;
+        else if (href.startsWith("http")) external++;
+      });
+      
+      setMetrics({ wordCount: words, h2Count, internalLinks: internal, externalLinks: external });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   // 1. Fetch Blog if Edit Mode
   useEffect(() => {
@@ -118,6 +155,7 @@ export function BlogEditorPage() {
           setMetaTitle(blog.metaTitle || "");
           setMetaDescription(blog.metaDescription || "");
           setKeywords(blog.keywords?.join(", ") || "");
+          setFaqs(blog.faqs || []);
           
           if (editorRef.current) {
             editorRef.current.innerHTML = blog.content;
@@ -160,6 +198,7 @@ export function BlogEditorPage() {
     setMetaTitle(draft.metaTitle || "");
     setMetaDescription(draft.metaDescription || "");
     setKeywords(draft.keywords || "");
+    setFaqs(draft.faqs || []);
     if (editorRef.current) {
       editorRef.current.innerHTML = draft.content || "";
     }
@@ -200,6 +239,7 @@ export function BlogEditorPage() {
         metaTitle,
         metaDescription,
         keywords,
+        faqs,
         updatedAt: new Date().toISOString(),
       };
 
@@ -210,7 +250,7 @@ export function BlogEditorPage() {
     }, 15000);
 
     return () => clearInterval(interval);
-  }, [title, slug, excerpt, thumbnail, category, tags, author, featured, published, metaTitle, metaDescription, keywords, isEdit, id]);
+  }, [title, slug, excerpt, thumbnail, category, tags, author, featured, published, metaTitle, metaDescription, keywords, faqs, isEdit, id]);
 
   // Visual text formatting operations
   function execCmd(command: string, value: string = "") {
@@ -422,9 +462,34 @@ export function BlogEditorPage() {
       keywords: keywords.split(",").map((k) => k.trim()).filter(Boolean),
       author: author.trim() || "CalcZen Team",
       featured,
-      published,
+      faqs,
       readingTime,
     };
+
+    if (published) {
+      if (!metaTitle.trim()) { toast.error("Meta Title is required to publish."); return; }
+      if (!metaDescription.trim()) { toast.error("Meta Description is required to publish."); return; }
+      if (!thumbnail.trim()) { toast.error("Featured Image is required to publish."); return; }
+      if (words < 500) { toast.error("Blog must have at least 500 words to publish."); return; }
+      
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = content;
+      const h2Count = tempDiv.querySelectorAll("h2").length;
+      if (h2Count < 2) { toast.error("Blog must have at least 2 H2 sections to publish."); return; }
+      
+      if (faqs.length < 3) { toast.error("Blog must have at least 3 FAQs to publish."); return; }
+      
+      const links = Array.from(tempDiv.querySelectorAll("a"));
+      let internal = 0;
+      let external = 0;
+      links.forEach(link => {
+        const href = link.getAttribute("href") || "";
+        if (href.startsWith("/") || href.includes("calczen.com")) internal++;
+        else if (href.startsWith("http")) external++;
+      });
+      if (internal < 2) { toast.error("Blog must have at least 2 internal links to publish."); return; }
+      if (external < 1) { toast.error("Blog must have at least 1 external authority link to publish."); return; }
+    }
 
     setSaving(true);
     try {
@@ -760,6 +825,69 @@ export function BlogEditorPage() {
                   suppressContentEditableWarning
                 />
               </div>
+              
+              {/* FAQ Section */}
+              <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5 space-y-4">
+                <div className="flex items-center justify-between border-b border-[var(--color-card-border)] pb-2">
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <List size={16} className="text-indigo-400" />
+                    Frequently Asked Questions
+                  </h3>
+                  <button
+                    type="button"
+                    onClick={() => setFaqs([...faqs, { question: "", answer: "" }])}
+                    className="text-xs font-semibold text-indigo-400 hover:text-indigo-300"
+                  >
+                    + Add FAQ
+                  </button>
+                </div>
+                
+                {faqs.length === 0 ? (
+                  <p className="text-sm text-[var(--color-muted)] italic py-2">No FAQs added yet. Add at least 3 for optimal SEO.</p>
+                ) : (
+                  <div className="space-y-4">
+                    {faqs.map((faq, idx) => (
+                      <div key={idx} className="border border-[var(--color-card-border)] rounded-lg p-3 bg-black/50 space-y-3 relative group">
+                        <button 
+                          type="button"
+                          onClick={() => setFaqs(faqs.filter((_, i) => i !== idx))}
+                          className="absolute right-3 top-3 text-[var(--color-muted)] hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          ✕
+                        </button>
+                        <div>
+                          <label className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1">Question {idx + 1}</label>
+                          <input
+                            type="text"
+                            value={faq.question}
+                            onChange={(e) => {
+                              const newFaqs = [...faqs];
+                              newFaqs[idx].question = e.target.value;
+                              setFaqs(newFaqs);
+                            }}
+                            className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                            placeholder="e.g., What is a good credit score?"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1">Answer</label>
+                          <textarea
+                            rows={2}
+                            value={faq.answer}
+                            onChange={(e) => {
+                              const newFaqs = [...faqs];
+                              newFaqs[idx].answer = e.target.value;
+                              setFaqs(newFaqs);
+                            }}
+                            className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] resize-none"
+                            placeholder="A good credit score is generally..."
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Sidebar Configurations Column */}
@@ -921,6 +1049,64 @@ export function BlogEditorPage() {
                     placeholder="home loan, rates, guide (comma separated)"
                   />
                 </div>
+              </div>
+              
+              {/* Live SEO Quality Enforcement Panel */}
+              <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5 space-y-4 sticky top-4">
+                <h3 className="text-sm font-bold border-b border-[var(--color-card-border)] pb-2 text-white flex items-center gap-2">
+                  <Globe size={16} className="text-green-400" />
+                  SEO Quality Panel
+                </h3>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)]">Word Count (Min 500)</span>
+                    <span className={`text-xs font-bold ${metrics.wordCount >= 500 ? 'text-green-400' : 'text-red-400'}`}>
+                      {metrics.wordCount} {metrics.wordCount >= 500 ? '✓' : '✗'}
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)]">H2 Sections (Min 2)</span>
+                    <span className={`text-xs font-bold ${metrics.h2Count >= 2 ? 'text-green-400' : 'text-red-400'}`}>
+                      {metrics.h2Count} {metrics.h2Count >= 2 ? '✓' : '✗'}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)]">FAQs (Min 3)</span>
+                    <span className={`text-xs font-bold ${faqs.length >= 3 ? 'text-green-400' : 'text-red-400'}`}>
+                      {faqs.length} {faqs.length >= 3 ? '✓' : '✗'}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)]">Internal Links (Min 2)</span>
+                    <span className={`text-xs font-bold ${metrics.internalLinks >= 2 ? 'text-green-400' : 'text-red-400'}`}>
+                      {metrics.internalLinks} {metrics.internalLinks >= 2 ? '✓' : '✗'}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)]">External Links (Min 1)</span>
+                    <span className={`text-xs font-bold ${metrics.externalLinks >= 1 ? 'text-green-400' : 'text-red-400'}`}>
+                      {metrics.externalLinks} {metrics.externalLinks >= 1 ? '✓' : '✗'}
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)]">Meta Required Fields</span>
+                    <span className={`text-xs font-bold ${(metaTitle && metaDescription && thumbnail) ? 'text-green-400' : 'text-red-400'}`}>
+                      {(metaTitle && metaDescription && thumbnail) ? '✓' : '✗'}
+                    </span>
+                  </div>
+                </div>
+                
+                {published && (
+                  <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-xs text-red-300">
+                    <strong>Note:</strong> You must meet all green checkmarks before you can save this article as Published.
+                  </div>
+                )}
               </div>
             </div>
           </div>

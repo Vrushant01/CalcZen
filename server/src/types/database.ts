@@ -94,6 +94,7 @@ export type BlogRow = {
   keywords: string[];
   author: string;
   calculator_links: any; // JSONB
+  faqs: { question: string; answer: string }[]; // JSONB
   featured: boolean;
   published: boolean;
   views: number;
@@ -117,6 +118,7 @@ export type ApiBlog = {
   keywords: string[];
   author: string;
   calculatorLinks: any;
+  faqs: { question: string; answer: string }[];
   featured: boolean;
   published: boolean;
   views: number;

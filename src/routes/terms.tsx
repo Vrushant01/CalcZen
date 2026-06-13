@@ -11,9 +11,9 @@ export const Route = createFileRoute("/terms")({
       { property: "og:title", content: "CalcZen Terms of Service" },
       { property: "og:description", content: "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability." },
       { name: "twitter:description", content: "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability." },
-      { property: "og:url", content: "https://calczen.com/terms" },
+      { property: "og:url", content: "https://calczen.in/terms" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.com/terms" }],
+    links: [{ rel: "canonical", href: "https://calczen.in/terms" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/terms")({
           "@type": "WebPage",
           "name": "Terms of Service — Using CalcZen Calculators",
           "description": "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability.",
-          "url": "https://calczen.com/terms"
+          "url": "https://calczen.in/terms"
         }),
       },
       {
@@ -35,13 +35,13 @@ export const Route = createFileRoute("/terms")({
               "@type": "ListItem",
               "position": 1,
               "name": "Home",
-              "item": "https://calczen.com"
+              "item": "https://calczen.in"
             },
             {
               "@type": "ListItem",
               "position": 2,
               "name": "Terms of Service",
-              "item": "https://calczen.com/terms"
+              "item": "https://calczen.in/terms"
             }
           ]
         }),

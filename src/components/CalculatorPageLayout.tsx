@@ -418,15 +418,15 @@ export function CalculatorPageLayout({ calc, intro, formula, example, faqs, chil
               {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
-                "@id": `https://calczen.com/calculator/${calc.slug}#webpage`,
+                "@id": `https://calczen.in/calculator/${calc.slug}#webpage`,
                 "name": calc.metaTitle || `${calc.name} - Free Online Calculator | CalcZen`,
                 "description": calc.metaDescription || calc.description,
-                "url": `https://calczen.com/calculator/${calc.slug}`
+                "url": `https://calczen.in/calculator/${calc.slug}`
               },
               {
                 "@context": "https://schema.org",
                 "@type": "SoftwareApplication",
-                "@id": `https://calczen.com/calculator/${calc.slug}#software`,
+                "@id": `https://calczen.in/calculator/${calc.slug}#software`,
                 "name": calc.name,
                 "applicationCategory": "CalculatorApplication",
                 "operatingSystem": "Web"
@@ -434,7 +434,7 @@ export function CalculatorPageLayout({ calc, intro, formula, example, faqs, chil
               {
                 "@context": "https://schema.org",
                 "@type": "FAQPage",
-                "@id": `https://calczen.com/calculator/${calc.slug}#faq`,
+                "@id": `https://calczen.in/calculator/${calc.slug}#faq`,
                 "mainEntity": faqs.map((f) => ({
                   "@type": "Question",
                   "name": f.q,
@@ -447,25 +447,25 @@ export function CalculatorPageLayout({ calc, intro, formula, example, faqs, chil
               ...(category ? [{
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
-                "@id": `https://calczen.com/calculator/${calc.slug}#breadcrumb`,
+                "@id": `https://calczen.in/calculator/${calc.slug}#breadcrumb`,
                 "itemListElement": [
                   {
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Home",
-                    "item": "https://calczen.com"
+                    "item": "https://calczen.in"
                   },
                   {
                     "@type": "ListItem",
                     "position": 2,
                     "name": category.name,
-                    "item": `https://calczen.com/category/${category.slug}`
+                    "item": `https://calczen.in/category/${category.slug}`
                   },
                   {
                     "@type": "ListItem",
                     "position": 3,
                     "name": calc.name,
-                    "item": `https://calczen.com/calculator/${calc.slug}`
+                    "item": `https://calczen.in/calculator/${calc.slug}`
                   }
                 ]
               }] : [])

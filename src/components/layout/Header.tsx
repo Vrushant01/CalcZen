@@ -34,7 +34,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 glass-header backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-background/60 transition-[background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
-      <div className="page-container flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-3 !py-0">
+      <div className="page-container flex h-14 sm:h-16 items-center justify-between gap-1.5 sm:gap-3 !py-0">
         <Link
           to="/"
           className="flex min-w-0 shrink items-center gap-2 group touch-target !min-w-0 !justify-start"
@@ -106,7 +106,7 @@ export function Header() {
         )}
         aria-hidden={!open}
       >
-        <nav className="flex flex-col justify-start p-3 sm:p-4 gap-0.5 max-h-[300px] overflow-y-auto">
+        <nav className="flex flex-col justify-start p-3 sm:p-4 gap-0.5 max-h-[280px] overflow-y-auto">
           <Link
             to="/calculators"
             onClick={() => setOpen(false)}

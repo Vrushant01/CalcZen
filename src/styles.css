@@ -2043,7 +2043,7 @@
 
 /* ─── Hero Section Mobile Responsiveness ─── */
 .hero-section {
-  min-height: 80svh !important; /* Reduced from 100svh since mockup is hidden on mobile (< 768px) */
+  min-height: auto !important; /* Allow content to dictate height on mobile since mockup is shown */
   padding-top: 85px !important;
   padding-bottom: 60px !important;
 }
@@ -2072,7 +2072,8 @@
 
 @media (max-width: 767.98px) {
   .hero-mockup-section {
-    display: none !important;
+    display: flex !important;
+    margin-top: 2rem !important;
   }
 }
 

@@ -438,7 +438,7 @@ function BlogPage() {
 
             {/* Visual content area parsed with linking engines */}
             <div
-              className="mt-8 prose prose-invert max-w-none select-text font-normal leading-[1.8] text-sm sm:text-base prose-table:border prose-table:border-border"
+              className="mt-8 prose prose-invert max-w-none select-text font-normal leading-[1.8] text-sm sm:text-base prose-table:block prose-table:overflow-x-auto prose-table:border prose-table:border-border prose-img:max-w-full prose-img:h-auto"
               dangerouslySetInnerHTML={{ __html: renderedContent }}
             />
 

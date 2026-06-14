@@ -209,7 +209,9 @@ export function BlogEditorPage() {
     setTags(draft.tags || "");
     setAuthor(draft.author || "CalcZen Team");
     setFeatured(draft.featured || false);
-    setPublished(draft.published || false);
+    if (!isEdit) {
+      setPublished(draft.published || false);
+    }
     setMetaTitle(draft.metaTitle || "");
     setMetaDescription(draft.metaDescription || "");
     setKeywords(draft.keywords || "");
@@ -238,6 +240,7 @@ export function BlogEditorPage() {
   // 3. Auto-save engine (every 15 seconds)
   useEffect(() => {
     const interval = setInterval(() => {
+      if (saving) return;
       if (!title.trim() && !editorRef.current?.innerHTML.trim()) return;
 
       const draftPayload = {
@@ -265,7 +268,7 @@ export function BlogEditorPage() {
     }, 15000);
 
     return () => clearInterval(interval);
-  }, [title, slug, excerpt, thumbnail, category, tags, author, featured, published, metaTitle, metaDescription, keywords, faqs, isEdit, id]);
+  }, [title, slug, excerpt, thumbnail, category, tags, author, featured, published, metaTitle, metaDescription, keywords, faqs, isEdit, id, saving]);
 
   // Visual text formatting operations
   function execCmd(command: string, value: string = "") {

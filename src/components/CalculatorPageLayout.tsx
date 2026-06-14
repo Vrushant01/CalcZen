@@ -80,6 +80,8 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Track hydration and calculate optimal fluid needs using our [Water Intake Calculator](/calculator/water-intake-calculator).",
     "pregnancy-due-date-calculator":
       "Plan gestational milestones and estimate your due date with the [Pregnancy Due Date Calculator](/calculator/pregnancy-due-date-calculator).",
+    "sleep-calculator":
+      "Optimize rest cycles and bedtime routines with our [Sleep Calculator](/calculator/sleep-calculator).",
   },
   "calorie-calculator": {
     "bmr-calculator":
@@ -90,6 +92,8 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Determine daily hydration needs matching your activity levels with our [Water Intake Calculator](/calculator/water-intake-calculator).",
     "pregnancy-due-date-calculator":
       "Track pregnancy progress and gestational milestones using the [Pregnancy Due Date Calculator](/calculator/pregnancy-due-date-calculator).",
+    "sleep-calculator":
+      "Coordinate resting schedules and sleep hygiene with our [Sleep Calculator](/calculator/sleep-calculator).",
   },
   "water-intake-calculator": {
     "calorie-calculator":
@@ -100,6 +104,8 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Estimate metabolic rates and baseline resting energy expenditure using the [BMR Calculator](/calculator/bmr-calculator).",
     "pregnancy-due-date-calculator":
       "Hydrate appropriately throughout pregnancy and track due dates using the [Pregnancy Due Date Calculator](/calculator/pregnancy-due-date-calculator).",
+    "sleep-calculator":
+      "Track daily hydration goals alongside your sleep health using the [Sleep Calculator](/calculator/sleep-calculator).",
   },
   "bmr-calculator": {
     "calorie-calculator":
@@ -110,6 +116,8 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Track optimal daily fluid consumption and hydration using the [Water Intake Calculator](/calculator/water-intake-calculator).",
     "pregnancy-due-date-calculator":
       "Plan obstetric milestones and track pregnancy progress with the [Pregnancy Due Date Calculator](/calculator/pregnancy-due-date-calculator).",
+    "sleep-calculator":
+      "Understand your resting metabolism and sleep hygiene using the [Sleep Calculator](/calculator/sleep-calculator).",
   },
   "pregnancy-due-date-calculator": {
     "water-intake-calculator":
@@ -120,6 +128,18 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Calculate nutritional energy requirements and calorie needs with the [Calorie Calculator](/calculator/calorie-calculator).",
     "bmr-calculator":
       "Determine resting energy expenditure during pregnancy using the [BMR Calculator](/calculator/bmr-calculator).",
+    "sleep-calculator":
+      "Monitor rest schedules and baby milestones with the [Sleep Calculator](/calculator/sleep-calculator).",
+  },
+  "sleep-calculator": {
+    "water-intake-calculator":
+      "Track daily hydration goals alongside your sleep health using the [Water Intake Calculator](/calculator/water-intake-calculator).",
+    "calorie-calculator":
+      "Balance your daily energy and diet requirements with our [Calorie Calculator](/calculator/calorie-calculator).",
+    "bmr-calculator":
+      "Understand your resting metabolism and metabolic health using the [BMR Calculator](/calculator/bmr-calculator).",
+    "bmi-calculator":
+      "Evaluate your general body mass and weight targets with our [BMI Calculator](/calculator/bmi-calculator).",
   },
   "percentage-calculator": {
     "tip-calculator":
@@ -285,6 +305,20 @@ const AUTHORITY_CITATIONS_DICT: Record<string, { name: string; url: string }[]> 
     },
     { name: "Academy of Nutrition and Dietetics Standards", url: "https://www.eatright.org" },
   ],
+  "sleep-calculator": [
+    {
+      name: "National Institutes of Health (NIH) Sleep Guidelines",
+      url: "https://www.nhlbi.nih.gov/health/sleep-deprivation",
+    },
+    {
+      name: "CDC Sleep and Sleep Disorders Information",
+      url: "https://www.cdc.gov/sleep/index.html",
+    },
+    {
+      name: "American Academy of Sleep Medicine (AASM) Healthy Sleep Education",
+      url: "https://sleepeducation.org/",
+    },
+  ],
   "pregnancy-due-date-calculator": [
     {
       name: "ACOG Gestational Age Milestone Standards",
@@ -379,14 +413,41 @@ export function CalculatorPageLayout({
       "compound-interest-calculator",
       "tip-calculator",
     ],
-    "bmi-calculator": ["calorie-calculator", "bmr-calculator", "water-intake-calculator"],
-    "calorie-calculator": ["bmr-calculator", "bmi-calculator", "water-intake-calculator"],
-    "water-intake-calculator": ["calorie-calculator", "bmi-calculator", "bmr-calculator"],
-    "bmr-calculator": ["calorie-calculator", "bmi-calculator", "water-intake-calculator"],
+    "bmi-calculator": [
+      "calorie-calculator",
+      "bmr-calculator",
+      "water-intake-calculator",
+      "sleep-calculator",
+    ],
+    "calorie-calculator": [
+      "bmr-calculator",
+      "bmi-calculator",
+      "water-intake-calculator",
+      "sleep-calculator",
+    ],
+    "water-intake-calculator": [
+      "calorie-calculator",
+      "bmi-calculator",
+      "bmr-calculator",
+      "sleep-calculator",
+    ],
+    "bmr-calculator": [
+      "calorie-calculator",
+      "bmi-calculator",
+      "water-intake-calculator",
+      "sleep-calculator",
+    ],
+    "sleep-calculator": [
+      "water-intake-calculator",
+      "calorie-calculator",
+      "bmr-calculator",
+      "bmi-calculator",
+    ],
     "pregnancy-due-date-calculator": [
       "water-intake-calculator",
       "bmi-calculator",
       "calorie-calculator",
+      "sleep-calculator",
     ],
     "percentage-calculator": ["tip-calculator", "age-calculator", "compound-interest-calculator"],
     "age-calculator": ["percentage-calculator", "tip-calculator", "pregnancy-due-date-calculator"],

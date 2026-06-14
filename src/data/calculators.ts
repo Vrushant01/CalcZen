@@ -12,6 +12,7 @@ import {
   Scale,
   Cake,
   Receipt,
+  Moon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -267,6 +268,37 @@ export const calculators: CalculatorMeta[] = [
       "healthy lifestyle habits",
     ],
     h1: "Water Intake Calculator for Daily Hydration Needs",
+  },
+  {
+    slug: "sleep-calculator",
+    name: "Sleep Calculator",
+    category: "health",
+    description:
+      "Determine your optimal bedtime, perfect wake-up time, and complete sleep cycles based on the scientifically accepted 90-minute sleep cycle. Improve rest and wake up refreshed.",
+    keywords: [
+      "sleep calculator",
+      "sleep cycles",
+      "bedtime calculator",
+      "wake up time",
+      "optimal sleep",
+      "rem sleep",
+      "deep sleep",
+      "avoid grogginess",
+    ],
+    icon: Moon,
+    popular: true,
+    trending: true,
+    metaTitle: "Sleep Calculator – Calculate Perfect Bedtime & Wake-Up Time",
+    metaDescription:
+      "Find the best bedtime and wake-up time based on 90-minute sleep cycles. Improve sleep quality with our free Sleep Calculator.",
+    calculatorType: "health",
+    useCases: [
+      "optimal bedtime calculation",
+      "sleep cycle optimization",
+      "wake-up time planning",
+      "preventing morning grogginess",
+    ],
+    h1: "Sleep Calculator for Optimal Sleep Cycles",
   },
   {
     slug: "pregnancy-due-date-calculator",

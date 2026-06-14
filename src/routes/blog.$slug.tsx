@@ -160,6 +160,7 @@ const KEYWORD_MAP: Array<{ term: string; slug: string; text: string }> = [
   { term: "mortgage", slug: "mortgage-calculator", text: "Mortgage Calculator" },
   { term: "emi", slug: "loan-emi-calculator", text: "EMI Calculator" },
   { term: "bmi", slug: "bmi-calculator", text: "BMI Calculator" },
+  { term: "sleep", slug: "sleep-calculator", text: "Sleep Calculator" },
   { term: "calories", slug: "calorie-calculator", text: "Calorie Calculator" },
   { term: "calorie", slug: "calorie-calculator", text: "Calorie Calculator" },
   { term: "percentage", slug: "percentage-calculator", text: "Percentage Calculator" },

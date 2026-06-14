@@ -50,6 +50,21 @@ const CALCULATORS = [
   { slug: "age-calculator", name: "Age Calculator" },
   { slug: "tip-calculator", name: "Tip Calculator" },
   { slug: "bmr-calculator", name: "BMR Calculator" },
+  { slug: "sleep-calculator", name: "Sleep Calculator" },
+  { slug: "standard-calculator", name: "Standard Calculator" },
+  { slug: "scientific-calculator", name: "Scientific Calculator" },
+  { slug: "retirement-calculator", name: "Retirement Calculator" },
+  { slug: "401k-calculator", name: "401(k) Calculator" },
+  { slug: "sip-calculator", name: "SIP Calculator" },
+  { slug: "fd-calculator", name: "FD Calculator" },
+  { slug: "gst-calculator", name: "GST Calculator" },
+  { slug: "attendance-calculator", name: "Attendance Calculator" },
+  { slug: "cgpa-calculator", name: "CGPA Calculator" },
+  { slug: "body-fat-calculator", name: "Body Fat Calculator" },
+  { slug: "protein-calculator", name: "Protein Calculator" },
+  { slug: "inflation-calculator", name: "Inflation Calculator" },
+  { slug: "loan-eligibility-calculator", name: "Loan Eligibility Calculator" },
+  { slug: "credit-card-emi-calculator", name: "Credit Card EMI Calculator" },
 ];
 
 export function BlogEditorPage() {

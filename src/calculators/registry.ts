@@ -25,6 +25,11 @@ export const calculatorComponents: Record<string, ComponentType> = {
       default: m.WaterIntakeCalculator,
     })),
   ),
+  "sleep-calculator": lazy(() =>
+    import("@/calculators/SleepCalculator").then((m) => ({
+      default: m.SleepCalculator,
+    })),
+  ),
   "pregnancy-due-date-calculator": lazy(() =>
     import("@/calculators/PregnancyDueDateCalculator").then((m) => ({
       default: m.PregnancyDueDateCalculator,

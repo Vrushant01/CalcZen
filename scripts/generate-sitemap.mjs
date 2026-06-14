@@ -34,6 +34,7 @@ const CALCULATOR_SLUGS = [
   "bmi-calculator",
   "calorie-calculator",
   "water-intake-calculator",
+  "sleep-calculator",
   "pregnancy-due-date-calculator",
   "percentage-calculator",
   "age-calculator",

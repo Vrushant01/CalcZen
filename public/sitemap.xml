@@ -18,6 +18,7 @@
   <url><loc>http://localhost:8080/calculator/bmi-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/calorie-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/water-intake-calculator</loc></url>
+  <url><loc>http://localhost:8080/calculator/sleep-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/pregnancy-due-date-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/percentage-calculator</loc></url>
   <url><loc>http://localhost:8080/calculator/age-calculator</loc></url>

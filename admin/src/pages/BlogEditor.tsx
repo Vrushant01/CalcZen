@@ -526,17 +526,6 @@ export function BlogEditorPage() {
       if (h2Count < 2) { toast.error("Blog must have at least 2 H2 sections to publish."); return; }
       
       if (faqs.length < 3) { toast.error("Blog must have at least 3 FAQs to publish."); return; }
-      
-      const links = Array.from(tempDiv.querySelectorAll("a"));
-      let internal = 0;
-      let external = 0;
-      links.forEach(link => {
-        const href = link.getAttribute("href") || "";
-        if (href.startsWith("/") || href.includes("calczen.com")) internal++;
-        else if (href.startsWith("http")) external++;
-      });
-      if (internal < 2) { toast.error("Blog must have at least 2 internal links to publish."); return; }
-      if (external < 1) { toast.error("Blog must have at least 1 external authority link to publish."); return; }
     }
 
     setSaving(true);
@@ -1151,19 +1140,7 @@ export function BlogEditorPage() {
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-[var(--color-muted)]">Internal Links (Min 2)</span>
-                    <span className={`text-xs font-bold ${metrics.internalLinks >= 2 ? 'text-green-400' : 'text-red-400'}`}>
-                      {metrics.internalLinks} {metrics.internalLinks >= 2 ? '✓' : '✗'}
-                    </span>
-                  </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-[var(--color-muted)]">External Links (Min 1)</span>
-                    <span className={`text-xs font-bold ${metrics.externalLinks >= 1 ? 'text-green-400' : 'text-red-400'}`}>
-                      {metrics.externalLinks} {metrics.externalLinks >= 1 ? '✓' : '✗'}
-                    </span>
-                  </div>
                   
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-[var(--color-muted)]">Meta Required Fields</span>

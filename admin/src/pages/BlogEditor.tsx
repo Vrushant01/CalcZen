@@ -510,6 +510,7 @@ export function BlogEditorPage() {
       keywords: keywords.split(",").map((k) => k.trim()).filter(Boolean),
       author: author.trim() || "CalcZen Team",
       featured,
+      published,
       faqs,
       readingTime,
     };
@@ -898,8 +899,9 @@ export function BlogEditorPage() {
                             type="text"
                             value={faq.question}
                             onChange={(e) => {
-                              const newFaqs = [...faqs];
-                              newFaqs[idx].question = e.target.value;
+                              const newFaqs = faqs.map((f, i) =>
+                                i === idx ? { ...f, question: e.target.value } : f
+                              );
                               setFaqs(newFaqs);
                             }}
                             className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
@@ -912,8 +914,9 @@ export function BlogEditorPage() {
                             rows={2}
                             value={faq.answer}
                             onChange={(e) => {
-                              const newFaqs = [...faqs];
-                              newFaqs[idx].answer = e.target.value;
+                              const newFaqs = faqs.map((f, i) =>
+                                i === idx ? { ...f, answer: e.target.value } : f
+                              );
                               setFaqs(newFaqs);
                             }}
                             className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] resize-none"

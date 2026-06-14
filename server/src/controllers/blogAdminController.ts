@@ -93,6 +93,7 @@ export async function createBlogAdminHandler(req: AuthRequest, res: Response): P
       featured,
       published,
       readingTime,
+      faqs,
     } = req.body;
 
     if (!title || !slug || !excerpt || !content || !category) {
@@ -119,6 +120,7 @@ export async function createBlogAdminHandler(req: AuthRequest, res: Response): P
       featured,
       published,
       readingTime,
+      faqs,
     });
 
     // Automatically trigger sitemap.xml update in the background
@@ -162,6 +164,7 @@ export async function updateBlogAdminHandler(req: AuthRequest, res: Response): P
       featured,
       published,
       readingTime,
+      faqs,
     } = req.body;
 
     const blog = await updateBlogAdmin(id, {
@@ -180,6 +183,7 @@ export async function updateBlogAdminHandler(req: AuthRequest, res: Response): P
       featured,
       published,
       readingTime,
+      faqs,
     });
 
     // Automatically trigger sitemap.xml update in the background

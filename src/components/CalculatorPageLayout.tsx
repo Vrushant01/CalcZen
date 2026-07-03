@@ -151,7 +151,7 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
     "scientific-calculator":
       "Solve technical math and logarithmic expressions with our [Scientific Calculator](/calculator/scientific-calculator).",
     "regular-calculator":
-      "Solve simple everyday arithmetic operations using our [Regular Calculator](/calculator/regular-calculator).",
+      "Solve simple everyday arithmetic operations using our [Standard Calculator](/calculator/regular-calculator).",
   },
   "age-calculator": {
     "percentage-calculator":
@@ -161,7 +161,7 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
     "pregnancy-due-date-calculator":
       "Track gestational timelines and baby due dates with the [Pregnancy Due Date Calculator](/calculator/pregnancy-due-date-calculator).",
     "regular-calculator":
-      "Compute basic math additions and divisions with our [Regular Calculator](/calculator/regular-calculator).",
+      "Compute basic math additions and divisions with our [Standard Calculator](/calculator/regular-calculator).",
   },
   "tip-calculator": {
     "percentage-calculator":
@@ -171,11 +171,11 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
     "age-calculator":
       "Track birthday countdowns and exact dates using the [Age Calculator](/calculator/age-calculator).",
     "regular-calculator":
-      "Run simple arithmetic calculations and bill audits using the [Regular Calculator](/calculator/regular-calculator).",
+      "Run simple arithmetic calculations and bill audits using the [Standard Calculator](/calculator/regular-calculator).",
   },
   "scientific-calculator": {
     "regular-calculator":
-      "Perform basic arithmetic, addition, and division using our [Regular Calculator](/calculator/regular-calculator).",
+      "Perform basic arithmetic, addition, and division using our [Standard Calculator](/calculator/regular-calculator).",
     "percentage-calculator":
       "Solve percent shifts, increases, and ratio math with the [Percentage Calculator](/calculator/percentage-calculator).",
     "age-calculator":

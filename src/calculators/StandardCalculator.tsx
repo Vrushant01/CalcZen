@@ -307,7 +307,7 @@ export function StandardCalculator() {
     const formattedEq = equation.includes("=") ? equation.split("=")[0].trim() : equation;
 
     return {
-      calculatorName: "Regular Calculator",
+      calculatorName: "Standard Calculator",
       calculatorSlug: "regular-calculator",
       siteName: PDF_SITE_NAME,
       siteUrl: PDF_SITE_URL,

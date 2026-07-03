@@ -609,7 +609,7 @@ ln(e) = 1
         },
         {
           q: "Can it solve trigonometric equations?",
-          a: 'Yes, it can easily evaluate trigonometric functions and inverse trigonometric equations for any given angle parameter. You must ensure the calculator is set to the correct active mode (Degree or Radian) depending on the equation\'s formatting to prevent calculation errors. If you need simple arithmetic, use our <a href="/calculator/regular-calculator" class="text-primary hover:underline">Regular Calculator</a>.',
+          a: 'Yes, it can easily evaluate trigonometric functions and inverse trigonometric equations for any given angle parameter. You must ensure the calculator is set to the correct active mode (Degree or Radian) depending on the equation\'s formatting to prevent calculation errors. If you need simple arithmetic, use our <a href="/calculator/regular-calculator" class="text-primary hover:underline">Standard Calculator</a>.',
         },
         {
           q: "Does it support radians and degrees?",

@@ -7,7 +7,7 @@ type Props = {
 export function CalculatorPdfExport({ pdfData }: Props) {
   const isButtonDisabled = !pdfData;
   const fallbackPdfData: PdfData = pdfData || {
-    calculatorName: "Regular Calculator",
+    calculatorName: "Standard Calculator",
     calculatorSlug: "regular-calculator",
     siteName: "CalcZen",
     siteUrl: "https://www.calczen.in",

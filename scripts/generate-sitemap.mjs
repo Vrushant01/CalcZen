@@ -23,7 +23,7 @@ if (existsSync(serverEnvPath)) {
   }
 }
 
-const siteUrl = (process.env.SITE_URL || "https://www.calczen.in").replace(/\/$/, "");
+const siteUrl = "https://www.calczen.in";
 
 const STATIC_PATHS = ["/", "/calculators", "/about", "/contact", "/terms", "/privacy", "/disclaimer", "/blog"];
 const CATEGORY_SLUGS = ["finance", "health", "math", "everyday"];
@@ -40,7 +40,7 @@ const CALCULATOR_SLUGS = [
   "age-calculator",
   "tip-calculator",
   "bmr-calculator",
-  "standard-calculator",
+  "regular-calculator",
   "scientific-calculator",
   "retirement-calculator",
   "401k-calculator",

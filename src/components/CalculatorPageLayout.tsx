@@ -150,8 +150,8 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Examine compound growth percentages over time using the [Compound Interest Calculator](/calculator/compound-interest-calculator).",
     "scientific-calculator":
       "Solve technical math and logarithmic expressions with our [Scientific Calculator](/calculator/scientific-calculator).",
-    "standard-calculator":
-      "Solve simple everyday arithmetic operations using our [Standard Calculator](/calculator/standard-calculator).",
+    "regular-calculator":
+      "Solve simple everyday arithmetic operations using our [Regular Calculator](/calculator/regular-calculator).",
   },
   "age-calculator": {
     "percentage-calculator":
@@ -160,8 +160,8 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Splits restaurant dining tabs and gratuity with our [Tip Calculator](/calculator/tip-calculator).",
     "pregnancy-due-date-calculator":
       "Track gestational timelines and baby due dates with the [Pregnancy Due Date Calculator](/calculator/pregnancy-due-date-calculator).",
-    "standard-calculator":
-      "Compute basic math additions and divisions with our [Standard Calculator](/calculator/standard-calculator).",
+    "regular-calculator":
+      "Compute basic math additions and divisions with our [Regular Calculator](/calculator/regular-calculator).",
   },
   "tip-calculator": {
     "percentage-calculator":
@@ -170,18 +170,18 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Assess personal borrowing costs and monthly repayments with the [Loan EMI Calculator](/calculator/loan-emi-calculator).",
     "age-calculator":
       "Track birthday countdowns and exact dates using the [Age Calculator](/calculator/age-calculator).",
-    "standard-calculator":
-      "Run simple arithmetic calculations and bill audits using the [Standard Calculator](/calculator/standard-calculator).",
+    "regular-calculator":
+      "Run simple arithmetic calculations and bill audits using the [Regular Calculator](/calculator/regular-calculator).",
   },
   "scientific-calculator": {
-    "standard-calculator":
-      "Perform basic arithmetic, addition, and division using our [Standard Calculator](/calculator/standard-calculator).",
+    "regular-calculator":
+      "Perform basic arithmetic, addition, and division using our [Regular Calculator](/calculator/regular-calculator).",
     "percentage-calculator":
       "Solve percent shifts, increases, and ratio math with the [Percentage Calculator](/calculator/percentage-calculator).",
     "age-calculator":
       "Count exact days, months, and years using the [Age Calculator](/calculator/age-calculator).",
   },
-  "standard-calculator": {
+  "regular-calculator": {
     "scientific-calculator":
       "Resolve advanced trigonometric, logarithmic, and root functions with our [Scientific Calculator](/calculator/scientific-calculator).",
     "percentage-calculator":
@@ -346,7 +346,7 @@ const AUTHORITY_CITATIONS_DICT: Record<string, { name: string; url: string }[]> 
     },
     { name: "US Naval Observatory Time Standards", url: "https://www.usno.navy.mil/USNO" },
   ],
-  "standard-calculator": [
+  "regular-calculator": [
     {
       name: "Wolfram MathWorld Arithmetic Standards",
       url: "https://mathworld.wolfram.com/Arithmetic.html",

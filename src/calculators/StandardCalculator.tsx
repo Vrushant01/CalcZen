@@ -57,7 +57,7 @@ function parseAndEvaluate(expr: string): string {
 }
 
 export function StandardCalculator() {
-  const calc = getCalculator("standard-calculator")!;
+  const calc = getCalculator("regular-calculator")!;
   const { isDark } = useTheme();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
 
@@ -307,8 +307,8 @@ export function StandardCalculator() {
     const formattedEq = equation.includes("=") ? equation.split("=")[0].trim() : equation;
 
     return {
-      calculatorName: "Standard Calculator",
-      calculatorSlug: "standard-calculator",
+      calculatorName: "Regular Calculator",
+      calculatorSlug: "regular-calculator",
       siteName: PDF_SITE_NAME,
       siteUrl: PDF_SITE_URL,
       inputs: hasCurrent ? [{ label: "Expression Evaluated", value: formattedEq || "0" }] : [],
@@ -370,7 +370,7 @@ Percentage multiplication = A × (B ÷ 100)`}
           a: "No, clicking the clear button (C) only clears the current active display screen so you can begin a new math calculation, but it preserves your session history log. You can review past calculations in the sidebar, manually delete individual history entries, or wipe the entire history list by clicking the clear option.",
         },
       ]}
-      blog={<CalculatorBlog content={blogContent.standard} />}
+      blog={<CalculatorBlog content={blogContent.regular} />}
     >
       <div className="flex flex-col lg:flex-row gap-6 w-full items-stretch justify-start">
         {/* LEFT COLUMN: CALCULATOR CARD */}
@@ -499,7 +499,7 @@ Percentage multiplication = A × (B ÷ 100)`}
         </div>
 
         {/* RIGHT COLUMN: SESSION HISTORY SIDEBAR */}
-        <div className="flex-1 min-w-0 sm:min-w-[350px]">
+        <aside className="flex-1 min-w-0 sm:min-w-[350px]" aria-label="Calculation History">
           <div className="w-full h-full flex flex-col min-w-0 bg-card border border-border rounded-[24px] p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)] dark:shadow-sm select-text justify-between">
             <div className="flex flex-col h-full justify-between flex-1 min-h-0">
               <div className="flex flex-col flex-1 min-h-0">
@@ -605,7 +605,7 @@ Percentage multiplication = A × (B ÷ 100)`}
               <CalculatorPdfExport pdfData={pdfData} />
             </div>
           </div>
-        </div>
+        </aside>
       </div>
     </CalculatorPageLayout>
   );

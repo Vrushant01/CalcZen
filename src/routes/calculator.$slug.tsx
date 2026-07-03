@@ -16,7 +16,7 @@ export const Route = createFileRoute("/calculator/$slug")({
 
     const title = calc.metaTitle || `${calc.name} - Free Online Calculator | CalcZen`;
     const desc = calc.metaDescription || calc.description;
-    const url = `https://calczen.com/calculator/${calc.slug}`;
+    const url = `https://www.calczen.in/calculator/${calc.slug}`;
 
     return {
       meta: [

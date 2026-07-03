@@ -51,7 +51,7 @@ const CALCULATORS = [
   { slug: "tip-calculator", name: "Tip Calculator" },
   { slug: "bmr-calculator", name: "BMR Calculator" },
   { slug: "sleep-calculator", name: "Sleep Calculator" },
-  { slug: "standard-calculator", name: "Standard Calculator" },
+  { slug: "regular-calculator", name: "Regular Calculator" },
   { slug: "scientific-calculator", name: "Scientific Calculator" },
   { slug: "retirement-calculator", name: "Retirement Calculator" },
   { slug: "401k-calculator", name: "401(k) Calculator" },

@@ -49,7 +49,7 @@ const content: CalculatorEducationalContent = {
     { text: "Centers for Disease Control and Prevention (CDC)", url: "https://www.cdc.gov/" },
   ],
 
-  relatedCalculators: ["standard-calculator", "age-calculator", "bmi-calculator"],
+  relatedCalculators: ["regular-calculator", "age-calculator", "bmi-calculator"],
 };
 
 export default content;

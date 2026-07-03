@@ -52,7 +52,7 @@ const content: CalculatorEducationalContent = {
     { text: "Internal Revenue Service (IRS)", url: "https://www.irs.gov/" },
   ],
 
-  relatedCalculators: ["standard-calculator", "scientific-calculator", "percentage-calculator"],
+  relatedCalculators: ["regular-calculator", "scientific-calculator", "percentage-calculator"],
 };
 
 export default content;

@@ -180,7 +180,7 @@ export function TipCalculator() {
         },
         {
           q: "How do I split a bill unevenly among friends?",
-          a: 'To split a restaurant bill unevenly, you must calculate each diner\'s individual food and drink subtotal, add their share of the local sales tax, and apply the chosen tip percentage. While our calculator splits bills evenly for simplicity, you can perform quick individual arithmetic checks using our standard <a href="/calculator/standard-calculator" class="text-primary hover:underline">Standard Calculator</a>.',
+          a: 'To split a restaurant bill unevenly, you must calculate each diner\'s individual food and drink subtotal, add their share of the local sales tax, and apply the chosen tip percentage. While our calculator splits bills evenly for simplicity, you can perform quick individual arithmetic checks using our standard <a href="/calculator/regular-calculator" class="text-primary hover:underline">Regular Calculator</a>.',
         },
         {
           q: "What should I do if a service charge is already included?",

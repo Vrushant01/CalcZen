@@ -23,7 +23,7 @@ const slugs = [
   'pregnancy-due-date-calculator',
   'percentage-calculator',
   'age-calculator',
-  'standard-calculator',
+  'regular-calculator',
   'tip-calculator',
   'bmr-calculator',
 ];

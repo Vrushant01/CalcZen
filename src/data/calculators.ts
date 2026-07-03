@@ -403,13 +403,13 @@ export const calculators: CalculatorMeta[] = [
     h1: "Age Calculator for Birthdays and Exact Time Elapsed",
   },
   {
-    slug: "standard-calculator",
-    name: "Standard Calculator",
+    slug: "regular-calculator",
+    name: "Regular Calculator",
     category: "everyday",
     description:
       "Perform basic arithmetic operations including addition, subtraction, multiplication, and division with a clear digital tape. Perfect for quick everyday math problems and receipts.",
     keywords: [
-      "standard calculator",
+      "regular calculator",
       "basic calculator",
       "arithmetic calculator",
       "simple math solver",
@@ -417,12 +417,12 @@ export const calculators: CalculatorMeta[] = [
     ],
     icon: Calculator,
     popular: true,
-    metaTitle: "Standard Calculator - Standard Basic Online Math Calculator | CalcZen",
+    metaTitle: "Regular Calculator - Free Online Basic Math Calculator | CalcZen",
     metaDescription:
-      "Use our free online standard calculator for fast addition, subtraction, multiplication, division, fractions, and percentage operations with session history.",
+      "Use our free online regular calculator for fast addition, subtraction, multiplication, division, fractions, and percentage operations with session history.",
     calculatorType: "arithmetic",
     useCases: ["basic math computations", "receipt verification", "daily math helpers"],
-    h1: "Standard Calculator for Everyday Arithmetic",
+    h1: "Regular Calculator for Everyday Arithmetic",
   },
   {
     slug: "tip-calculator",

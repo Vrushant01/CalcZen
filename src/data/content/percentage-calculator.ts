@@ -49,7 +49,7 @@ const content: CalculatorEducationalContent = {
     { text: "Centers for Disease Control and Prevention (CDC)", url: "https://www.cdc.gov/" },
   ],
 
-  relatedCalculators: ["mortgage-calculator", "water-intake-calculator", "standard-calculator"],
+  relatedCalculators: ["mortgage-calculator", "water-intake-calculator", "regular-calculator"],
 };
 
 export default content;

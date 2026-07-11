@@ -363,7 +363,19 @@ export async function createApp(): Promise<Express> {
         `;
         modifiedHtml = modifiedHtml.replace("</head>", `${seoMetaTags}\n</head>`);
 
-        // 3. Prevent any browser disk-level or CDN caching of the HTML file
+        // 3. Inject dynamic body/H1 fallback inside #root
+        const dynamicSeoContent = `
+    <div style="display: none;">
+      <h1>${metadata.title}</h1>
+      <p>${metadata.description}</p>
+    </div>
+        `;
+        modifiedHtml = modifiedHtml.replace(
+          /<!--seo-content-->[\s\S]*?<!--\/seo-content-->/gi,
+          `<!--seo-content-->${dynamicSeoContent}<!--/seo-content-->`
+        );
+
+        // 4. Prevent any browser disk-level or CDN caching of the HTML file
         res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
         res.setHeader("Pragma", "no-cache");
         res.setHeader("Expires", "0");

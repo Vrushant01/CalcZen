@@ -180,7 +180,7 @@ export function generateSeoData(input: {
         "url": siteUrl,
         "logo": {
           "@type": "ImageObject",
-          "url": `${siteUrl}/brand-logo.png`
+          "url": `${siteUrl}/logo.png`
         }
       },
       "description": excerpt,

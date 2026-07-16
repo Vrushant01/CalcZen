@@ -2,7 +2,8 @@ import { getSupabase } from "../config/supabase.js";
 import type { ApiBlog, BlogRow } from "../types/database.js";
 import { toApiBlog } from "../utils/serializers.js";
 import { generateSeoData } from "../utils/seo.js";
-import { optimizeAndStoreImage } from "../utils/imageOptimizer.js";
+import { optimizeAndStoreImage, generateOgImage } from "../utils/imageOptimizer.js";
+import { triggerSitemapUpdate } from "../utils/sitemap.js";
 
 interface CacheEntry<T> {
   data: T;
@@ -187,10 +188,14 @@ export async function createBlogAdmin(input: {
     publishDate,
   });
 
-  // Download and optimize thumbnail if external
+  // Download and optimize thumbnail or generate branded OG card
   let optimizedThumbnail = input.thumbnail || null;
-  if (optimizedThumbnail && seo.slug) {
-    optimizedThumbnail = await optimizeAndStoreImage(optimizedThumbnail, seo.slug);
+  if (seo.slug) {
+    if (optimizedThumbnail && optimizedThumbnail.trim()) {
+      optimizedThumbnail = await optimizeAndStoreImage(optimizedThumbnail, seo.slug);
+    } else {
+      optimizedThumbnail = await generateOgImage(seo.title, seo.slug);
+    }
     seo.ogImage = optimizedThumbnail;
     seo.twitterImage = optimizedThumbnail;
     if (seo.jsonld) {
@@ -248,6 +253,7 @@ export async function createBlogAdmin(input: {
   }
 
   clearBlogCache(seo.slug);
+  void triggerSitemapUpdate();
   return toApiBlog(data as BlogRow);
 }
 
@@ -327,10 +333,14 @@ export async function updateBlogAdmin(
     publishDate,
   });
 
-  // Download and optimize thumbnail if external
+  // Download and optimize thumbnail or generate branded OG card
   let optimizedThumbnail = thumbnailInput || null;
-  if (input.thumbnail !== undefined && optimizedThumbnail && seo.slug) {
-    optimizedThumbnail = await optimizeAndStoreImage(optimizedThumbnail, seo.slug);
+  if (seo.slug) {
+    if (optimizedThumbnail && optimizedThumbnail.trim()) {
+      optimizedThumbnail = await optimizeAndStoreImage(optimizedThumbnail, seo.slug);
+    } else {
+      optimizedThumbnail = await generateOgImage(seo.title, seo.slug);
+    }
     seo.ogImage = optimizedThumbnail;
     seo.twitterImage = optimizedThumbnail;
     if (seo.jsonld) {
@@ -397,6 +407,7 @@ export async function updateBlogAdmin(
   // Clear cache for old and new slugs
   clearBlogCache(existing.slug);
   clearBlogCache(seo.slug);
+  void triggerSitemapUpdate();
 
   return toApiBlog(data as BlogRow);
 }
@@ -416,6 +427,7 @@ export async function deleteBlogByIdAdmin(id: string): Promise<boolean> {
   if (blog && blog.slug) {
     clearBlogCache(blog.slug);
   }
+  void triggerSitemapUpdate();
 
   return (count ?? 0) > 0;
 }

@@ -21,6 +21,7 @@ import contactRoutes from "./routes/contactRoutes.js";
 import subscribeRoutes from "./routes/subscribeRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import { findPublishedBlogBySlug } from "./services/blogService.js";
+import { backfillBase64Images } from "./scripts/backfillBase64Images.js";
 
 import { formatDbError } from "./utils/errors.js";
 
@@ -59,6 +60,8 @@ async function ensureDb(): Promise<void> {
     const ok = await verifySupabaseConnection();
     if (!ok) {
       console.warn("Supabase connection check failed — ensure tables exist (run supabase/schema.sql).");
+    } else {
+      void backfillBase64Images();
     }
     dbVerified = true;
   }

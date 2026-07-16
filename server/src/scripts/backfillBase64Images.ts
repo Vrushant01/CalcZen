@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { getSupabase } from "../config/supabase.js";
 import { optimizeAndStoreImage, generateOgImage } from "../utils/imageOptimizer.js";
 import { triggerSitemapUpdate } from "../utils/sitemap.js";
@@ -40,6 +42,9 @@ export async function backfillBase64Images(): Promise<void> {
       const slug = blog.slug;
       const title = blog.title;
 
+      const absoluteThumbnailPath = path.resolve(process.cwd(), thumbnail.startsWith("/") ? thumbnail.slice(1) : thumbnail);
+      const thumbnailFileExists = thumbnail.startsWith("/") && fs.existsSync(absoluteThumbnailPath);
+
       // 1. If thumbnail is base64, optimize and store it locally
       if (thumbnail.startsWith("data:")) {
         console.log(`[SEO MIGRATION] Found base64 thumbnail in blog "${title}". Converting...`);
@@ -50,9 +55,9 @@ export async function backfillBase64Images(): Promise<void> {
         }
       }
 
-      // 2. If thumbnail is missing, generate branded OG image
-      if (!thumbnail.trim()) {
-        console.log(`[SEO MIGRATION] Missing thumbnail in blog "${title}". Generating branded OG image...`);
+      // 2. If thumbnail is missing or the local file does not exist, generate branded OG image
+      if (!thumbnail.trim() || (thumbnail.startsWith("/") && !thumbnailFileExists)) {
+        console.log(`[SEO MIGRATION] Missing or broken thumbnail in blog "${title}". Generating branded OG image...`);
         const localPath = await generateOgImage(title, slug);
         thumbnail = localPath;
         needsUpdate = true;

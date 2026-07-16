@@ -294,8 +294,11 @@ function BlogHomepage() {
                     className="group border border-border bg-card/45 rounded-2xl overflow-hidden shadow-card hover:-translate-y-0.5 transition-all duration-300 hover:border-accent/40"
                   >
                     <Link
-                      to={`/blog/$slug`}
-                      params={{ slug: featuredBlog.slug }}
+                      to="/blog/$category/$slug"
+                      params={{
+                        category: (featuredBlog.category || "finance").toLowerCase(),
+                        slug: featuredBlog.slug,
+                      }}
                       className="grid grid-cols-1 md:grid-cols-12 gap-0"
                     >
                       <div className="md:col-span-6 overflow-hidden h-64 md:h-full relative min-h-[220px]">
@@ -358,8 +361,11 @@ function BlogHomepage() {
                             className="group border border-border bg-card/25 rounded-2xl overflow-hidden hover:-translate-y-0.5 hover:border-accent/40 shadow-soft hover:shadow-card transition-all duration-300 flex flex-col h-full"
                           >
                             <Link
-                              to={`/blog/$slug`}
-                              params={{ slug: b.slug }}
+                              to="/blog/$category/$slug"
+                              params={{
+                                category: (b.category || "finance").toLowerCase(),
+                                slug: b.slug,
+                              }}
                               className="flex flex-col h-full"
                             >
                               <div className="h-44 overflow-hidden relative bg-black shrink-0">
@@ -446,8 +452,11 @@ function BlogHomepage() {
                   {popularBlogs.map((pop) => (
                     <Link
                       key={pop._id}
-                      to={`/blog/$slug`}
-                      params={{ slug: pop.slug }}
+                      to="/blog/$category/$slug"
+                      params={{
+                        category: (pop.category || "finance").toLowerCase(),
+                        slug: pop.slug,
+                      }}
                       className="group flex gap-3 items-center min-w-0"
                     >
                       <div className="h-12 w-18 shrink-0 rounded overflow-hidden bg-black border border-border">

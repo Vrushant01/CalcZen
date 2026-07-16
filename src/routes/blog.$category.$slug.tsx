@@ -19,6 +19,27 @@ import { FaqAccordion } from "@/components/FaqAccordion";
 import { calculators, getCalculator } from "@/data/calculators";
 import { fetchBlogBySlug, fetchPublishedBlogs, trackBlogView, type Blog } from "@/lib/blog-api";
 
+// Skeleton component for visual pending transitions
+function BlogPageSkeleton() {
+  return (
+    <PageShell>
+      <div className="page-container max-w-4xl py-12 px-4 space-y-8 animate-pulse">
+        <div className="h-4 w-48 bg-slate-800 rounded"></div>
+        <div className="space-y-3">
+          <div className="h-10 w-3/4 bg-slate-800 rounded-lg"></div>
+          <div className="h-4 w-1/3 bg-slate-800 rounded"></div>
+        </div>
+        <div className="h-80 w-full bg-slate-800 rounded-xl"></div>
+        <div className="space-y-4 pt-4">
+          <div className="h-5 w-full bg-slate-800 rounded"></div>
+          <div className="h-5 w-5/6 bg-slate-800 rounded"></div>
+          <div className="h-5 w-4/5 bg-slate-800 rounded"></div>
+        </div>
+      </div>
+    </PageShell>
+  );
+}
+
 // 1. TanStack Router Route definition for /blog/$category/$slug
 export const Route = createFileRoute("/blog/$category/$slug")({
   loader: async ({ params }) => {
@@ -28,6 +49,8 @@ export const Route = createFileRoute("/blog/$category/$slug")({
     }
     return { blog: res.data, categoryParam: params.category };
   },
+  pendingComponent: BlogPageSkeleton,
+  pendingMs: 100,
   head: ({ loaderData }) => {
     const blog = loaderData?.blog;
     if (!blog) return {};

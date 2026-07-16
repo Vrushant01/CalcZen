@@ -142,6 +142,62 @@ interface DynamicMetadata {
   h1: string;
   jsonld?: any;
   featured_image?: string | null;
+  notFound?: boolean;
+}
+
+export function isBrowserPageRequest(req: Request): boolean {
+  if (req.path.startsWith("/admin")) return false;
+
+  // Determine the true path (checking for Vercel's rewrite headers)
+  let checkPath = req.path;
+  const matchedPath = req.headers["x-matched-path"];
+  if (typeof matchedPath === "string" && matchedPath) {
+    checkPath = matchedPath;
+  } else {
+    const originalUrl = req.headers["x-original-url"];
+    if (typeof originalUrl === "string" && originalUrl) {
+      checkPath = originalUrl.split("?")[0];
+    } else {
+      const forwardedUrl = req.headers["x-forwarded-url"];
+      if (typeof forwardedUrl === "string" && forwardedUrl) {
+        try {
+          if (forwardedUrl.startsWith("http")) {
+            checkPath = new URL(forwardedUrl).pathname;
+          } else {
+            checkPath = forwardedUrl.split("?")[0];
+          }
+        } catch {}
+      }
+    }
+  }
+
+  // It is a page request if the true path does NOT start with /api, /admin, and has no file extension
+  const startsWithApi = checkPath.startsWith("/api") || req.path.startsWith("/api");
+  const startsWithAdmin = checkPath.startsWith("/admin") || req.path.startsWith("/admin");
+  const hasFileExtension = !!checkPath.match(/\.[a-zA-Z0-9]+$/) || !!req.path.match(/\.[a-zA-Z0-9]+$/);
+
+  return !startsWithApi && !startsWithAdmin && !hasFileExtension;
+}
+
+export function getOriginalRequestPath(req: Request): string {
+  const matchedPath = req.headers["x-matched-path"];
+  if (typeof matchedPath === "string" && matchedPath) {
+    return matchedPath;
+  }
+  const originalUrl = req.headers["x-original-url"];
+  if (typeof originalUrl === "string" && originalUrl) {
+    return originalUrl.split("?")[0];
+  }
+  const forwardedUrl = req.headers["x-forwarded-url"];
+  if (typeof forwardedUrl === "string" && forwardedUrl) {
+    try {
+      if (forwardedUrl.startsWith("http")) {
+        return new URL(forwardedUrl).pathname;
+      }
+      return forwardedUrl.split("?")[0];
+    } catch {}
+  }
+  return req.path;
 }
 
 async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
@@ -185,91 +241,91 @@ async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
       if (meta) {
         title = meta.title;
         description = meta.description;
+        h1 = title.split(" - ")[0];
+        jsonld = [
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://calczen.in"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Calculators",
+                "item": "https://calczen.in/calculators"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": h1,
+                "item": canonical
+              }
+            ]
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "@id": `${canonical}#webapp`,
+            "url": canonical,
+            "name": h1,
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "All",
+            "browserRequirements": "Requires HTML5/JavaScript",
+            "description": description
+          }
+        ];
       } else {
-        const name = slug
-          .split("-")
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-          .join(" ");
-        title = `${name} - Free Online Calculator | CalcZen`;
-        description = `Use our free online ${name} for instant calculations, explanations, formulas, and worked examples.`;
+        title = "Calculator Not Found | CalcZen";
+        description = "The requested calculator could not be found on our platform.";
+        h1 = "Calculator Not Found";
+        return { title, description, canonical, h1, notFound: true };
       }
-      h1 = title.split(" - ")[0];
-      jsonld = [
-        {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://calczen.in"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Calculators",
-              "item": "https://calczen.in/calculators"
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "name": h1,
-              "item": canonical
-            }
-          ]
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "WebApplication",
-          "@id": `${canonical}#webapp`,
-          "url": canonical,
-          "name": h1,
-          "applicationCategory": "EducationalApplication",
-          "operatingSystem": "All",
-          "browserRequirements": "Requires HTML5/JavaScript",
-          "description": description
-        }
-      ];
     } else if (lowercasePath.startsWith("/category/")) {
       const slug = lowercasePath.replace("/category/", "");
       const meta = categoryMeta[slug];
-      const categoryName = slug.charAt(0).toUpperCase() + slug.slice(1);
       if (meta) {
         title = meta.title;
         description = meta.description;
+        const categoryName = slug.charAt(0).toUpperCase() + slug.slice(1);
+        h1 = `${categoryName} Calculators`;
+        jsonld = [
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://calczen.in"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": h1,
+                "item": canonical
+              }
+            ]
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "url": canonical,
+            "name": title,
+            "description": description
+          }
+        ];
       } else {
-        title = `${categoryName} Calculators | CalcZen`;
-        description = `Explore our list of free online ${categoryName} calculators.`;
+        title = "Category Not Found | CalcZen";
+        description = "The requested calculator category could not be found.";
+        h1 = "Category Not Found";
+        return { title, description, canonical, h1, notFound: true };
       }
-      h1 = `${categoryName} Calculators`;
-      jsonld = [
-        {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://calczen.in"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": h1,
-              "item": canonical
-            }
-          ]
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          "url": canonical,
-          "name": title,
-          "description": description
-        }
-      ];
     } else if (lowercasePath.startsWith("/blog/")) {
       const parts = lowercasePath.split("/").filter(Boolean);
       const slug = parts[parts.length - 1];
@@ -287,6 +343,11 @@ async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
           if (featured_image && featured_image.startsWith("/")) {
             featured_image = `https://calczen.in${featured_image}`;
           }
+        } else {
+          title = "Article Not Found | CalcZen";
+          description = "The requested blog article could not be found on CalcZen.";
+          h1 = "Article Not Found";
+          return { title, description, canonical, h1, notFound: true };
         }
       } catch (err: any) {
         console.error(`[METADATA BLOG FETCH ERROR] Failed to fetch blog database entry for slug: ${slug}`, err.message, err.stack);
@@ -463,7 +524,11 @@ export async function createApp(): Promise<Express> {
   // Serve static uploaded images
   const uploadsDir = path.resolve(process.cwd(), "uploads");
   if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
+    try {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    } catch (mkdirErr) {
+      console.warn("[BOOT] Failed to create uploads directory (could be read-only filesystem):", mkdirErr);
+    }
   }
   app.use("/uploads", express.static(uploadsDir));
 
@@ -488,23 +553,55 @@ export async function createApp(): Promise<Express> {
   app.use(express.static(publicDist));
 
   // Serve public frontend index.html with dynamic metadata for crawlers/SEO
-  app.get("*path", async (req, res, next) => {
-    // Skip API, Admin, or files with extensions
-    if (req.path.startsWith("/api") || req.path.startsWith("/admin") || req.path.match(/\.[a-zA-Z0-9]+$/)) {
+  app.get(/^\/(?!api|admin|assets).*/, async (req, res, next) => {
+    // Skip if it's not a public browser page request (e.g. API endpoint, static file)
+    if (!isBrowserPageRequest(req)) {
       return next();
     }
 
+    const originalPath = getOriginalRequestPath(req);
+    console.log(`[SEO PRERENDER] Processing page request for path: ${originalPath} (Express req.path: ${req.path})`);
+
     let metadata: DynamicMetadata | null = null;
     try {
-      metadata = await getDynamicMetadata(req.path);
+      metadata = await getDynamicMetadata(originalPath);
     } catch (metaErr: any) {
-      console.error("[CRITICAL META FAILURE] getDynamicMetadata crashed completely for path:", req.path, metaErr.message, metaErr.stack);
+      console.error("[CRITICAL META FAILURE] getDynamicMetadata crashed completely for path:", originalPath, metaErr.message, metaErr.stack);
       metadata = {
         title: "Free Online Calculators for Finance, Health & Math | CalcZen",
         description: "Free online calculators for finance, health, math and everyday life.",
-        canonical: `https://calczen.in${req.path}`,
+        canonical: `https://calczen.in${originalPath}`,
         h1: "Free Online Calculators",
       };
+    }
+
+    // Handle 404 for missing blog posts, calculators, or categories
+    if (metadata.notFound) {
+      res.status(404).setHeader("Content-Type", "text/html");
+      res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>${metadata.title}</title>
+  <meta name="description" content="${metadata.description}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { background: #0F172A; color: #F8FAFC; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    .container { text-align: center; max-width: 500px; padding: 2rem; }
+    h1 { color: #F59E0B; font-size: 2.5rem; margin-bottom: 1rem; }
+    p { color: #94A3B8; font-size: 1.1rem; line-height: 1.6; }
+    a { color: #6366F1; text-decoration: none; font-weight: bold; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>${metadata.h1}</h1>
+    <p>${metadata.description} Check the URL or return to the <a href="/">Homepage</a>.</p>
+  </div>
+</body>
+</html>`);
+      return;
     }
 
     const publicDist = resolvePublicDist();
@@ -548,7 +645,7 @@ export async function createApp(): Promise<Express> {
     <meta property="og:title" content="${metadata!.title}" />
     <meta property="og:description" content="${metadata!.description}" />
     <meta property="og:url" content="${metadata!.canonical}" />
-    <meta property="og:type" content="${req.path.startsWith("/blog/") ? "article" : "website"}" />
+    <meta property="og:type" content="${originalPath.startsWith("/blog/") ? "article" : "website"}" />
     <meta property="og:site_name" content="CalcZen" />
     <meta property="og:image" content="${ogImage}" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -598,8 +695,7 @@ export async function createApp(): Promise<Express> {
 
   // Global Page-aware 404 Handler
   app.use((req, res) => {
-    const isPageRequest = !req.path.startsWith("/api") && !req.path.startsWith("/admin") && !req.path.match(/\.[a-zA-Z0-9]+$/);
-    if (isPageRequest) {
+    if (isBrowserPageRequest(req)) {
       res.status(404).setHeader("Content-Type", "text/html");
       res.send(`<!DOCTYPE html>
 <html lang="en">
@@ -636,8 +732,7 @@ export async function createApp(): Promise<Express> {
       applyCorsHeaders(req, res);
       const { status, message } = formatDbError(err);
       
-      const isPageRequest = !req.path.startsWith("/api") && !req.path.startsWith("/admin") && !req.path.match(/\.[a-zA-Z0-9]+$/);
-      if (isPageRequest) {
+      if (isBrowserPageRequest(req)) {
         res.status(status).setHeader("Content-Type", "text/html");
         res.send(`<!DOCTYPE html>
 <html lang="en">

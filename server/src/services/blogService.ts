@@ -4,6 +4,18 @@ import { toApiBlog } from "../utils/serializers.js";
 import { generateSeoData } from "../utils/seo.js";
 import { optimizeAndStoreImage } from "../utils/imageOptimizer.js";
 
+interface CacheEntry<T> {
+  data: T;
+  expiry: number;
+}
+
+const blogCache = new Map<string, CacheEntry<ApiBlog | null>>();
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes cache TTL
+
+export function clearBlogCache(slug: string): void {
+  blogCache.delete(slug.toLowerCase().trim());
+}
+
 function isUniqueViolation(error: { code?: string }): boolean {
   return error.code === "23505";
 }
@@ -44,15 +56,28 @@ export async function listPublishedBlogs(options: {
 
 /** Public: Find a published blog by its unique slug */
 export async function findPublishedBlogBySlug(slug: string): Promise<ApiBlog | null> {
+  const cleanSlug = slug.toLowerCase().trim();
+  const cached = blogCache.get(cleanSlug);
+  if (cached && cached.expiry > Date.now()) {
+    return cached.data;
+  }
+
   const { data, error } = await getSupabase()
     .from("blogs")
     .select("*")
-    .eq("slug", slug.toLowerCase().trim())
+    .eq("slug", cleanSlug)
     .eq("published", true)
     .maybeSingle();
 
   if (error) throw error;
-  return data ? toApiBlog(data as BlogRow) : null;
+  
+  const result = data ? toApiBlog(data as BlogRow) : null;
+  blogCache.set(cleanSlug, {
+    data: result,
+    expiry: Date.now() + CACHE_TTL_MS,
+  });
+
+  return result;
 }
 
 /** Increment a blog's view count in the database */
@@ -222,6 +247,7 @@ export async function createBlogAdmin(input: {
     throw error;
   }
 
+  clearBlogCache(seo.slug);
   return toApiBlog(data as BlogRow);
 }
 
@@ -368,17 +394,29 @@ export async function updateBlogAdmin(
     throw error;
   }
 
+  // Clear cache for old and new slugs
+  clearBlogCache(existing.slug);
+  clearBlogCache(seo.slug);
+
   return toApiBlog(data as BlogRow);
 }
 
 /** Admin: Delete blog by ID */
 export async function deleteBlogByIdAdmin(id: string): Promise<boolean> {
-  const { error, count } = await getSupabase()
+  const supabase = getSupabase();
+  const { data: blog } = await supabase.from("blogs").select("slug").eq("id", id).maybeSingle();
+
+  const { error, count } = await supabase
     .from("blogs")
     .delete({ count: "exact" })
     .eq("id", id);
 
   if (error) throw error;
+
+  if (blog && blog.slug) {
+    clearBlogCache(blog.slug);
+  }
+
   return (count ?? 0) > 0;
 }
 

@@ -49,8 +49,10 @@ export const Route = createFileRoute("/blog/$category/$slug")({
     }
     return { blog: res.data, categoryParam: params.category };
   },
+  loaderMaxAge: 2 * 60 * 1000,
+  loaderGcMaxAge: 5 * 60 * 1000,
   pendingComponent: BlogPageSkeleton,
-  pendingMs: 100,
+  pendingMs: 50,
   head: ({ loaderData }) => {
     const blog = loaderData?.blog;
     if (!blog) return {};

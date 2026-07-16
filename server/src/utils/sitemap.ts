@@ -153,8 +153,12 @@ export async function triggerSitemapUpdate(): Promise<void> {
       const lastmod = b.updated_at || b.publish_date || todayStr;
       let imgTag = "";
       if (b.thumbnail) {
+        const absoluteImgUrl = b.thumbnail.startsWith("http")
+          ? b.thumbnail
+          : `${siteUrl}${b.thumbnail.startsWith("/") ? "" : "/"}${b.thumbnail}`;
+        
         imgTag = `\n    <image:image>
-      <image:loc>${escapeXml(b.thumbnail)}</image:loc>
+      <image:loc>${escapeXml(absoluteImgUrl)}</image:loc>
       <image:title>${escapeXml(b.title)}</image:title>
     </image:image>`;
       }

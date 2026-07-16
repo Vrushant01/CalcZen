@@ -153,176 +153,216 @@ async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
   let jsonld: any = null;
   let featured_image: string | null = null;
 
-  const pathPart = urlPath.endsWith("/") && urlPath !== "/" ? urlPath.slice(0, -1) : urlPath;
-  const lowercasePath = pathPart.toLowerCase();
+  try {
+    const pathPart = urlPath.endsWith("/") && urlPath !== "/" ? urlPath.slice(0, -1) : urlPath;
+    const lowercasePath = pathPart.toLowerCase();
 
-  if (lowercasePath === "" || lowercasePath === "/") {
-    title = "Free Online Calculators for Finance, Health & Math | CalcZen";
-    description = "Free online calculators for finance, health, math and everyday life.";
-    h1 = "Free Online Calculators";
-    jsonld = [
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "@id": "https://calczen.in/#website",
-        "url": "https://calczen.in",
-        "name": "CalcZen",
-        "description": description
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "@id": "https://calczen.in/#organization",
-        "url": "https://calczen.in",
-        "name": "CalcZen",
-        "logo": "https://calczen.in/icons/android-chrome-512x512.png"
-      }
-    ];
-  } else if (lowercasePath.startsWith("/calculator/")) {
-    const slug = lowercasePath.replace("/calculator/", "");
-    const meta = calculatorMeta[slug];
-    if (meta) {
-      title = meta.title;
-      description = meta.description;
-    } else {
-      const name = slug
-        .split("-")
-        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(" ");
-      title = `${name} - Free Online Calculator | CalcZen`;
-      description = `Use our free online ${name} for instant calculations, explanations, formulas, and worked examples.`;
-    }
-    h1 = title.split(" - ")[0];
-    jsonld = [
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://calczen.in"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Calculators",
-            "item": "https://calczen.in/calculators"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": h1,
-            "item": canonical
-          }
-        ]
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "@id": `${canonical}#webapp`,
-        "url": canonical,
-        "name": h1,
-        "applicationCategory": "EducationalApplication",
-        "operatingSystem": "All",
-        "browserRequirements": "Requires HTML5/JavaScript",
-        "description": description
-      }
-    ];
-  } else if (lowercasePath.startsWith("/category/")) {
-    const slug = lowercasePath.replace("/category/", "");
-    const meta = categoryMeta[slug];
-    const categoryName = slug.charAt(0).toUpperCase() + slug.slice(1);
-    if (meta) {
-      title = meta.title;
-      description = meta.description;
-    } else {
-      title = `${categoryName} Calculators | CalcZen`;
-      description = `Explore our list of free online ${categoryName} calculators.`;
-    }
-    h1 = `${categoryName} Calculators`;
-    jsonld = [
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://calczen.in"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": h1,
-            "item": canonical
-          }
-        ]
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "url": canonical,
-        "name": title,
-        "description": description
-      }
-    ];
-  } else if (lowercasePath.startsWith("/blog/")) {
-    // Resolve slug by taking the last part of the URL (solving /blog/category/slug)
-    const parts = lowercasePath.split("/").filter(Boolean);
-    const slug = parts[parts.length - 1];
-    try {
-      const blog = await findPublishedBlogBySlug(slug);
-      if (blog) {
-        title = blog.metaTitle || `${blog.title} | CalcZen`;
-        description = blog.metaDescription || blog.excerpt || (blog.content.replace(/<[^>]*>/g, "").substring(0, 155) + "...");
-        h1 = blog.title;
-        jsonld = blog.jsonld;
-        featured_image = blog.featuredImage || blog.thumbnail || null;
-        if (featured_image && !featured_image.startsWith("http") && !featured_image.startsWith("/")) {
-          featured_image = "/" + featured_image;
+    if (lowercasePath === "" || lowercasePath === "/") {
+      title = "Free Online Calculators for Finance, Health & Math | CalcZen";
+      description = "Free online calculators for finance, health, math and everyday life.";
+      h1 = "Free Online Calculators";
+      jsonld = [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://calczen.in/#website",
+          "url": "https://calczen.in",
+          "name": "CalcZen",
+          "description": description
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://calczen.in/#organization",
+          "url": "https://calczen.in",
+          "name": "CalcZen",
+          "logo": "https://calczen.in/icons/android-chrome-512x512.png"
         }
-        if (featured_image && featured_image.startsWith("/")) {
-          featured_image = `https://calczen.in${featured_image}`;
-        }
+      ];
+    } else if (lowercasePath.startsWith("/calculator/")) {
+      const slug = lowercasePath.replace("/calculator/", "");
+      const meta = calculatorMeta[slug];
+      if (meta) {
+        title = meta.title;
+        description = meta.description;
+      } else {
+        const name = slug
+          .split("-")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" ");
+        title = `${name} - Free Online Calculator | CalcZen`;
+        description = `Use our free online ${name} for instant calculations, explanations, formulas, and worked examples.`;
       }
-    } catch (err) {
-      console.error(`Failed to fetch blog metadata for slug ${slug}:`, err);
+      h1 = title.split(" - ")[0];
+      jsonld = [
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://calczen.in"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Calculators",
+              "item": "https://calczen.in/calculators"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": h1,
+              "item": canonical
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "@id": `${canonical}#webapp`,
+          "url": canonical,
+          "name": h1,
+          "applicationCategory": "EducationalApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires HTML5/JavaScript",
+          "description": description
+        }
+      ];
+    } else if (lowercasePath.startsWith("/category/")) {
+      const slug = lowercasePath.replace("/category/", "");
+      const meta = categoryMeta[slug];
+      const categoryName = slug.charAt(0).toUpperCase() + slug.slice(1);
+      if (meta) {
+        title = meta.title;
+        description = meta.description;
+      } else {
+        title = `${categoryName} Calculators | CalcZen`;
+        description = `Explore our list of free online ${categoryName} calculators.`;
+      }
+      h1 = `${categoryName} Calculators`;
+      jsonld = [
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://calczen.in"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": h1,
+              "item": canonical
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "url": canonical,
+          "name": title,
+          "description": description
+        }
+      ];
+    } else if (lowercasePath.startsWith("/blog/")) {
+      const parts = lowercasePath.split("/").filter(Boolean);
+      const slug = parts[parts.length - 1];
+      try {
+        const blog = await findPublishedBlogBySlug(slug);
+        if (blog) {
+          title = blog.metaTitle || `${blog.title} | CalcZen`;
+          description = blog.metaDescription || blog.excerpt || (blog.content.replace(/<[^>]*>/g, "").substring(0, 155) + "...");
+          h1 = blog.title;
+          jsonld = blog.jsonld;
+          featured_image = blog.featuredImage || blog.thumbnail || null;
+          if (featured_image && !featured_image.startsWith("http") && !featured_image.startsWith("/")) {
+            featured_image = "/" + featured_image;
+          }
+          if (featured_image && featured_image.startsWith("/")) {
+            featured_image = `https://calczen.in${featured_image}`;
+          }
+        }
+      } catch (err: any) {
+        console.error(`[METADATA BLOG FETCH ERROR] Failed to fetch blog database entry for slug: ${slug}`, err.message, err.stack);
+      }
+    } else if (lowercasePath === "/about") {
+      title = "About Us - CalcZen";
+      description = "Learn more about CalcZen, our mission to build beautiful online tools, and our standards for mathematical accuracy.";
+      h1 = "About CalcZen";
+    } else if (lowercasePath === "/contact") {
+      title = "Contact Us - CalcZen";
+      description = "Have feedback or a request for a new calculator? Reach out to the CalcZen team directly.";
+      h1 = "Contact CalcZen";
+    } else if (lowercasePath === "/privacy") {
+      title = "Privacy Policy - CalcZen";
+      description = "Read the CalcZen privacy policy to understand how we secure your data and maintain privacy.";
+      h1 = "Privacy Policy";
+    } else if (lowercasePath === "/terms") {
+      title = "Terms of Service - CalcZen";
+      description = "View the terms and conditions for using CalcZen calculators and resources.";
+      h1 = "Terms of Service";
+    } else if (lowercasePath === "/disclaimer") {
+      title = "Disclaimer - CalcZen";
+      description = "Read our site disclaimer regarding the informational nature of our calculation results.";
+      h1 = "Disclaimer";
+    } else if (lowercasePath === "/calculators") {
+      title = "All Calculators - CalcZen";
+      description = "Browse our complete directory of free online calculators for finance, health, math, and everyday tasks.";
+      h1 = "All Online Calculators";
+    } else if (lowercasePath === "/blog") {
+      title = "CalcZen Blog - Financial Tips, Health Insights & Math Guides";
+      description = "Expert guides, calculator tutorials, and practical articles on managing personal finance, tracking fitness goals, and solving math problems.";
+      h1 = "CalcZen Blog";
     }
-  } else if (lowercasePath === "/about") {
-    title = "About Us - CalcZen";
-    description = "Learn more about CalcZen, our mission to build beautiful online tools, and our standards for mathematical accuracy.";
-    h1 = "About CalcZen";
-  } else if (lowercasePath === "/contact") {
-    title = "Contact Us - CalcZen";
-    description = "Have feedback or a request for a new calculator? Reach out to the CalcZen team directly.";
-    h1 = "Contact CalcZen";
-  } else if (lowercasePath === "/privacy") {
-    title = "Privacy Policy - CalcZen";
-    description = "Read the CalcZen privacy policy to understand how we secure your data and maintain privacy.";
-    h1 = "Privacy Policy";
-  } else if (lowercasePath === "/terms") {
-    title = "Terms of Service - CalcZen";
-    description = "View the terms and conditions for using CalcZen calculators and resources.";
-    h1 = "Terms of Service";
-  } else if (lowercasePath === "/disclaimer") {
-    title = "Disclaimer - CalcZen";
-    description = "Read our site disclaimer regarding the informational nature of our calculation results.";
-    h1 = "Disclaimer";
-  } else if (lowercasePath === "/calculators") {
-    title = "All Calculators - CalcZen";
-    description = "Browse our complete directory of free online calculators for finance, health, math, and everyday tasks.";
-    h1 = "All Online Calculators";
-  } else if (lowercasePath === "/blog") {
-    title = "CalcZen Blog - Financial Tips, Health Insights & Math Guides";
-    description = "Expert guides, calculator tutorials, and practical articles on managing personal finance, tracking fitness goals, and solving math problems.";
-    h1 = "CalcZen Blog";
+  } catch (globalMetaErr: any) {
+    console.error("[METADATA ENGINE CRITICAL ERROR] Failed during metadata generation for path:", urlPath, globalMetaErr.message, globalMetaErr.stack);
   }
 
   return { title, description, canonical, h1, jsonld, featured_image };
 }
+
+// Fallback HTML template in case index.html is missing on production server filesystem
+const fallbackHtmlTemplate = (metadata: DynamicMetadata) => `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>${metadata.title}</title>
+  <meta name="description" content="${metadata.description}" />
+  <link rel="canonical" href="${metadata.canonical}" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta property="og:title" content="${metadata.title}" />
+  <meta property="og:description" content="${metadata.description}" />
+  <meta property="og:url" content="${metadata.canonical}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="CalcZen" />
+  <meta property="og:image" content="${metadata.featured_image || 'https://calczen.in/icons/android-chrome-512x512.png'}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${metadata.title}" />
+  <meta name="twitter:description" content="${metadata.description}" />
+  <meta name="twitter:image" content="${metadata.featured_image || 'https://calczen.in/icons/android-chrome-512x512.png'}" />
+  <link rel="icon" type="image/png" href="/icons/favicon-32x32.png" />
+  ${metadata.jsonld ? (Array.isArray(metadata.jsonld) ? metadata.jsonld : [metadata.jsonld]).map(node => `<script type="application/ld+json">${JSON.stringify(node)}</script>`).join("\n") : ""}
+</head>
+<body style="background:#0f172a;color:#cbd5e1;font-family:system-ui,sans-serif;margin:0;padding:2rem;display:flex;justify-content:center;">
+  <div style="max-width:800px;width:100%;">
+    <header style="margin-bottom:2rem;"><a href="/" style="color:#6366f1;font-weight:bold;text-decoration:none;font-size:1.5rem;">CalcZen</a></header>
+    <main>
+      <h1 style="color:#f8fafc;font-size:2.25rem;margin-bottom:1rem;">${metadata.h1}</h1>
+      <p style="font-size:1.125rem;line-height:1.75;margin-bottom:2rem;">${metadata.description}</p>
+      <div style="background:#1e293b;padding:1.5rem;border-radius:0.75rem;border:1px solid #334155;">
+        <p style="margin:0;font-size:0.875rem;color:#94a3b8;">Please enable JavaScript to access all interactive tools, calculators, and sliders on this page.</p>
+      </div>
+    </main>
+  </div>
+</body>
+</html>`;
 
 /**
  * Express app — production order:
@@ -454,22 +494,41 @@ export async function createApp(): Promise<Express> {
       return next();
     }
 
+    let metadata: DynamicMetadata | null = null;
+    try {
+      metadata = await getDynamicMetadata(req.path);
+    } catch (metaErr: any) {
+      console.error("[CRITICAL META FAILURE] getDynamicMetadata crashed completely for path:", req.path, metaErr.message, metaErr.stack);
+      metadata = {
+        title: "Free Online Calculators for Finance, Health & Math | CalcZen",
+        description: "Free online calculators for finance, health, math and everyday life.",
+        canonical: `https://calczen.in${req.path}`,
+        h1: "Free Online Calculators",
+      };
+    }
+
     const publicDist = resolvePublicDist();
     const indexPath = path.join(publicDist, "index.html");
 
+    // Fallback to dynamic template if index.html is missing
     if (!fs.existsSync(indexPath)) {
-      console.warn("Public index.html not found at:", indexPath);
-      return next(); // Fallback to 404
+      console.warn(`[PRERENDER WARNING] index.html not found at: ${indexPath}. Rendering page via fallback HTML template.`);
+      res.setHeader("Content-Type", "text/html");
+      res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
+      res.send(fallbackHtmlTemplate(metadata));
+      return;
     }
 
     fs.readFile(indexPath, "utf8", async (err, html) => {
       if (err) {
-        console.error("Failed to read public index.html:", err);
-        return res.status(500).send("Internal server error");
+        console.error(`[PRERENDER FILE READ ERROR] Failed to read public index.html from path: ${indexPath}. rendering fallback HTML template.`, err.message, err.stack);
+        res.setHeader("Content-Type", "text/html");
+        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
+        res.send(fallbackHtmlTemplate(metadata!));
+        return;
       }
+
       try {
-        const metadata = await getDynamicMetadata(req.path);
-        
         // 1. Remove all old SEO tags to prevent duplicates and handle minification attribute re-ordering
         let modifiedHtml = html;
         modifiedHtml = modifiedHtml.replace(/<title[^>]*>[^<]*<\/title>/gi, "");
@@ -480,26 +539,26 @@ export async function createApp(): Promise<Express> {
         modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?robots["']?[^>]*>/gi, "");
 
         // 2. Inject fresh, verified dynamic metadata inside the head
-        const ogImage = metadata.featured_image || "https://calczen.in/icons/android-chrome-512x512.png";
+        const ogImage = metadata!.featured_image || "https://calczen.in/icons/android-chrome-512x512.png";
         let seoMetaTags = `
-    <title>${metadata.title}</title>
-    <meta name="description" content="${metadata.description}" />
-    <link rel="canonical" href="${metadata.canonical}" />
+    <title>${metadata!.title}</title>
+    <meta name="description" content="${metadata!.description}" />
+    <link rel="canonical" href="${metadata!.canonical}" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta property="og:title" content="${metadata.title}" />
-    <meta property="og:description" content="${metadata.description}" />
-    <meta property="og:url" content="${metadata.canonical}" />
+    <meta property="og:title" content="${metadata!.title}" />
+    <meta property="og:description" content="${metadata!.description}" />
+    <meta property="og:url" content="${metadata!.canonical}" />
     <meta property="og:type" content="${req.path.startsWith("/blog/") ? "article" : "website"}" />
     <meta property="og:site_name" content="CalcZen" />
     <meta property="og:image" content="${ogImage}" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${metadata.title}" />
-    <meta name="twitter:description" content="${metadata.description}" />
+    <meta name="twitter:title" content="${metadata!.title}" />
+    <meta name="twitter:description" content="${metadata!.description}" />
     <meta name="twitter:image" content="${ogImage}" />
         `;
 
-        if (metadata.jsonld) {
-          const graphs = Array.isArray(metadata.jsonld) ? metadata.jsonld : [metadata.jsonld];
+        if (metadata!.jsonld) {
+          const graphs = Array.isArray(metadata!.jsonld) ? metadata!.jsonld : [metadata!.jsonld];
           graphs.forEach(node => {
             seoMetaTags += `
     <script type="application/ld+json">${JSON.stringify(node)}</script>`;
@@ -511,8 +570,8 @@ export async function createApp(): Promise<Express> {
         // 3. Inject dynamic body/H1 fallback inside #root
         const dynamicSeoContent = `
     <div style="display: none;">
-      <h1>${metadata.h1}</h1>
-      <p>${metadata.description}</p>
+      <h1>${metadata!.h1}</h1>
+      <p>${metadata!.description}</p>
     </div>
         `;
         modifiedHtml = modifiedHtml.replace(
@@ -527,27 +586,85 @@ export async function createApp(): Promise<Express> {
 
         res.setHeader("Content-Type", "text/html");
         res.send(modifiedHtml);
-      } catch (seoErr) {
-        console.error("SEO Metadata Injector Error:", seoErr);
-        // Fallback to sending raw unmodified HTML with no-cache
-        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
-        res.setHeader("Pragma", "no-cache");
-        res.setHeader("Expires", "0");
+      } catch (seoErr: any) {
+        console.error("[PRERENDER ENGINE EXCEPTION] Failed to compile rewrites inside index.html templates.", seoErr.message, seoErr.stack);
+        // Fallback to sending dynamic fallback template
         res.setHeader("Content-Type", "text/html");
-        res.send(html);
+        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
+        res.send(fallbackHtmlTemplate(metadata!));
       }
     });
   });
 
-  app.use((_req, res) => {
+  // Global Page-aware 404 Handler
+  app.use((req, res) => {
+    const isPageRequest = !req.path.startsWith("/api") && !req.path.startsWith("/admin") && !req.path.match(/\.[a-zA-Z0-9]+$/);
+    if (isPageRequest) {
+      res.status(404).setHeader("Content-Type", "text/html");
+      res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Page Not Found | CalcZen</title>
+  <meta name="description" content="The page you are looking for does not exist." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { background: #0F172A; color: #F8FAFC; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    .container { text-align: center; max-width: 500px; padding: 2rem; }
+    h1 { color: #F59E0B; font-size: 2.5rem; margin-bottom: 1rem; }
+    p { color: #94A3B8; font-size: 1.1rem; line-height: 1.6; }
+    a { color: #6366F1; text-decoration: none; font-weight: bold; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Page Not Found</h1>
+    <p>The page you are looking for does not exist. Check the URL or return to the <a href="/">Homepage</a>.</p>
+  </div>
+</body>
+</html>`);
+      return;
+    }
     res.status(404).json({ success: false, message: "Not found" });
   });
 
+  // Global Error Handler
   app.use(
     (err: unknown, req: Request, res: Response, _next: NextFunction) => {
-      console.error(err);
+      console.error("[GLOBAL ERROR INTERCEPTOR] Express unhandled exception caught:", err);
       applyCorsHeaders(req, res);
       const { status, message } = formatDbError(err);
+      
+      const isPageRequest = !req.path.startsWith("/api") && !req.path.startsWith("/admin") && !req.path.match(/\.[a-zA-Z0-9]+$/);
+      if (isPageRequest) {
+        res.status(status).setHeader("Content-Type", "text/html");
+        res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Internal Server Error | CalcZen</title>
+  <meta name="description" content="An internal server error occurred. Please try again." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { background: #0F172A; color: #F8FAFC; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    .container { text-align: center; max-width: 500px; padding: 2rem; }
+    h1 { color: #EF4444; font-size: 2.5rem; margin-bottom: 1rem; }
+    p { color: #94A3B8; font-size: 1.1rem; line-height: 1.6; }
+    a { color: #6366F1; text-decoration: none; font-weight: bold; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Internal Server Error</h1>
+    <p>We encountered an error while processing your request. Please go back to the <a href="/">Homepage</a> or try again later.</p>
+  </div>
+</body>
+</html>`);
+        return;
+      }
+
       res.status(status).json({ success: false, message });
     },
   );

@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Googlebot specific crawlers
+# Google crawlers
 User-agent: Googlebot
 Allow: /
 
@@ -11,11 +11,11 @@ Allow: /
 User-agent: Googlebot-Image
 Allow: /
 
-# Bingbot
+# Bing
 User-agent: Bingbot
 Allow: /
 
-# AI search engine crawlers
+# AI crawlers
 User-agent: GPTBot
 Allow: /
 
@@ -34,16 +34,13 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
-User-agent: Gemini
-Allow: /
-
 User-agent: Google-Extended
 Allow: /
 
 User-agent: CCBot
 Allow: /
 
-# Sitemap links
-Sitemap: https://www.calczen.in/sitemap.xml
-Sitemap: https://www.calczen.in/sitemap-blogs.xml
-Sitemap: https://www.calczen.in/sitemap-news.xml
+# Sitemaps
+Sitemap: https://calczen.in/sitemap.xml
+Sitemap: https://calczen.in/sitemap-blogs.xml
+Sitemap: https://calczen.in/sitemap-news.xml

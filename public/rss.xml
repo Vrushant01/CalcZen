@@ -5,7 +5,7 @@
     <link>https://www.calczen.in/blog</link>
     <description>Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Jul 2026 19:12:29 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jul 2026 19:37:05 GMT</lastBuildDate>
     <atom:link href="https://www.calczen.in/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>10 AI Skills That Will Be Worth More Than Coding in 2026 (And How to Learn Them)</title>
@@ -145,7 +145,7 @@
       <description>Ever wonder how many calories your body burns even when you&apos;re doing absolutely nothing? A Basal Metabolic Rate (BMR) Calculator helps you estimate the calories your body needs to maintain essential functions like breathing, circulation, and cell production.</description>
       <author>hello@calczen.in (CalcZen Team)</author>
       <category>Health</category>
-    <media:content url="https://images.unsplash.com/photo-1517836357463-d25dfeac3438" medium="image" type="image/jpeg" />
+    <media:content url="/uploads/blog/basal-metabolic-rate-calculator.webp" medium="image" type="image/jpeg" />
     </item>
     <item>
       <title>Current Mortgage Rates in 2026: What Homebuyers Are Facing Right Now</title>
@@ -155,7 +155,7 @@
       <description>Mortgage rates continue to be one of the biggest factors affecting home affordability in 2026. Whether you&apos;re buying your first home, refinancing, or investing in real estate, understanding current mortgage trends can help you make smarter financial decisions.</description>
       <author>hello@calczen.in (CalcZen Team)</author>
       <category>Finance</category>
-    <media:content url="https://images.unsplash.com/photo-1570129477492-45c003edd2be" medium="image" type="image/jpeg" />
+    <media:content url="/uploads/blog/current-mortgage-rates-in-2026-what-homebuyers-are-facing-right-now.webp" medium="image" type="image/jpeg" />
     </item>
     <item>
       <title>Water Intake Calculator: How Much Water Should You Drink Each Day?</title>
@@ -165,7 +165,7 @@
       <description>Staying hydrated is essential for your health, energy levels, and overall well-being. Use a Water Intake Calculator to determine how much water you should drink daily based on your weight, activity level, climate, and lifestyle.</description>
       <author>hello@calczen.in (CalcZen Team)</author>
       <category>Health</category>
-    <media:content url="https://images.unsplash.com/photo-1559839734-2b71ea197ec2" medium="image" type="image/jpeg" />
+    <media:content url="/uploads/blog/water-intake-calculator-how-much-water-should-you-drink-each-day.webp" medium="image" type="image/jpeg" />
     </item>
     <item>
       <title>Pregnancy Due Date Calculator: Estimate Your Baby’s Arrival Date Accurately</title>
@@ -175,7 +175,7 @@
       <description>Wondering when your baby will arrive? Use a Pregnancy Due Date Calculator to estimate your expected delivery date, track pregnancy milestones, and plan each trimester with confidence.</description>
       <author>hello@calczen.in (CalcZen Team)</author>
       <category>Health</category>
-    <media:content url="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2" medium="image" type="image/jpeg" />
+    <media:content url="/uploads/blog/pregnancy-due-date-calculator-estimate-your-babys-arrival-date-accurately.webp" medium="image" type="image/jpeg" />
     </item>
   </channel>
 </rss>

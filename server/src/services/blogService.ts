@@ -2,6 +2,7 @@ import { getSupabase } from "../config/supabase.js";
 import type { ApiBlog, BlogRow } from "../types/database.js";
 import { toApiBlog } from "../utils/serializers.js";
 import { generateSeoData } from "../utils/seo.js";
+import { optimizeAndStoreImage } from "../utils/imageOptimizer.js";
 
 function isUniqueViolation(error: { code?: string }): boolean {
   return error.code === "23505";
@@ -161,6 +162,21 @@ export async function createBlogAdmin(input: {
     publishDate,
   });
 
+  // Download and optimize thumbnail if external
+  let optimizedThumbnail = input.thumbnail || null;
+  if (optimizedThumbnail && seo.slug) {
+    optimizedThumbnail = await optimizeAndStoreImage(optimizedThumbnail, seo.slug);
+    seo.ogImage = optimizedThumbnail;
+    seo.twitterImage = optimizedThumbnail;
+    if (seo.jsonld) {
+      const graph = Array.isArray(seo.jsonld) ? seo.jsonld : [seo.jsonld];
+      if (graph[0] && graph[0]["@type"] === "BlogPosting") {
+        graph[0].image = [optimizedThumbnail];
+      }
+      seo.schema = JSON.stringify(graph);
+    }
+  }
+
   const { data, error } = await getSupabase()
     .from("blogs")
     .insert({
@@ -168,7 +184,7 @@ export async function createBlogAdmin(input: {
       slug: seo.slug,
       excerpt: seo.excerpt,
       content: seo.content,
-      thumbnail: input.thumbnail || null,
+      thumbnail: optimizedThumbnail,
       category: input.category,
       tags: input.tags || [],
       meta_title: seo.metaTitle,
@@ -185,7 +201,7 @@ export async function createBlogAdmin(input: {
       schema: seo.schema,
       jsonld: seo.jsonld,
       canonical: seo.canonical,
-      featured_image: input.thumbnail || null,
+      featured_image: optimizedThumbnail,
       status: input.published ? "published" : "draft",
       discover_ready: seo.discoverReady,
       indexed: false,
@@ -285,6 +301,21 @@ export async function updateBlogAdmin(
     publishDate,
   });
 
+  // Download and optimize thumbnail if external
+  let optimizedThumbnail = thumbnailInput || null;
+  if (input.thumbnail !== undefined && optimizedThumbnail && seo.slug) {
+    optimizedThumbnail = await optimizeAndStoreImage(optimizedThumbnail, seo.slug);
+    seo.ogImage = optimizedThumbnail;
+    seo.twitterImage = optimizedThumbnail;
+    if (seo.jsonld) {
+      const graph = Array.isArray(seo.jsonld) ? seo.jsonld : [seo.jsonld];
+      if (graph[0] && graph[0]["@type"] === "BlogPosting") {
+        graph[0].image = [optimizedThumbnail];
+      }
+      seo.schema = JSON.stringify(graph);
+    }
+  }
+
   const updates: Record<string, any> = {
     title: seo.title,
     slug: seo.slug,
@@ -308,8 +339,8 @@ export async function updateBlogAdmin(
   };
 
   if (input.thumbnail !== undefined) {
-    updates.thumbnail = input.thumbnail;
-    updates.featured_image = input.thumbnail;
+    updates.thumbnail = optimizedThumbnail;
+    updates.featured_image = optimizedThumbnail;
   }
   if (input.category !== undefined) updates.category = input.category;
   if (input.tags !== undefined) updates.tags = input.tags;

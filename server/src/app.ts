@@ -132,19 +132,53 @@ const categoryMeta: Record<string, { title: string; description: string }> = {
 
 function getCanonicalUrl(urlPath: string): string {
   const pathPart = urlPath.endsWith("/") && urlPath !== "/" ? urlPath.slice(0, -1) : urlPath;
-  return `https://www.calczen.in${pathPart}`;
+  return `https://calczen.in${pathPart}`;
 }
 
-async function getDynamicMetadata(urlPath: string): Promise<{ title: string; description: string; canonical: string }> {
+interface DynamicMetadata {
+  title: string;
+  description: string;
+  canonical: string;
+  h1: string;
+  jsonld?: any;
+  featured_image?: string | null;
+}
+
+async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
   const canonical = getCanonicalUrl(urlPath);
   
-  let title = "CalcZen — Smart Online Calculators";
+  let title = "Free Online Calculators for Finance, Health & Math | CalcZen";
   let description = "Free online calculators for finance, health, math and everyday life.";
+  let h1 = "Free Online Calculators";
+  let jsonld: any = null;
+  let featured_image: string | null = null;
 
   const pathPart = urlPath.endsWith("/") && urlPath !== "/" ? urlPath.slice(0, -1) : urlPath;
   const lowercasePath = pathPart.toLowerCase();
 
-  if (lowercasePath.startsWith("/calculator/")) {
+  if (lowercasePath === "" || lowercasePath === "/") {
+    title = "Free Online Calculators for Finance, Health & Math | CalcZen";
+    description = "Free online calculators for finance, health, math and everyday life.";
+    h1 = "Free Online Calculators";
+    jsonld = [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://calczen.in/#website",
+        "url": "https://calczen.in",
+        "name": "CalcZen",
+        "description": description
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://calczen.in/#organization",
+        "url": "https://calczen.in",
+        "name": "CalcZen",
+        "logo": "https://calczen.in/icons/android-chrome-512x512.png"
+      }
+    ];
+  } else if (lowercasePath.startsWith("/calculator/")) {
     const slug = lowercasePath.replace("/calculator/", "");
     const meta = calculatorMeta[slug];
     if (meta) {
@@ -158,20 +192,101 @@ async function getDynamicMetadata(urlPath: string): Promise<{ title: string; des
       title = `${name} - Free Online Calculator | CalcZen`;
       description = `Use our free online ${name} for instant calculations, explanations, formulas, and worked examples.`;
     }
+    h1 = title.split(" - ")[0];
+    jsonld = [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://calczen.in"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Calculators",
+            "item": "https://calczen.in/calculators"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": h1,
+            "item": canonical
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "@id": `${canonical}#webapp`,
+        "url": canonical,
+        "name": h1,
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires HTML5/JavaScript",
+        "description": description
+      }
+    ];
   } else if (lowercasePath.startsWith("/category/")) {
     const slug = lowercasePath.replace("/category/", "");
     const meta = categoryMeta[slug];
+    const categoryName = slug.charAt(0).toUpperCase() + slug.slice(1);
     if (meta) {
       title = meta.title;
       description = meta.description;
+    } else {
+      title = `${categoryName} Calculators | CalcZen`;
+      description = `Explore our list of free online ${categoryName} calculators.`;
     }
+    h1 = `${categoryName} Calculators`;
+    jsonld = [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://calczen.in"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": h1,
+            "item": canonical
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "url": canonical,
+        "name": title,
+        "description": description
+      }
+    ];
   } else if (lowercasePath.startsWith("/blog/")) {
-    const slug = lowercasePath.replace("/blog/", "");
+    // Resolve slug by taking the last part of the URL (solving /blog/category/slug)
+    const parts = lowercasePath.split("/").filter(Boolean);
+    const slug = parts[parts.length - 1];
     try {
       const blog = await findPublishedBlogBySlug(slug);
       if (blog) {
-        title = blog.metaTitle || `${blog.title} | CalcZen Blog`;
+        title = blog.metaTitle || `${blog.title} | CalcZen`;
         description = blog.metaDescription || blog.excerpt || (blog.content.replace(/<[^>]*>/g, "").substring(0, 155) + "...");
+        h1 = blog.title;
+        jsonld = blog.jsonld;
+        featured_image = blog.featuredImage || blog.thumbnail || null;
+        if (featured_image && !featured_image.startsWith("http") && !featured_image.startsWith("/")) {
+          featured_image = "/" + featured_image;
+        }
+        if (featured_image && featured_image.startsWith("/")) {
+          featured_image = `https://calczen.in${featured_image}`;
+        }
       }
     } catch (err) {
       console.error(`Failed to fetch blog metadata for slug ${slug}:`, err);
@@ -179,27 +294,34 @@ async function getDynamicMetadata(urlPath: string): Promise<{ title: string; des
   } else if (lowercasePath === "/about") {
     title = "About Us - CalcZen";
     description = "Learn more about CalcZen, our mission to build beautiful online tools, and our standards for mathematical accuracy.";
+    h1 = "About CalcZen";
   } else if (lowercasePath === "/contact") {
     title = "Contact Us - CalcZen";
     description = "Have feedback or a request for a new calculator? Reach out to the CalcZen team directly.";
+    h1 = "Contact CalcZen";
   } else if (lowercasePath === "/privacy") {
     title = "Privacy Policy - CalcZen";
     description = "Read the CalcZen privacy policy to understand how we secure your data and maintain privacy.";
+    h1 = "Privacy Policy";
   } else if (lowercasePath === "/terms") {
     title = "Terms of Service - CalcZen";
     description = "View the terms and conditions for using CalcZen calculators and resources.";
+    h1 = "Terms of Service";
   } else if (lowercasePath === "/disclaimer") {
     title = "Disclaimer - CalcZen";
     description = "Read our site disclaimer regarding the informational nature of our calculation results.";
+    h1 = "Disclaimer";
   } else if (lowercasePath === "/calculators") {
     title = "All Calculators - CalcZen";
     description = "Browse our complete directory of free online calculators for finance, health, math, and everyday tasks.";
+    h1 = "All Online Calculators";
   } else if (lowercasePath === "/blog") {
     title = "CalcZen Blog - Financial Tips, Health Insights & Math Guides";
     description = "Expert guides, calculator tutorials, and practical articles on managing personal finance, tracking fitness goals, and solving math problems.";
+    h1 = "CalcZen Blog";
   }
 
-  return { title, description, canonical };
+  return { title, description, canonical, h1, jsonld, featured_image };
 }
 
 /**
@@ -298,6 +420,12 @@ export async function createApp(): Promise<Express> {
   app.use("/api/newsletters", newsletterRoutes);
   app.use("/api/blogs", blogRoutes);
 
+  // Serve static uploaded images
+  const uploadsDir = path.resolve(process.cwd(), "uploads");
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+  app.use("/uploads", express.static(uploadsDir));
 
   const adminDist = resolveAdminDist();
   app.use("/admin", express.static(adminDist, { index: "index.html" }));
@@ -347,26 +475,43 @@ export async function createApp(): Promise<Express> {
         modifiedHtml = modifiedHtml.replace(/<title[^>]*>[^<]*<\/title>/gi, "");
         modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?description["']?[^>]*>/gi, "");
         modifiedHtml = modifiedHtml.replace(/<link\s+[^>]*rel=["']?canonical["']?[^>]*>/gi, "");
-        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*property=["']?og:(title|description|url)["']?[^>]*>/gi, "");
-        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?twitter:(title|description)["']?[^>]*>/gi, "");
+        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*property=["']?og:(title|description|url|image|type|site_name)["']?[^>]*>/gi, "");
+        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?twitter:(title|description|card|image)["']?[^>]*>/gi, "");
+        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?robots["']?[^>]*>/gi, "");
 
         // 2. Inject fresh, verified dynamic metadata inside the head
-        const seoMetaTags = `
+        const ogImage = metadata.featured_image || "https://calczen.in/icons/android-chrome-512x512.png";
+        let seoMetaTags = `
     <title>${metadata.title}</title>
     <meta name="description" content="${metadata.description}" />
     <link rel="canonical" href="${metadata.canonical}" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta property="og:title" content="${metadata.title}" />
     <meta property="og:description" content="${metadata.description}" />
     <meta property="og:url" content="${metadata.canonical}" />
+    <meta property="og:type" content="${req.path.startsWith("/blog/") ? "article" : "website"}" />
+    <meta property="og:site_name" content="CalcZen" />
+    <meta property="og:image" content="${ogImage}" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${metadata.title}" />
     <meta name="twitter:description" content="${metadata.description}" />
+    <meta name="twitter:image" content="${ogImage}" />
         `;
+
+        if (metadata.jsonld) {
+          const graphs = Array.isArray(metadata.jsonld) ? metadata.jsonld : [metadata.jsonld];
+          graphs.forEach(node => {
+            seoMetaTags += `
+    <script type="application/ld+json">${JSON.stringify(node)}</script>`;
+          });
+        }
+
         modifiedHtml = modifiedHtml.replace("</head>", `${seoMetaTags}\n</head>`);
 
         // 3. Inject dynamic body/H1 fallback inside #root
         const dynamicSeoContent = `
     <div style="display: none;">
-      <h1>${metadata.title}</h1>
+      <h1>${metadata.h1}</h1>
       <p>${metadata.description}</p>
     </div>
         `;

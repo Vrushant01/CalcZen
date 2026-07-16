@@ -24,6 +24,10 @@ const CATEGORIES = [
   "Fitness",
   "Investment",
   "Business",
+  "Education",
+  "Math",
+  "Everyday",
+  "Science",
 ];
 
 export function BlogListPage() {

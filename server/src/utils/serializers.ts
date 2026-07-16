@@ -84,6 +84,17 @@ export function toApiBlog(row: BlogRow): ApiBlog {
     publishDate: row.publish_date,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    schema: row.schema,
+    jsonld: row.jsonld,
+    canonical: row.canonical,
+    featuredImage: row.featured_image,
+    status: row.status,
+    discoverReady: row.discover_ready,
+    indexed: row.indexed,
+    ogImage: row.og_image,
+    twitterImage: row.twitter_image,
+    faqJson: row.faq_json,
+    toc: row.toc,
   };
 }
 

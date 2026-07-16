@@ -139,6 +139,10 @@ const CATEGORY_PILLS = [
   "Fitness",
   "Investment",
   "Business",
+  "Education",
+  "Math",
+  "Everyday",
+  "Science",
 ];
 
 function BlogHomepage() {

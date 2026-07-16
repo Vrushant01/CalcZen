@@ -102,6 +102,17 @@ export type BlogRow = {
   publish_date: string | null;
   created_at: string;
   updated_at: string;
+  schema: string | null;
+  jsonld: any;
+  canonical: string | null;
+  featured_image: string | null;
+  status: string;
+  discover_ready: boolean;
+  indexed: boolean;
+  og_image: string | null;
+  twitter_image: string | null;
+  faq_json: any;
+  toc: any;
 };
 
 export type ApiBlog = {
@@ -126,5 +137,16 @@ export type ApiBlog = {
   publishDate: string | null;
   createdAt: string;
   updatedAt: string;
+  schema: string | null;
+  jsonld: any;
+  canonical: string | null;
+  featuredImage: string | null;
+  status: string;
+  discoverReady: boolean;
+  indexed: boolean;
+  ogImage: string | null;
+  twitterImage: string | null;
+  faqJson: any;
+  toc: any;
 };
 

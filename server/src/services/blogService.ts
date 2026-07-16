@@ -1,6 +1,7 @@
 import { getSupabase } from "../config/supabase.js";
 import type { ApiBlog, BlogRow } from "../types/database.js";
 import { toApiBlog } from "../utils/serializers.js";
+import { generateSeoData } from "../utils/seo.js";
 
 function isUniqueViolation(error: { code?: string }): boolean {
   return error.code === "23505";
@@ -143,27 +144,55 @@ export async function createBlogAdmin(input: {
 }): Promise<ApiBlog> {
   const publishDate = input.published ? new Date().toISOString() : null;
 
+  // Run SEO Optimization Engine automatically
+  const seo = generateSeoData({
+    title: input.title,
+    slug: input.slug,
+    excerpt: input.excerpt,
+    content: input.content,
+    thumbnail: input.thumbnail,
+    category: input.category,
+    tags: input.tags,
+    metaTitle: input.metaTitle,
+    metaDescription: input.metaDescription,
+    keywords: input.keywords,
+    author: input.author || "CalcZen Team",
+    faqs: input.faqs,
+    publishDate,
+  });
+
   const { data, error } = await getSupabase()
     .from("blogs")
     .insert({
-      title: input.title.trim(),
-      slug: input.slug.toLowerCase().trim(),
-      excerpt: input.excerpt.trim(),
-      content: input.content,
+      title: seo.title,
+      slug: seo.slug,
+      excerpt: seo.excerpt,
+      content: seo.content,
       thumbnail: input.thumbnail || null,
       category: input.category,
       tags: input.tags || [],
-      meta_title: input.metaTitle || null,
-      meta_description: input.metaDescription || null,
-      keywords: input.keywords || [],
+      meta_title: seo.metaTitle,
+      meta_description: seo.metaDescription,
+      keywords: seo.keywords,
       author: input.author || "CalcZen Team",
       calculator_links: input.calculatorLinks || [],
       featured: input.featured ?? false,
       published: input.published ?? false,
       views: 0,
-      reading_time: input.readingTime || 0,
+      reading_time: seo.readingTime,
       publish_date: publishDate,
       faqs: input.faqs || [],
+      schema: seo.schema,
+      jsonld: seo.jsonld,
+      canonical: seo.canonical,
+      featured_image: input.thumbnail || null,
+      status: input.published ? "published" : "draft",
+      discover_ready: seo.discoverReady,
+      indexed: false,
+      og_image: seo.ogImage,
+      twitter_image: seo.twitterImage,
+      faq_json: input.faqs || [],
+      toc: seo.toc,
     })
     .select("*")
     .single();
@@ -202,7 +231,6 @@ export async function updateBlogAdmin(
     faqs?: { question: string; answer: string }[];
   },
 ): Promise<ApiBlog> {
-  // Fetch existing blog to determine publish date logic
   const supabase = getSupabase();
   const { data: existing, error: fetchErr } = await supabase
     .from("blogs")
@@ -215,31 +243,83 @@ export async function updateBlogAdmin(
     throw new Error("BLOG_NOT_FOUND");
   }
 
-  const updates: Record<string, any> = {};
-  if (input.title !== undefined) updates.title = input.title.trim();
-  if (input.slug !== undefined) updates.slug = input.slug.toLowerCase().trim();
-  if (input.excerpt !== undefined) updates.excerpt = input.excerpt.trim();
-  if (input.content !== undefined) updates.content = input.content;
-  if (input.thumbnail !== undefined) updates.thumbnail = input.thumbnail;
-  if (input.category !== undefined) updates.category = input.category;
-  if (input.tags !== undefined) updates.tags = input.tags;
-  if (input.metaTitle !== undefined) updates.meta_title = input.metaTitle;
-  if (input.metaDescription !== undefined) updates.meta_description = input.metaDescription;
-  if (input.keywords !== undefined) updates.keywords = input.keywords;
-  if (input.author !== undefined) updates.author = input.author;
-  if (input.calculatorLinks !== undefined) updates.calculator_links = input.calculatorLinks;
-  if (input.faqs !== undefined) updates.faqs = input.faqs;
-  if (input.featured !== undefined) updates.featured = input.featured;
-  
+  // Merge existing values with updates to process fresh SEO metrics
+  const title = input.title !== undefined ? input.title : existing.title;
+  const slugInput = input.slug !== undefined ? input.slug : existing.slug;
+  const excerptInput = input.excerpt !== undefined ? input.excerpt : existing.excerpt;
+  const contentInput = input.content !== undefined ? input.content : existing.content;
+  const thumbnailInput = input.thumbnail !== undefined ? input.thumbnail : existing.thumbnail;
+  const categoryInput = input.category !== undefined ? input.category : existing.category;
+  const tagsInput = input.tags !== undefined ? input.tags : existing.tags;
+  const metaTitleInput = input.metaTitle !== undefined ? input.metaTitle : existing.meta_title;
+  const metaDescriptionInput = input.metaDescription !== undefined ? input.metaDescription : existing.meta_description;
+  const keywordsInput = input.keywords !== undefined ? input.keywords : existing.keywords;
+  const authorInput = input.author !== undefined ? input.author : existing.author;
+  const faqsInput = input.faqs !== undefined ? input.faqs : existing.faqs;
+
+  let published = existing.published;
+  let publishDate = existing.publish_date;
   if (input.published !== undefined) {
-    updates.published = input.published;
+    published = input.published;
     if (input.published && !existing.published) {
-      updates.publish_date = new Date().toISOString();
+      publishDate = new Date().toISOString();
     } else if (!input.published) {
-      updates.publish_date = null;
+      publishDate = null;
     }
   }
-  if (input.readingTime !== undefined) updates.reading_time = input.readingTime;
+
+  // Run SEO Optimization Engine dynamically
+  const seo = generateSeoData({
+    title,
+    slug: slugInput,
+    excerpt: excerptInput,
+    content: contentInput,
+    thumbnail: thumbnailInput,
+    category: categoryInput,
+    tags: tagsInput,
+    metaTitle: metaTitleInput,
+    metaDescription: metaDescriptionInput,
+    keywords: keywordsInput,
+    author: authorInput,
+    faqs: faqsInput,
+    publishDate,
+  });
+
+  const updates: Record<string, any> = {
+    title: seo.title,
+    slug: seo.slug,
+    excerpt: seo.excerpt,
+    content: seo.content,
+    meta_title: seo.metaTitle,
+    meta_description: seo.metaDescription,
+    keywords: seo.keywords,
+    reading_time: seo.readingTime,
+    discover_ready: seo.discoverReady,
+    schema: seo.schema,
+    jsonld: seo.jsonld,
+    canonical: seo.canonical,
+    og_image: seo.ogImage,
+    twitter_image: seo.twitterImage,
+    toc: seo.toc,
+    faq_json: faqsInput !== undefined ? faqsInput : (existing.faq_json || existing.faqs || []),
+    faqs: faqsInput !== undefined ? faqsInput : (existing.faqs || existing.faq_json || []),
+    status: published ? "published" : "draft",
+    updated_at: new Date().toISOString(),
+  };
+
+  if (input.thumbnail !== undefined) {
+    updates.thumbnail = input.thumbnail;
+    updates.featured_image = input.thumbnail;
+  }
+  if (input.category !== undefined) updates.category = input.category;
+  if (input.tags !== undefined) updates.tags = input.tags;
+  if (input.author !== undefined) updates.author = input.author;
+  if (input.calculatorLinks !== undefined) updates.calculator_links = input.calculatorLinks;
+  if (input.featured !== undefined) updates.featured = input.featured;
+  if (input.published !== undefined) {
+    updates.published = published;
+    updates.publish_date = publishDate;
+  }
 
   const { data, error } = await supabase
     .from("blogs")

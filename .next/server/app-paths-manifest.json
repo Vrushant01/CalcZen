@@ -1,0 +1,16 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/about/page": "app/about/page.js",
+  "/blog/[category]/[slug]/page": "app/blog/[category]/[slug]/page.js",
+  "/blog/[slug]/page": "app/blog/[slug]/page.js",
+  "/blog/page": "app/blog/page.js",
+  "/calculator/[slug]/page": "app/calculator/[slug]/page.js",
+  "/calculators/page": "app/calculators/page.js",
+  "/category/[slug]/page": "app/category/[slug]/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/disclaimer/page": "app/disclaimer/page.js",
+  "/page": "app/page.js",
+  "/privacy/page": "app/privacy/page.js",
+  "/terms/page": "app/terms/page.js"
+}

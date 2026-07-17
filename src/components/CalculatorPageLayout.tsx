@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "@/components/ui/Link";
 import { ChevronRight, Share2 } from "lucide-react";
 import { CalculatorExample } from "@/components/CalculatorExample";
 import { CalculatorFormula } from "@/components/CalculatorFormula";

@@ -1,0 +1,16 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/about/page": "/about",
+  "/blog/[category]/[slug]/page": "/blog/[category]/[slug]",
+  "/blog/[slug]/page": "/blog/[slug]",
+  "/blog/page": "/blog",
+  "/calculator/[slug]/page": "/calculator/[slug]",
+  "/calculators/page": "/calculators",
+  "/category/[slug]/page": "/category/[slug]",
+  "/contact/page": "/contact",
+  "/disclaimer/page": "/disclaimer",
+  "/page": "/",
+  "/privacy/page": "/privacy",
+  "/terms/page": "/terms"
+}

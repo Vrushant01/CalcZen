@@ -1,9 +1,22 @@
-import { Link } from "@tanstack/react-router";
+"use client";
+
+import { Link } from "@/components/ui/Link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { CalculatorMeta } from "@/data/calculators";
+import { getCalculator } from "@/data/calculators";
 
-export function CalculatorCard({ calc, index = 0 }: { calc: CalculatorMeta; index?: number }) {
+export function CalculatorCard({
+  calc: propCalc,
+  slug,
+  index = 0,
+}: {
+  calc?: CalculatorMeta;
+  slug?: string;
+  index?: number;
+}) {
+  const calc = propCalc || (slug ? getCalculator(slug) : undefined);
+  if (!calc) return null;
   const Icon = calc.icon;
   return (
     <motion.div

@@ -1,10 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "framework": "vite",
+  "framework": "nextjs",
   "buildCommand": "npm run vercel-build",
   "installCommand": "npm install && npm install --prefix server && npm install --prefix admin",
-  "outputDirectory": "dist",
   "redirects": [
     {
       "source": "/admin/:path*",
@@ -41,16 +40,15 @@
     }
   ],
   "rewrites": [
-    { "source": "/api", "destination": "/api" },
-    { "source": "/api/(.*)", "destination": "/api" },
-    { "source": "/admin", "destination": "/api" },
-    { "source": "/admin/(.*)", "destination": "/api" },
-    { "source": "/((?!api/|admin/).*)", "destination": "/api" }
+    { "source": "/api", "destination": "/api/index.ts" },
+    { "source": "/api/(.*)", "destination": "/api/index.ts" },
+    { "source": "/admin", "destination": "/api/index.ts" },
+    { "source": "/admin/(.*)", "destination": "/api/index.ts" }
   ],
   "functions": {
     "api/index.ts": {
       "maxDuration": 60,
-      "includeFiles": "{admin/dist/**,dist/index.html}"
+      "includeFiles": "admin/dist/**"
     }
   }
 }

@@ -20,7 +20,9 @@ import newsletterRoutes from "./routes/newsletterRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import subscribeRoutes from "./routes/subscribeRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
-import { findPublishedBlogBySlug } from "./services/blogService.js";
+import { findPublishedBlogBySlug, listPublishedBlogs } from "./services/blogService.js";
+import { renderBlogDetailHtml, renderBlogListHtml } from "./utils/blogHtmlRenderer.js";
+import type { ApiBlog } from "./types/database.js";
 import { backfillBase64Images } from "./scripts/backfillBase64Images.js";
 
 import { formatDbError } from "./utils/errors.js";
@@ -146,6 +148,7 @@ interface DynamicMetadata {
   jsonld?: any;
   featured_image?: string | null;
   notFound?: boolean;
+  bodyHtml?: string;
 }
 
 export function isBrowserPageRequest(req: Request): boolean {
@@ -211,9 +214,12 @@ async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
   let h1 = "Free Online Calculators";
   let jsonld: any = null;
   let featured_image: string | null = null;
+  let bodyHtml: string | undefined = undefined;
 
   try {
-    const pathPart = urlPath.endsWith("/") && urlPath !== "/" ? urlPath.slice(0, -1) : urlPath;
+    const searchParams = new URL(urlPath, "https://calczen.in").searchParams;
+    const cleanPath = urlPath.split("?")[0];
+    const pathPart = cleanPath.endsWith("/") && cleanPath !== "/" ? cleanPath.slice(0, -1) : cleanPath;
     const lowercasePath = pathPart.toLowerCase();
 
     if (lowercasePath === "" || lowercasePath === "/") {
@@ -346,6 +352,21 @@ async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
           if (featured_image && featured_image.startsWith("/")) {
             featured_image = `https://calczen.in${featured_image}`;
           }
+
+          // Fetch related blogs to compile complete HTML pre-rendering
+          let relatedBlogs: ApiBlog[] = [];
+          try {
+            const relResult = await listPublishedBlogs({
+              category: blog.category,
+              page: 1,
+              limit: 3
+            });
+            relatedBlogs = relResult.blogs.filter(b => b._id !== blog._id).slice(0, 2);
+          } catch (relErr) {
+            console.error("Failed to fetch related blogs for pre-rendering", relErr);
+          }
+
+          bodyHtml = renderBlogDetailHtml(blog, relatedBlogs);
         } else {
           title = "Article Not Found | CalcZen";
           description = "The requested blog article could not be found on CalcZen.";
@@ -383,12 +404,23 @@ async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
       title = "CalcZen Blog - Financial Tips, Health Insights & Math Guides";
       description = "Expert guides, calculator tutorials, and practical articles on managing personal finance, tracking fitness goals, and solving math problems.";
       h1 = "CalcZen Blog";
+      try {
+        const categoryQuery = searchParams.get("category") || "";
+        const { blogs, total } = await listPublishedBlogs({
+          category: categoryQuery,
+          page: 1,
+          limit: 10
+        });
+        bodyHtml = renderBlogListHtml(blogs, total, categoryQuery);
+      } catch (err: any) {
+        console.error("Failed to render blog list", err);
+      }
     }
   } catch (globalMetaErr: any) {
     console.error("[METADATA ENGINE CRITICAL ERROR] Failed during metadata generation for path:", urlPath, globalMetaErr.message, globalMetaErr.stack);
   }
 
-  return { title, description, canonical, h1, jsonld, featured_image };
+  return { title, description, canonical, h1, jsonld, featured_image, bodyHtml };
 }
 
 // Fallback HTML template in case index.html is missing on production server filesystem
@@ -553,7 +585,17 @@ export async function createApp(): Promise<Express> {
 
   // Serve public frontend static assets (robots.txt, ads.txt, assets/, sitemaps, etc.)
   const publicDist = resolvePublicDist();
-  app.use(express.static(publicDist));
+  app.use(express.static(publicDist, {
+    maxAge: "1y",
+    immutable: true,
+    setHeaders: (res, filePath) => {
+      if (filePath.includes(path.sep + "assets" + path.sep)) {
+        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+      } else {
+        res.setHeader("Cache-Control", "public, max-age=3600, must-revalidate");
+      }
+    }
+  }));
 
   // Serve public frontend index.html with dynamic metadata for crawlers/SEO
   app.get(/^\/(?!api|admin|assets).*/, async (req, res, next) => {
@@ -657,6 +699,11 @@ export async function createApp(): Promise<Express> {
     <meta name="twitter:image" content="${ogImage}" />
         `;
 
+        if (metadata!.featured_image && originalPath.startsWith("/blog/")) {
+          seoMetaTags += `
+    <link rel="preload" as="image" href="${metadata!.featured_image}" imagesrcset="${metadata!.featured_image} 1200w, ${metadata!.featured_image}?w=800 800w, ${metadata!.featured_image}?w=400 400w" imagesizes="(max-width: 768px) 100vw, 800px" />`;
+        }
+
         if (metadata!.jsonld) {
           const graphs = Array.isArray(metadata!.jsonld) ? metadata!.jsonld : [metadata!.jsonld];
           graphs.forEach(node => {
@@ -668,21 +715,31 @@ export async function createApp(): Promise<Express> {
         modifiedHtml = modifiedHtml.replace("</head>", `${seoMetaTags}\n</head>`);
 
         // 3. Inject dynamic body/H1 fallback inside #root
-        const dynamicSeoContent = `
+        let dynamicSeoContent = "";
+        if (metadata!.bodyHtml) {
+          dynamicSeoContent = metadata!.bodyHtml;
+        } else {
+          dynamicSeoContent = `
     <noscript>
       <h1>${metadata!.h1}</h1>
       <p>${metadata!.description}</p>
     </noscript>
-        `;
+          `;
+        }
         modifiedHtml = modifiedHtml.replace(
           /<!--seo-content-->[\s\S]*?<!--\/seo-content-->/gi,
           `<!--seo-content-->${dynamicSeoContent}<!--/seo-content-->`
         );
 
-        // 4. Prevent any browser disk-level or CDN caching of the HTML file
-        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
-        res.setHeader("Pragma", "no-cache");
-        res.setHeader("Expires", "0");
+        // 4. Implement proper caching headers: 1 hour cache, must-revalidate on client side, 1 day on edge CDN for blogs
+        if (originalPath.startsWith("/blog") || originalPath.startsWith("/blog/")) {
+          res.setHeader("Cache-Control", "public, max-age=3600, s-maxage=86400, must-revalidate");
+          res.setHeader("Last-Modified", new Date().toUTCString());
+        } else {
+          res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
+          res.setHeader("Pragma", "no-cache");
+          res.setHeader("Expires", "0");
+        }
 
         res.setHeader("Content-Type", "text/html");
         res.send(modifiedHtml);

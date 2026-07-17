@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "@/components/ui/Link";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 type LegalArticleProps = {

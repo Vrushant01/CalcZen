@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "@/components/ui/Link";
 import { BrandLogo } from "@/components/BrandLogo";
 import { categories } from "@/data/calculators";
 

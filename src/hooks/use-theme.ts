@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useSyncExternalStore } from "react";
 import { applyTheme, getResolvedTheme, subscribeTheme, type Theme } from "@/lib/theme";
 

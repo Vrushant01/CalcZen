@@ -26,9 +26,11 @@ const isAdminHost =
   (typeof window !== "undefined" && window.location.search.includes("admin=true"));
 
 function AppBoot() {
-  const [ready, setReady] = useState(false);
+  const isBlogRoute = typeof window !== "undefined" && (window.location.pathname.startsWith("/blog") || window.location.pathname.startsWith("/blog/"));
+  const [ready, setReady] = useState(isBlogRoute);
 
   useEffect(() => {
+    if (isBlogRoute) return;
     const reveal = () => window.setTimeout(() => setReady(true), 460);
     if (document.readyState === "complete") {
       reveal();
@@ -41,7 +43,7 @@ function AppBoot() {
       window.removeEventListener("load", reveal);
       window.clearTimeout(fallback);
     };
-  }, []);
+  }, [isBlogRoute]);
 
   if (!ready) {
     return (

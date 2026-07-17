@@ -11,10 +11,12 @@ interface CacheEntry<T> {
 }
 
 const blogCache = new Map<string, CacheEntry<ApiBlog | null>>();
+const listCache = new Map<string, CacheEntry<{ blogs: ApiBlog[]; total: number }>>();
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes cache TTL
 
 export function clearBlogCache(slug: string): void {
   blogCache.delete(slug.toLowerCase().trim());
+  listCache.clear();
 }
 
 function isUniqueViolation(error: { code?: string }): boolean {
@@ -28,6 +30,12 @@ export async function listPublishedBlogs(options: {
   page: number;
   limit: number;
 }): Promise<{ blogs: ApiBlog[]; total: number }> {
+  const cacheKey = JSON.stringify(options);
+  const cached = listCache.get(cacheKey);
+  if (cached && cached.expiry > Date.now()) {
+    return cached.data;
+  }
+
   const { category, search, page, limit } = options;
   const from = (page - 1) * limit;
   const to = from + limit - 1;
@@ -49,10 +57,17 @@ export async function listPublishedBlogs(options: {
   const { data, error, count } = await query.range(from, to);
   if (error) throw error;
 
-  return {
+  const result = {
     blogs: (data as BlogRow[]).map(toApiBlog),
     total: count ?? 0,
   };
+
+  listCache.set(cacheKey, {
+    data: result,
+    expiry: Date.now() + CACHE_TTL_MS,
+  });
+
+  return result;
 }
 
 /** Public: Find a published blog by its unique slug */

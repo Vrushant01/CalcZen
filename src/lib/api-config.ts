@@ -5,13 +5,23 @@ const REQUEST_TIMEOUT_MS = 30_000;
 
 /** Base URL without trailing slash. Empty in dev = Vite proxy to local API. */
 export function getApiBaseUrl(): string {
-  const fromEnv = import.meta.env.VITE_API_URL?.trim();
+  // Support Next.js / Node env
+  const nextApiUrl = typeof process !== "undefined" ? process.env.VITE_API_URL || process.env.NEXT_PUBLIC_API_URL : undefined;
+  if (nextApiUrl) {
+    return nextApiUrl.replace(/\/$/, "");
+  }
+
+  // Support Vite env
+  const fromEnv = typeof import.meta !== "undefined" && import.meta.env ? import.meta.env.VITE_API_URL?.trim() : undefined;
   if (fromEnv) {
     return fromEnv.replace(/\/$/, "");
   }
-  if (import.meta.env.DEV) {
+
+  const isDev = typeof process !== "undefined" ? process.env.NODE_ENV === "development" : (typeof import.meta !== "undefined" && import.meta.env ? import.meta.env.DEV : false);
+  if (isDev) {
     return "http://localhost:3001/api";
   }
+
   if (typeof window !== "undefined" && window.location) {
     return `${window.location.origin}/api`;
   }

@@ -1,4 +1,6 @@
-import { Link } from "@tanstack/react-router";
+"use client";
+
+import { Link } from "@/components/ui/Link";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, Sparkles, Calendar } from "lucide-react";
 import { useEffect, useState } from "react";

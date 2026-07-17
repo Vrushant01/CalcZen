@@ -11,11 +11,11 @@ import {
   ChevronRight,
   Sparkles,
 } from "lucide-react";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, lazy, Suspense } from "react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { PageShell } from "@/components/layout/PageShell";
-import { FaqAccordion } from "@/components/FaqAccordion";
+const FaqAccordion = lazy(() => import("@/components/FaqAccordion").then(m => ({ default: m.FaqAccordion })));
 import { calculators, getCalculator } from "@/data/calculators";
 import { fetchBlogBySlug, fetchPublishedBlogs, trackBlogView, type Blog } from "@/lib/blog-api";
 
@@ -47,7 +47,19 @@ export const Route = createFileRoute("/blog/$category/$slug")({
     if (!res.ok || !res.data) {
       throw notFound();
     }
-    return { blog: res.data, categoryParam: params.category };
+    const blog = res.data;
+    let relatedBlogs: Blog[] = [];
+    try {
+      const relRes = await fetchPublishedBlogs({
+        category: blog.category,
+        page: 1,
+        limit: 3,
+      });
+      if (relRes.ok && relRes.data) {
+        relatedBlogs = relRes.data.blogs.filter((b) => b._id !== blog._id).slice(0, 2);
+      }
+    } catch {}
+    return { blog, categoryParam: params.category, relatedBlogs };
   },
   loaderMaxAge: 2 * 60 * 1000,
   loaderGcMaxAge: 5 * 60 * 1000,
@@ -201,9 +213,8 @@ const KEYWORD_MAP: Array<{ term: string; slug: string; text: string }> = [
 ];
 
 function BlogPageCategory() {
-  const { blog, categoryParam } = Route.useLoaderData();
+  const { blog, categoryParam, relatedBlogs } = Route.useLoaderData();
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]);
 
   // 1. Dynamic reading scroll progress tracker
   useEffect(() => {
@@ -221,21 +232,6 @@ function BlogPageCategory() {
   useEffect(() => {
     trackBlogView(blog._id);
   }, [blog._id]);
-
-  // 3. Load Related Blogs in same category
-  useEffect(() => {
-    async function loadRelated() {
-      const res = await fetchPublishedBlogs({
-        category: blog.category,
-        page: 1,
-        limit: 3,
-      });
-      if (res.ok && res.data) {
-        setRelatedBlogs(res.data.blogs.filter((b) => b._id !== blog._id).slice(0, 2));
-      }
-    }
-    loadRelated();
-  }, [blog.category, blog._id]);
 
   // 4. Social Share actions
   const handleShare = (platform: "twitter" | "linkedin" | "facebook" | "copy") => {
@@ -518,7 +514,9 @@ function BlogPageCategory() {
                   <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
                     Frequently Asked Questions
                   </h2>
-                  <FaqAccordion faqs={blog.faqs.map((f) => ({ q: f.question, a: f.answer }))} />
+                  <Suspense fallback={<div className="h-20 animate-pulse bg-slate-800/10 rounded-lg"></div>}>
+                    <FaqAccordion faqs={blog.faqs.map((f) => ({ q: f.question, a: f.answer }))} />
+                  </Suspense>
                 </div>
               </div>
             )}

@@ -207,7 +207,7 @@ async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
   const canonical = getCanonicalUrl(urlPath);
   
   let title = "Free Online Calculators for Finance, Health & Math | CalcZen";
-  let description = "Free online calculators for finance, health, math and everyday life.";
+  let description = "Discover free online calculators for personal finance, health tracking, mathematics, and daily helpers. Get fast, accurate results with transparent formulas.";
   let h1 = "Free Online Calculators";
   let jsonld: any = null;
   let featured_image: string | null = null;
@@ -218,7 +218,7 @@ async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
 
     if (lowercasePath === "" || lowercasePath === "/") {
       title = "Free Online Calculators for Finance, Health & Math | CalcZen";
-      description = "Free online calculators for finance, health, math and everyday life.";
+      description = "Discover free online calculators for personal finance, health tracking, mathematics, and daily helpers. Get fast, accurate results with transparent formulas.";
       h1 = "Free Online Calculators";
       jsonld = [
         {
@@ -357,27 +357,27 @@ async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
       }
     } else if (lowercasePath === "/about") {
       title = "About Us - CalcZen";
-      description = "Learn more about CalcZen, our mission to build beautiful online tools, and our standards for mathematical accuracy.";
+      description = "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience.";
       h1 = "About CalcZen";
     } else if (lowercasePath === "/contact") {
       title = "Contact Us - CalcZen";
-      description = "Have feedback or a request for a new calculator? Reach out to the CalcZen team directly.";
+      description = "Have questions, feedback, or requests for new calculator tools? Get in touch with the CalcZen team using our contact form for fast, helpful assistance.";
       h1 = "Contact CalcZen";
     } else if (lowercasePath === "/privacy") {
       title = "Privacy Policy - CalcZen";
-      description = "Read the CalcZen privacy policy to understand how we secure your data and maintain privacy.";
+      description = "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.";
       h1 = "Privacy Policy";
     } else if (lowercasePath === "/terms") {
       title = "Terms of Service - CalcZen";
-      description = "View the terms and conditions for using CalcZen calculators and resources.";
+      description = "Read the CalcZen Terms of Service to understand the rules, guidelines, and terms of use for our online calculators, tools, and blog content.";
       h1 = "Terms of Service";
     } else if (lowercasePath === "/disclaimer") {
       title = "Disclaimer - CalcZen";
-      description = "Read our site disclaimer regarding the informational nature of our calculation results.";
+      description = "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results.";
       h1 = "Disclaimer";
     } else if (lowercasePath === "/calculators") {
       title = "All Calculators - CalcZen";
-      description = "Browse our complete directory of free online calculators for finance, health, math, and everyday tasks.";
+      description = "Browse and search our full directory of free online calculators. Access accurate tools for personal finance, health tracking, math, and daily helpers.";
       h1 = "All Online Calculators";
     } else if (lowercasePath === "/blog") {
       title = "CalcZen Blog - Financial Tips, Health Insights & Math Guides";
@@ -669,10 +669,10 @@ export async function createApp(): Promise<Express> {
 
         // 3. Inject dynamic body/H1 fallback inside #root
         const dynamicSeoContent = `
-    <div style="display: none;">
+    <noscript>
       <h1>${metadata!.h1}</h1>
       <p>${metadata!.description}</p>
-    </div>
+    </noscript>
         `;
         modifiedHtml = modifiedHtml.replace(
           /<!--seo-content-->[\s\S]*?<!--\/seo-content-->/gi,

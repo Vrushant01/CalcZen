@@ -262,9 +262,17 @@ function BlogPageCategory() {
 
   // 5. INTERNAL LINKING ENGINE & CONTENT RENDERER
   const renderedContent = useMemo(() => {
-    const parsedContent = blog.content;
+    const parsedContent = blog.content.replace(/<(h[23])id=/gi, "<$1 id=");
     const parser = new DOMParser();
     const doc = parser.parseFromString(parsedContent, "text/html");
+
+    // Ensure all H2 and H3 headings have matching ID attributes for smooth anchor scrolling
+    const headings = doc.querySelectorAll("h2, h3");
+    headings.forEach((h, idx) => {
+      const dbTocItem = blog.toc?.[idx];
+      const targetId = dbTocItem?.id || h.getAttribute("id") || `heading-${idx}`;
+      h.setAttribute("id", targetId);
+    });
 
     // Replace visual editor CTA placeholder blocks with interactive premium cards
     const placeholders = doc.querySelectorAll(".calc-cta-block");
@@ -339,13 +347,20 @@ function BlogPageCategory() {
     if (blog.toc && blog.toc.length > 0) {
       return blog.toc;
     }
-    // Fallback parsing
     const parser = new DOMParser();
-    const doc = parser.parseFromString(blog.content, "text/html");
-    const headings = doc.querySelectorAll("h2");
+    const doc = parser.parseFromString(
+      blog.content.replace(/<(h[23])id=/gi, "<$1 id="),
+      "text/html"
+    );
+    const headings = doc.querySelectorAll("h2, h3");
     const items: Array<{ id: string; text: string; level: number }> = [];
     headings.forEach((h, idx) => {
-      items.push({ id: `heading-${idx}`, text: h.textContent || "", level: 2 });
+      const id = h.getAttribute("id") || `heading-${idx}`;
+      items.push({
+        id,
+        text: h.textContent || "",
+        level: h.tagName.toLowerCase() === "h2" ? 2 : 3,
+      });
     });
     return items;
   }, [blog.toc, blog.content]);
@@ -523,6 +538,14 @@ function BlogPageCategory() {
                     <a
                       key={item.id}
                       href={`#${item.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const element = document.getElementById(item.id);
+                        if (element) {
+                          element.scrollIntoView({ behavior: "smooth", block: "start" });
+                          window.history.pushState(null, "", `#${item.id}`);
+                        }
+                      }}
                       className={`block text-xs font-semibold text-muted-foreground hover:text-foreground hover:translate-x-0.5 transition-all truncate leading-relaxed ${
                         item.level === 3 ? "pl-3 text-[11px] font-medium" : ""
                       }`}

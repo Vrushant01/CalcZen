@@ -15,18 +15,18 @@ export const Route = createFileRoute("/calculators")({
       {
         name: "description",
         content:
-          "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
+          "Browse and search our full directory of free online calculators. Access accurate tools for personal finance, health tracking, math, and daily helpers.",
       },
       { property: "og:title", content: "All Calculators | CalcZen" },
       {
         property: "og:description",
         content:
-          "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
+          "Browse and search our full directory of free online calculators. Access accurate tools for personal finance, health tracking, math, and daily helpers.",
       },
       {
         name: "twitter:description",
         content:
-          "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
+          "Browse and search our full directory of free online calculators. Access accurate tools for personal finance, health tracking, math, and daily helpers.",
       },
       { property: "og:url", content: "https://calczen.in/calculators" },
     ],

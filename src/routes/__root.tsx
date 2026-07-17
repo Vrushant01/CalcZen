@@ -88,7 +88,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { title: "CalcZen — Smart Online Calculators" },
         {
           name: "description",
-          content: "Free online calculators for finance, health, math and everyday life.",
+          content:
+            "Discover free online calculators for personal finance, health tracking, mathematics, and daily helpers. Get fast, accurate results with transparent formulas.",
         },
         { name: "author", content: "CalcZen" },
         { name: "theme-color", content: "#0F172A" },

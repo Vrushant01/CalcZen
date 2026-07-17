@@ -95,18 +95,18 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results.",
+          "Access free online calculators for personal finance, health tracking, mathematical equations, and everyday tasks. Get fast, accurate results instantly.",
       },
       { property: "og:title", content: "CalcZen — Free Online Calculators" },
       {
         property: "og:description",
         content:
-          "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results.",
+          "Access free online calculators for personal finance, health tracking, mathematical equations, and everyday tasks. Get fast, accurate results instantly.",
       },
       {
         name: "twitter:description",
         content:
-          "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results.",
+          "Access free online calculators for personal finance, health tracking, mathematical equations, and everyday tasks. Get fast, accurate results instantly.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://calczen.com/" },

@@ -80,6 +80,14 @@ export default function CalculatorBlog({ content }: Props) {
               <li key={idx}>
                 <a
                   href={`#section-${idx}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.getElementById(`section-${idx}`);
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth", block: "start" });
+                      window.history.pushState(null, "", `#section-${idx}`);
+                    }
+                  }}
                   className="text-primary hover:underline flex items-center gap-1.5 transition-colors"
                 >
                   <ArrowRight size={12} className="shrink-0 text-primary/70" />
@@ -91,6 +99,14 @@ export default function CalculatorBlog({ content }: Props) {
               <li>
                 <a
                   href="#faq-section"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.getElementById("faq-section");
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth", block: "start" });
+                      window.history.pushState(null, "", "#faq-section");
+                    }
+                  }}
                   className="text-primary hover:underline flex items-center gap-1.5 transition-colors"
                 >
                   <ArrowRight size={12} className="shrink-0 text-primary/70" />

@@ -243,7 +243,7 @@ export function BlogEditorPage() {
           setFaqs(blog.faqs || []);
 
           if (editorRef.current) {
-            editorRef.current.innerHTML = blog.content;
+            editorRef.current.innerHTML = blog.content.replace(/<(h[23])id=/gi, "<$1 id=");
           }
 
           const savedDraft = localStorage.getItem(`calczen_blog_draft_${id}`);
@@ -286,7 +286,7 @@ export function BlogEditorPage() {
     setKeywords(draft.keywords || "");
     setFaqs(draft.faqs || []);
     if (editorRef.current) {
-      editorRef.current.innerHTML = draft.content || "";
+      editorRef.current.innerHTML = (draft.content || "").replace(/<(h[23])id=/gi, "<$1 id=");
     }
     toast.success("Draft restored successfully");
   }

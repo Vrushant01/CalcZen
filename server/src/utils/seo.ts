@@ -52,7 +52,7 @@ export function processContentAndGenerateToc(content: string): { processedConten
       return match;
     }
     // Inject the new ID attribute
-    const space = attrs.trim() ? " " : "";
+    const space = " ";
     return `<${tag}${attrs}${space}id="${id}">${text}</${tag}>`;
   });
 

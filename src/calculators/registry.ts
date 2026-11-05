@@ -3,6 +3,100 @@ import type { ComponentType } from "react";
 
 // Registry maps calculator slug → lazy component.
 export const calculatorComponents: Record<string, ComponentType> = {
+<<<<<<< HEAD
+=======
+  "gst-invoice-calculator": lazy(() =>
+    import("@/calculators/GstInvoiceCalculator").then((m) => ({
+      default: m.GstInvoiceCalculator,
+    })),
+  ),
+  "gst-calculator-india": lazy(() =>
+    import("@/calculators/GstInvoiceCalculator").then((m) => ({
+      default: m.GstInvoiceCalculator,
+    })),
+  ),
+  "cgst-sgst-calculator": lazy(() =>
+    import("@/calculators/GstInvoiceCalculator").then((m) => ({
+      default: m.GstInvoiceCalculator,
+    })),
+  ),
+  "igst-calculator": lazy(() =>
+    import("@/calculators/GstInvoiceCalculator").then((m) => ({
+      default: m.GstInvoiceCalculator,
+    })),
+  ),
+  "gst-bill-calculator": lazy(() =>
+    import("@/calculators/GstInvoiceCalculator").then((m) => ({
+      default: m.GstInvoiceCalculator,
+    })),
+  ),
+  "product-profit-calculator": lazy(() =>
+    import("@/calculators/ProductProfitCalculator").then((m) => ({
+      default: m.ProductProfitCalculator,
+    })),
+  ),
+  "profit-calculator": lazy(() =>
+    import("@/calculators/ProductProfitCalculator").then((m) => ({
+      default: m.ProductProfitCalculator,
+    })),
+  ),
+  "profit-margin-calculator": lazy(() =>
+    import("@/calculators/ProductProfitCalculator").then((m) => ({
+      default: m.ProductProfitCalculator,
+    })),
+  ),
+  "product-profit": lazy(() =>
+    import("@/calculators/ProductProfitCalculator").then((m) => ({
+      default: m.ProductProfitCalculator,
+    })),
+  ),
+  "business-profit-calculator": lazy(() =>
+    import("@/calculators/ProductProfitCalculator").then((m) => ({
+      default: m.ProductProfitCalculator,
+    })),
+  ),
+  "home-electricity-bill-calculator": lazy(() =>
+    import("@/calculators/HomeElectricityBillCalculator").then((m) => ({
+      default: m.HomeElectricityBillCalculator,
+    })),
+  ),
+  "appliance-electricity-cost-calculator": lazy(() =>
+    import("@/calculators/ApplianceElectricityCostCalculator").then((m) => ({
+      default: m.ApplianceElectricityCostCalculator,
+    })),
+  ),
+  "ac-electricity-cost-calculator": lazy(() =>
+    import("@/calculators/AcElectricityCostCalculator").then((m) => ({
+      default: m.AcElectricityCostCalculator,
+    })),
+  ),
+  "cement-bag-calculator": lazy(() =>
+    import("@/calculators/CementBagCalculator").then((m) => ({
+      default: m.CementBagCalculator,
+    })),
+  ),
+  "rcc-price-calculator": lazy(() =>
+    import("@/calculators/RccPriceCalculator").then((m) => ({
+      default: m.RccPriceCalculator,
+    })),
+  ),
+  "gold-making-charges-calculator": lazy(() =>
+    import("@/calculators/GoldMakingChargesCalculator").then((m) => ({
+      default: m.GoldMakingChargesCalculator,
+    })),
+  ),
+  "gold-jewellery-bill-calculator": lazy(() =>
+    import("@/calculators/GoldJewelleryBillCalculator").then((m) => ({
+      default: m.GoldJewelleryBillCalculator,
+    })),
+  ),
+  "job-offer-comparison-calculator": lazy(() =>
+    import("@/calculators/JobOfferCalculator").then((m) => ({ default: m.JobOfferCalculator })),
+  ),
+  "ctc-to-in-hand-salary-calculator": lazy(() =>
+    import("@/calculators/SalaryCalculator").then((m) => ({ default: m.SalaryCalculator })),
+  ),
+>>>>>>> 529569b (Deploy CalcZen V2)
   "mortgage-calculator": lazy(() =>
     import("@/calculators/MortgageCalculator").then((m) => ({ default: m.MortgageCalculator })),
   ),
@@ -47,7 +141,11 @@ export const calculatorComponents: Record<string, ComponentType> = {
   "bmr-calculator": lazy(() =>
     import("@/calculators/BMRCalculator").then((m) => ({ default: m.BMRCalculator })),
   ),
+<<<<<<< HEAD
   "regular-calculator": lazy(() =>
+=======
+  "standard-calculator": lazy(() =>
+>>>>>>> 529569b (Deploy CalcZen V2)
     import("@/calculators/StandardCalculator").then((m) => ({ default: m.StandardCalculator })),
   ),
   "scientific-calculator": lazy(() =>
@@ -93,4 +191,18 @@ export const calculatorComponents: Record<string, ComponentType> = {
       default: m.CreditCardEMICalculator,
     })),
   ),
+<<<<<<< HEAD
+=======
+  "love-calculator": lazy(() =>
+    import("@/calculators/LoveCalculator").then((m) => ({ default: m.LoveCalculator })),
+  ),
+  "flames-calculator": lazy(() =>
+    import("@/calculators/FlamesCalculator").then((m) => ({ default: m.FlamesCalculator })),
+  ),
+  "couple-age-difference-calculator": lazy(() =>
+    import("@/calculators/CoupleAgeDifferenceCalculator").then((m) => ({
+      default: m.CoupleAgeDifferenceCalculator,
+    })),
+  ),
+>>>>>>> 529569b (Deploy CalcZen V2)
 };

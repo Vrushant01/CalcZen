@@ -1,4 +1,5 @@
 @import "tailwindcss" source(none);
+<<<<<<< HEAD
 @source "../src";
 @import "../node_modules/tw-animate-css/dist/tw-animate.css";
 
@@ -6,6 +7,15 @@
 
 @theme inline {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+=======
+@custom-variant dark (&:where(.dark, .dark *));
+@source "../src";
+@import "tw-animate-css";
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+>>>>>>> 529569b (Deploy CalcZen V2)
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -130,6 +140,36 @@
   --toggle-glow: oklch(0.55 0.14 220 / 0.35);
   --input-background: oklch(1 0.002 264);
   --shadow-input: 0 1px 2px oklch(0.18 0.03 264 / 0.05);
+<<<<<<< HEAD
+=======
+
+  /* ─── CalcZen Hero Section Tokens — Light Mode (Master Spec) ─── */
+  --cz-hero-bg: #EEF2F8;
+  --cz-hero-bg-alt: #F5F7FC;
+  --cz-hero-headline: #111827;
+  --cz-hero-accent: #2563EB;
+  --cz-hero-text: #536177;
+  --cz-hero-nav-text: #263449;
+  --cz-hero-search-bg: #FFFFFF;
+  --cz-hero-search-border: #DCE4EF;
+  --cz-hero-search-text: #18243A;
+  --cz-hero-calc-body: #FFFFFF;
+  --cz-hero-calc-border: #DCE4EF;
+  --cz-hero-calc-display: #111827;
+  --cz-hero-calc-display-text: #FFFFFF;
+  --cz-hero-calc-key: #F1F4F9;
+  --cz-hero-calc-key-text: #202D43;
+  --cz-hero-calc-key-border: #DCE4EF;
+  --cz-hero-calc-op: #E7EEFF;
+  --cz-hero-calc-op-text: #2563EB;
+  --cz-hero-calc-op-border: #D0DEFF;
+  --cz-hero-calc-equals: #2563EB;
+  --cz-hero-calc-equals-text: #FFFFFF;
+  --cz-hero-badge-bg: #FFFFFF;
+  --cz-hero-badge-border: #DCE4EF;
+  --cz-hero-badge-text: #17233A;
+  --cz-hero-border: #DCE4EF;
+>>>>>>> 529569b (Deploy CalcZen V2)
 }
 
 .dark {
@@ -214,6 +254,352 @@
   --toggle-glow: oklch(0.72 0.12 220 / 0.45);
   --input-background: oklch(0.28 0.028 265);
   --shadow-input: none;
+<<<<<<< HEAD
+=======
+
+  /* ─── CalcZen Hero Section Tokens — Dark Mode (Master Spec) ─── */
+  --cz-hero-bg: #080D1B;
+  --cz-hero-bg-alt: #0B1020;
+  --cz-hero-headline: #F5F7FF;
+  --cz-hero-accent: #4F83FF;
+  --cz-hero-text: #AAB6CC;
+  --cz-hero-nav-text: #E2E8F0;
+  --cz-hero-search-bg: #111A2D;
+  --cz-hero-search-border: #283750;
+  --cz-hero-search-text: #F3F6FC;
+  --cz-hero-calc-body: #111A2B;
+  --cz-hero-calc-border: #26354D;
+  --cz-hero-calc-display: #050B18;
+  --cz-hero-calc-display-text: #FFFFFF;
+  --cz-hero-calc-key: #1B263B;
+  --cz-hero-calc-key-text: #E8EEF8;
+  --cz-hero-calc-key-border: #26354D;
+  --cz-hero-calc-op: #172B54;
+  --cz-hero-calc-op-text: #67A5FF;
+  --cz-hero-calc-op-border: #253D73;
+  --cz-hero-calc-equals: #2563EB;
+  --cz-hero-calc-equals-text: #FFFFFF;
+  --cz-hero-badge-bg: #131F32;
+  --cz-hero-badge-border: #26354D;
+  --cz-hero-badge-text: #F1F5FC;
+  --cz-hero-border: #26354D;
+}
+
+/* ─── CalcZen Hero Scoped Theme Utility Classes (Auto-adaptive & Bulletproof) ─── */
+.cz-brand-calc {
+  color: #0F172A !important;
+  font-weight: 800;
+}
+.dark .cz-brand-calc {
+  color: #F8FAFC !important;
+}
+
+.cz-hero {
+  background-color: var(--cz-hero-bg);
+  border-color: var(--cz-hero-border);
+  color: var(--cz-hero-headline);
+  transition-property: color, background-color, border-color;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cz-hero-header {
+  background-color: color-mix(in srgb, var(--cz-hero-bg-alt) 88%, transparent);
+  border-color: var(--cz-hero-border);
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 200ms;
+}
+
+.cz-hero-headline {
+  color: #0F172A !important;
+  transition-property: color;
+  transition-duration: 200ms;
+}
+
+.dark .cz-hero-headline {
+  color: #F8FAFC !important;
+}
+
+.cz-hero-headline-accent {
+  color: var(--cz-hero-accent);
+  transition-property: color;
+  transition-duration: 200ms;
+}
+
+.cz-hero-text {
+  color: var(--cz-hero-text);
+  border-color: var(--cz-hero-border);
+  transition-property: color, border-color;
+  transition-duration: 200ms;
+}
+
+.cz-hero-nav-link {
+  color: var(--cz-hero-nav-text);
+  transition-property: color, background-color;
+  transition-duration: 200ms;
+}
+.cz-hero-nav-link:hover {
+  color: var(--cz-hero-accent);
+  background-color: rgba(226, 232, 240, 0.6);
+}
+.dark .cz-hero-nav-link:hover {
+  background-color: rgba(30, 41, 59, 0.7);
+}
+
+.cz-hero-quick-search {
+  background-color: var(--cz-hero-search-bg);
+  border-color: var(--cz-hero-search-border);
+  color: var(--cz-hero-nav-text);
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 200ms;
+}
+.cz-hero-quick-search:hover {
+  color: var(--cz-hero-headline);
+  border-color: var(--cz-hero-accent);
+}
+
+.cz-hero-quick-search-icon {
+  color: var(--cz-hero-text);
+}
+
+.cz-hero-quick-search-kbd {
+  background-color: #F1F4F9;
+  border-color: #DCE4EF;
+  color: #536177;
+}
+.dark .cz-hero-quick-search-kbd {
+  background-color: #1B263B;
+  border-color: #283750;
+  color: #AAB6CC;
+}
+
+.cz-hero-search-card {
+  background-color: var(--cz-hero-search-bg);
+  border-color: var(--cz-hero-search-border);
+  color: var(--cz-hero-search-text);
+  box-shadow: 0 8px 30px rgba(17, 26, 48, 0.06);
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 200ms;
+}
+.cz-hero-search-card:hover {
+  box-shadow: 0 12px 36px rgba(17, 26, 48, 0.12);
+}
+.cz-hero-search-card:focus-within {
+  border-color: var(--cz-hero-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--cz-hero-accent) 15%, transparent);
+}
+.dark .cz-hero-search-card {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+.dark .cz-hero-search-card:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75);
+}
+.dark .cz-hero-search-card:focus-within {
+  border-color: var(--cz-hero-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--cz-hero-accent) 20%, transparent);
+}
+
+.cz-hero-popular-chip {
+  background-color: var(--cz-hero-search-bg);
+  border-color: var(--cz-hero-search-border);
+  color: var(--cz-hero-nav-text);
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 200ms;
+}
+.cz-hero-popular-chip:hover {
+  color: var(--cz-hero-accent);
+  border-color: color-mix(in srgb, var(--cz-hero-accent) 45%, transparent);
+}
+
+.cz-hero-btn-secondary {
+  background-color: var(--cz-hero-search-bg);
+  border-color: var(--cz-hero-search-border);
+  color: var(--cz-hero-headline);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 200ms;
+}
+.cz-hero-btn-secondary:hover {
+  background-color: #F8FAFC;
+  border-color: #CBD5E1;
+}
+.dark .cz-hero-btn-secondary:hover {
+  background-color: #1A263D;
+  border-color: #384C6D;
+}
+
+.cz-hero-calc-body {
+  background-color: var(--cz-hero-calc-body);
+  border-color: var(--cz-hero-calc-border);
+  box-shadow: 0 25px 60px -15px rgba(17, 24, 39, 0.12), 0 0 0 1px rgba(220, 228, 239, 0.8);
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 200ms;
+}
+.dark .cz-hero-calc-body {
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(38, 53, 77, 0.8);
+}
+
+.cz-hero-calc-display {
+  background-color: var(--cz-hero-calc-display);
+  color: var(--cz-hero-calc-display-text);
+  border-color: var(--cz-hero-border);
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 200ms;
+}
+
+.cz-hero-calc-key {
+  background-color: var(--cz-hero-calc-key);
+  color: var(--cz-hero-calc-key-text);
+  border-color: var(--cz-hero-calc-key-border);
+  transition-property: color, background-color, border-color;
+  transition-duration: 150ms;
+}
+.cz-hero-calc-key:hover {
+  background-color: #E2E8F0;
+}
+.dark .cz-hero-calc-key:hover {
+  background-color: #253552;
+}
+
+.cz-hero-calc-op {
+  background-color: var(--cz-hero-calc-op);
+  color: var(--cz-hero-calc-op-text);
+  border-color: var(--cz-hero-calc-op-border);
+  transition-property: color, background-color, border-color;
+  transition-duration: 150ms;
+}
+.cz-hero-calc-op:hover {
+  background-color: #D6E4FF;
+}
+.dark .cz-hero-calc-op:hover {
+  background-color: #1F3A72;
+}
+
+.cz-hero-calc-ac {
+  background-color: #FEE2E2;
+  color: #DC2626;
+  border-color: #FECACA;
+  transition-property: color, background-color, border-color;
+  transition-duration: 150ms;
+}
+.cz-hero-calc-ac:hover {
+  background-color: #FCA5A5;
+  color: #B91C1C;
+}
+.dark .cz-hero-calc-ac {
+  background-color: rgba(225, 29, 72, 0.18);
+  color: #FB7185;
+  border-color: rgba(225, 29, 72, 0.35);
+}
+.dark .cz-hero-calc-ac:hover {
+  background-color: rgba(225, 29, 72, 0.28);
+  color: #FDA4AF;
+}
+
+.cz-hero-calc-equals {
+  background-color: var(--cz-hero-calc-equals);
+  color: var(--cz-hero-calc-equals-text);
+  box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.4);
+  transition-property: background-color, box-shadow;
+  transition-duration: 150ms;
+}
+.cz-hero-calc-equals:hover {
+  background-color: #1D4ED8;
+}
+
+.cz-hero-badge {
+  background-color: var(--cz-hero-badge-bg);
+  border-color: var(--cz-hero-badge-border);
+  color: var(--cz-hero-badge-text);
+  box-shadow: 0 10px 25px -4px rgba(17, 24, 39, 0.08);
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 200ms;
+}
+.dark .cz-hero-badge {
+  box-shadow: 0 14px 32px -6px rgba(0, 0, 0, 0.7);
+}
+
+.cz-hero-badge-subtext {
+  color: #0F172A !important;
+  font-weight: 800;
+  transition-property: color;
+  transition-duration: 200ms;
+}
+.dark .cz-hero-badge-subtext {
+  color: #F8FAFC !important;
+}
+
+.cz-hero-badge-title-finance {
+  color: #1D4ED8;
+  font-weight: 900;
+}
+.dark .cz-hero-badge-title-finance {
+  color: #67A5FF;
+}
+.cz-hero-badge-icon-finance {
+  background-color: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.25);
+  color: #1D4ED8;
+}
+.dark .cz-hero-badge-icon-finance {
+  background-color: rgba(37, 99, 235, 0.22);
+  border-color: rgba(37, 99, 235, 0.4);
+  color: #67A5FF;
+}
+
+.cz-hero-badge-title-health {
+  color: #047857;
+  font-weight: 900;
+}
+.dark .cz-hero-badge-title-health {
+  color: #34D399;
+}
+.cz-hero-badge-icon-health {
+  background-color: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: #047857;
+}
+.dark .cz-hero-badge-icon-health {
+  background-color: rgba(16, 185, 129, 0.22);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34D399;
+}
+
+.cz-hero-badge-title-everyday {
+  color: #B45309;
+  font-weight: 900;
+}
+.dark .cz-hero-badge-title-everyday {
+  color: #FBBF24;
+}
+.cz-hero-badge-icon-everyday {
+  background-color: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.25);
+  color: #B45309;
+}
+.dark .cz-hero-badge-icon-everyday {
+  background-color: rgba(245, 158, 11, 0.22);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #FBBF24;
+}
+
+.cz-hero-badge-title-maths {
+  color: #6D28D9;
+  font-weight: 900;
+}
+.dark .cz-hero-badge-title-maths {
+  color: #A78BFA;
+}
+.cz-hero-badge-icon-maths {
+  background-color: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.25);
+  color: #6D28D9;
+}
+.dark .cz-hero-badge-icon-maths {
+  background-color: rgba(139, 92, 246, 0.22);
+  border-color: rgba(139, 92, 246, 0.4);
+  color: #A78BFA;
+>>>>>>> 529569b (Deploy CalcZen V2)
 }
 
 @layer base {
@@ -270,8 +656,13 @@
   h2,
   h3,
   h4 {
+<<<<<<< HEAD
     letter-spacing: -0.025em;
     font-weight: 700;
+=======
+    letter-spacing: -0.035em;
+    font-weight: 800;
+>>>>>>> 529569b (Deploy CalcZen V2)
   }
 }
 
@@ -929,6 +1320,34 @@
     @apply dark:bg-transparent dark:from-amber-950/65 dark:to-orange-950/45 dark:border-amber-500/25;
   }
 
+<<<<<<< HEAD
+=======
+  .category-card-salary {
+    @apply bg-gradient-to-br from-emerald-100 to-teal-50 border-emerald-200/80 bg-white;
+    @apply dark:bg-transparent dark:from-emerald-950/70 dark:to-teal-950/50 dark:border-emerald-500/25;
+  }
+
+  .category-card-jewellery {
+    @apply bg-gradient-to-br from-amber-100 to-yellow-50 border-amber-200/80 bg-white;
+    @apply dark:bg-transparent dark:from-amber-950/70 dark:to-yellow-950/50 dark:border-amber-500/25;
+  }
+
+  .category-card-home-construction {
+    @apply bg-gradient-to-br from-amber-100 to-orange-50 border-amber-200/80 bg-white;
+    @apply dark:bg-transparent dark:from-amber-950/70 dark:to-orange-950/50 dark:border-amber-500/25;
+  }
+
+  .category-card-electricity {
+    @apply bg-gradient-to-br from-amber-100 to-yellow-50 border-amber-200/80 bg-white;
+    @apply dark:bg-transparent dark:from-amber-950/70 dark:to-yellow-950/50 dark:border-amber-500/25;
+  }
+
+  .category-card-business {
+    @apply bg-gradient-to-br from-emerald-100 to-teal-50 border-emerald-200/80 bg-white;
+    @apply dark:bg-transparent dark:from-emerald-950/70 dark:to-teal-950/50 dark:border-emerald-500/25;
+  }
+
+>>>>>>> 529569b (Deploy CalcZen V2)
   /* Premium elevated card */
   .surface-card {
     background: var(--card);

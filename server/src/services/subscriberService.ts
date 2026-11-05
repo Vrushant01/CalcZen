@@ -78,7 +78,14 @@ export async function getSubscriberStats(): Promise<{
   const [totalRes, activeRes, unsubRes, recent30Res, recent7Res] = await Promise.all([
     supabase.from("subscribers").select("*", { count: "exact", head: true }),
     supabase.from("subscribers").select("*", { count: "exact", head: true }).eq("status", "active"),
+<<<<<<< HEAD
     supabase.from("subscribers").select("*", { count: "exact", head: true }).eq("status", "unsubscribed"),
+=======
+    supabase
+      .from("subscribers")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "unsubscribed"),
+>>>>>>> 529569b (Deploy CalcZen V2)
     supabase
       .from("subscribers")
       .select("*", { count: "exact", head: true })

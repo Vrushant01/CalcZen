@@ -15,10 +15,14 @@ export async function getStats(_req: AuthRequest, res: Response): Promise<void> 
   res.json({ success: true, data });
 }
 
+<<<<<<< HEAD
 export async function getRecentSubscribersHandler(
   _req: AuthRequest,
   res: Response,
 ): Promise<void> {
+=======
+export async function getRecentSubscribersHandler(_req: AuthRequest, res: Response): Promise<void> {
+>>>>>>> 529569b (Deploy CalcZen V2)
   const subscribers = await getRecentSubscribers(8);
   res.json({ success: true, data: subscribers });
 }

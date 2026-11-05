@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 
+<<<<<<< HEAD
 # Google crawlers
 User-agent: Googlebot
 Allow: /
@@ -44,3 +45,6 @@ Allow: /
 Sitemap: https://calczen.in/sitemap.xml
 Sitemap: https://calczen.in/sitemap-blogs.xml
 Sitemap: https://calczen.in/sitemap-news.xml
+=======
+Sitemap: https://www.calczen.in/sitemap.xml
+>>>>>>> 529569b (Deploy CalcZen V2)

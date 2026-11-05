@@ -26,11 +26,17 @@ const isAdminHost =
   (typeof window !== "undefined" && window.location.search.includes("admin=true"));
 
 function AppBoot() {
+<<<<<<< HEAD
   const isBlogRoute = typeof window !== "undefined" && (window.location.pathname.startsWith("/blog") || window.location.pathname.startsWith("/blog/"));
   const [ready, setReady] = useState(isBlogRoute);
 
   useEffect(() => {
     if (isBlogRoute) return;
+=======
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+>>>>>>> 529569b (Deploy CalcZen V2)
     const reveal = () => window.setTimeout(() => setReady(true), 460);
     if (document.readyState === "complete") {
       reveal();
@@ -43,7 +49,11 @@ function AppBoot() {
       window.removeEventListener("load", reveal);
       window.clearTimeout(fallback);
     };
+<<<<<<< HEAD
   }, [isBlogRoute]);
+=======
+  }, []);
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   if (!ready) {
     return (

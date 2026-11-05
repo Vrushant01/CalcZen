@@ -102,6 +102,7 @@ export type BlogRow = {
   publish_date: string | null;
   created_at: string;
   updated_at: string;
+<<<<<<< HEAD
   schema: string | null;
   jsonld: any;
   canonical: string | null;
@@ -113,6 +114,8 @@ export type BlogRow = {
   twitter_image: string | null;
   faq_json: any;
   toc: any;
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 export type ApiBlog = {
@@ -137,6 +140,7 @@ export type ApiBlog = {
   publishDate: string | null;
   createdAt: string;
   updatedAt: string;
+<<<<<<< HEAD
   schema: string | null;
   jsonld: any;
   canonical: string | null;
@@ -150,3 +154,6 @@ export type ApiBlog = {
   toc: any;
 };
 
+=======
+};
+>>>>>>> 529569b (Deploy CalcZen V2)

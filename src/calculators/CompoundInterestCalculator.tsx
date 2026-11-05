@@ -425,7 +425,11 @@ export function CompoundInterestCalculator() {
             </DashboardSection>
 
             <div className="flex flex-col">
+<<<<<<< HEAD
             {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
+=======
+              {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
+>>>>>>> 529569b (Deploy CalcZen V2)
             </div>
           </motion.div>
         )}

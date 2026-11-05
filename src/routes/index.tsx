@@ -10,6 +10,11 @@ import { Input } from "@/components/ui/input";
 import { CalculatorCard } from "@/components/CalculatorCard";
 import { BlogSection } from "@/components/BlogSection";
 import { FaqAccordion } from "@/components/FaqAccordion";
+<<<<<<< HEAD
+=======
+import { UniversalSearch } from "@/components/UniversalSearch";
+import { HeroSection } from "@/components/HeroSection";
+>>>>>>> 529569b (Deploy CalcZen V2)
 import { categories, calculators } from "@/data/calculators";
 import { subscribeEmail } from "@/lib/subscribe-api";
 
@@ -95,18 +100,30 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
+<<<<<<< HEAD
           "Access free online calculators for personal finance, health tracking, mathematical equations, and everyday tasks. Get fast, accurate results instantly.",
+=======
+          "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results.",
+>>>>>>> 529569b (Deploy CalcZen V2)
       },
       { property: "og:title", content: "CalcZen — Free Online Calculators" },
       {
         property: "og:description",
         content:
+<<<<<<< HEAD
           "Access free online calculators for personal finance, health tracking, mathematical equations, and everyday tasks. Get fast, accurate results instantly.",
+=======
+          "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results.",
+>>>>>>> 529569b (Deploy CalcZen V2)
       },
       {
         name: "twitter:description",
         content:
+<<<<<<< HEAD
           "Access free online calculators for personal finance, health tracking, mathematical equations, and everyday tasks. Get fast, accurate results instantly.",
+=======
+          "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results.",
+>>>>>>> 529569b (Deploy CalcZen V2)
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://calczen.com/" },
@@ -213,6 +230,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const popular = calculators.filter((c) => c.popular).slice(0, 8);
+<<<<<<< HEAD
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
 
@@ -541,6 +559,15 @@ function Index() {
 
       {/* Popular Calculators Section */}
       <section className="page-container mt-8 sm:mt-28 md:mt-32">
+=======
+
+  return (
+    <PageShell hideHeader>
+      <HeroSection />
+
+      {/* Popular Calculators Section */}
+      <section className="page-container mt-6 sm:mt-14 md:mt-16">
+>>>>>>> 529569b (Deploy CalcZen V2)
         <div className="mb-4 sm:mb-6">
           <div className="flex items-center justify-between gap-4 mb-1.5">
             <div className="flex items-center gap-2.5 min-w-0">

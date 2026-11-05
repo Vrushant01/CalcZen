@@ -36,7 +36,11 @@ export async function listNewsletterHistory(limit = 50): Promise<ApiNewsletter[]
   const rows = data as NewsletterRow[];
   const adminIds = [...new Set(rows.map((r) => r.sent_by).filter(Boolean))] as string[];
 
+<<<<<<< HEAD
   let adminMap = new Map<string, { email: string; name: string | null }>();
+=======
+  const adminMap = new Map<string, { email: string; name: string | null }>();
+>>>>>>> 529569b (Deploy CalcZen V2)
   if (adminIds.length > 0) {
     const { data: admins } = await getSupabase()
       .from("admins")
@@ -52,7 +56,11 @@ export async function listNewsletterHistory(limit = 50): Promise<ApiNewsletter[]
   return rows.map((row) =>
     toApiNewsletter({
       ...row,
+<<<<<<< HEAD
       admins: row.sent_by ? adminMap.get(row.sent_by) ?? null : null,
+=======
+      admins: row.sent_by ? (adminMap.get(row.sent_by) ?? null) : null,
+>>>>>>> 529569b (Deploy CalcZen V2)
     }),
   );
 }

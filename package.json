@@ -7,6 +7,7 @@
     "node": ">=20"
   },
   "scripts": {
+<<<<<<< HEAD
     "dev": "next dev",
     "dev:server": "npm run dev --prefix server",
     "dev:admin": "npm run dev --prefix admin",
@@ -22,6 +23,22 @@
     "seed:admin": "npm run seed:admin --prefix server",
     "admin:reset-password": "npm run admin:reset-password --prefix server",
     "db:migrate-blogs": "npm run db:migrate-blogs --prefix server"
+=======
+    "dev": "vite dev",
+    "dev:server": "npm run dev --prefix server",
+    "dev:admin": "npm run dev --prefix admin",
+    "build": "vite build",
+    "build:admin": "npm run build --prefix admin",
+    "build:all": "npm run build:admin && npm run build",
+    "build:vercel": "npm run build:admin && npm --prefix server run build:vercel && node scripts/generate-sitemap.mjs && vite build",
+    "vercel-build": "npm run build:vercel",
+    "build:dev": "vite build --mode development",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "seed:admin": "npm run seed:admin --prefix server",
+    "admin:reset-password": "npm run admin:reset-password --prefix server"
+>>>>>>> 529569b (Deploy CalcZen V2)
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",
@@ -52,7 +69,10 @@
     "@radix-ui/react-toggle": "^1.1.10",
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
+<<<<<<< HEAD
     "@tailwindcss/postcss": "^4.3.3",
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)
     "@tailwindcss/vite": "^4.2.1",
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-router": "^1.168.25",
@@ -69,8 +89,11 @@
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",
     "lucide-react": "^0.575.0",
+<<<<<<< HEAD
     "next": "^16.2.10",
     "postcss": "^8.5.19",
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)
     "react": "^19.2.0",
     "react-day-picker": "^9.14.0",
     "react-dom": "^19.2.0",

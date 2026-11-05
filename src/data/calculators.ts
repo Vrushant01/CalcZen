@@ -13,6 +13,16 @@ import {
   Cake,
   Receipt,
   Moon,
+<<<<<<< HEAD
+=======
+  Briefcase,
+  Gem,
+  Sparkles,
+  Building2,
+  Hammer,
+  Zap,
+  Store,
+>>>>>>> 529569b (Deploy CalcZen V2)
   type LucideIcon,
 } from "lucide-react";
 
@@ -53,6 +63,25 @@ export const categories: Category[] = [
     iconColor: "text-violet-600 dark:text-violet-400",
   },
   {
+<<<<<<< HEAD
+=======
+    slug: "salary-and-employment",
+    name: "Salary & Employment",
+    description: "CTC, in-hand pay & tax deductions",
+    icon: Briefcase,
+    color: "category-card-salary",
+    iconColor: "text-emerald-600 dark:text-emerald-400",
+  },
+  {
+    slug: "jewellery",
+    name: "Jewellery",
+    description: "Gold rates, making charges, wastage & GST",
+    icon: Gem,
+    color: "category-card-jewellery",
+    iconColor: "text-amber-500 dark:text-amber-400",
+  },
+  {
+>>>>>>> 529569b (Deploy CalcZen V2)
     slug: "everyday",
     name: "Everyday",
     description: "Dates, fuel & lifestyle",
@@ -60,6 +89,43 @@ export const categories: Category[] = [
     color: "category-card-everyday",
     iconColor: "text-amber-600 dark:text-amber-400",
   },
+<<<<<<< HEAD
+=======
+  {
+    slug: "home-construction",
+    name: "Home Construction",
+    description: "Estimate construction materials, quantities, and costs for residential building work",
+    icon: Building2,
+    color: "category-card-home-construction",
+    iconColor: "text-amber-600 dark:text-amber-400",
+  },
+  {
+    slug: "electricity",
+    name: "Electricity",
+    description:
+      "Calculate electricity usage, appliance running costs, power consumption, and household electricity expenses with simple and practical calculators.",
+    icon: Zap,
+    color: "category-card-electricity",
+    iconColor: "text-amber-500 dark:text-amber-400",
+  },
+  {
+    slug: "business",
+    name: "Business",
+    description:
+      "Simple calculators to help entrepreneurs, sellers, shopkeepers, and small businesses calculate profits, costs, pricing, margins, and commercial performance.",
+    icon: Store,
+    color: "category-card-business",
+    iconColor: "text-emerald-600 dark:text-emerald-400",
+  },
+  {
+    slug: "love-and-relationships",
+    name: "Love & Relationships",
+    description: "Compatibility & fun matches",
+    icon: Heart,
+    color: "category-card-love", // Adding a simple color reference
+    iconColor: "text-pink-500 dark:text-pink-400",
+  },
+>>>>>>> 529569b (Deploy CalcZen V2)
 ];
 
 export type CalculatorMeta = {
@@ -80,6 +146,433 @@ export type CalculatorMeta = {
 
 export const calculators: CalculatorMeta[] = [
   {
+<<<<<<< HEAD
+=======
+    slug: "gst-invoice-calculator",
+    name: "GST Invoice Calculator",
+    category: "business",
+    description:
+      "Calculate GST on products and services with inclusive and exclusive options. Find CGST, SGST, IGST, taxable value, and final invoice amounts.",
+    keywords: [
+      "gst invoice calculator",
+      "gst calculator india",
+      "cgst sgst calculator",
+      "igst calculator",
+      "gst inclusive calculator",
+      "gst exclusive calculator",
+      "gst amount calculator",
+      "gst bill calculator",
+      "gst discount calculator",
+      "calculate gst online",
+    ],
+    icon: Receipt,
+    popular: true,
+    trending: true,
+    metaTitle: "GST Invoice Calculator – Calculate CGST, SGST & IGST | CalcZen",
+    metaDescription:
+      "Calculate GST on products and services with inclusive and exclusive GST options. Find CGST, SGST, IGST, taxable value, and final invoice amount with CalcZen.",
+    calculatorType: "Business & Tax",
+    useCases: [
+      "Calculate GST on single product or service invoice",
+      "Extract taxable amount from GST inclusive price",
+      "Split tax into CGST and SGST for local state billing",
+      "Calculate IGST for inter-state deliveries",
+      "Build multi-item invoice estimates with mixed GST rates",
+    ],
+    h1: "GST Invoice Calculator",
+  },
+  {
+    slug: "product-profit-calculator",
+    name: "Product Profit Calculator",
+    category: "business",
+    description:
+      "Calculate profit per product, net profit margin, markup percentage, revenue, break-even selling price, and target price with shipping, packaging, and marketplace fees.",
+    keywords: [
+      "product profit calculator",
+      "profit margin calculator",
+      "markup calculator",
+      "how to calculate profit on a product",
+      "selling price calculator",
+      "ecommerce profit calculator india",
+      "amazon profit calculator india",
+      "retail profit calculator",
+      "cost price selling price profit",
+      "break-even price calculator",
+    ],
+    icon: TrendingUp,
+    popular: true,
+    trending: true,
+    metaTitle: "Product Profit Calculator India — Profit Margin, Markup & Selling Price | CalcZen",
+    metaDescription:
+      "Calculate your exact profit per product, total profit, net profit margin %, markup %, and break-even selling price. Perfect for shopkeepers, resellers, manufacturers, and Amazon/Flipkart sellers.",
+    calculatorType: "Business & Commerce",
+    useCases: [
+      "Find net profit and margin on retail products",
+      "Calculate selling price after shipping and packaging expenses",
+      "Estimate marketplace commissions for Amazon, Flipkart & Meesho sellers",
+      "Determine break-even price and target selling price",
+    ],
+    h1: "Product Profit Calculator",
+  },
+  {
+    slug: "home-electricity-bill-calculator",
+    name: "Home Electricity Bill Calculator",
+    category: "electricity",
+    description:
+      "Estimate your household electricity bill, calculate monthly units, and find out how much your appliances cost to run in India. Support flat-rate and state DISCOM slab tariffs.",
+    keywords: [
+      "home electricity bill calculator",
+      "electricity bill calculator India",
+      "household electricity consumption calculator",
+      "monthly electricity bill calculator",
+      "electricity units calculator",
+      "home power consumption calculator",
+      "household electricity cost calculator",
+      "calculate electricity bill online",
+      "electricity slab rate calculator",
+    ],
+    icon: Zap,
+    popular: true,
+    trending: true,
+    metaTitle: "Home Electricity Bill Calculator – Estimate Monthly Electricity Bill | CalcZen",
+    metaDescription:
+      "Estimate your household electricity bill with monthly units or appliance usage. Calculate electricity consumption, energy charges, and monthly costs with CalcZen.",
+    calculatorType: "Household Electricity Bill Calculator",
+    useCases: [
+      "estimate monthly electricity bill from entered meter units or household appliances",
+      "support state DISCOM telescopic slab tariffs (GERC, MSEDCL, BSES, BESCOM)",
+      "calculate fixed meter charges, electricity duty, and fuel surcharges (FPPPA)",
+      "view appliance-wise electricity consumption and identify top power-consuming devices",
+      "compare current month's electricity units and bill against the previous month",
+    ],
+    h1: "Home Electricity Bill Calculator",
+  },
+  {
+    slug: "appliance-electricity-cost-calculator",
+    name: "Appliance Electricity Cost Calculator",
+    category: "electricity",
+    description:
+      "Calculate electricity units and estimated electricity bill cost of everyday household appliances in India. Check daily, monthly, and yearly costs for fans, TVs, fridges, washing machines, and heaters.",
+    keywords: [
+      "appliance electricity cost calculator",
+      "electricity consumption calculator",
+      "appliance power consumption calculator",
+      "home appliance electricity cost",
+      "electricity units calculator",
+      "fan electricity cost calculator",
+      "refrigerator electricity consumption",
+      "washing machine electricity cost",
+      "electricity bill calculator for appliances",
+      "household appliance power calculator india",
+    ],
+    icon: Zap,
+    popular: true,
+    trending: true,
+    metaTitle: "Appliance Electricity Cost Calculator – Calculate Appliance Power Consumption | CalcZen",
+    metaDescription:
+      "Calculate how much electricity your appliances use and their daily, monthly, and yearly running costs. Estimate electricity units and bills with CalcZen.",
+    calculatorType: "Appliance Energy Cost Calculator",
+    useCases: [
+      "calculate electricity units and cost for 30+ everyday household appliances",
+      "support rated power in watts, cycle consumption, annual BEE label kWh, and standby draw",
+      "estimate daily, monthly, and yearly electricity consumption and bill expenses in rupees",
+      "model combined household electricity consumption across multiple appliances",
+      "calculate standby vampire power wasted when electronics remain plugged in",
+    ],
+    h1: "Appliance Electricity Cost Calculator",
+  },
+  {
+    slug: "ac-electricity-cost-calculator",
+    name: "AC Electricity Cost Calculator",
+    category: "electricity",
+    description:
+      "Calculate AC electricity consumption in India. Estimate daily, monthly and yearly units, running cost, inverter savings, and state tariff bill impact with CalcZen.",
+    keywords: [
+      "ac electricity cost calculator",
+      "ac power consumption calculator",
+      "ac electricity bill calculator",
+      "1.5 ton ac electricity consumption",
+      "ac monthly electricity bill",
+      "ac units per day",
+      "ac running cost per hour",
+      "inverter ac electricity consumption",
+      "ac electricity cost per month",
+      "bee ac electricity consumption",
+      "ac power consumption in watts",
+      "ac electricity bill calculator india",
+    ],
+    icon: Zap,
+    popular: true,
+    trending: true,
+    metaTitle: "AC Electricity Cost Calculator India – Calculate AC Bill Per Month | CalcZen",
+    metaDescription:
+      "Calculate your AC electricity consumption and monthly bill in India. Find daily, monthly and yearly units and cost using AC power, running hours and electricity rates.",
+    calculatorType: "Electricity Cost Calculator",
+    useCases: [
+      "calculate AC electricity units consumed per day, month, and year",
+      "estimate monthly electricity bill impact of running 1, 1.5, or 2 Ton AC",
+      "compare inverter vs non-inverter AC power consumption and potential savings",
+      "evaluate BEE star label annual energy consumption against actual usage hours",
+      "calculate incremental bill cost using state electricity tariff slabs (GERC, MSEDCL, BSES, etc.)",
+    ],
+    h1: "AC Electricity Cost Calculator (India)",
+  },
+  {
+    slug: "rcc-price-calculator",
+    name: "RCC Price Calculator",
+    category: "home-construction",
+    description:
+      "Estimate RCC concrete volume, cement bags, sand, aggregate, reinforcement steel, shuttering, labour, and total construction cost in India with CalcZen.",
+    keywords: [
+      "rcc price calculator",
+      "rcc cost calculator india",
+      "rcc slab cost calculator",
+      "rcc construction cost calculator",
+      "cement sand aggregate calculator",
+      "steel quantity calculator",
+      "rcc material calculator",
+      "rcc cost per cubic metre",
+      "rcc cost per square foot",
+      "concrete material cost calculator",
+      "m20 concrete mix calculator",
+      "roof slab costing india",
+    ],
+    icon: Building2,
+    popular: true,
+    trending: true,
+    metaTitle: "RCC Price Calculator India – Cement, Sand, Steel & Concrete Cost | CalcZen",
+    metaDescription:
+      "Calculate RCC construction cost in India. Estimate concrete volume, cement, sand, aggregate, steel, shuttering, labour, and total RCC price with CalcZen.",
+    calculatorType: "Construction Cost Calculator",
+    useCases: [
+      "estimate RCC roof slab casting cost and material takeoff",
+      "calculate cement bags, sand, and aggregate for M20 and M25 mix",
+      "calculate TMT rebar steel weight using standard d²/162 formula",
+      "verify civil contractor and labour quotation rates per sq ft and m³",
+    ],
+    h1: "RCC Price Calculator (India)",
+  },
+  {
+    slug: "cement-bag-calculator",
+    name: "Cement Bag Calculator",
+    category: "home-construction",
+    description:
+      "Calculate cement bags required for concrete, RCC slabs, wall & ceiling plaster, brickwork mortar, and flooring screed in India per IS 456 & CPWD norms.",
+    keywords: [
+      "cement bag calculator",
+      "cement calculator india",
+      "cement bags for 1000 sq ft slab",
+      "cement sand aggregate calculator",
+      "plaster cement bag calculator",
+      "brickwork mortar calculator",
+      "how many cement bags required",
+      "cement quantity calculation",
+      "m20 concrete cement bags",
+      "floor screed cement calculator",
+      "cement bag weight 50kg",
+    ],
+    icon: Hammer,
+    popular: true,
+    trending: true,
+    metaTitle: "Cement Bag Calculator India – Concrete, Plaster & Mortar Bags | CalcZen",
+    metaDescription:
+      "Calculate exact cement bags required for concrete, slabs, plastering, brickwork mortar, and flooring screed in India. Free, instant material takeoff per IS 456.",
+    calculatorType: "Material Quantity Calculator",
+    useCases: [
+      "calculate cement bags needed for residential roof slabs (5\" and 6\" thick)",
+      "estimate cement and sand for 12mm internal and 20mm external wall plaster",
+      "calculate mortar volume and cement bags for 9-inch and 4.5-inch brick walls",
+      "estimate whole bags to purchase with 5% on-site handling wastage allowance",
+    ],
+    h1: "Cement Bag Calculator (India)",
+  },
+  {
+    slug: "gold-making-charges-calculator",
+    name: "Gold Making Charges Calculator",
+    category: "jewellery",
+    description:
+      "Calculate gold jewellery making charges using percentage, per-gram, or flat pricing. Compare jeweller quotations and understand the actual cost of making charges with CalcZen.",
+    keywords: [
+      "gold making charges calculator",
+      "gold making charge calculator india",
+      "gold jewellery making charges",
+      "gold making charges per gram",
+      "gold making charges percentage",
+      "gold making charges calculator 22k",
+      "jewellery making charges calculator",
+      "gold making charge comparison",
+      "gold jewellery making cost",
+      "calculate gold making charges",
+      "gold wastage vs making charges",
+      "gold rate today making charge",
+      "jeweller quotation comparison",
+      "gold making charges discount calculator",
+      "tanishq making charges calculator",
+      "kalyan jewellers making charges",
+      "malabar gold making charges calculator",
+    ],
+    icon: Sparkles,
+    popular: true,
+    trending: true,
+    metaTitle: "Gold Making Charges Calculator India – Percentage, Per Gram & Flat Fee | CalcZen",
+    metaDescription:
+      "Calculate gold jewellery making charges in India using percentage, per-gram, or flat fees. Compare jewellers, calculate savings, and understand GST with CalcZen.",
+    calculatorType: "financial",
+    useCases: [
+      "calculate making charges across percentage, per-gram, and flat pricing",
+      "convert different jeweller making charges to equivalent per-gram and percentage rates",
+      "compare making charge quotations from two or three different jewellers",
+      "calculate savings from negotiating making charges with 3% GST impact",
+      "determine the exact GST added by making charges on the final jewellery bill",
+      "calculate maximum affordable gold weight for a fixed budget and making charge",
+    ],
+    h1: "Gold Making Charges Calculator (India)",
+  },
+  {
+    slug: "gold-jewellery-bill-calculator",
+    name: "Gold Jewellery Bill Calculator",
+    category: "jewellery",
+    description:
+      "Calculate complete gold jewellery bills in India with gold purity, net weight, making charges, wastage, gemstone/diamond charges, and 3% GST breakdown.",
+    keywords: [
+      "gold jewellery bill calculator",
+      "gold jewellery price calculator",
+      "gold making charges calculator",
+      "gold gst calculator india",
+      "22k gold price calculator",
+      "jewellery bill calculator india",
+      "gold wastage calculator",
+      "gold price per gram calculator",
+      "gold jewellery gst 3 percent",
+      "gold jewellery cost calculator",
+      "hallmark gold calculator",
+      "old gold exchange calculator",
+      "gold rate today calculator",
+    ],
+    icon: Gem,
+    popular: true,
+    trending: true,
+    metaTitle: "Gold Jewellery Bill Calculator India – Gold Price, Making Charges & GST | CalcZen",
+    metaDescription:
+      "Calculate your gold jewellery bill in India using gold purity, weight, making charges, wastage, stones, discounts, and GST. Get a detailed price breakdown with CalcZen.",
+    calculatorType: "financial",
+    useCases: [
+      "estimate gold jewellery price before buying",
+      "calculate making charges and wastage charges",
+      "verify jeweller quotation against standard bill",
+      "calculate 3 percent gold jewellery GST breakdown",
+      "estimate old gold exchange credit and deductions",
+      "reverse calculate gold weight from a fixed budget",
+    ],
+    h1: "Gold Jewellery Bill Calculator (India)",
+  },
+  {
+    slug: "ctc-to-in-hand-salary-calculator",
+    name: "CTC to In-Hand Salary Calculator",
+    category: "salary-and-employment",
+    description:
+      "Calculate your estimated monthly and annual in-hand take-home salary from CTC in India for FY 2026-27. Compare New and Old tax regimes with exact breakdowns of Basic, HRA, PF, Gratuity, ESI, and Professional Tax.",
+    keywords: [
+      "ctc to in hand salary calculator",
+      "ctc to in-hand salary calculator",
+      "salary calculator india",
+      "in hand salary calculator",
+      "ctc calculator",
+      "take home salary calculator",
+      "monthly take home salary",
+      "salary after tax",
+      "pf calculator",
+      "new tax regime salary calculator",
+      "old tax regime salary calculator",
+      "gratuity calculator",
+      "professional tax calculator",
+      "ctc breakup",
+      "salary slip calculator",
+    ],
+    icon: Briefcase,
+    popular: true,
+    trending: true,
+    metaTitle: "CTC to In-Hand Salary Calculator India FY 2026-27 | CalcZen",
+    metaDescription:
+      "Calculate your estimated monthly in-hand salary from CTC in India. Compare new and old tax regimes, PF, gratuity, ESI and professional tax with our free calculator.",
+    calculatorType: "financial",
+    useCases: [
+      "job offer salary comparison",
+      "monthly take-home pay planning",
+      "new vs old tax regime comparison",
+      "pf and gratuity deduction estimation",
+      "appraisal in-hand calculation",
+    ],
+    h1: "CTC to In-Hand Salary Calculator (India)",
+  },
+  {
+    slug: "job-offer-comparison-calculator",
+    name: "Job Offer Comparison Calculator",
+    category: "salary-and-employment",
+    description:
+      "Compare multiple job offers in India by monthly in-hand salary, fixed pay, target bonuses, ESOPs, employer benefits, commute time, and first-year vs recurring compensation.",
+    keywords: [
+      "job offer comparison calculator",
+      "compare two job offers",
+      "salary comparison calculator",
+      "ctc comparison calculator",
+      "job offer calculator india",
+      "compare job offers in india",
+      "in-hand salary comparison",
+      "fixed vs variable salary",
+      "total compensation calculator",
+      "esop comparison",
+      "joining bonus calculator",
+    ],
+    icon: Scale,
+    popular: true,
+    trending: true,
+    metaTitle: "Job Offer Comparison Calculator India – Compare Salary, CTC & In-Hand Pay | CalcZen",
+    metaDescription:
+      "Compare two or more job offers in India using CTC, monthly in-hand salary, fixed pay, bonuses, ESOPs, benefits, commute costs, and first-year compensation with CalcZen.",
+    calculatorType: "financial",
+    useCases: [
+      "compare two or more job offers in India",
+      "evaluate startup vs mnc job offers",
+      "remote vs on-site compensation trade-off",
+      "joining bonus vs recurring salary comparison",
+      "esop and benefits valuation",
+    ],
+    h1: "Job Offer Comparison Calculator (India)",
+  },
+  {
+    slug: "love-calculator",
+    name: "Love Calculator",
+    category: "love-and-relationships",
+    description: "Calculate a fun love compatibility percentage based on two names.",
+    keywords: [
+      "love calculator",
+      "love compatibility",
+      "love percentage",
+      "love match",
+      "relationship calculator",
+      "couple compatibility",
+      "name compatibility",
+      "crush calculator",
+      "love test",
+      "love meter",
+      "love",
+    ],
+    icon: Heart,
+    popular: false,
+    metaTitle: "Love Calculator — Calculate Love Compatibility | CalcZen",
+    metaDescription:
+      "Use CalcZen's Love Calculator to calculate a fun name-based love compatibility percentage instantly. Enter two names and discover your playful compatibility score.",
+    calculatorType: "entertainment",
+    useCases: [
+      "relationship compatibility test",
+      "couple fun calculation",
+      "crush percentage checking",
+    ],
+    h1: "Love Calculator - Check Compatibility",
+  },
+  {
+>>>>>>> 529569b (Deploy CalcZen V2)
     slug: "mortgage-calculator",
     name: "Mortgage Calculator",
     category: "finance",
@@ -403,7 +896,11 @@ export const calculators: CalculatorMeta[] = [
     h1: "Age Calculator for Birthdays and Exact Time Elapsed",
   },
   {
+<<<<<<< HEAD
     slug: "regular-calculator",
+=======
+    slug: "standard-calculator",
+>>>>>>> 529569b (Deploy CalcZen V2)
     name: "Standard Calculator",
     category: "everyday",
     description:
@@ -417,7 +914,11 @@ export const calculators: CalculatorMeta[] = [
     ],
     icon: Calculator,
     popular: true,
+<<<<<<< HEAD
     metaTitle: "Standard Calculator - Free Online Basic Math Calculator | CalcZen",
+=======
+    metaTitle: "Standard Calculator - Standard Basic Online Math Calculator | CalcZen",
+>>>>>>> 529569b (Deploy CalcZen V2)
     metaDescription:
       "Use our free online standard calculator for fast addition, subtraction, multiplication, division, fractions, and percentage operations with session history.",
     calculatorType: "arithmetic",
@@ -668,9 +1169,96 @@ export const calculators: CalculatorMeta[] = [
     ],
     h1: "Credit Card EMI Payment Calculator",
   },
+<<<<<<< HEAD
 ];
 
 export const getCalculator = (slug: string) => calculators.find((c) => c.slug === slug);
+=======
+  {
+    slug: "flames-calculator",
+    name: "FLAMES Calculator",
+    category: "love-and-relationships",
+    description:
+      "Play the classic FLAMES game and discover your fun relationship result from two names.",
+    keywords: [
+      "flames",
+      "flames calculator",
+      "flames game",
+      "flames love calculator",
+      "flames relationship calculator",
+      "love flames",
+      "relationship test",
+      "name compatibility",
+      "friends love affection marriage enemies siblings",
+      "flames by name",
+    ],
+    icon: Flame,
+    metaTitle: "FLAMES Calculator - Calculate Your FLAMES Result | CalcZen",
+    metaDescription:
+      "Use the CalcZen FLAMES Calculator to find your fun relationship result. Enter two names, match the letters, and discover your Friends, Love, Affection, Marriage, Enemies, or Siblings result.",
+    calculatorType: "entertainment",
+    useCases: ["name compatibility testing", "classic flames game", "relationship entertainment"],
+    h1: "FLAMES Calculator",
+  },
+  {
+    slug: "couple-age-difference-calculator",
+    name: "Couple Age Difference Calculator",
+    category: "love-and-relationships",
+    description:
+      "Calculate the exact age difference between two partners in years, months, and days, and see who is older and how old you both are today.",
+    keywords: [
+      "couple age difference calculator",
+      "age difference calculator",
+      "couple age gap calculator",
+      "age gap calculator",
+      "age difference between couples",
+      "age difference between two people",
+      "partner age difference",
+      "relationship age gap",
+      "calculate age difference",
+      "age difference by date of birth",
+      "age gap between two people",
+    ],
+    icon: Heart,
+    metaTitle: "Couple Age Difference Calculator - Calculate Age Gap | CalcZen",
+    metaDescription:
+      "Calculate the exact age difference between two people in years, months, and days. See who is older, total days apart, and both current ages.",
+    calculatorType: "dating",
+    useCases: ["partner age difference", "couple age gap"],
+    h1: "Couple Age Difference Calculator",
+  },
+];
+
+export const SLUG_ALIASES: Record<string, string> = {
+  "profit-calculator": "product-profit-calculator",
+  "profit-margin-calculator": "product-profit-calculator",
+  "product-profit": "product-profit-calculator",
+  "business-profit-calculator": "product-profit-calculator",
+  "margin-calculator": "product-profit-calculator",
+  "markup-calculator": "product-profit-calculator",
+  "product-profit-calc": "product-profit-calculator",
+  "profit": "product-profit-calculator",
+  "gst-calculator-india": "gst-invoice-calculator",
+  "cgst-sgst-calculator": "gst-invoice-calculator",
+  "igst-calculator": "gst-invoice-calculator",
+  "gst-invoice": "gst-invoice-calculator",
+  "gst-bill-calculator": "gst-invoice-calculator",
+};
+
+export const getCalculator = (slug: string) => {
+  if (!slug) return undefined;
+  const raw = String(slug).trim().toLowerCase();
+  const cleaned = raw.replace(/\/+$/, "").replace(/_/g, "-");
+  const resolved = SLUG_ALIASES[cleaned] || cleaned;
+
+  return (
+    calculators.find((c) => c.slug === resolved) ||
+    calculators.find((c) => c.slug === cleaned) ||
+    calculators.find((c) => c.slug.toLowerCase() === cleaned) ||
+    calculators.find((c) => c.slug === slug)
+  );
+};
+>>>>>>> 529569b (Deploy CalcZen V2)
 
 export const getCategory = (slug: string) => categories.find((c) => c.slug === slug);
 

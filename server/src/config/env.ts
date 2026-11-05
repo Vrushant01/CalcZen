@@ -22,8 +22,12 @@ export const env = {
   nodeEnv: process.env.NODE_ENV ?? "development",
   supabaseUrl: process.env.SUPABASE_URL ?? "",
   /** Prefer service role on server; falls back to anon key */
+<<<<<<< HEAD
   supabaseKey:
     process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_ANON_KEY ?? "",
+=======
+  supabaseKey: process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_ANON_KEY ?? "",
+>>>>>>> 529569b (Deploy CalcZen V2)
   supabaseAnonKey: process.env.SUPABASE_ANON_KEY ?? "",
   jwtSecret: process.env.JWT_SECRET ?? "change-me-in-production",
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "7d",

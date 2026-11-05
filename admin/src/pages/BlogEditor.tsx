@@ -21,8 +21,11 @@ import {
   Settings,
   Calculator,
   RefreshCw,
+<<<<<<< HEAD
   AlertTriangle,
   CheckCircle,
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)
 } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "../components/AdminLayout";
@@ -38,10 +41,13 @@ const CATEGORIES = [
   "Fitness",
   "Investment",
   "Business",
+<<<<<<< HEAD
   "Education",
   "Math",
   "Everyday",
   "Science",
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)
 ];
 
 const CALCULATORS = [
@@ -57,7 +63,11 @@ const CALCULATORS = [
   { slug: "tip-calculator", name: "Tip Calculator" },
   { slug: "bmr-calculator", name: "BMR Calculator" },
   { slug: "sleep-calculator", name: "Sleep Calculator" },
+<<<<<<< HEAD
   { slug: "regular-calculator", name: "Regular Calculator" },
+=======
+  { slug: "standard-calculator", name: "Standard Calculator" },
+>>>>>>> 529569b (Deploy CalcZen V2)
   { slug: "scientific-calculator", name: "Scientific Calculator" },
   { slug: "retirement-calculator", name: "Retirement Calculator" },
   { slug: "401k-calculator", name: "401(k) Calculator" },
@@ -89,7 +99,11 @@ export function BlogEditorPage() {
   const [featured, setFeatured] = useState(false);
   const [published, setPublished] = useState(false);
 
+<<<<<<< HEAD
   // Manual Overrides (Hidden in collapsed Details Accordion)
+=======
+  // SEO fields
+>>>>>>> 529569b (Deploy CalcZen V2)
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
   const [keywords, setKeywords] = useState("");
@@ -102,6 +116,7 @@ export function BlogEditorPage() {
   const [autoSaveTime, setAutoSaveTime] = useState<string | null>(null);
   const [selectedCalc, setSelectedCalc] = useState(CALCULATORS[0].slug);
 
+<<<<<<< HEAD
   // Quality Validation Checks Modal States
   const [qualityWarnings, setQualityWarnings] = useState<string[]>([]);
   const [showWarningModal, setShowWarningModal] = useState(false);
@@ -117,23 +132,39 @@ export function BlogEditorPage() {
     schema: 0,
     wordCount: 0,
     h1Count: 0,
+=======
+  const editorRef = useRef<HTMLDivElement>(null);
+
+  // SEO Metrics State
+  const [metrics, setMetrics] = useState({
+    wordCount: 0,
+>>>>>>> 529569b (Deploy CalcZen V2)
     h2Count: 0,
     internalLinks: 0,
     externalLinks: 0,
   });
 
+<<<<<<< HEAD
   // Calculate realtime audit parameters and scores
+=======
+  // Calculate metrics periodically
+>>>>>>> 529569b (Deploy CalcZen V2)
   useEffect(() => {
     const interval = setInterval(() => {
       if (!editorRef.current) return;
 
+<<<<<<< HEAD
       const content = editorRef.current.innerHTML || "";
+=======
+      const content = editorRef.current.innerHTML;
+>>>>>>> 529569b (Deploy CalcZen V2)
       const textContent = editorRef.current.innerText || "";
       const words = textContent.trim().split(/\s+/).filter(Boolean).length;
 
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = content;
 
+<<<<<<< HEAD
       const h1Count = tempDiv.querySelectorAll("h1").length;
       const h2Count = tempDiv.querySelectorAll("h2").length;
       const h3Count = tempDiv.querySelectorAll("h3").length;
@@ -145,10 +176,16 @@ export function BlogEditorPage() {
         if (!img.getAttribute("alt")?.trim()) missingAlts++;
       });
 
+=======
+      const h2Count = tempDiv.querySelectorAll("h2").length;
+
+      const links = Array.from(tempDiv.querySelectorAll("a"));
+>>>>>>> 529569b (Deploy CalcZen V2)
       let internal = 0;
       let external = 0;
       links.forEach((link) => {
         const href = link.getAttribute("href") || "";
+<<<<<<< HEAD
         if (href.startsWith("/") || href.includes("calczen.in")) internal++;
         else if (href.startsWith("http")) external++;
       });
@@ -204,15 +241,37 @@ export function BlogEditorPage() {
     }, 1000);
     return () => clearInterval(interval);
   }, [title, excerpt, thumbnail, tags, faqs, metaDescription]);
+=======
+        if (href.startsWith("/") || href.includes("calczen.com")) internal++;
+        else if (href.startsWith("http")) external++;
+      });
+
+      setMetrics({ wordCount: words, h2Count, internalLinks: internal, externalLinks: external });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   // 1. Fetch Blog if Edit Mode
   useEffect(() => {
     if (!isEdit) {
+<<<<<<< HEAD
+=======
+      // Check for local storage auto-saved draft
+>>>>>>> 529569b (Deploy CalcZen V2)
       const savedDraft = localStorage.getItem("calczen_blog_draft_new");
       if (savedDraft) {
         try {
           const parsed = JSON.parse(savedDraft);
+<<<<<<< HEAD
           if (confirm("Found an auto-saved draft. Would you like to restore it?")) {
+=======
+          if (
+            confirm(
+              "Found an auto-saved unsaved draft in your browser. Would you like to restore it?",
+            )
+          ) {
+>>>>>>> 529569b (Deploy CalcZen V2)
             restoreDraft(parsed);
           } else {
             localStorage.removeItem("calczen_blog_draft_new");
@@ -243,15 +302,30 @@ export function BlogEditorPage() {
           setFaqs(blog.faqs || []);
 
           if (editorRef.current) {
+<<<<<<< HEAD
             editorRef.current.innerHTML = blog.content.replace(/<(h[23])id=/gi, "<$1 id=");
           }
 
+=======
+            editorRef.current.innerHTML = blog.content;
+          }
+
+          // Check if local storage has a newer version
+>>>>>>> 529569b (Deploy CalcZen V2)
           const savedDraft = localStorage.getItem(`calczen_blog_draft_${id}`);
           if (savedDraft) {
             try {
               const parsed = JSON.parse(savedDraft);
               if (new Date(parsed.updatedAt) > new Date(blog.updatedAt)) {
+<<<<<<< HEAD
                 if (confirm("Your browser has a newer auto-saved draft. Restore now?")) {
+=======
+                if (
+                  confirm(
+                    "Your browser has a newer auto-saved version of this article. Restoring is recommended. Restore now?",
+                  )
+                ) {
+>>>>>>> 529569b (Deploy CalcZen V2)
                   restoreDraft(parsed);
                 }
               }
@@ -286,9 +360,15 @@ export function BlogEditorPage() {
     setKeywords(draft.keywords || "");
     setFaqs(draft.faqs || []);
     if (editorRef.current) {
+<<<<<<< HEAD
       editorRef.current.innerHTML = (draft.content || "").replace(/<(h[23])id=/gi, "<$1 id=");
     }
     toast.success("Draft restored successfully");
+=======
+      editorRef.current.innerHTML = draft.content || "";
+    }
+    toast.success("Draft restored from browser storage");
+>>>>>>> 529569b (Deploy CalcZen V2)
   }
 
   // 2. Dynamic Auto Slug Generator
@@ -298,15 +378,26 @@ export function BlogEditorPage() {
     if (!isEdit) {
       const generated = val
         .toLowerCase()
+<<<<<<< HEAD
         .replace(/[^a-z0-9\s-]/g, "")
         .trim()
         .replace(/\s+/g, "-")
         .replace(/-+/g, "-");
+=======
+        .replace(/[^a-z0-9\s-]/g, "") // remove special characters
+        .trim()
+        .replace(/\s+/g, "-") // replace spaces with hyphens
+        .replace(/-+/g, "-"); // remove double hyphens
+>>>>>>> 529569b (Deploy CalcZen V2)
       setSlug(generated);
     }
   };
 
+<<<<<<< HEAD
   // 3. Auto-save draft
+=======
+  // 3. Auto-save engine (every 15 seconds)
+>>>>>>> 529569b (Deploy CalcZen V2)
   useEffect(() => {
     const interval = setInterval(() => {
       if (saving) return;
@@ -332,6 +423,7 @@ export function BlogEditorPage() {
 
       const key = isEdit ? `calczen_blog_draft_${id}` : "calczen_blog_draft_new";
       localStorage.setItem(key, JSON.stringify(draftPayload));
+<<<<<<< HEAD
       setAutoSaveTime(new Date().toLocaleTimeString());
     }, 15000);
 
@@ -339,6 +431,33 @@ export function BlogEditorPage() {
   }, [title, slug, excerpt, thumbnail, category, tags, author, featured, published, metaTitle, metaDescription, keywords, faqs, isEdit, id, saving]);
 
   // Formatter commands
+=======
+      const now = new Date();
+      setAutoSaveTime(now.toLocaleTimeString());
+    }, 15000);
+
+    return () => clearInterval(interval);
+  }, [
+    title,
+    slug,
+    excerpt,
+    thumbnail,
+    category,
+    tags,
+    author,
+    featured,
+    published,
+    metaTitle,
+    metaDescription,
+    keywords,
+    faqs,
+    isEdit,
+    id,
+    saving,
+  ]);
+
+  // Visual text formatting operations
+>>>>>>> 529569b (Deploy CalcZen V2)
   function execCmd(command: string, value: string = "") {
     document.execCommand(command, false, value);
     editorRef.current?.focus();
@@ -348,7 +467,13 @@ export function BlogEditorPage() {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 800 * 1024) {
+<<<<<<< HEAD
         toast.error("Image file is large. Compressed WebP/JPEG under 200KB is recommended for core web vitals.");
+=======
+        toast.error(
+          "File is larger than 800 KB. We recommend uploading a compressed WebP/JPEG under 800 KB for optimal performance.",
+        );
+>>>>>>> 529569b (Deploy CalcZen V2)
       }
       const reader = new FileReader();
       reader.onload = () => {
@@ -360,8 +485,14 @@ export function BlogEditorPage() {
     }
   }
 
+<<<<<<< HEAD
   function insertLink() {
     const url = prompt("Enter URL:");
+=======
+  // Visual structures insertions
+  function insertLink() {
+    const url = prompt("Enter full URL (e.g. https://google.com):");
+>>>>>>> 529569b (Deploy CalcZen V2)
     if (url) execCmd("createLink", url);
   }
 
@@ -372,6 +503,12 @@ export function BlogEditorPage() {
     input.onchange = (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
+<<<<<<< HEAD
+=======
+        if (file.size > 800 * 1024) {
+          toast.error("Image file is too large (max 800 KB recommended for fast page loads).");
+        }
+>>>>>>> 529569b (Deploy CalcZen V2)
         const reader = new FileReader();
         reader.onload = () => {
           if (typeof reader.result === "string") {
@@ -385,8 +522,13 @@ export function BlogEditorPage() {
   }
 
   function insertTable() {
+<<<<<<< HEAD
     const cols = parseInt(prompt("Columns:", "3") || "0");
     const rows = parseInt(prompt("Rows:", "3") || "0");
+=======
+    const cols = parseInt(prompt("Enter number of columns:", "3") || "0");
+    const rows = parseInt(prompt("Enter number of rows:", "3") || "0");
+>>>>>>> 529569b (Deploy CalcZen V2)
     if (!cols || !rows) return;
 
     let html = `<table class="calc-editor-table w-full border-collapse border border-[var(--color-card-border)] my-4 text-left text-sm"><thead><tr>`;
@@ -397,7 +539,11 @@ export function BlogEditorPage() {
     for (let r = 0; r < rows; r++) {
       html += `<tr>`;
       for (let c = 0; c < cols; c++) {
+<<<<<<< HEAD
         html += `<td class="border border-[var(--color-card-border)] p-2">Cell Data</td>`;
+=======
+        html += `<td class="border border-[var(--color-card-border)] p-2">Data Cell</td>`;
+>>>>>>> 529569b (Deploy CalcZen V2)
       }
       html += `</tr>`;
     }
@@ -406,6 +552,10 @@ export function BlogEditorPage() {
     execCmd("insertHTML", html);
   }
 
+<<<<<<< HEAD
+=======
+  // Calculator custom card block insertion
+>>>>>>> 529569b (Deploy CalcZen V2)
   function insertCalculatorBlock() {
     const calc = CALCULATORS.find((c) => c.slug === selectedCalc);
     if (!calc) return;
@@ -425,6 +575,7 @@ export function BlogEditorPage() {
       </div>
       <p>&nbsp;</p>
     `;
+<<<<<<< HEAD
     execCmd("insertHTML", html);
     toast.success(`Embedded ${calc.name} block`);
   }
@@ -439,14 +590,67 @@ export function BlogEditorPage() {
     if (html) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
+=======
+
+    execCmd("insertHTML", html);
+    toast.success(`Embedded ${calc.name} card into article`);
+  }
+
+  // 3.5 Robust Notion/Medium Paste Sanitizer and Spacing Engine
+  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const clipboardData = e.clipboardData;
+    const html = clipboardData.getData("text/html");
+    const text = clipboardData.getData("text/plain");
+
+    let contentToInsert = "";
+
+    if (html) {
+      // Paste rich HTML, but sanitize it to keep only clean, semantic blog tags:
+      // p, h1, h2, h3, h4, ul, ol, li, strong, em, u, a, blockquote, table, thead, tbody, tr, th, td, br
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+
+>>>>>>> 529569b (Deploy CalcZen V2)
       const cleanNode = (node: Node): string => {
         if (node.nodeType === Node.TEXT_NODE) {
           return node.nodeValue ? escapeHtml(node.nodeValue) : "";
         }
+<<<<<<< HEAD
         if (node.nodeType === Node.ELEMENT_NODE) {
           const el = node as HTMLElement;
           const tagName = el.tagName.toLowerCase();
           const allowedTags = ["p", "h1", "h2", "h3", "h4", "ul", "ol", "li", "strong", "em", "u", "a", "blockquote", "table", "thead", "tbody", "tr", "th", "td", "br"];
+=======
+
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const el = node as HTMLElement;
+          const tagName = el.tagName.toLowerCase();
+
+          const allowedTags = [
+            "p",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "ul",
+            "ol",
+            "li",
+            "strong",
+            "em",
+            "u",
+            "a",
+            "blockquote",
+            "table",
+            "thead",
+            "tbody",
+            "tr",
+            "th",
+            "td",
+            "br",
+          ];
+
+>>>>>>> 529569b (Deploy CalcZen V2)
           if (allowedTags.includes(tagName)) {
             let attributes = "";
             if (tagName === "a") {
@@ -461,6 +665,7 @@ export function BlogEditorPage() {
             } else if (tagName === "td") {
               attributes = ` class="border border-[var(--color-card-border)] p-2"`;
             }
+<<<<<<< HEAD
             let childrenContent = "";
             el.childNodes.forEach((child) => { childrenContent += cleanNode(child); });
             if (tagName === "br") return "<br>";
@@ -468,13 +673,38 @@ export function BlogEditorPage() {
           } else {
             let childrenContent = "";
             el.childNodes.forEach((child) => { childrenContent += cleanNode(child); });
+=======
+
+            let childrenContent = "";
+            el.childNodes.forEach((child) => {
+              childrenContent += cleanNode(child);
+            });
+
+            if (tagName === "br") return "<br>";
+
+            return `<${tagName}${attributes}>${childrenContent}</${tagName}>`;
+          } else {
+            let childrenContent = "";
+            el.childNodes.forEach((child) => {
+              childrenContent += cleanNode(child);
+            });
+>>>>>>> 529569b (Deploy CalcZen V2)
             return childrenContent;
           }
         }
         return "";
       };
+<<<<<<< HEAD
       let cleanedHtml = "";
       doc.body.childNodes.forEach((child) => { cleanedHtml += cleanNode(child); });
+=======
+
+      let cleanedHtml = "";
+      doc.body.childNodes.forEach((child) => {
+        cleanedHtml += cleanNode(child);
+      });
+
+>>>>>>> 529569b (Deploy CalcZen V2)
       cleanedHtml = cleanedHtml.replace(/<p>\s*<\/p>/g, "");
       contentToInsert = cleanedHtml;
     } else if (text) {
@@ -512,6 +742,7 @@ export function BlogEditorPage() {
       .replace(/'/g, "&#039;");
   }
 
+<<<<<<< HEAD
   // Quality Validation Checker prior to publish saving
   function runQualityAudit(): string[] {
     const warningsList: string[] = [];
@@ -609,6 +840,34 @@ export function BlogEditorPage() {
     setShowWarningModal(false);
     setSaving(true);
     const content = editorRef.current?.innerHTML.trim() || "";
+=======
+  // 4. Save Blog Handler
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const content = editorRef.current?.innerHTML.trim() || "";
+
+    if (!title.trim()) {
+      toast.error("Title is required");
+      return;
+    }
+    if (!slug.trim()) {
+      toast.error("URL Slug is required");
+      return;
+    }
+    if (!excerpt.trim()) {
+      toast.error("Short Excerpt is required");
+      return;
+    }
+    if (!content || content === "<br>") {
+      toast.error("Article content is required");
+      return;
+    }
+
+    // Dynamic Reading Time Estimator (avg 200 words per minute)
+    const textContent = editorRef.current?.innerText || "";
+    const words = textContent.trim().split(/\s+/).filter(Boolean).length;
+    const readingTime = Math.max(1, Math.ceil(words / 200));
+>>>>>>> 529569b (Deploy CalcZen V2)
 
     const payload = {
       title: title.trim(),
@@ -617,16 +876,68 @@ export function BlogEditorPage() {
       content,
       thumbnail: thumbnail.trim() || null,
       category,
+<<<<<<< HEAD
       tags: tags.split(",").map((t) => t.trim()).filter(Boolean),
       metaTitle: metaTitle.trim() || null,
       metaDescription: metaDescription.trim() || null,
       keywords: keywords.split(",").map((k) => k.trim()).filter(Boolean),
+=======
+      tags: tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean),
+      metaTitle: metaTitle.trim() || null,
+      metaDescription: metaDescription.trim() || null,
+      keywords: keywords
+        .split(",")
+        .map((k) => k.trim())
+        .filter(Boolean),
+>>>>>>> 529569b (Deploy CalcZen V2)
       author: author.trim() || "CalcZen Team",
       featured,
       published,
       faqs,
+<<<<<<< HEAD
     };
 
+=======
+      readingTime,
+    };
+
+    if (published) {
+      if (!metaTitle.trim()) {
+        toast.error("Meta Title is required to publish.");
+        return;
+      }
+      if (!metaDescription.trim()) {
+        toast.error("Meta Description is required to publish.");
+        return;
+      }
+      if (!thumbnail.trim()) {
+        toast.error("Featured Image is required to publish.");
+        return;
+      }
+      if (words < 500) {
+        toast.error("Blog must have at least 500 words to publish.");
+        return;
+      }
+
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = content;
+      const h2Count = tempDiv.querySelectorAll("h2").length;
+      if (h2Count < 2) {
+        toast.error("Blog must have at least 2 H2 sections to publish.");
+        return;
+      }
+
+      if (faqs.length < 3) {
+        toast.error("Blog must have at least 3 FAQs to publish.");
+        return;
+      }
+    }
+
+    setSaving(true);
+>>>>>>> 529569b (Deploy CalcZen V2)
     try {
       if (isEdit) {
         await api.updateBlog(id!, payload);
@@ -634,17 +945,45 @@ export function BlogEditorPage() {
         localStorage.removeItem(`calczen_blog_draft_${id}`);
       } else {
         await api.createBlog(payload);
+<<<<<<< HEAD
         toast.success("Article published successfully");
+=======
+        toast.success("Article created successfully");
+>>>>>>> 529569b (Deploy CalcZen V2)
         localStorage.removeItem("calczen_blog_draft_new");
       }
       navigate("/blogs");
     } catch (err: any) {
+<<<<<<< HEAD
       toast.error(err instanceof Error ? err.message : "Failed to save article settings");
+=======
+      toast.error(err instanceof Error ? err.message : "Failed to save article");
+>>>>>>> 529569b (Deploy CalcZen V2)
     } finally {
       setSaving(false);
     }
   }
 
+<<<<<<< HEAD
+=======
+  // Clean-room preview processor: detects calculator CTA blocks and keywords
+  const processPreviewContent = (rawHtml: string) => {
+    // Return standard visual html
+    return rawHtml;
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-96 items-center justify-center">
+        <div className="text-center">
+          <RefreshCw className="h-8 w-8 mx-auto animate-spin text-[var(--color-primary)]" />
+          <p className="mt-2 text-sm text-[var(--color-muted)]">Loading article settings...</p>
+        </div>
+      </div>
+    );
+  }
+
+>>>>>>> 529569b (Deploy CalcZen V2)
   return (
     <>
       <form onSubmit={handleSubmit} className="max-w-6xl pb-16">
@@ -658,14 +997,26 @@ export function BlogEditorPage() {
             </Link>
             <PageHeader
               title={isEdit ? "Edit Article" : "Create Article"}
+<<<<<<< HEAD
               description="SEO optimization, schema markups, and Discover configurations will be automatically generated upon publish."
+=======
+              description={
+                isEdit
+                  ? "Update your existing article content and configurations."
+                  : "Draft a new publication with SEO optimization."
+              }
+>>>>>>> 529569b (Deploy CalcZen V2)
             />
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto shrink-0 justify-end">
             {autoSaveTime && (
               <span className="text-[11px] text-[var(--color-muted)] italic mr-1 shrink-0 hidden md:inline">
+<<<<<<< HEAD
                 Draft auto-saved: {autoSaveTime}
+=======
+                Auto-saved in browser: {autoSaveTime}
+>>>>>>> 529569b (Deploy CalcZen V2)
               </span>
             )}
             <button
@@ -681,7 +1032,11 @@ export function BlogEditorPage() {
               ) : (
                 <>
                   <EyeOff size={16} />
+<<<<<<< HEAD
                   Editing Mode
+=======
+                  Back to Editing
+>>>>>>> 529569b (Deploy CalcZen V2)
                 </>
               )}
             </button>
@@ -691,21 +1046,42 @@ export function BlogEditorPage() {
               className="inline-flex items-center gap-2 rounded-lg bg-[var(--color-primary)] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[var(--color-primary-hover)] transition-colors disabled:opacity-60"
             >
               <Save size={16} />
+<<<<<<< HEAD
               {saving ? "Saving Changes..." : "Publish Post"}
+=======
+              {saving ? "Saving Changes..." : "Save Article"}
+>>>>>>> 529569b (Deploy CalcZen V2)
             </button>
           </div>
         </div>
 
         {activeTab === "preview" ? (
+<<<<<<< HEAD
           /* PREVIEW PORTAL */
+=======
+          /* PREVIEW MODE */
+>>>>>>> 529569b (Deploy CalcZen V2)
           <div className="rounded-xl border border-[var(--color-card-border)] bg-slate-950 p-6 md:p-10 text-white min-h-[500px]">
             <div className="max-w-3xl mx-auto">
               <span className="inline-block rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-400">
                 {category}
               </span>
+<<<<<<< HEAD
               <h1 className="text-3xl md:text-5xl font-bold mt-3 leading-tight tracking-tight">{title || "Untitled Post"}</h1>
               <p className="text-sm text-[var(--color-muted)] mt-4">
                 By <strong className="text-white">{author}</strong> · Reading time: ~ {scores.readingTime || Math.max(1, Math.ceil(scores.wordCount / 200))} min
+=======
+              <h1 className="text-3xl md:text-5xl font-bold mt-3 leading-tight tracking-tight">
+                {title || "Article Title"}
+              </h1>
+              <p className="text-sm text-[var(--color-muted)] mt-4">
+                By <strong className="text-white">{author}</strong> · Reading time: ~{" "}
+                {Math.max(
+                  1,
+                  Math.ceil((editorRef.current?.innerText || "").split(" ").length / 200),
+                )}{" "}
+                min
+>>>>>>> 529569b (Deploy CalcZen V2)
               </p>
 
               {thumbnail && (
@@ -713,27 +1089,48 @@ export function BlogEditorPage() {
                   src={thumbnail}
                   alt=""
                   className="w-full h-80 object-cover rounded-xl mt-6 border border-white/10"
+<<<<<<< HEAD
+=======
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&auto=format&fit=crop&q=60";
+                  }}
+>>>>>>> 529569b (Deploy CalcZen V2)
                 />
               )}
 
               <div className="mt-8 border-t border-white/5 pt-6 prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-300 prose-a:text-indigo-400 prose-strong:text-white select-text">
                 <div
                   dangerouslySetInnerHTML={{
+<<<<<<< HEAD
                     __html: editorRef.current?.innerHTML || "",
+=======
+                    __html: processPreviewContent(editorRef.current?.innerHTML || ""),
+>>>>>>> 529569b (Deploy CalcZen V2)
                   }}
                 />
               </div>
             </div>
           </div>
         ) : (
+<<<<<<< HEAD
           /* EDITING ENVIRONMENT */
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {/* Editor Input Column */}
+=======
+          /* EDITING MODE */
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            {/* Main Fields Column */}
+>>>>>>> 529569b (Deploy CalcZen V2)
             <div className="lg:col-span-8 space-y-5">
               <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5 space-y-4">
                 <div>
                   <label htmlFor="title" className="block text-sm font-semibold mb-1.5 text-white">
+<<<<<<< HEAD
                     Article Title
+=======
+                    Title
+>>>>>>> 529569b (Deploy CalcZen V2)
                   </label>
                   <input
                     id="title"
@@ -743,7 +1140,11 @@ export function BlogEditorPage() {
                     value={title}
                     onChange={handleTitleChange}
                     className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3.5 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] placeholder:text-[var(--color-muted)]"
+<<<<<<< HEAD
                     placeholder="Enter blog post title..."
+=======
+                    placeholder="Enter an attention-grabbing blog title..."
+>>>>>>> 529569b (Deploy CalcZen V2)
                   />
                 </div>
 
@@ -759,11 +1160,22 @@ export function BlogEditorPage() {
                       value={slug}
                       onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"))}
                       className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3.5 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] font-mono"
+<<<<<<< HEAD
                       placeholder="url-slug-here"
                     />
                   </div>
                   <div>
                     <label htmlFor="category" className="block text-sm font-semibold mb-1.5 text-white">
+=======
+                      placeholder="url-slug-goes-here"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="category"
+                      className="block text-sm font-semibold mb-1.5 text-white"
+                    >
+>>>>>>> 529569b (Deploy CalcZen V2)
                       Category
                     </label>
                     <select
@@ -782,22 +1194,42 @@ export function BlogEditorPage() {
                 </div>
 
                 <div>
+<<<<<<< HEAD
                   <label htmlFor="excerpt" className="block text-sm font-semibold mb-1.5 text-white">
                     Short Excerpt (Auto-generated if left blank)
                   </label>
                   <textarea
                     id="excerpt"
+=======
+                  <label
+                    htmlFor="excerpt"
+                    className="block text-sm font-semibold mb-1.5 text-white"
+                  >
+                    Short Summary (Excerpt)
+                  </label>
+                  <textarea
+                    id="excerpt"
+                    required
+>>>>>>> 529569b (Deploy CalcZen V2)
                     rows={3}
                     maxLength={300}
                     value={excerpt}
                     onChange={(e) => setExcerpt(e.target.value)}
                     className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3.5 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] placeholder:text-[var(--color-muted)] resize-none"
+<<<<<<< HEAD
                     placeholder="Brief 1-2 sentence article description summary..."
+=======
+                    placeholder="Provide a compelling 1-2 sentence meta summary of the article..."
+>>>>>>> 529569b (Deploy CalcZen V2)
                   />
                 </div>
               </div>
 
+<<<<<<< HEAD
               {/* Rich Visual Editor */}
+=======
+              {/* Rich visual WYSIWYG Editor */}
+>>>>>>> 529569b (Deploy CalcZen V2)
               <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] overflow-hidden shadow-card">
                 <div className="bg-white/5 border-b border-[var(--color-card-border)] p-2.5 flex flex-wrap gap-1 items-center justify-between">
                   <div className="flex flex-wrap gap-1 items-center">
@@ -829,24 +1261,43 @@ export function BlogEditorPage() {
                     <button
                       type="button"
                       onClick={() => execCmd("formatBlock", "H2")}
+<<<<<<< HEAD
                       className="p-2 rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white font-bold text-xs"
                       title="H2 Header"
                     >
                       H2
+=======
+                      className="p-2 rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white"
+                      title="H2 Header"
+                    >
+                      <Heading2 size={16} />
+>>>>>>> 529569b (Deploy CalcZen V2)
                     </button>
                     <button
                       type="button"
                       onClick={() => execCmd("formatBlock", "H3")}
+<<<<<<< HEAD
                       className="p-2 rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white font-bold text-xs"
                       title="H3 Header"
                     >
                       H3
+=======
+                      className="p-2 rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white"
+                      title="H3 Header"
+                    >
+                      <Heading3 size={16} />
+>>>>>>> 529569b (Deploy CalcZen V2)
                     </button>
                     <button
                       type="button"
                       onClick={() => execCmd("formatBlock", "P")}
+<<<<<<< HEAD
                       className="px-2 py-1 text-xs rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white font-semibold"
                       title="Paragraph Text"
+=======
+                      className="px-2 py-1 text-xs rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white font-medium"
+                      title="Normal Text Paragraph"
+>>>>>>> 529569b (Deploy CalcZen V2)
                     >
                       P
                     </button>
@@ -863,7 +1314,11 @@ export function BlogEditorPage() {
                       type="button"
                       onClick={() => execCmd("insertOrderedList")}
                       className="p-2 rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white"
+<<<<<<< HEAD
                       title="Numbered List"
+=======
+                      title="Ordered List"
+>>>>>>> 529569b (Deploy CalcZen V2)
                     >
                       <ListOrdered size={16} />
                     </button>
@@ -871,7 +1326,11 @@ export function BlogEditorPage() {
                       type="button"
                       onClick={() => execCmd("formatBlock", "BLOCKQUOTE")}
                       className="p-2 rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white"
+<<<<<<< HEAD
                       title="Quote"
+=======
+                      title="Blockquote"
+>>>>>>> 529569b (Deploy CalcZen V2)
                     >
                       <Quote size={16} />
                     </button>
@@ -880,7 +1339,11 @@ export function BlogEditorPage() {
                       type="button"
                       onClick={insertLink}
                       className="p-2 rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white"
+<<<<<<< HEAD
                       title="Insert Hyperlink"
+=======
+                      title="Insert Link"
+>>>>>>> 529569b (Deploy CalcZen V2)
                     >
                       <LinkIcon size={16} />
                     </button>
@@ -888,7 +1351,11 @@ export function BlogEditorPage() {
                       type="button"
                       onClick={insertImage}
                       className="p-2 rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white"
+<<<<<<< HEAD
                       title="Insert Image"
+=======
+                      title="Upload Image from Files"
+>>>>>>> 529569b (Deploy CalcZen V2)
                     >
                       <Image size={16} />
                     </button>
@@ -896,13 +1363,21 @@ export function BlogEditorPage() {
                       type="button"
                       onClick={insertTable}
                       className="p-2 rounded hover:bg-white/5 text-[var(--color-muted)] hover:text-white"
+<<<<<<< HEAD
                       title="Insert Table"
+=======
+                      title="Insert Responsive Table"
+>>>>>>> 529569b (Deploy CalcZen V2)
                     >
                       <Table size={16} />
                     </button>
                   </div>
 
+<<<<<<< HEAD
                   {/* Dynamic Calculator embedding widget */}
+=======
+                  {/* Calculator CTA embedding controller */}
+>>>>>>> 529569b (Deploy CalcZen V2)
                   <div className="flex items-center gap-1.5 border border-indigo-500/20 bg-indigo-950/20 px-2 py-1 rounded-lg">
                     <Calculator size={14} className="text-indigo-400" />
                     <select
@@ -920,9 +1395,16 @@ export function BlogEditorPage() {
                       type="button"
                       onClick={insertCalculatorBlock}
                       className="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1 transition-all"
+<<<<<<< HEAD
                     >
                       <Sparkles size={10} />
                       Link Tool
+=======
+                      title="Embed Interactive Calculator CTA"
+                    >
+                      <Sparkles size={10} />
+                      Embed Card
+>>>>>>> 529569b (Deploy CalcZen V2)
                     </button>
                   </div>
                 </div>
@@ -933,17 +1415,29 @@ export function BlogEditorPage() {
                   onPaste={handlePaste}
                   className="min-h-[500px] p-6 md:p-8 text-base text-slate-200 outline-none select-text prose prose-invert max-w-3xl mx-auto w-full focus:ring-0 overflow-y-auto"
                   style={{ backgroundColor: "black" }}
+<<<<<<< HEAD
                   data-placeholder="Visually craft your premium article content here..."
+=======
+                  data-placeholder="Start visually composing your premium article copy..."
+>>>>>>> 529569b (Deploy CalcZen V2)
                   suppressContentEditableWarning
                 />
               </div>
 
+<<<<<<< HEAD
               {/* FAQs accordion manager */}
+=======
+              {/* FAQ Section */}
+>>>>>>> 529569b (Deploy CalcZen V2)
               <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5 space-y-4">
                 <div className="flex items-center justify-between border-b border-[var(--color-card-border)] pb-2">
                   <h3 className="text-sm font-bold text-white flex items-center gap-2">
                     <List size={16} className="text-indigo-400" />
+<<<<<<< HEAD
                     Interactive FAQs Accordion
+=======
+                    Frequently Asked Questions
+>>>>>>> 529569b (Deploy CalcZen V2)
                   </h3>
                   <button
                     type="button"
@@ -955,11 +1449,24 @@ export function BlogEditorPage() {
                 </div>
 
                 {faqs.length === 0 ? (
+<<<<<<< HEAD
                   <p className="text-sm text-[var(--color-muted)] italic py-2">No FAQs created. Add at least 3 for schema inclusion.</p>
                 ) : (
                   <div className="space-y-4">
                     {faqs.map((faq, idx) => (
                       <div key={idx} className="border border-[var(--color-card-border)] rounded-lg p-3 bg-black/50 space-y-3 relative group">
+=======
+                  <p className="text-sm text-[var(--color-muted)] italic py-2">
+                    No FAQs added yet. Add at least 3 for optimal SEO.
+                  </p>
+                ) : (
+                  <div className="space-y-4">
+                    {faqs.map((faq, idx) => (
+                      <div
+                        key={idx}
+                        className="border border-[var(--color-card-border)] rounded-lg p-3 bg-black/50 space-y-3 relative group"
+                      >
+>>>>>>> 529569b (Deploy CalcZen V2)
                         <button
                           type="button"
                           onClick={() => setFaqs(faqs.filter((_, i) => i !== idx))}
@@ -968,33 +1475,61 @@ export function BlogEditorPage() {
                           ✕
                         </button>
                         <div>
+<<<<<<< HEAD
                           <label className="block text-[10px] font-bold text-[var(--color-muted)] uppercase mb-1">Question {idx + 1}</label>
+=======
+                          <label className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1">
+                            Question {idx + 1}
+                          </label>
+>>>>>>> 529569b (Deploy CalcZen V2)
                           <input
                             type="text"
                             value={faq.question}
                             onChange={(e) => {
                               const newFaqs = faqs.map((f, i) =>
+<<<<<<< HEAD
                                 i === idx ? { ...f, question: e.target.value } : f
+=======
+                                i === idx ? { ...f, question: e.target.value } : f,
+>>>>>>> 529569b (Deploy CalcZen V2)
                               );
                               setFaqs(newFaqs);
                             }}
                             className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+<<<<<<< HEAD
                             placeholder="e.g. What is Compound Interest?"
                           />
                         </div>
                         <div>
                           <label className="block text-[10px] font-bold text-[var(--color-muted)] uppercase mb-1">Answer</label>
+=======
+                            placeholder="e.g., What is a good credit score?"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1">
+                            Answer
+                          </label>
+>>>>>>> 529569b (Deploy CalcZen V2)
                           <textarea
                             rows={2}
                             value={faq.answer}
                             onChange={(e) => {
                               const newFaqs = faqs.map((f, i) =>
+<<<<<<< HEAD
                                 i === idx ? { ...f, answer: e.target.value } : f
+=======
+                                i === idx ? { ...f, answer: e.target.value } : f,
+>>>>>>> 529569b (Deploy CalcZen V2)
                               );
                               setFaqs(newFaqs);
                             }}
                             className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] resize-none"
+<<<<<<< HEAD
                             placeholder="Provide details..."
+=======
+                            placeholder="A good credit score is generally..."
+>>>>>>> 529569b (Deploy CalcZen V2)
                           />
                         </div>
                       </div>
@@ -1004,6 +1539,7 @@ export function BlogEditorPage() {
               </div>
             </div>
 
+<<<<<<< HEAD
             {/* Configs Column & Audit Card Panel */}
             <div className="lg:col-span-4 space-y-5">
               {/* Quality Audit Dashboard Panel */}
@@ -1113,6 +1649,11 @@ export function BlogEditorPage() {
               </div>
 
               {/* Status and Cover Image Panel */}
+=======
+            {/* Sidebar Configurations Column */}
+            <div className="lg:col-span-4 space-y-5">
+              {/* Publication States Panel */}
+>>>>>>> 529569b (Deploy CalcZen V2)
               <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5 space-y-4">
                 <h3 className="text-sm font-bold border-b border-[var(--color-card-border)] pb-2 text-white flex items-center gap-2">
                   <Settings size={16} className="text-[var(--color-primary)]" />
@@ -1121,8 +1662,15 @@ export function BlogEditorPage() {
 
                 <div className="flex items-center justify-between">
                   <div>
+<<<<<<< HEAD
                     <p className="text-sm font-semibold text-white">Publish Live</p>
                     <p className="text-xs text-[var(--color-muted)] mt-0.5">Index article live on the site.</p>
+=======
+                    <p className="text-sm font-semibold text-white">Publish Directly</p>
+                    <p className="text-xs text-[var(--color-muted)] mt-0.5">
+                      Toggle to index live on site.
+                    </p>
+>>>>>>> 529569b (Deploy CalcZen V2)
                   </div>
                   <button
                     type="button"
@@ -1141,8 +1689,15 @@ export function BlogEditorPage() {
 
                 <div className="flex items-center justify-between border-t border-[var(--color-card-border)] pt-4">
                   <div>
+<<<<<<< HEAD
                     <p className="text-sm font-semibold text-white">Featured Post</p>
                     <p className="text-xs text-[var(--color-muted)] mt-0.5">Showcase at top of blog.</p>
+=======
+                    <p className="text-sm font-semibold text-white">Featured Article</p>
+                    <p className="text-xs text-[var(--color-muted)] mt-0.5">
+                      Showcase at top of blog.
+                    </p>
+>>>>>>> 529569b (Deploy CalcZen V2)
                   </div>
                   <button
                     type="button"
@@ -1162,7 +1717,11 @@ export function BlogEditorPage() {
                 <div className="space-y-3 border-t border-[var(--color-card-border)] pt-4">
                   <div>
                     <label className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1">
+<<<<<<< HEAD
                       Featured Cover Image
+=======
+                      Cover Thumbnail Image
+>>>>>>> 529569b (Deploy CalcZen V2)
                     </label>
                     <div className="flex flex-col gap-2">
                       <div className="flex items-center gap-2">
@@ -1178,7 +1737,11 @@ export function BlogEditorPage() {
                           onClick={() => document.getElementById("thumbnail-file")?.click()}
                           className="h-9 px-3 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-colors"
                         >
+<<<<<<< HEAD
                           Upload Featured Image
+=======
+                          Upload Cover Image
+>>>>>>> 529569b (Deploy CalcZen V2)
                         </button>
                         {thumbnail && (
                           <button
@@ -1191,8 +1754,14 @@ export function BlogEditorPage() {
                         )}
                       </div>
                       <p className="text-[10px] text-[var(--color-muted)] leading-relaxed mt-1">
+<<<<<<< HEAD
                         Required dimensions: <strong>minimum 1200px wide</strong>.
                         Best practice format: <strong>WebP</strong> under 200KB.
+=======
+                        Recommended dimensions: <strong>1200 x 630 pixels</strong> (16:9 aspect
+                        ratio) for optimal social preview. Recommended file size:{" "}
+                        <strong>under 200 KB</strong> (maximum 800 KB, format: WebP or JPEG).
+>>>>>>> 529569b (Deploy CalcZen V2)
                       </p>
                     </div>
                   </div>
@@ -1203,13 +1772,28 @@ export function BlogEditorPage() {
                         src={thumbnail}
                         alt=""
                         className="w-full h-full object-cover"
+<<<<<<< HEAD
+=======
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=200&auto=format&fit=crop&q=60";
+                        }}
+>>>>>>> 529569b (Deploy CalcZen V2)
                       />
                     </div>
                   )}
 
                   <div>
+<<<<<<< HEAD
                     <label htmlFor="author" className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1">
                       Author
+=======
+                    <label
+                      htmlFor="author"
+                      className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1"
+                    >
+                      Author Name
+>>>>>>> 529569b (Deploy CalcZen V2)
                     </label>
                     <input
                       id="author"
@@ -1222,6 +1806,7 @@ export function BlogEditorPage() {
                 </div>
               </div>
 
+<<<<<<< HEAD
               {/* Tags & Focus Keywords Panel */}
               <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5 space-y-4">
                 <h3 className="text-sm font-bold border-b border-[var(--color-card-border)] pb-2 text-white flex items-center gap-2">
@@ -1232,6 +1817,63 @@ export function BlogEditorPage() {
                 <div>
                   <label htmlFor="keywords" className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1">
                     Focus Keywords (Comma Separated)
+=======
+              {/* SEO Configurations Drawer */}
+              <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5 space-y-4">
+                <h3 className="text-sm font-bold border-b border-[var(--color-card-border)] pb-2 text-white flex items-center gap-2">
+                  <Sparkles size={16} className="text-indigo-400" />
+                  Meta SEO settings
+                </h3>
+
+                <div>
+                  <label
+                    htmlFor="metaTitle"
+                    className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1"
+                  >
+                    Meta SEO Title
+                  </label>
+                  <input
+                    id="metaTitle"
+                    type="text"
+                    maxLength={70}
+                    value={metaTitle}
+                    onChange={(e) => setMetaTitle(e.target.value)}
+                    className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] placeholder:text-[var(--color-muted)]"
+                    placeholder="Recommends: Title | CalcZen"
+                  />
+                  <p className="text-[10px] text-[var(--color-muted)] mt-1">
+                    Recommended length: under 60 characters.
+                  </p>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="metaDesc"
+                    className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1"
+                  >
+                    Meta Description
+                  </label>
+                  <textarea
+                    id="metaDesc"
+                    rows={3}
+                    maxLength={160}
+                    value={metaDescription}
+                    onChange={(e) => setMetaDescription(e.target.value)}
+                    className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] placeholder:text-[var(--color-muted)] resize-none"
+                    placeholder="Write a concise SEO teaser..."
+                  />
+                  <p className="text-[10px] text-[var(--color-muted)] mt-1">
+                    Recommended length: under 160 characters.
+                  </p>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="keywords"
+                    className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1"
+                  >
+                    Focus Keywords
+>>>>>>> 529569b (Deploy CalcZen V2)
                   </label>
                   <input
                     id="keywords"
@@ -1239,13 +1881,25 @@ export function BlogEditorPage() {
                     value={keywords}
                     onChange={(e) => setKeywords(e.target.value)}
                     className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] placeholder:text-[var(--color-muted)]"
+<<<<<<< HEAD
                     placeholder="sip, investing, compound growth (auto-generated if empty)"
+=======
+                    placeholder="mortgage, emi, interest (comma separated)"
+>>>>>>> 529569b (Deploy CalcZen V2)
                   />
                 </div>
 
                 <div>
+<<<<<<< HEAD
                   <label htmlFor="tags" className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1">
                     Tags / Badges (Comma Separated)
+=======
+                  <label
+                    htmlFor="tags"
+                    className="block text-xs font-bold text-[var(--color-muted)] uppercase mb-1"
+                  >
+                    Pill Tags
+>>>>>>> 529569b (Deploy CalcZen V2)
                   </label>
                   <input
                     id="tags"
@@ -1253,11 +1907,16 @@ export function BlogEditorPage() {
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
                     className="w-full rounded-lg border border-[var(--color-card-border)] bg-black px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] placeholder:text-[var(--color-muted)]"
+<<<<<<< HEAD
                     placeholder="guides, wealth creation, tutorials"
+=======
+                    placeholder="home loan, rates, guide (comma separated)"
+>>>>>>> 529569b (Deploy CalcZen V2)
                   />
                 </div>
               </div>
 
+<<<<<<< HEAD
               {/* SEO Configurations Drawer (Optional Overrides) */}
               <details className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5 [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex items-center justify-between cursor-pointer focus:outline-none select-none">
@@ -1301,10 +1960,65 @@ export function BlogEditorPage() {
                   </div>
                 </div>
               </details>
+=======
+              {/* Live SEO Quality Enforcement Panel */}
+              <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5 space-y-4 sticky top-4">
+                <h3 className="text-sm font-bold border-b border-[var(--color-card-border)] pb-2 text-white flex items-center gap-2">
+                  <Globe size={16} className="text-green-400" />
+                  SEO Quality Panel
+                </h3>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)]">Word Count (Min 500)</span>
+                    <span
+                      className={`text-xs font-bold ${metrics.wordCount >= 500 ? "text-green-400" : "text-red-400"}`}
+                    >
+                      {metrics.wordCount} {metrics.wordCount >= 500 ? "✓" : "✗"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)]">H2 Sections (Min 2)</span>
+                    <span
+                      className={`text-xs font-bold ${metrics.h2Count >= 2 ? "text-green-400" : "text-red-400"}`}
+                    >
+                      {metrics.h2Count} {metrics.h2Count >= 2 ? "✓" : "✗"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)]">FAQs (Min 3)</span>
+                    <span
+                      className={`text-xs font-bold ${faqs.length >= 3 ? "text-green-400" : "text-red-400"}`}
+                    >
+                      {faqs.length} {faqs.length >= 3 ? "✓" : "✗"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[var(--color-muted)]">Meta Required Fields</span>
+                    <span
+                      className={`text-xs font-bold ${metaTitle && metaDescription && thumbnail ? "text-green-400" : "text-red-400"}`}
+                    >
+                      {metaTitle && metaDescription && thumbnail ? "✓" : "✗"}
+                    </span>
+                  </div>
+                </div>
+
+                {published && (
+                  <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-xs text-red-300">
+                    <strong>Note:</strong> You must meet all green checkmarks before you can save
+                    this article as Published.
+                  </div>
+                )}
+              </div>
+>>>>>>> 529569b (Deploy CalcZen V2)
             </div>
           </div>
         )}
       </form>
+<<<<<<< HEAD
 
       {/* Quality Validation Audit Warning Modal */}
       {showWarningModal && (
@@ -1346,6 +2060,8 @@ export function BlogEditorPage() {
           </div>
         </div>
       )}
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)
     </>
   );
 }

@@ -51,7 +51,11 @@ export async function getPublishedBlogBySlugHandler(req: Request, res: Response)
 
     // Increment view count in background asynchronously
     incrementBlogViews(blog._id).catch((err) =>
+<<<<<<< HEAD
       console.error(`Failed to increment views for ${blog._id}:`, err)
+=======
+      console.error(`Failed to increment views for ${blog._id}:`, err),
+>>>>>>> 529569b (Deploy CalcZen V2)
     );
 
     res.json({ success: true, data: blog });

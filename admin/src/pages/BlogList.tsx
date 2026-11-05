@@ -24,10 +24,13 @@ const CATEGORIES = [
   "Fitness",
   "Investment",
   "Business",
+<<<<<<< HEAD
   "Education",
   "Math",
   "Everyday",
   "Science",
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)
 ];
 
 export function BlogListPage() {
@@ -85,7 +88,12 @@ export function BlogListPage() {
   }, [loadBlogs]);
 
   async function handleDelete(id: string) {
+<<<<<<< HEAD
     if (!confirm("Are you sure you want to delete this article? This action cannot be undone.")) return;
+=======
+    if (!confirm("Are you sure you want to delete this article? This action cannot be undone."))
+      return;
+>>>>>>> 529569b (Deploy CalcZen V2)
     setDeletingId(id);
     try {
       await api.deleteBlog(id);
@@ -109,7 +117,22 @@ export function BlogListPage() {
       }
 
       // Generate CSV string
+<<<<<<< HEAD
       const headers = ["ID", "Title", "Slug", "Excerpt", "Category", "Author", "Views", "Published", "Publish Date", "Created At"];
+=======
+      const headers = [
+        "ID",
+        "Title",
+        "Slug",
+        "Excerpt",
+        "Category",
+        "Author",
+        "Views",
+        "Published",
+        "Publish Date",
+        "Created At",
+      ];
+>>>>>>> 529569b (Deploy CalcZen V2)
       const rows = blogs.map((b) => [
         b._id,
         `"${b.title.replace(/"/g, '""')}"`,
@@ -178,7 +201,16 @@ export function BlogListPage() {
           icon={FileText}
           accent="rgba(234,179,8,0.2)"
         />
+<<<<<<< HEAD
         <StatCard label="Total Blog Views" value={stats.views} icon={Eye} accent="rgba(99,102,241,0.2)" />
+=======
+        <StatCard
+          label="Total Blog Views"
+          value={stats.views}
+          icon={Eye}
+          accent="rgba(99,102,241,0.2)"
+        />
+>>>>>>> 529569b (Deploy CalcZen V2)
       </div>
 
       <div className="flex flex-col md:flex-row gap-3 mb-6">
@@ -305,7 +337,13 @@ export function BlogListPage() {
                         </span>
                       )}
                     </td>
+<<<<<<< HEAD
                     <td className="p-4 text-right tabular-nums text-white">{b.views.toLocaleString()}</td>
+=======
+                    <td className="p-4 text-right tabular-nums text-white">
+                      {b.views.toLocaleString()}
+                    </td>
+>>>>>>> 529569b (Deploy CalcZen V2)
                     <td className="p-4 text-[var(--color-muted)]">
                       {b.publishDate ? new Date(b.publishDate).toLocaleDateString() : "-"}
                     </td>

@@ -22,9 +22,13 @@ function StatusBadge({ status }: { status?: string }) {
   return (
     <span
       className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${
+<<<<<<< HEAD
         active
           ? "bg-emerald-500/15 text-emerald-400"
           : "bg-slate-500/15 text-slate-400"
+=======
+        active ? "bg-emerald-500/15 text-emerald-400" : "bg-slate-500/15 text-slate-400"
+>>>>>>> 529569b (Deploy CalcZen V2)
       }`}
     >
       {active ? "active" : "unsubscribed"}

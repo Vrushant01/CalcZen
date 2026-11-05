@@ -217,6 +217,7 @@ export function FDCalculator() {
       <h2>Understanding Fixed Deposits (FDs)</h2>
       <p>
         A <strong>Fixed Deposit (FD)</strong> is one of the most reliable, secure, and popular
+<<<<<<< HEAD
         financial instruments available to investors today. Offered by banks, non-banking
         financial companies (NBFCs), and post offices, an FD allows you to deposit a lump sum
         amount for a predefined period, ranging from a few days to several years. In return,
@@ -228,14 +229,33 @@ export function FDCalculator() {
         is shielded from market fluctuations. This makes Fixed Deposits an excellent choice
         for risk-averse individuals who prioritize the safety of their capital while seeking a
         steady, predictable return over time.
+=======
+        financial instruments available to investors today. Offered by banks, non-banking financial
+        companies (NBFCs), and post offices, an FD allows you to deposit a lump sum amount for a
+        predefined period, ranging from a few days to several years. In return, the financial
+        institution guarantees a fixed rate of interest, which is typically higher than what you
+        would earn in a regular savings account.
+      </p>
+      <p>
+        Because the interest rate is locked in at the time of opening the FD, your investment is
+        shielded from market fluctuations. This makes Fixed Deposits an excellent choice for
+        risk-averse individuals who prioritize the safety of their capital while seeking a steady,
+        predictable return over time.
+>>>>>>> 529569b (Deploy CalcZen V2)
       </p>
 
       <h3>How Does the FD Calculator Work?</h3>
       <p>
         Our FD Calculator is designed to instantly compute the maturity amount and the total
+<<<<<<< HEAD
         interest you will earn on your deposit. It eliminates complex manual math and provides
         you with an accurate projection of your financial growth. The calculator takes into
         account the following key inputs:
+=======
+        interest you will earn on your deposit. It eliminates complex manual math and provides you
+        with an accurate projection of your financial growth. The calculator takes into account the
+        following key inputs:
+>>>>>>> 529569b (Deploy CalcZen V2)
       </p>
       <ul>
         <li>
@@ -246,6 +266,7 @@ export function FDCalculator() {
           financial institution.
         </li>
         <li>
+<<<<<<< HEAD
           <strong>Duration (Tenure):</strong> The length of time your money will remain
           invested, which you can input in years and months.
         </li>
@@ -253,13 +274,27 @@ export function FDCalculator() {
           <strong>Compounding Frequency:</strong> How often the interest is added to your
           principal (e.g., monthly, quarterly, half-yearly, or yearly). The more frequently it
           compounds, the higher your overall returns.
+=======
+          <strong>Duration (Tenure):</strong> The length of time your money will remain invested,
+          which you can input in years and months.
+        </li>
+        <li>
+          <strong>Compounding Frequency:</strong> How often the interest is added to your principal
+          (e.g., monthly, quarterly, half-yearly, or yearly). The more frequently it compounds, the
+          higher your overall returns.
+>>>>>>> 529569b (Deploy CalcZen V2)
         </li>
       </ul>
 
       <h3>The Formula Behind FD Calculations</h3>
       <p>
+<<<<<<< HEAD
         When dealing with cumulative Fixed Deposits (where the interest is reinvested), the
         maturity amount is calculated using the compound interest formula:
+=======
+        When dealing with cumulative Fixed Deposits (where the interest is reinvested), the maturity
+        amount is calculated using the compound interest formula:
+>>>>>>> 529569b (Deploy CalcZen V2)
       </p>
       <div className="bg-muted p-4 rounded-lg overflow-x-auto text-center font-mono text-lg my-4">
         A = P × (1 + r/n)<sup>n×t</sup>
@@ -273,8 +308,12 @@ export function FDCalculator() {
           <strong>P</strong> = Principal Amount (Initial investment)
         </li>
         <li>
+<<<<<<< HEAD
           <strong>r</strong> = Annual Interest Rate (expressed as a decimal, e.g., 6.5% =
           0.065)
+=======
+          <strong>r</strong> = Annual Interest Rate (expressed as a decimal, e.g., 6.5% = 0.065)
+>>>>>>> 529569b (Deploy CalcZen V2)
         </li>
         <li>
           <strong>n</strong> = Number of times the interest is compounded per year
@@ -284,6 +323,7 @@ export function FDCalculator() {
         </li>
       </ul>
       <p>
+<<<<<<< HEAD
         <strong>Example:</strong> Suppose you invest $10,000 for 5 years at an interest rate
         of 6.5% p.a., compounded quarterly (n = 4).
       </p>
@@ -323,11 +363,53 @@ export function FDCalculator() {
           <strong>Loan Against FD:</strong> In times of financial emergencies, you can quickly
           secure a loan or an overdraft facility against your FD, typically up to 90% of the
           deposit amount, at a marginally higher interest rate than the FD itself.
+=======
+        <strong>Example:</strong> Suppose you invest $10,000 for 5 years at an interest rate of 6.5%
+        p.a., compounded quarterly (n = 4).
+      </p>
+      <ul>
+        <li>
+          A = 10,000 × (1 + 0.065 / 4)<sup>4 × 5</sup>
+        </li>
+        <li>
+          A = 10,000 × (1 + 0.01625)<sup>20</sup>
+        </li>
+        <li>A = 10,000 × (1.3804)</li>
+        <li>A ≈ $13,804.20</li>
+      </ul>
+      <p>In this scenario, your interest earned over the 5 years would be $3,804.20.</p>
+
+      <h3>Key Benefits of Investing in FDs</h3>
+      <p>
+        Fixed deposits hold a prominent place in many investment portfolios for several reasons:
+      </p>
+      <ol>
+        <li>
+          <strong>Guaranteed Returns:</strong> Unlike equity investments, the returns on an FD are
+          fixed and unaffected by market volatility. You know exactly how much you will receive at
+          maturity.
+        </li>
+        <li>
+          <strong>Capital Protection:</strong> FDs are highly secure, especially when opened with
+          reputable banks. Many countries also provide deposit insurance (e.g., up to $250,000 via
+          FDIC in the US or ₹5 lakh via DICGC in India) which further protects your principal.
+        </li>
+        <li>
+          <strong>Flexible Tenures:</strong> You can choose a tenure that aligns with your financial
+          goals, whether it’s a short-term 6-month deposit for an upcoming vacation or a 10-year
+          deposit for long-term wealth preservation.
+        </li>
+        <li>
+          <strong>Loan Against FD:</strong> In times of financial emergencies, you can quickly
+          secure a loan or an overdraft facility against your FD, typically up to 90% of the deposit
+          amount, at a marginally higher interest rate than the FD itself.
+>>>>>>> 529569b (Deploy CalcZen V2)
         </li>
       </ol>
 
       <h3>Tax Implications on FD Returns</h3>
       <p>
+<<<<<<< HEAD
         It is crucial to understand that the interest earned on Fixed Deposits is not
         tax-free. It is categorized as "Income from Other Sources" and is fully taxable
         according to your applicable income tax slab. Additionally, banks are mandated to
@@ -335,10 +417,19 @@ export function FDCalculator() {
         threshold in a financial year. However, if your total income is below the taxable
         limit, you can submit specific declarations (like Form 15G or 15H in India) to prevent
         the bank from deducting TDS.
+=======
+        It is crucial to understand that the interest earned on Fixed Deposits is not tax-free. It
+        is categorized as "Income from Other Sources" and is fully taxable according to your
+        applicable income tax slab. Additionally, banks are mandated to deduct Tax Deducted at
+        Source (TDS) if your interest income exceeds a certain threshold in a financial year.
+        However, if your total income is below the taxable limit, you can submit specific
+        declarations (like Form 15G or 15H in India) to prevent the bank from deducting TDS.
+>>>>>>> 529569b (Deploy CalcZen V2)
       </p>
 
       <h3>Strategies for Maximizing FD Returns</h3>
       <p>
+<<<<<<< HEAD
         While FDs are straightforward, implementing the right strategies can optimize your
         yields:
       </p>
@@ -353,10 +444,26 @@ export function FDCalculator() {
           <strong>Opt for Cumulative FDs:</strong> If you do not need a regular income stream,
           choose the cumulative option. The interest generated is continually added back to
           the principal, allowing you to benefit immensely from the power of compounding.
+=======
+        While FDs are straightforward, implementing the right strategies can optimize your yields:
+      </p>
+      <ul>
+        <li>
+          <strong>Laddering Strategy:</strong> Instead of locking all your funds into a single FD,
+          split your capital across multiple FDs with varying maturities (e.g., 1 year, 2 years, 3
+          years). This ensures regular liquidity and allows you to reinvest at higher rates if
+          interest rates rise in the future.
+        </li>
+        <li>
+          <strong>Opt for Cumulative FDs:</strong> If you do not need a regular income stream,
+          choose the cumulative option. The interest generated is continually added back to the
+          principal, allowing you to benefit immensely from the power of compounding.
+>>>>>>> 529569b (Deploy CalcZen V2)
         </li>
         <li>
           <strong>Compare Rates:</strong> Interest rates can vary significantly between large
           commercial banks, smaller community banks, and NBFCs. Always compare rates before
+<<<<<<< HEAD
           investing. Note that higher rates from lesser-known entities might carry slightly
           more risk.
         </li>
@@ -364,12 +471,25 @@ export function FDCalculator() {
           <strong>Senior Citizen Benefits:</strong> In many countries, banks offer a premium
           of 0.50% to 0.75% over regular FD rates to senior citizens. Ensure you avail of
           these benefits if applicable.
+=======
+          investing. Note that higher rates from lesser-known entities might carry slightly more
+          risk.
+        </li>
+        <li>
+          <strong>Senior Citizen Benefits:</strong> In many countries, banks offer a premium of
+          0.50% to 0.75% over regular FD rates to senior citizens. Ensure you avail of these
+          benefits if applicable.
+>>>>>>> 529569b (Deploy CalcZen V2)
         </li>
       </ul>
       <p>
         By leveraging our FD Calculator, you can strategically plan your investments, evaluate
+<<<<<<< HEAD
         different scenarios, and build a robust, low-risk foundation for your financial
         future.
+=======
+        different scenarios, and build a robust, low-risk foundation for your financial future.
+>>>>>>> 529569b (Deploy CalcZen V2)
       </p>
     </div>
   );
@@ -382,7 +502,11 @@ export function FDCalculator() {
       blog={blogContent}
     >
       <CalculatorCurrencyBar />
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 529569b (Deploy CalcZen V2)
       <div className="flex flex-col gap-6">
         <div className="calc-input-column">
           <MoneyField
@@ -519,7 +643,15 @@ export function FDCalculator() {
                             color: "var(--color-foreground)",
                           }}
                         />
+<<<<<<< HEAD
                         <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: 12 }} />
+=======
+                        <Legend
+                          verticalAlign="bottom"
+                          height={36}
+                          wrapperStyle={{ fontSize: 12 }}
+                        />
+>>>>>>> 529569b (Deploy CalcZen V2)
                       </PieChart>
                     </ResponsiveContainer>
                   </div>
@@ -527,7 +659,14 @@ export function FDCalculator() {
               </DashboardSection>
 
               <DashboardSection title="Growth Over Time">
+<<<<<<< HEAD
                 <div id="fd-growth-chart" className="rounded-xl border border-border/60 bg-card p-4 shadow-soft">
+=======
+                <div
+                  id="fd-growth-chart"
+                  className="rounded-xl border border-border/60 bg-card p-4 shadow-soft"
+                >
+>>>>>>> 529569b (Deploy CalcZen V2)
                   <div className="h-[250px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart

@@ -8,7 +8,11 @@ export function CalculatorPdfExport({ pdfData }: Props) {
   const isButtonDisabled = !pdfData;
   const fallbackPdfData: PdfData = pdfData || {
     calculatorName: "Standard Calculator",
+<<<<<<< HEAD
     calculatorSlug: "regular-calculator",
+=======
+    calculatorSlug: "standard-calculator",
+>>>>>>> 529569b (Deploy CalcZen V2)
     siteName: "CalcZen",
     siteUrl: "https://www.calczen.in",
     inputs: [],

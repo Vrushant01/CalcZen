@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
@@ -412,3 +413,31 @@
     </image:image>
   </url>
 </urlset>
+=======
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.calczen.in/</loc></url>
+  <url><loc>https://www.calczen.in/calculators</loc></url>
+  <url><loc>https://www.calczen.in/about</loc></url>
+  <url><loc>https://www.calczen.in/contact</loc></url>
+  <url><loc>https://www.calczen.in/terms</loc></url>
+  <url><loc>https://www.calczen.in/privacy</loc></url>
+  <url><loc>https://www.calczen.in/disclaimer</loc></url>
+  <url><loc>https://www.calczen.in/blog</loc></url>
+  <url><loc>https://www.calczen.in/category/finance</loc></url>
+  <url><loc>https://www.calczen.in/category/health</loc></url>
+  <url><loc>https://www.calczen.in/category/math</loc></url>
+  <url><loc>https://www.calczen.in/category/everyday</loc></url>
+  <url><loc>https://www.calczen.in/calculator/mortgage-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/compound-interest-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/loan-emi-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/bmi-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/calorie-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/water-intake-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/pregnancy-due-date-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/percentage-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/age-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/tip-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/bmr-calculator</loc></url>
+  <url><loc>https://www.calczen.in/blog/us-mortgage-rates-drop-in-2026-what-home-buyers-should-do-now</loc></url>
+</urlset>
+>>>>>>> 529569b (Deploy CalcZen V2)

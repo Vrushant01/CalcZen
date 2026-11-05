@@ -29,11 +29,15 @@ const router = Router();
 
 const replySchema = z.object({
   id: z.string().uuid("Invalid message id"),
+<<<<<<< HEAD
   reply: z
     .string()
     .trim()
     .min(1, "Reply is required")
     .max(5000, "Reply is too long"),
+=======
+  reply: z.string().trim().min(1, "Reply is required").max(5000, "Reply is too long"),
+>>>>>>> 529569b (Deploy CalcZen V2)
 });
 
 const replyLimiter = createRateLimiter({
@@ -69,4 +73,7 @@ router.put("/blogs/:id", updateBlogAdminHandler);
 router.delete("/blogs/:id", deleteBlogAdminHandler);
 
 export default router;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)

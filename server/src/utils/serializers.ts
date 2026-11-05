@@ -55,9 +55,13 @@ export function toApiNewsletter(
     sentAt: row.sent_at,
     recipientCount: row.recipient_count,
     sentBy: row.sent_by,
+<<<<<<< HEAD
     sentByAdmin: row.admins
       ? { email: row.admins.email, name: row.admins.name }
       : null,
+=======
+    sentByAdmin: row.admins ? { email: row.admins.email, name: row.admins.name } : null,
+>>>>>>> 529569b (Deploy CalcZen V2)
   };
 }
 
@@ -84,6 +88,7 @@ export function toApiBlog(row: BlogRow): ApiBlog {
     publishDate: row.publish_date,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+<<<<<<< HEAD
     schema: row.schema,
     jsonld: row.jsonld,
     canonical: row.canonical,
@@ -98,3 +103,7 @@ export function toApiBlog(row: BlogRow): ApiBlog {
   };
 }
 
+=======
+  };
+}
+>>>>>>> 529569b (Deploy CalcZen V2)

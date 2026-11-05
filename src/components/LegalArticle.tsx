@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Link } from "@/components/ui/Link";
+=======
+import { Link } from "@tanstack/react-router";
+>>>>>>> 529569b (Deploy CalcZen V2)
 import { PageContainer } from "@/components/layout/PageContainer";
 
 type LegalArticleProps = {

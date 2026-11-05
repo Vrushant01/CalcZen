@@ -14,7 +14,12 @@ export function LoginPage() {
   useEffect(() => {
     const token = getToken();
     if (token) {
+<<<<<<< HEAD
       api.me()
+=======
+      api
+        .me()
+>>>>>>> 529569b (Deploy CalcZen V2)
         .then(() => {
           navigate("/dashboard", { replace: true });
         })

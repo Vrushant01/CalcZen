@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Link } from "@/components/ui/Link";
+=======
+import { Link } from "@tanstack/react-router";
+>>>>>>> 529569b (Deploy CalcZen V2)
 import { ChevronRight, Share2 } from "lucide-react";
 import { CalculatorExample } from "@/components/CalculatorExample";
 import { CalculatorFormula } from "@/components/CalculatorFormula";
@@ -150,8 +154,13 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Examine compound growth percentages over time using the [Compound Interest Calculator](/calculator/compound-interest-calculator).",
     "scientific-calculator":
       "Solve technical math and logarithmic expressions with our [Scientific Calculator](/calculator/scientific-calculator).",
+<<<<<<< HEAD
     "regular-calculator":
       "Solve simple everyday arithmetic operations using our [Standard Calculator](/calculator/regular-calculator).",
+=======
+    "standard-calculator":
+      "Solve simple everyday arithmetic operations using our [Standard Calculator](/calculator/standard-calculator).",
+>>>>>>> 529569b (Deploy CalcZen V2)
   },
   "age-calculator": {
     "percentage-calculator":
@@ -160,8 +169,13 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Splits restaurant dining tabs and gratuity with our [Tip Calculator](/calculator/tip-calculator).",
     "pregnancy-due-date-calculator":
       "Track gestational timelines and baby due dates with the [Pregnancy Due Date Calculator](/calculator/pregnancy-due-date-calculator).",
+<<<<<<< HEAD
     "regular-calculator":
       "Compute basic math additions and divisions with our [Standard Calculator](/calculator/regular-calculator).",
+=======
+    "standard-calculator":
+      "Compute basic math additions and divisions with our [Standard Calculator](/calculator/standard-calculator).",
+>>>>>>> 529569b (Deploy CalcZen V2)
   },
   "tip-calculator": {
     "percentage-calculator":
@@ -170,18 +184,31 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Assess personal borrowing costs and monthly repayments with the [Loan EMI Calculator](/calculator/loan-emi-calculator).",
     "age-calculator":
       "Track birthday countdowns and exact dates using the [Age Calculator](/calculator/age-calculator).",
+<<<<<<< HEAD
     "regular-calculator":
       "Run simple arithmetic calculations and bill audits using the [Standard Calculator](/calculator/regular-calculator).",
   },
   "scientific-calculator": {
     "regular-calculator":
       "Perform basic arithmetic, addition, and division using our [Standard Calculator](/calculator/regular-calculator).",
+=======
+    "standard-calculator":
+      "Run simple arithmetic calculations and bill audits using the [Standard Calculator](/calculator/standard-calculator).",
+  },
+  "scientific-calculator": {
+    "standard-calculator":
+      "Perform basic arithmetic, addition, and division using our [Standard Calculator](/calculator/standard-calculator).",
+>>>>>>> 529569b (Deploy CalcZen V2)
     "percentage-calculator":
       "Solve percent shifts, increases, and ratio math with the [Percentage Calculator](/calculator/percentage-calculator).",
     "age-calculator":
       "Count exact days, months, and years using the [Age Calculator](/calculator/age-calculator).",
   },
+<<<<<<< HEAD
   "regular-calculator": {
+=======
+  "standard-calculator": {
+>>>>>>> 529569b (Deploy CalcZen V2)
     "scientific-calculator":
       "Resolve advanced trigonometric, logarithmic, and root functions with our [Scientific Calculator](/calculator/scientific-calculator).",
     "percentage-calculator":
@@ -189,6 +216,91 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
     "tip-calculator":
       "Split restaurant tabs and calculate gratuity percentages with the [Tip Calculator](/calculator/tip-calculator).",
   },
+<<<<<<< HEAD
+=======
+  "love-calculator": {
+    "flames-calculator":
+      "Play the classic name-matching game and check your destiny with the [FLAMES Calculator](/calculator/flames-calculator).",
+    "age-calculator":
+      "Find out exactly how many days you and your partner have been alive with our [Age Calculator](/calculator/age-calculator).",
+    "percentage-calculator":
+      "Calculate exact percentage differences and ratios using the [Percentage Calculator](/calculator/percentage-calculator).",
+  },
+  "flames-calculator": {
+    "love-calculator":
+      "Try another fun relationship percentage calculation with our [Love Calculator](/calculator/love-calculator).",
+    "couple-age-difference-calculator":
+      "Calculate the exact calendar gap between your birth dates with the [Couple Age Difference Calculator](/calculator/couple-age-difference-calculator).",
+  },
+  "couple-age-difference-calculator": {
+    "love-calculator":
+      "Discover your romantic compatibility percentage with our [Love Calculator](/calculator/love-calculator).",
+    "age-calculator":
+      "Determine your exact life timeline in days and minutes with the [Age Calculator](/calculator/age-calculator).",
+  },
+  "ctc-to-in-hand-salary-calculator": {
+    "job-offer-comparison-calculator":
+      "Evaluating competing compensation packages? Compare in-hand pay, ESOPs, and bonuses across offers using our [Job Offer Comparison Calculator](/calculator/job-offer-comparison-calculator).",
+    "loan-emi-calculator":
+      "Plan your borrowing and check monthly loan eligibility against your net salary with our [Loan EMI Calculator](/calculator/loan-emi-calculator).",
+    "sip-calculator":
+      "Invest your monthly surplus salary into disciplined mutual funds with the [SIP Calculator](/calculator/sip-calculator).",
+    "compound-interest-calculator":
+      "Grow your savings and model compounding wealth with our [Compound Interest Calculator](/calculator/compound-interest-calculator).",
+    "gst-calculator":
+      "Calculate GST and tax breakdowns for your business or freelance income using the [GST Calculator](/calculator/gst-calculator).",
+    "retirement-calculator":
+      "Forecast your retirement corpus and long-term financial security with the [Retirement Calculator](/calculator/retirement-calculator).",
+  },
+  "job-offer-comparison-calculator": {
+    "ctc-to-in-hand-salary-calculator":
+      "Determine detailed monthly take-home salary, HRA tax exemptions, and statutory deductions with our [CTC to In-Hand Salary Calculator](/calculator/ctc-to-in-hand-salary-calculator).",
+    "sip-calculator":
+      "Invest your salary increase into systematic wealth accumulation using the [SIP Calculator](/calculator/sip-calculator).",
+    "loan-emi-calculator":
+      "Assess how a higher pay grade enhances your home or car loan borrowing power with our [Loan EMI Calculator](/calculator/loan-emi-calculator).",
+    "compound-interest-calculator":
+      "Forecast how investing your joining bonus or ESOP proceeds compounds over time with the [Compound Interest Calculator](/calculator/compound-interest-calculator).",
+  },
+  "gold-making-charges-calculator": {
+    "gold-jewellery-bill-calculator":
+      "Calculate your complete gold jewellery bill including stones, hallmarking, and exchange credit with the [Gold Jewellery Bill Calculator](/calculator/gold-jewellery-bill-calculator).",
+    "gst-calculator":
+      "Calculate 3% jewellery GST and separate tax impacts with our dedicated [GST Calculator](/calculator/gst-calculator).",
+    "percentage-calculator":
+      "Convert jewellery markups, percentage discounts, and price ratios with the [Percentage Calculator](/calculator/percentage-calculator).",
+    "ctc-to-in-hand-salary-calculator":
+      "Budget your jewellery investments and festive gold purchases from your net salary using the [CTC to In-Hand Salary Calculator](/calculator/ctc-to-in-hand-salary-calculator).",
+  },
+  "gold-jewellery-bill-calculator": {
+    "gold-making-charges-calculator":
+      "Compare different jewellers' making charges and convert flat or per-gram fees into equivalent percentages with our [Gold Making Charges Calculator](/calculator/gold-making-charges-calculator).",
+    "gst-calculator":
+      "Calculate applicable GST rates and reverse tax values for any goods or services with our dedicated [GST Calculator](/calculator/gst-calculator).",
+    "percentage-calculator":
+      "Calculate making charge percentages, discount ratios, and price markdowns using the [Percentage Calculator](/calculator/percentage-calculator).",
+    "ctc-to-in-hand-salary-calculator":
+      "Plan your monthly gold savings and jewellery investments from your net take-home pay with the [CTC to In-Hand Salary Calculator](/calculator/ctc-to-in-hand-salary-calculator).",
+    "sip-calculator":
+      "Compare physical jewellery purchases against disciplined digital gold or mutual fund compounding with the [SIP Calculator](/calculator/sip-calculator).",
+  },
+  "product-profit-calculator": {
+    "gst-calculator":
+      "Calculate GST impact and reverse tax deductions using our dedicated [GST Calculator](/calculator/gst-calculator).",
+    "percentage-calculator":
+      "Check profit margins, percentage discounts, and pricing markups with the [Percentage Calculator](/calculator/percentage-calculator).",
+    "ctc-to-in-hand-salary-calculator":
+      "Plan your business earnings, salary withdrawals, and personal take-home income with the [CTC to In-Hand Salary Calculator](/calculator/ctc-to-in-hand-salary-calculator).",
+  },
+  "gst-invoice-calculator": {
+    "product-profit-calculator":
+      "Calculate your net profit margins after accounting for GST and shipping expenses using our [Product Profit Calculator](/calculator/product-profit-calculator).",
+    "percentage-calculator":
+      "Calculate commercial discounts and percentage markups with our [Percentage Calculator](/calculator/percentage-calculator).",
+    "ctc-to-in-hand-salary-calculator":
+      "Calculate business salary withdrawals and professional net income using the [CTC to In-Hand Salary Calculator](/calculator/ctc-to-in-hand-salary-calculator).",
+  },
+>>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 function renderContextualSentence(sentence: string) {
@@ -346,7 +458,11 @@ const AUTHORITY_CITATIONS_DICT: Record<string, { name: string; url: string }[]> 
     },
     { name: "US Naval Observatory Time Standards", url: "https://www.usno.navy.mil/USNO" },
   ],
+<<<<<<< HEAD
   "regular-calculator": [
+=======
+  "standard-calculator": [
+>>>>>>> 529569b (Deploy CalcZen V2)
     {
       name: "Wolfram MathWorld Arithmetic Standards",
       url: "https://mathworld.wolfram.com/Arithmetic.html",
@@ -373,6 +489,213 @@ const AUTHORITY_CITATIONS_DICT: Record<string, { name: string; url: string }[]> 
       url: "https://mathworld.wolfram.com/",
     },
   ],
+<<<<<<< HEAD
+=======
+  "love-calculator": [
+    {
+      name: "Pythagorean Numerology Methodology & Systems",
+      url: "https://en.wikipedia.org/wiki/Numerology#Pythagorean_system",
+    },
+    {
+      name: "Western Astrology Element Compatibility Rules",
+      url: "https://en.wikipedia.org/wiki/Astrological_sign#Western_zodiac_signs",
+    },
+  ],
+  "flames-calculator": [
+    {
+      name: "FLAMES (Traditional Name Game)",
+      url: "https://en.wikipedia.org/wiki/Flames_(game)",
+    },
+    {
+      name: "Paper-and-Pencil Games",
+      url: "https://en.wikipedia.org/wiki/Paper-and-pencil_game",
+    },
+  ],
+  "couple-age-difference-calculator": [
+    {
+      name: "Proleptic Gregorian Calendar Algorithm",
+      url: "https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar",
+    },
+    {
+      name: "Leap Year Calculation Mathematics",
+      url: "https://en.wikipedia.org/wiki/Leap_year#Algorithm",
+    },
+  ],
+  "ctc-to-in-hand-salary-calculator": [
+    {
+      name: "Income Tax Department of India (Tax Rates & Slabs)",
+      url: "https://www.incometax.gov.in/",
+    },
+    {
+      name: "Employees' Provident Fund Organisation (EPFO)",
+      url: "https://www.epfindia.gov.in/",
+    },
+    {
+      name: "Employees' State Insurance Corporation (ESIC)",
+      url: "https://www.esic.gov.in/",
+    },
+    {
+      name: "Ministry of Labour & Employment (Gratuity Act & Labour Codes)",
+      url: "https://labour.gov.in/",
+    },
+  ],
+  "job-offer-comparison-calculator": [
+    {
+      name: "Income Tax Department of India (Salaries & Perquisites)",
+      url: "https://www.incometax.gov.in/",
+    },
+    {
+      name: "Ministry of Corporate Affairs (ESOP & Sweat Equity Rules)",
+      url: "https://www.mca.gov.in/",
+    },
+    {
+      name: "Employees' Provident Fund Organisation (EPFO Rules)",
+      url: "https://www.epfindia.gov.in/",
+    },
+  ],
+  "cement-bag-calculator": [
+    {
+      name: "Bureau of Indian Standards (IS 456:2000 Plain & Reinforced Concrete Code of Practice)",
+      url: "https://www.bis.gov.in/",
+    },
+    {
+      name: "Central Public Works Department (CPWD Analysis of Rates & Specifications)",
+      url: "https://cpwd.gov.in/",
+    },
+    {
+      name: "Bureau of Indian Standards (IS 10262:2019 Concrete Mix Proportioning Guidelines)",
+      url: "https://www.bis.gov.in/",
+    },
+    {
+      name: "Bureau of Indian Standards (IS 2250:1981 Preparation & Use of Masonry Mortars)",
+      url: "https://www.bis.gov.in/",
+    },
+  ],
+  "rcc-price-calculator": [
+    {
+      name: "Bureau of Indian Standards (IS 456:2000 Plain & Reinforced Concrete Code of Practice)",
+      url: "https://www.bis.gov.in/",
+    },
+    {
+      name: "Central Public Works Department (CPWD Analysis of Rates & Specifications)",
+      url: "https://cpwd.gov.in/",
+    },
+    {
+      name: "Bureau of Indian Standards (IS 10262:2019 Concrete Mix Proportioning Guidelines)",
+      url: "https://www.bis.gov.in/",
+    },
+    {
+      name: "Bureau of Indian Standards (IS 1786 High Strength Deformed Steel Bars & Wires)",
+      url: "https://www.bis.gov.in/",
+    },
+  ],
+  "gold-making-charges-calculator": [
+    {
+      name: "Central Board of Indirect Taxes and Customs (CBIC GST Guidance on Retail Jewellery)",
+      url: "https://cbic-gst.gov.in/",
+    },
+    {
+      name: "Bureau of Indian Standards (BIS Hallmarking Guidelines & Standards)",
+      url: "https://www.bis.gov.in/hallmarking-overview/",
+    },
+    {
+      name: "World Gold Council (Gold Demand & Pricing Standards in India)",
+      url: "https://www.gold.org/",
+    },
+  ],
+  "gold-jewellery-bill-calculator": [
+    {
+      name: "Central Board of Indirect Taxes and Customs (CBIC GST Guidance on Retail Jewellery)",
+      url: "https://cbic-gst.gov.in/",
+    },
+    {
+      name: "Bureau of Indian Standards (BIS Hallmarking Guidelines & Standards)",
+      url: "https://www.bis.gov.in/hallmarking-overview/",
+    },
+    {
+      name: "World Gold Council (Gold Demand & Pricing Standards in India)",
+      url: "https://www.gold.org/",
+    },
+  ],
+  "home-electricity-bill-calculator": [
+    {
+      name: "Gujarat Electricity Regulatory Commission (GERC Tariff Orders)",
+      url: "https://www.gercin.org/",
+    },
+    {
+      name: "Central Electricity Authority (CEA Retail Tariff Overview)",
+      url: "https://cea.nic.in/",
+    },
+    {
+      name: "Ministry of Power (Government of India Electricity Consumer Rights)",
+      url: "https://powermin.gov.in/",
+    },
+  ],
+  "appliance-electricity-cost-calculator": [
+    {
+      name: "Bureau of Energy Efficiency (BEE India Standards & Labeling Program)",
+      url: "https://beeindia.gov.in/",
+    },
+    {
+      name: "Ministry of Power (Government of India Domestic Energy Conservation Guidelines)",
+      url: "https://powermin.gov.in/",
+    },
+    {
+      name: "Central Electricity Authority (CEA Retail Tariff & Energy Consumption Review)",
+      url: "https://cea.nic.in/",
+    },
+    {
+      name: "International Electrotechnical Commission (IEC Household Electric Appliance Performance Standards)",
+      url: "https://www.iec.ch/",
+    },
+  ],
+  "ac-electricity-cost-calculator": [
+    {
+      name: "Bureau of Energy Efficiency (BEE India Room Air Conditioner Energy Rating Schedule)",
+      url: "https://beeindia.gov.in/",
+    },
+    {
+      name: "Central Electricity Authority (CEA Tariff & Generation Review)",
+      url: "https://cea.nic.in/",
+    },
+  ],
+  "product-profit-calculator": [
+    {
+      name: "Central Board of Indirect Taxes and Customs (CBIC GST Rates & Invoicing Guidelines)",
+      url: "https://cbic-gst.gov.in/",
+    },
+    {
+      name: "Ministry of Micro, Small & Medium Enterprises (MSME Government of India)",
+      url: "https://msme.gov.in/",
+    },
+    {
+      name: "Amazon India Seller Central (Fee Schedules & Referral Rates)",
+      url: "https://sellercentral.amazon.in/",
+    },
+    {
+      name: "Flipkart Seller Hub (Commission Structure & Pricing Guidelines)",
+      url: "https://seller.flipkart.com/",
+    },
+  ],
+  "gst-invoice-calculator": [
+    {
+      name: "Central Board of Indirect Taxes and Customs (CBIC GST Invoice Rules)",
+      url: "https://cbic-gst.gov.in/gst-invoice-rules.html",
+    },
+    {
+      name: "Goods and Services Tax Network (GSTN Official Portal)",
+      url: "https://www.gst.gov.in/",
+    },
+    {
+      name: "CBIC Sectoral FAQ on Invoicing & Supply Rules",
+      url: "https://cbic-gst.gov.in/hindi/sectoral-faq.html",
+    },
+    {
+      name: "Ministry of Finance, Government of India (CGST Act Rules)",
+      url: "https://taxinformation.cbic.gov.in/",
+    },
+  ],
+>>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 type Props = {
@@ -398,6 +721,90 @@ export function CalculatorPageLayout({
 
   // Dynamic high-relevance semantic internal linking dictionary for programmatic SEO
   const SEMANTIC_RELATION_MAP: Record<string, string[]> = {
+<<<<<<< HEAD
+=======
+    "home-electricity-bill-calculator": [
+      "appliance-electricity-cost-calculator",
+      "ac-electricity-cost-calculator",
+      "percentage-calculator",
+      "standard-calculator",
+      "gst-calculator",
+    ],
+    "product-profit-calculator": [
+      "gst-invoice-calculator",
+      "gst-calculator",
+      "percentage-calculator",
+      "ctc-to-in-hand-salary-calculator",
+      "loan-emi-calculator",
+      "compound-interest-calculator",
+    ],
+    "gst-invoice-calculator": [
+      "product-profit-calculator",
+      "gst-calculator",
+      "percentage-calculator",
+      "ctc-to-in-hand-salary-calculator",
+      "loan-emi-calculator",
+    ],
+    "appliance-electricity-cost-calculator": [
+      "home-electricity-bill-calculator",
+      "ac-electricity-cost-calculator",
+      "percentage-calculator",
+      "standard-calculator",
+      "gst-calculator",
+    ],
+    "ac-electricity-cost-calculator": [
+      "home-electricity-bill-calculator",
+      "appliance-electricity-cost-calculator",
+      "percentage-calculator",
+      "standard-calculator",
+      "gst-calculator",
+    ],
+    "cement-bag-calculator": [
+      "rcc-price-calculator",
+      "gst-calculator",
+      "loan-emi-calculator",
+      "mortgage-calculator",
+      "percentage-calculator",
+    ],
+    "rcc-price-calculator": [
+      "cement-bag-calculator",
+      "gst-calculator",
+      "loan-emi-calculator",
+      "mortgage-calculator",
+      "percentage-calculator",
+      "standard-calculator",
+    ],
+    "gold-making-charges-calculator": [
+      "gold-jewellery-bill-calculator",
+      "gst-calculator",
+      "percentage-calculator",
+      "ctc-to-in-hand-salary-calculator",
+      "sip-calculator",
+    ],
+    "gold-jewellery-bill-calculator": [
+      "gold-making-charges-calculator",
+      "gst-calculator",
+      "percentage-calculator",
+      "ctc-to-in-hand-salary-calculator",
+      "sip-calculator",
+      "compound-interest-calculator",
+    ],
+    "job-offer-comparison-calculator": [
+      "ctc-to-in-hand-salary-calculator",
+      "loan-emi-calculator",
+      "sip-calculator",
+      "compound-interest-calculator",
+      "retirement-calculator",
+    ],
+    "ctc-to-in-hand-salary-calculator": [
+      "job-offer-comparison-calculator",
+      "loan-emi-calculator",
+      "sip-calculator",
+      "compound-interest-calculator",
+      "gst-calculator",
+      "retirement-calculator",
+    ],
+>>>>>>> 529569b (Deploy CalcZen V2)
     "mortgage-calculator": [
       "loan-emi-calculator",
       "compound-interest-calculator",
@@ -452,6 +859,28 @@ export function CalculatorPageLayout({
     "percentage-calculator": ["tip-calculator", "age-calculator", "compound-interest-calculator"],
     "age-calculator": ["percentage-calculator", "tip-calculator", "pregnancy-due-date-calculator"],
     "tip-calculator": ["percentage-calculator", "loan-emi-calculator", "age-calculator"],
+<<<<<<< HEAD
+=======
+    "love-calculator": [
+      "couple-age-difference-calculator",
+      "flames-calculator",
+      "age-calculator",
+      "percentage-calculator",
+      "tip-calculator",
+    ],
+    "flames-calculator": [
+      "couple-age-difference-calculator",
+      "love-calculator",
+      "age-calculator",
+      "percentage-calculator",
+    ],
+    "couple-age-difference-calculator": [
+      "age-calculator",
+      "love-calculator",
+      "flames-calculator",
+      "percentage-calculator",
+    ],
+>>>>>>> 529569b (Deploy CalcZen V2)
   };
 
   const getRelatedCalculators = (): typeof calculators => {

@@ -8,11 +8,19 @@ export type PdfData = Record<string, unknown>;
 type Props = {
   pdfData: PdfData;
   disabled?: boolean;
+<<<<<<< HEAD
+=======
+  className?: string;
+>>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 type ExportState = "idle" | "exporting" | "success";
 
+<<<<<<< HEAD
 export default function SavePDFButton({ pdfData, disabled }: Props) {
+=======
+export default function SavePDFButton({ pdfData, disabled, className }: Props) {
+>>>>>>> 529569b (Deploy CalcZen V2)
   const [exportState, setExportState] = useState<ExportState>("idle");
   const [progress, setProgress] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -112,6 +120,10 @@ export default function SavePDFButton({ pdfData, disabled }: Props) {
         ],
 
         disabled && "cursor-not-allowed opacity-50",
+<<<<<<< HEAD
+=======
+        className,
+>>>>>>> 529569b (Deploy CalcZen V2)
       )}
     >
       {/* Icon Wrapper (transitions between Down, Progress ring, and Checkmark) */}

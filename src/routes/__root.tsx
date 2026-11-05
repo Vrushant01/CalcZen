@@ -9,6 +9,27 @@ import {
 import { useEffect } from "react";
 
 function NotFoundComponent() {
+<<<<<<< HEAD
+=======
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const pathname = window.location.pathname;
+      if (pathname.startsWith("/calculators/") && pathname.length > "/calculators/".length) {
+        const subSlug = pathname.replace(/^\/calculators\//, "").replace(/\/+$/, "");
+        if (subSlug && !subSlug.startsWith("?")) {
+          router.navigate({
+            to: "/calculator/$slug",
+            params: { slug: subSlug },
+            replace: true,
+          });
+        }
+      }
+    }
+  }, [router]);
+
+>>>>>>> 529569b (Deploy CalcZen V2)
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
@@ -88,11 +109,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { title: "CalcZen — Smart Online Calculators" },
         {
           name: "description",
+<<<<<<< HEAD
           content:
             "Discover free online calculators for personal finance, health tracking, mathematics, and daily helpers. Get fast, accurate results with transparent formulas.",
         },
         { name: "author", content: "CalcZen" },
         { name: "theme-color", content: "#0F172A" },
+=======
+          content: "Free online calculators for finance, health, math and everyday life.",
+        },
+        { name: "author", content: "CalcZen" },
+        { name: "theme-color", content: "#F5F7FB" },
+>>>>>>> 529569b (Deploy CalcZen V2)
         { property: "og:site_name", content: "CalcZen" },
         { property: "og:type", content: "website" },
         { property: "og:image", content: "/icons/android-chrome-512x512.png" },

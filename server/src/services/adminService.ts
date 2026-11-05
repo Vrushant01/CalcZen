@@ -14,11 +14,15 @@ export async function findAdminByEmail(email: string): Promise<ApiAdmin | null> 
 }
 
 export async function findAdminById(id: string): Promise<ApiAdmin | null> {
+<<<<<<< HEAD
   const { data, error } = await getSupabase()
     .from("admins")
     .select("*")
     .eq("id", id)
     .maybeSingle();
+=======
+  const { data, error } = await getSupabase().from("admins").select("*").eq("id", id).maybeSingle();
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   if (error) throw error;
   return data ? toApiAdmin(data as AdminRow) : null;

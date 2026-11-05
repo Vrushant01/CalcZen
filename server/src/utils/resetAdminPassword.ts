@@ -22,7 +22,15 @@ async function main() {
   const passwordHash = await bcrypt.hash(env.adminPassword, 12);
   const supabase = getSupabase();
 
+<<<<<<< HEAD
   const { data: existing } = await supabase.from("admins").select("id").eq("email", email).maybeSingle();
+=======
+  const { data: existing } = await supabase
+    .from("admins")
+    .select("id")
+    .eq("email", email)
+    .maybeSingle();
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   if (existing) {
     const { error } = await supabase

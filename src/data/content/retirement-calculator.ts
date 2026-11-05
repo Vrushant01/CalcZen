@@ -52,7 +52,11 @@ const content: CalculatorEducationalContent = {
     { text: "Internal Revenue Service (IRS)", url: "https://www.irs.gov/" },
   ],
 
+<<<<<<< HEAD
   relatedCalculators: ["regular-calculator", "age-calculator", "mortgage-calculator"],
+=======
+  relatedCalculators: ["standard-calculator", "age-calculator", "mortgage-calculator"],
+>>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 export default content;

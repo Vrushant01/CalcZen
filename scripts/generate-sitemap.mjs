@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { writeFileSync, existsSync, readFileSync, mkdirSync } from "node:fs";
+=======
+import { writeFileSync, existsSync, readFileSync } from "node:fs";
+>>>>>>> 529569b (Deploy CalcZen V2)
 import { join } from "node:path";
 
 // Dynamically load server/.env to pull Supabase credentials during build or manual runs
@@ -11,7 +15,14 @@ if (existsSync(serverEnvPath)) {
       if (trimmed && !trimmed.startsWith("#") && trimmed.includes("=")) {
         const index = trimmed.indexOf("=");
         const key = trimmed.substring(0, index).trim();
+<<<<<<< HEAD
         const value = trimmed.substring(index + 1).trim().replace(/^['"]|['"]$/g, "");
+=======
+        const value = trimmed
+          .substring(index + 1)
+          .trim()
+          .replace(/^['"]|['"]$/g, "");
+>>>>>>> 529569b (Deploy CalcZen V2)
         if (key && value && !process.env[key]) {
           process.env[key] = value;
         }
@@ -23,10 +34,48 @@ if (existsSync(serverEnvPath)) {
   }
 }
 
+<<<<<<< HEAD
 const siteUrl = "https://www.calczen.in";
 const STATIC_PATHS = ["/", "/calculators", "/about", "/contact", "/terms", "/privacy", "/disclaimer", "/blog"];
 const CATEGORY_SLUGS = ["finance", "health", "math", "everyday", "education", "science"];
 const CALCULATOR_SLUGS = [
+=======
+const siteUrl = (process.env.SITE_URL || "https://www.calczen.in").replace(/\/$/, "");
+
+const STATIC_PATHS = [
+  "/",
+  "/calculators",
+  "/about",
+  "/contact",
+  "/terms",
+  "/privacy",
+  "/disclaimer",
+  "/blog",
+];
+const CATEGORY_SLUGS = [
+  "finance",
+  "health",
+  "math",
+  "everyday",
+  "salary-and-employment",
+  "jewellery",
+  "home-construction",
+  "electricity",
+  "business",
+];
+const CALCULATOR_SLUGS = [
+  "gst-invoice-calculator",
+  "product-profit-calculator",
+  "home-electricity-bill-calculator",
+  "appliance-electricity-cost-calculator",
+  "ac-electricity-cost-calculator",
+  "rcc-price-calculator",
+  "cement-bag-calculator",
+  "gold-making-charges-calculator",
+  "gold-jewellery-bill-calculator",
+  "job-offer-comparison-calculator",
+  "ctc-to-in-hand-salary-calculator",
+>>>>>>> 529569b (Deploy CalcZen V2)
   "mortgage-calculator",
   "compound-interest-calculator",
   "loan-emi-calculator",
@@ -39,7 +88,11 @@ const CALCULATOR_SLUGS = [
   "age-calculator",
   "tip-calculator",
   "bmr-calculator",
+<<<<<<< HEAD
   "regular-calculator",
+=======
+  "standard-calculator",
+>>>>>>> 529569b (Deploy CalcZen V2)
   "scientific-calculator",
   "retirement-calculator",
   "401k-calculator",
@@ -55,6 +108,7 @@ const CALCULATOR_SLUGS = [
   "credit-card-emi-calculator",
 ];
 
+<<<<<<< HEAD
 function escapeXml(unsafe) {
   if (!unsafe) return "";
   return unsafe.replace(/[<>&'"]/g, (c) => {
@@ -72,10 +126,19 @@ function escapeXml(unsafe) {
 async function generateSitemap() {
   const todayStr = new Date().toISOString();
   let fetchedBlogs = [];
+=======
+async function generateSitemap() {
+  const paths = [
+    ...STATIC_PATHS,
+    ...CATEGORY_SLUGS.map((s) => `/category/${s}`),
+    ...CALCULATOR_SLUGS.map((s) => `/calculator/${s}`),
+  ];
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   // Try to load blogs from Supabase REST API dynamically at build time
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+<<<<<<< HEAD
 
   if (supabaseUrl && supabaseKey) {
     try {
@@ -84,18 +147,39 @@ async function generateSitemap() {
         headers: {
           "apikey": supabaseKey,
           "Authorization": `Bearer ${supabaseKey}`,
+=======
+  let fetchedBlogs = [];
+
+  if (supabaseUrl && supabaseKey) {
+    try {
+      const url = `${supabaseUrl.replace(/\/$/, "")}/rest/v1/blogs?select=slug&published=eq.true`;
+      const res = await fetch(url, {
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+>>>>>>> 529569b (Deploy CalcZen V2)
           "Content-Type": "application/json",
         },
       });
       if (res.ok) {
         fetchedBlogs = await res.json();
         if (Array.isArray(fetchedBlogs)) {
+<<<<<<< HEAD
           console.log(`Successfully fetched ${fetchedBlogs.length} dynamic blogs for sitemap compilation.`);
+=======
+          fetchedBlogs.forEach((b) => {
+            if (b.slug) paths.push(`/blog/${b.slug}`);
+          });
+          console.log(
+            `Successfully added ${fetchedBlogs.length} dynamic blog paths to sitemap.xml.`,
+          );
+>>>>>>> 529569b (Deploy CalcZen V2)
         }
       } else {
         console.warn(`Supabase sitemap fetch returned status ${res.status}`);
       }
     } catch (err) {
+<<<<<<< HEAD
       console.warn("Failed to fetch dynamic blog slugs for sitemap, falling back to static paths:", err.message);
     }
   } else {
@@ -267,6 +351,39 @@ ${rssItems.join("\n")}
 
   writeFileSync(join(publicDir, "rss.xml"), rssXml, "utf8");
   console.log("Generated public/rss.xml");
+=======
+      console.warn(
+        "Failed to fetch dynamic blog slugs for sitemap, falling back to static paths:",
+        err.message,
+      );
+    }
+  } else {
+    console.log(
+      "Supabase credentials not available during sitemap compilation. Compiling static paths.",
+    );
+  }
+
+  // 1. Generate main sitemap.xml
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${paths.map((p) => `  <url><loc>${siteUrl}${p}</loc></url>`).join("\n")}
+</urlset>
+`;
+
+  writeFileSync(join(process.cwd(), "public", "sitemap.xml"), xml, "utf8");
+  console.log("Generated public/sitemap.xml");
+
+  // 2. Generate separate sitemap-blogs.xml if blogs exist
+  const blogPaths = ["/blog", ...fetchedBlogs.map((b) => `/blog/${b.slug}`)];
+  const blogsXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${blogPaths.map((p) => `  <url><loc>${siteUrl}${p}</loc></url>`).join("\n")}
+</urlset>
+`;
+
+  writeFileSync(join(process.cwd(), "public", "sitemap-blogs.xml"), blogsXml, "utf8");
+  console.log("Generated public/sitemap-blogs.xml");
+>>>>>>> 529569b (Deploy CalcZen V2)
 }
 
 generateSitemap();

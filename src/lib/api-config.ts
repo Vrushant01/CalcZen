@@ -5,6 +5,7 @@ const REQUEST_TIMEOUT_MS = 30_000;
 
 /** Base URL without trailing slash. Empty in dev = Vite proxy to local API. */
 export function getApiBaseUrl(): string {
+<<<<<<< HEAD
   // Support Next.js / Node env
   const nextApiUrl = typeof process !== "undefined" ? process.env.VITE_API_URL || process.env.NEXT_PUBLIC_API_URL : undefined;
   if (nextApiUrl) {
@@ -22,6 +23,15 @@ export function getApiBaseUrl(): string {
     return "http://localhost:3001/api";
   }
 
+=======
+  const fromEnv = import.meta.env.VITE_API_URL?.trim();
+  if (fromEnv) {
+    return fromEnv.replace(/\/$/, "");
+  }
+  if (import.meta.env.DEV) {
+    return "http://localhost:3001/api";
+  }
+>>>>>>> 529569b (Deploy CalcZen V2)
   if (typeof window !== "undefined" && window.location) {
     return `${window.location.origin}/api`;
   }

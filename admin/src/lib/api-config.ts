@@ -20,14 +20,22 @@ export function buildApiUrl(path: string): string {
   let base = getApiBaseUrl();
   base = base.replace(/\/$/, "");
   let cleanPath = path.startsWith("/") ? path : `/${path}`;
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 529569b (Deploy CalcZen V2)
   // Prevent duplicate "/api/api" prefixing and handle absolute vs relative mismatches
   if (base.endsWith("/api") && cleanPath.startsWith("/api/")) {
     cleanPath = cleanPath.substring(4);
   } else if (!base.endsWith("/api") && !cleanPath.startsWith("/api/")) {
     cleanPath = `/api${cleanPath}`;
   }
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 529569b (Deploy CalcZen V2)
   return `${base}${cleanPath}`;
 }
 
@@ -43,13 +51,21 @@ export async function apiFetch(path: string, init?: RequestInit): Promise<Respon
       ...init,
       signal: init?.signal ?? controller.signal,
     });
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 529569b (Deploy CalcZen V2)
     if (res.ok) {
       console.log(`[API RESPONSE] Success: ${resolvedUrl} -> Status ${res.status}`);
     } else {
       console.warn(`[API RESPONSE] FAILED: ${resolvedUrl} -> Status ${res.status}`);
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 529569b (Deploy CalcZen V2)
     return res;
   } catch (err) {
     console.error(`[API ERROR] Exception during fetch to ${resolvedUrl}:`, err);
@@ -68,4 +84,7 @@ export function getNetworkErrorMessage(err: unknown): string {
   }
   return err instanceof Error ? err.message : "Something went wrong.";
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)

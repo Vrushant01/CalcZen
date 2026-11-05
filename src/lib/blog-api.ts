@@ -22,6 +22,7 @@ export type Blog = {
   publishDate: string | null;
   createdAt: string;
   updatedAt: string;
+<<<<<<< HEAD
   schema?: string | null;
   jsonld?: any;
   canonical?: string | null;
@@ -33,6 +34,8 @@ export type Blog = {
   twitterImage?: string | null;
   faqJson?: any;
   toc?: Array<{ id: string; text: string; level: number }>;
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 export type BlogsResponse = {

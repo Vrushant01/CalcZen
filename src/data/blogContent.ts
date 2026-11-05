@@ -1212,6 +1212,7 @@ export const blogContent: Record<string, BlogContent> = {
       },
     ],
   },
+<<<<<<< HEAD
   regular: {
     primaryKeyword: "standard calculator",
     category: "Everyday Tools & Math Operations",
@@ -1329,11 +1330,76 @@ export const blogContent: Record<string, BlogContent> = {
           "<strong>Leverage the Keyboard:</strong> If you are using a desktop computer, type numbers and operators directly using your physical keyboard. The number pad is layout-aligned with the calculator keys, allowing for fast, blind data entry.",
           "<strong>Utilize the Running History Tape:</strong> Do not write down intermediate numbers. Look at the history panel in the sidebar to review, copy, or reuse past results instantly. This keeps your desktop clean and ensures accuracy.",
           "<strong>Check for Cleared State:</strong> Before starting a new calculation, press the Clear (C) button or hit <code>Escape</code> on your keyboard. This resets the active display and clears any cached operations, ensuring you start from a clean slate.",
+=======
+  standard: {
+    primaryKeyword: "standard calculator",
+    category: "Everyday Tools & Math Operations",
+    introText:
+      "A <strong>standard calculator</strong> is a fundamental tool for performing standard arithmetic, percentage calculations, and algebraic groupings in daily life. Whether you are balancing your monthly household budget, calculating local retail discounts, estimating taxes, or executing simple homework equations, a reliable standard calculator is an essential productivity aid. Unlike complex scientific calculators cluttered with advanced trigonometric and logarithmic functions, the standard calculator focuses purely on speed, simplicity, and core arithmetic operations. It provides a clean, distraction-free interface perfectly suited for the 99% of math problems we face on a daily basis. This digital tool mimics the functionality of classic physical desktop calculators but adds modern conveniences like a running history tape, allowing you to review long chains of grocery receipts or expense reports without losing your place.",
+    sections: [
+      {
+        title: "How It Works: Understanding Mathematical Operator Hierarchy",
+        paragraphs: [
+          "Standard calculators evaluate mathematical operations based on standard hierarchy rules—popularly remembered by the acronym **PEMDAS** (Parentheses, Exponents, Multiplication & Division, Addition & Subtraction).",
+          "Unlike old physical calculators that simply evaluated numbers strictly from left to right as you typed them, modern digital standard calculators wait until you press 'equals' and then parse the entire mathematical string according to PEMDAS rules.",
+          "Our interactive tool fully implements parenthesis grouping `( )` and active percentage scaling. This lets you execute complex algebraic chains in a single calculation—like adding sales tax to multiple individual items grouped in parentheses—rather than writing down intermediate steps on a piece of scratch paper.",
+        ],
+        callout: {
+          type: "didYouKnow",
+          title: "The Order of Operations Matter",
+          text: "Try calculating `5 + 5 × 2`. A primitive left-to-right calculator will output `20`. A smart algebraic calculator (like ours) will output `15`, because multiplication is always performed before addition!",
+        },
+      },
+      {
+        title: "The Core Arithmetic Formulas",
+        paragraphs: [
+          "The standard calculator revolves around the four foundational pillars of arithmetic, alongside grouping operators.",
+        ],
+        formulaBox: {
+          title: "Foundational Arithmetic Operations",
+          formula: "Addition (+) | Subtraction (-) | Multiplication (×) | Division (÷)",
+          variables: [
+            { name: "Addition", desc: "Combines two or more numbers into a single sum." },
+            { name: "Subtraction", desc: "Finds the difference between numbers." },
+            { name: "Multiplication", desc: "Repeated addition of a specific base value." },
+            { name: "Division", desc: "Splitting a quantity into equal parts." },
+          ],
+        },
+      },
+      {
+        title: "Step-by-Step Budgeting Example",
+        paragraphs: [
+          "Let us walk through a practical household budgeting example using parenthesis grouping to isolate different expense categories.",
+        ],
+        exampleBox: {
+          title: "Household Expense Grouping",
+          inputs: [
+            { name: "Monthly Income", val: "$4,000" },
+            { name: "Fixed Expenses (Rent, Car)", val: "$1,500 + $350" },
+            { name: "Variable Expenses (Groceries, Gas)", val: "$600 + $150" },
+          ],
+          steps: [
+            "Write the full expression: 4000 - (1500 + 350) - (600 + 150).",
+            "The calculator evaluates parentheses first: 4000 - (1850) - (750).",
+            "Perform subtraction left to right: 4000 - 1850 = 2150.",
+            "Final subtraction: 2150 - 750 = 1400.",
+          ],
+          result:
+            "You have <strong>$1,400</strong> remaining in discretionary income after accounting for grouped fixed and variable expenses.",
+        },
+      },
+      {
+        title: "When To Use This Calculator",
+        paragraphs: [
+          "You should use this calculator for rapid, daily accounting tasks where you do not need advanced functions. It is perfect for balancing checkbooks, quickly calculating the split for a group dinner, or tallying up a list of business expenses for a reimbursement report.",
+          "Because it includes a history panel, it is incredibly useful when adding up dozens of small numbers (like line items on a hardware store receipt) where it is easy to lose track of where you are.",
+>>>>>>> 529569b (Deploy CalcZen V2)
         ],
       },
     ],
     faqs: [
       {
+<<<<<<< HEAD
         q: "What is a standard calculator?",
         a: "A standard calculator is a standard mathematical utility designed to perform basic arithmetic operations—addition, subtraction, multiplication, division—along with parenthesis groupings and percentage calculations. It is optimized for everyday budgeting, grocery tallies, retail shopping, and invoicing tasks.",
       },
@@ -1372,6 +1438,26 @@ export const blogContent: Record<string, BlogContent> = {
       {
         q: "How does the calculator prevent decimal rounding issues?",
         a: "Computers use binary floating-point math, which can occasionally lead to tiny rounding discrepancies (like `0.1 + 0.2 = 0.30000000000000004`). Our calculator includes post-processing logic to round results to 12 decimal places, correcting these artifacts.",
+=======
+        q: "Does the history panel save my calculations?",
+        a: "Yes, it tracks all operations performed during your current active session. Navigating between calculators or other pages on the site keeps the history intact, but refreshing the browser (F5) or closing the tab resets it for privacy.",
+      },
+      {
+        q: "How do percentage addition and subtraction work?",
+        a: "In standard commercial arithmetic, adding or subtracting a percentage calculates relatively to the base number. For example, typing `50 + 10%` translates to `50 + (50 * 0.1)`, resulting in `55`. Our algebraic parser automatically maps these structures cleanly without requiring you to use decimals.",
+      },
+      {
+        q: "Can I use my keyboard to type equations?",
+        a: "Yes! Our calculator is fully optimized for desktop use. You can use your physical number pad to type numbers, use the standard `+`, `-`, `*`, and `/` keys for operations, and press the `Enter` key to evaluate the result instantly.",
+      },
+      {
+        q: "What happens if I try to divide by zero?",
+        a: "Dividing any number by zero is mathematically undefined. If you attempt to calculate `5 ÷ 0`, the calculator will safely catch the error and display 'Error' or 'Undefined' rather than crashing.",
+      },
+      {
+        q: "Why is my decimal calculation slightly off?",
+        a: "Computers use floating-point arithmetic, which occasionally results in microscopic rounding errors (e.g., `0.1 + 0.2 = 0.30000000000000004`). Our calculator includes built-in rounding logic to automatically clean up these floating-point artifacts and display the correct human-readable number.",
+>>>>>>> 529569b (Deploy CalcZen V2)
       },
     ],
     internalLinks: [
@@ -1481,7 +1567,11 @@ export const blogContent: Record<string, BlogContent> = {
       {
         text: "perform quick everyday arithmetic operations",
         calculatorName: "Standard Calculator",
+<<<<<<< HEAD
         href: "/calculator/regular-calculator",
+=======
+        href: "/calculator/standard-calculator",
+>>>>>>> 529569b (Deploy CalcZen V2)
       },
       {
         text: "solve percentage shift and relative ratios",

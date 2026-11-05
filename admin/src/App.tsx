@@ -14,12 +14,23 @@ import "./styles.css";
 export default function App() {
   const hostname = typeof window !== "undefined" ? window.location.hostname : "";
   const isSubdomain = hostname === "admin.calczen.in" || hostname.startsWith("admin.");
+<<<<<<< HEAD
   const useAdminParam = typeof window !== "undefined" && window.location.search.includes("admin=true");
   const hasAdminInPath = typeof window !== "undefined" && window.location.pathname.startsWith("/admin");
   
   // In production on the subdomain (or local dev with ?admin=true without /admin path), use no basename.
   // If we are on calczen.in/admin or testing via localhost with /admin prefix, use "/admin".
   const basename = (isSubdomain && !hasAdminInPath && !useAdminParam) ? undefined : "/admin";
+=======
+  const useAdminParam =
+    typeof window !== "undefined" && window.location.search.includes("admin=true");
+  const hasAdminInPath =
+    typeof window !== "undefined" && window.location.pathname.startsWith("/admin");
+
+  // In production on the subdomain (or local dev with ?admin=true without /admin path), use no basename.
+  // If we are on calczen.in/admin or testing via localhost with /admin prefix, use "/admin".
+  const basename = isSubdomain && !hasAdminInPath && !useAdminParam ? undefined : "/admin";
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   return (
     <div className="admin-theme">
@@ -46,4 +57,7 @@ export default function App() {
     </div>
   );
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)

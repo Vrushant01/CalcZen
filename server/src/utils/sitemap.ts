@@ -6,8 +6,22 @@ import { getSupabase } from "../config/supabase.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const siteUrl = "https://www.calczen.in";
+<<<<<<< HEAD
 const STATIC_PATHS = ["/", "/calculators", "/about", "/contact", "/terms", "/privacy", "/disclaimer", "/blog"];
 const CATEGORY_SLUGS = ["finance", "health", "math", "everyday", "education", "science"];
+=======
+const STATIC_PATHS = [
+  "/",
+  "/calculators",
+  "/about",
+  "/contact",
+  "/terms",
+  "/privacy",
+  "/disclaimer",
+  "/blog",
+];
+const CATEGORY_SLUGS = ["finance", "health", "math", "everyday"];
+>>>>>>> 529569b (Deploy CalcZen V2)
 const CALCULATOR_SLUGS = [
   "mortgage-calculator",
   "compound-interest-calculator",
@@ -21,7 +35,11 @@ const CALCULATOR_SLUGS = [
   "age-calculator",
   "tip-calculator",
   "bmr-calculator",
+<<<<<<< HEAD
   "regular-calculator",
+=======
+  "standard-calculator",
+>>>>>>> 529569b (Deploy CalcZen V2)
   "scientific-calculator",
   "retirement-calculator",
   "401k-calculator",
@@ -37,6 +55,7 @@ const CALCULATOR_SLUGS = [
   "credit-card-emi-calculator",
 ];
 
+<<<<<<< HEAD
 function escapeXml(unsafe: string): string {
   if (!unsafe) return "";
   return unsafe.replace(/[<>&'"]/g, (c) => {
@@ -51,21 +70,38 @@ function escapeXml(unsafe: string): string {
   });
 }
 
+=======
+>>>>>>> 529569b (Deploy CalcZen V2)
 /**
  * Finds all potential locations of the frontend 'public' directory in workspace
  */
 function resolvePublicDirs(): string[] {
   const dirs: string[] = [];
 
+<<<<<<< HEAD
+=======
+  // Candidates relative to process.cwd()
+>>>>>>> 529569b (Deploy CalcZen V2)
   const cwd = process.cwd();
   dirs.push(path.resolve(cwd, "public"));
   dirs.push(path.resolve(cwd, "../public"));
 
+<<<<<<< HEAD
   dirs.push(path.resolve(__dirname, "../../../public"));
   dirs.push(path.resolve(__dirname, "../../../../public"));
 
   return [...new Set(dirs)].filter((dir) => {
     try {
+=======
+  // Candidates relative to this module directory
+  dirs.push(path.resolve(__dirname, "../../../public"));
+  dirs.push(path.resolve(__dirname, "../../../../public"));
+
+  // Filter only those that actually exist or are highly likely to be the public directory
+  return [...new Set(dirs)].filter((dir) => {
+    try {
+      // If the parent directory of 'public' contains a package.json, it's a real workspace directory
+>>>>>>> 529569b (Deploy CalcZen V2)
       const parentDir = path.dirname(dir);
       return fs.existsSync(path.join(parentDir, "package.json"));
     } catch {
@@ -75,6 +111,7 @@ function resolvePublicDirs(): string[] {
 }
 
 /**
+<<<<<<< HEAD
  * Generates and updates sitemap.xml, sitemap-blogs.xml, sitemap-news.xml and rss.xml dynamically
  */
 export async function triggerSitemapUpdate(): Promise<void> {
@@ -260,6 +297,62 @@ ${rssItems.join("\n")}
     const publicDirs = resolvePublicDirs();
     if (publicDirs.length === 0) {
       console.warn("[SEO UTILS] Warning: Could not locate frontend 'public' directory to write files.");
+=======
+ * Generates and updates sitemap.xml and sitemap-blogs.xml dynamically
+ */
+export async function triggerSitemapUpdate(): Promise<void> {
+  try {
+    console.log("[SITEMAP] Starting dynamic sitemap auto-generation...");
+    const paths = [
+      ...STATIC_PATHS,
+      ...CATEGORY_SLUGS.map((s) => `/category/${s}`),
+      ...CALCULATOR_SLUGS.map((s) => `/calculator/${s}`),
+    ];
+
+    // Fetch all published blogs from database
+    const { data: blogs, error } = await getSupabase()
+      .from("blogs")
+      .select("slug")
+      .eq("published", true);
+
+    const fetchedBlogs: Array<{ slug: string }> = [];
+
+    if (error) {
+      console.error("[SITEMAP] Failed to fetch blogs from Supabase for sitemap:", error);
+    } else if (blogs && Array.isArray(blogs)) {
+      blogs.forEach((b) => {
+        if (b.slug) {
+          paths.push(`/blog/${b.slug}`);
+          fetchedBlogs.push({ slug: b.slug });
+        }
+      });
+      console.log(
+        `[SITEMAP] Successfully gathered ${fetchedBlogs.length} published blogs from database.`,
+      );
+    }
+
+    // 1. Generate main sitemap.xml
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${paths.map((p) => `  <url><loc>${siteUrl}${p}</loc></url>`).join("\n")}
+</urlset>
+`;
+
+    // 2. Generate separate sitemap-blogs.xml if blogs exist
+    const blogPaths = ["/blog", ...fetchedBlogs.map((b) => `/blog/${b.slug}`)];
+    const blogsXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${blogPaths.map((p) => `  <url><loc>${siteUrl}${p}</loc></url>`).join("\n")}
+</urlset>
+`;
+
+    // Write to all matching public directories in the workspace
+    const publicDirs = resolvePublicDirs();
+    if (publicDirs.length === 0) {
+      console.warn(
+        "[SITEMAP] Warning: Could not locate frontend 'public' directory to write sitemaps.",
+      );
+>>>>>>> 529569b (Deploy CalcZen V2)
       return;
     }
 
@@ -269,6 +362,7 @@ ${rssItems.join("\n")}
           fs.mkdirSync(dir, { recursive: true });
         }
 
+<<<<<<< HEAD
         fs.writeFileSync(path.join(dir, "sitemap.xml"), sitemapXml, "utf8");
         fs.writeFileSync(path.join(dir, "sitemap-blogs.xml"), sitemapBlogsXml, "utf8");
         fs.writeFileSync(path.join(dir, "sitemap-news.xml"), sitemapNewsXml, "utf8");
@@ -280,5 +374,16 @@ ${rssItems.join("\n")}
     }
   } catch (err: any) {
     console.error("[SEO UTILS] Unexpected error during sitemap and RSS generation:", err);
+=======
+        fs.writeFileSync(path.join(dir, "sitemap.xml"), xml, "utf8");
+        fs.writeFileSync(path.join(dir, "sitemap-blogs.xml"), blogsXml, "utf8");
+        console.log(`[SITEMAP] Instantly wrote sitemaps successfully to: ${dir}`);
+      } catch (writeErr: any) {
+        console.error(`[SITEMAP] Failed to write sitemap to ${dir}:`, writeErr.message);
+      }
+    }
+  } catch (err: any) {
+    console.error("[SITEMAP] Unexpected error during sitemap auto-generation:", err);
+>>>>>>> 529569b (Deploy CalcZen V2)
   }
 }

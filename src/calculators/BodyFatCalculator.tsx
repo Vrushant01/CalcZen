@@ -449,11 +449,19 @@ export function BodyFatCalculator() {
         <div className="medical-alert border rounded-lg p-4 flex gap-3 text-sm">
           <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 medical-alert-icon" />
           <div className="medical-alert-text">
+<<<<<<< HEAD
             <strong className="medical-alert-title mr-1">Medical Disclaimer:</strong> This calculator provides an estimate of your body
             fat percentage for informational and fitness tracking purposes only. It is not intended
             to diagnose, treat, or prevent any medical condition. Always consult with a qualified
             healthcare provider or registered dietitian before beginning any new diet or exercise
             program.
+=======
+            <strong className="medical-alert-title mr-1">Medical Disclaimer:</strong> This
+            calculator provides an estimate of your body fat percentage for informational and
+            fitness tracking purposes only. It is not intended to diagnose, treat, or prevent any
+            medical condition. Always consult with a qualified healthcare provider or registered
+            dietitian before beginning any new diet or exercise program.
+>>>>>>> 529569b (Deploy CalcZen V2)
           </div>
         </div>
 

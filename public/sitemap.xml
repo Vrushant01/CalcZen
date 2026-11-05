@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
@@ -412,3 +413,61 @@
     </image:image>
   </url>
 </urlset>
+=======
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.calczen.in/</loc></url>
+  <url><loc>https://www.calczen.in/calculators</loc></url>
+  <url><loc>https://www.calczen.in/about</loc></url>
+  <url><loc>https://www.calczen.in/contact</loc></url>
+  <url><loc>https://www.calczen.in/terms</loc></url>
+  <url><loc>https://www.calczen.in/privacy</loc></url>
+  <url><loc>https://www.calczen.in/disclaimer</loc></url>
+  <url><loc>https://www.calczen.in/blog</loc></url>
+  <url><loc>https://www.calczen.in/category/finance</loc></url>
+  <url><loc>https://www.calczen.in/category/health</loc></url>
+  <url><loc>https://www.calczen.in/category/math</loc></url>
+  <url><loc>https://www.calczen.in/category/everyday</loc></url>
+  <url><loc>https://www.calczen.in/category/salary-and-employment</loc></url>
+  <url><loc>https://www.calczen.in/category/jewellery</loc></url>
+  <url><loc>https://www.calczen.in/category/home-construction</loc></url>
+  <url><loc>https://www.calczen.in/category/electricity</loc></url>
+  <url><loc>https://www.calczen.in/category/business</loc></url>
+  <url><loc>https://www.calczen.in/calculator/gst-invoice-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/product-profit-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/home-electricity-bill-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/appliance-electricity-cost-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/ac-electricity-cost-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/rcc-price-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/cement-bag-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/gold-making-charges-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/gold-jewellery-bill-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/job-offer-comparison-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/ctc-to-in-hand-salary-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/mortgage-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/compound-interest-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/loan-emi-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/bmi-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/calorie-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/water-intake-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/sleep-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/pregnancy-due-date-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/percentage-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/age-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/tip-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/bmr-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/standard-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/scientific-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/retirement-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/401k-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/sip-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/fd-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/gst-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/attendance-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/cgpa-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/body-fat-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/protein-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/inflation-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/loan-eligibility-calculator</loc></url>
+  <url><loc>https://www.calczen.in/calculator/credit-card-emi-calculator</loc></url>
+</urlset>
+>>>>>>> 529569b (Deploy CalcZen V2)

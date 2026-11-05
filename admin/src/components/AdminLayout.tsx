@@ -27,12 +27,28 @@ export function AdminLayout() {
       <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-[var(--color-card-border)] bg-[var(--color-card)] p-4 md:min-h-screen shrink-0 transition-all duration-300">
         <div className="flex items-center justify-between md:block md:mb-8">
           <div>
+<<<<<<< HEAD
             <Link to="/dashboard" className="inline-flex items-center gap-2" onClick={() => setMenuOpen(false)}>
               <BrandLogo imageClassName="h-8 w-8 object-contain" labelClassName="text-xl font-bold tracking-tight" />
             </Link>
             <p className="text-xs text-[var(--color-muted)] mt-1">Admin Panel</p>
           </div>
           
+=======
+            <Link
+              to="/dashboard"
+              className="inline-flex items-center gap-2"
+              onClick={() => setMenuOpen(false)}
+            >
+              <BrandLogo
+                imageClassName="h-8 w-8 object-contain"
+                labelClassName="text-xl font-bold tracking-tight"
+              />
+            </Link>
+            <p className="text-xs text-[var(--color-muted)] mt-1">Admin Panel</p>
+          </div>
+
+>>>>>>> 529569b (Deploy CalcZen V2)
           {/* Hamburger toggle button on mobile */}
           <button
             type="button"
@@ -69,7 +85,11 @@ export function AdminLayout() {
               </NavLink>
             ))}
           </nav>
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> 529569b (Deploy CalcZen V2)
           <button
             type="button"
             onClick={logout}

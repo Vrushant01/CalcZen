@@ -5,11 +5,15 @@ import { createRateLimiter } from "../middleware/rate-limit.js";
 import { validateBody } from "../middleware/validate.js";
 
 const contactSchema = z.object({
+<<<<<<< HEAD
   name: z
     .string()
     .trim()
     .min(1, "Name is required")
     .max(100, "Name is too long"),
+=======
+  name: z.string().trim().min(1, "Name is required").max(100, "Name is too long"),
+>>>>>>> 529569b (Deploy CalcZen V2)
   email: z
     .string()
     .trim()

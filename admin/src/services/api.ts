@@ -39,6 +39,7 @@ async function request<T>(
   }))) as { success?: boolean; message?: string; data?: T };
 
   // Check BOTH HTTP status and payload response.success for authentication failure
+<<<<<<< HEAD
   const isUnauthenticated = 
     res.status === 401 || 
     (json.success === false && (
@@ -46,6 +47,14 @@ async function request<T>(
       json.message?.toLowerCase().includes("token") ||
       json.message?.toLowerCase().includes("unauthorized")
     ));
+=======
+  const isUnauthenticated =
+    res.status === 401 ||
+    (json.success === false &&
+      (json.message?.toLowerCase().includes("auth") ||
+        json.message?.toLowerCase().includes("token") ||
+        json.message?.toLowerCase().includes("unauthorized")));
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   if (isUnauthenticated) {
     clearToken();
@@ -119,6 +128,7 @@ export type Blog = {
   publishDate: string | null;
   createdAt: string;
   updatedAt: string;
+<<<<<<< HEAD
   schema?: string | null;
   jsonld?: any;
   canonical?: string | null;
@@ -133,6 +143,10 @@ export type Blog = {
 };
 
 
+=======
+};
+
+>>>>>>> 529569b (Deploy CalcZen V2)
 export const api = {
   login: (email: string, password: string) =>
     request<{ token: string; admin: { id: string; email: string; name?: string } }>(
@@ -155,12 +169,16 @@ export const api = {
       }>
     >("/api/admin/subscribers/recent"),
 
+<<<<<<< HEAD
   subscribers: (params?: {
     search?: string;
     page?: number;
     limit?: number;
     status?: string;
   }) => {
+=======
+  subscribers: (params?: { search?: string; page?: number; limit?: number; status?: string }) => {
+>>>>>>> 529569b (Deploy CalcZen V2)
     const q = new URLSearchParams();
     if (params?.search) q.set("search", params.search);
     if (params?.page) q.set("page", String(params.page));
@@ -179,8 +197,12 @@ export const api = {
     }>(`/api/admin/subscribers${query}`);
   },
 
+<<<<<<< HEAD
   deleteSubscriber: (id: string) =>
     request(`/api/admin/subscribers/${id}`, { method: "DELETE" }),
+=======
+  deleteSubscriber: (id: string) => request(`/api/admin/subscribers/${id}`, { method: "DELETE" }),
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   exportCsv: async () => {
     const token = getToken();
@@ -233,8 +255,12 @@ export const api = {
     }>(`/api/admin/contact-messages${query}`);
   },
 
+<<<<<<< HEAD
   contactMessage: (id: string) =>
     request<ContactMessage>(`/api/admin/contact-messages/${id}`),
+=======
+  contactMessage: (id: string) => request<ContactMessage>(`/api/admin/contact-messages/${id}`),
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   replyToMessage: (id: string, reply: string) =>
     request<ContactMessage>("/api/admin/reply-message", {
@@ -242,8 +268,12 @@ export const api = {
       body: JSON.stringify({ id, reply }),
     }),
 
+<<<<<<< HEAD
   blogStats: () =>
     request<BlogStats>("/api/admin/blogs/stats"),
+=======
+  blogStats: () => request<BlogStats>("/api/admin/blogs/stats"),
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   blogs: (params?: {
     search?: string;
@@ -265,8 +295,12 @@ export const api = {
     }>(`/api/admin/blogs${query}`);
   },
 
+<<<<<<< HEAD
   blog: (id: string) =>
     request<Blog>(`/api/admin/blogs/${id}`),
+=======
+  blog: (id: string) => request<Blog>(`/api/admin/blogs/${id}`),
+>>>>>>> 529569b (Deploy CalcZen V2)
 
   createBlog: (body: Partial<Blog>) =>
     request<Blog>("/api/admin/blogs", {
@@ -280,6 +314,7 @@ export const api = {
       body: JSON.stringify(body),
     }),
 
+<<<<<<< HEAD
   deleteBlog: (id: string) =>
     request(`/api/admin/blogs/${id}`, { method: "DELETE" }),
 
@@ -288,5 +323,12 @@ export const api = {
 };
 
 
+=======
+  deleteBlog: (id: string) => request(`/api/admin/blogs/${id}`, { method: "DELETE" }),
+
+  infrastructureStats: () => request<any>("/api/admin/infrastructure/stats"),
+};
+
+>>>>>>> 529569b (Deploy CalcZen V2)
 /** Resolved API base (for debugging / display). */
 export const apiBaseUrl = getApiBaseUrl;

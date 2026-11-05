@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -425,11 +425,7 @@ export function CompoundInterestCalculator() {
             </DashboardSection>
 
             <div className="flex flex-col">
-<<<<<<< HEAD
-            {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
-=======
               {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
           </motion.div>
         )}

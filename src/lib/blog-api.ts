@@ -1,4 +1,4 @@
-import { apiFetch, getNetworkErrorMessage } from "@/lib/api-config";
+﻿import { apiFetch, getNetworkErrorMessage } from "@/lib/api-config";
 
 export type Blog = {
   _id: string;
@@ -22,20 +22,6 @@ export type Blog = {
   publishDate: string | null;
   createdAt: string;
   updatedAt: string;
-<<<<<<< HEAD
-  schema?: string | null;
-  jsonld?: any;
-  canonical?: string | null;
-  featuredImage?: string | null;
-  status?: string;
-  discoverReady?: boolean;
-  indexed?: boolean;
-  ogImage?: string | null;
-  twitterImage?: string | null;
-  faqJson?: any;
-  toc?: Array<{ id: string; text: string; level: number }>;
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 export type BlogsResponse = {

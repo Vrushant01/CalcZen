@@ -1,4 +1,4 @@
-import type { CalculatorEducationalContent } from "../content-types";
+﻿import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
@@ -52,11 +52,7 @@ const content: CalculatorEducationalContent = {
     { text: "Internal Revenue Service (IRS)", url: "https://www.irs.gov/" },
   ],
 
-<<<<<<< HEAD
-  relatedCalculators: ["regular-calculator", "scientific-calculator", "percentage-calculator"],
-=======
   relatedCalculators: ["standard-calculator", "scientific-calculator", "percentage-calculator"],
->>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 export default content;

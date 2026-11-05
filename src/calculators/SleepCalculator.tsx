@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+﻿import { useMemo, useState, useEffect } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -776,15 +776,11 @@ export function SleepCalculator() {
                             <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.02} />
                           </linearGradient>
                         </defs>
-<<<<<<< HEAD
-                        <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
-=======
                         <CartesianGrid
                           strokeDasharray="3 3"
                           stroke="var(--color-border)"
                           vertical={false}
                         />
->>>>>>> 529569b (Deploy CalcZen V2)
                         <XAxis
                           dataKey="time"
                           stroke="var(--color-muted-foreground)"
@@ -831,10 +827,6 @@ export function SleepCalculator() {
                           stroke="#8b5cf6"
                           strokeWidth={2.5}
                           fill="url(#sleepGrad)"
-<<<<<<< HEAD
-                          dot={{ r: 3, stroke: "#8b5cf6", strokeWidth: 1.5, fill: "var(--color-card)" }}
-                          activeDot={{ r: 5, stroke: "#8b5cf6", strokeWidth: 2, fill: "var(--color-card)" }}
-=======
                           dot={{
                             r: 3,
                             stroke: "#8b5cf6",
@@ -847,7 +839,6 @@ export function SleepCalculator() {
                             strokeWidth: 2,
                             fill: "var(--color-card)",
                           }}
->>>>>>> 529569b (Deploy CalcZen V2)
                         />
                       </AreaChart>
                     </ResponsiveContainer>

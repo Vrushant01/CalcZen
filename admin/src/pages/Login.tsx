@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { BrandLogo } from "../components/BrandLogo";
@@ -14,12 +14,8 @@ export function LoginPage() {
   useEffect(() => {
     const token = getToken();
     if (token) {
-<<<<<<< HEAD
-      api.me()
-=======
       api
         .me()
->>>>>>> 529569b (Deploy CalcZen V2)
         .then(() => {
           navigate("/dashboard", { replace: true });
         })

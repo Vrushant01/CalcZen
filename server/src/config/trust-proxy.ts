@@ -7,6 +7,7 @@ import { env } from "./env.js";
  */
 export function configureTrustProxy(app: Express): void {
   const behindProxy =
+    Boolean(process.env.VERCEL) ||
     process.env.RENDER === "true" ||
     Boolean(process.env.RENDER_EXTERNAL_URL) ||
     env.nodeEnv === "production";

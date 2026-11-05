@@ -1,13 +1,4 @@
-@import "tailwindcss" source(none);
-<<<<<<< HEAD
-@source "../src";
-@import "../node_modules/tw-animate-css/dist/tw-animate.css";
-
-@variant dark (&:where(.dark, .dark *));
-
-@theme inline {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-=======
+﻿@import "tailwindcss" source(none);
 @custom-variant dark (&:where(.dark, .dark *));
 @source "../src";
 @import "tw-animate-css";
@@ -15,7 +6,6 @@
 @theme inline {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Outfit", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
->>>>>>> 529569b (Deploy CalcZen V2)
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -140,8 +130,6 @@
   --toggle-glow: oklch(0.55 0.14 220 / 0.35);
   --input-background: oklch(1 0.002 264);
   --shadow-input: 0 1px 2px oklch(0.18 0.03 264 / 0.05);
-<<<<<<< HEAD
-=======
 
   /* ─── CalcZen Hero Section Tokens — Light Mode (Master Spec) ─── */
   --cz-hero-bg: #EEF2F8;
@@ -169,7 +157,6 @@
   --cz-hero-badge-border: #DCE4EF;
   --cz-hero-badge-text: #17233A;
   --cz-hero-border: #DCE4EF;
->>>>>>> 529569b (Deploy CalcZen V2)
 }
 
 .dark {
@@ -254,8 +241,6 @@
   --toggle-glow: oklch(0.72 0.12 220 / 0.45);
   --input-background: oklch(0.28 0.028 265);
   --shadow-input: none;
-<<<<<<< HEAD
-=======
 
   /* ─── CalcZen Hero Section Tokens — Dark Mode (Master Spec) ─── */
   --cz-hero-bg: #080D1B;
@@ -599,7 +584,6 @@
   background-color: rgba(139, 92, 246, 0.22);
   border-color: rgba(139, 92, 246, 0.4);
   color: #A78BFA;
->>>>>>> 529569b (Deploy CalcZen V2)
 }
 
 @layer base {
@@ -656,13 +640,8 @@
   h2,
   h3,
   h4 {
-<<<<<<< HEAD
-    letter-spacing: -0.025em;
-    font-weight: 700;
-=======
     letter-spacing: -0.035em;
     font-weight: 800;
->>>>>>> 529569b (Deploy CalcZen V2)
   }
 }
 
@@ -1320,8 +1299,6 @@
     @apply dark:bg-transparent dark:from-amber-950/65 dark:to-orange-950/45 dark:border-amber-500/25;
   }
 
-<<<<<<< HEAD
-=======
   .category-card-salary {
     @apply bg-gradient-to-br from-emerald-100 to-teal-50 border-emerald-200/80 bg-white;
     @apply dark:bg-transparent dark:from-emerald-950/70 dark:to-teal-950/50 dark:border-emerald-500/25;
@@ -1347,7 +1324,6 @@
     @apply dark:bg-transparent dark:from-emerald-950/70 dark:to-teal-950/50 dark:border-emerald-500/25;
   }
 
->>>>>>> 529569b (Deploy CalcZen V2)
   /* Premium elevated card */
   .surface-card {
     background: var(--card);

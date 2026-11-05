@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Link } from "@/components/ui/Link";
-=======
-import { Link } from "@tanstack/react-router";
->>>>>>> 529569b (Deploy CalcZen V2)
+﻿import { Link } from "@tanstack/react-router";
 import {
   Lightbulb,
   HelpCircle,
@@ -84,17 +80,6 @@ export default function CalculatorBlog({ content }: Props) {
               <li key={idx}>
                 <a
                   href={`#section-${idx}`}
-<<<<<<< HEAD
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const element = document.getElementById(`section-${idx}`);
-                    if (element) {
-                      element.scrollIntoView({ behavior: "smooth", block: "start" });
-                      window.history.pushState(null, "", `#section-${idx}`);
-                    }
-                  }}
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
                   className="text-primary hover:underline flex items-center gap-1.5 transition-colors"
                 >
                   <ArrowRight size={12} className="shrink-0 text-primary/70" />
@@ -106,17 +91,6 @@ export default function CalculatorBlog({ content }: Props) {
               <li>
                 <a
                   href="#faq-section"
-<<<<<<< HEAD
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const element = document.getElementById("faq-section");
-                    if (element) {
-                      element.scrollIntoView({ behavior: "smooth", block: "start" });
-                      window.history.pushState(null, "", "#faq-section");
-                    }
-                  }}
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
                   className="text-primary hover:underline flex items-center gap-1.5 transition-colors"
                 >
                   <ArrowRight size={12} className="shrink-0 text-primary/70" />

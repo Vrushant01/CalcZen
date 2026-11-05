@@ -1,16 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-<<<<<<< HEAD
-  "framework": "nextjs",
-  "buildCommand": "npm run vercel-build",
-  "installCommand": "npm install && npm install --prefix server && npm install --prefix admin",
-=======
   "framework": "vite",
   "buildCommand": "npm run vercel-build",
   "installCommand": "npm install && npm install --prefix server && npm install --prefix admin",
   "outputDirectory": "dist",
->>>>>>> 529569b (Deploy CalcZen V2)
   "redirects": [
     {
       "source": "/admin/:path*",
@@ -47,27 +41,15 @@
     }
   ],
   "rewrites": [
-<<<<<<< HEAD
     { "source": "/api", "destination": "/api/index.ts" },
     { "source": "/api/(.*)", "destination": "/api/index.ts" },
     { "source": "/admin", "destination": "/api/index.ts" },
     { "source": "/admin/(.*)", "destination": "/api/index.ts" }
-=======
-    { "source": "/api", "destination": "/api" },
-    { "source": "/api/(.*)", "destination": "/api" },
-    { "source": "/admin", "destination": "/api" },
-    { "source": "/admin/(.*)", "destination": "/api" },
-    { "source": "/((?!api/|admin/).*)", "destination": "/api" }
->>>>>>> 529569b (Deploy CalcZen V2)
   ],
   "functions": {
     "api/index.ts": {
       "maxDuration": 60,
-<<<<<<< HEAD
-      "includeFiles": "admin/dist/**"
-=======
       "includeFiles": "{admin/dist/**,dist/index.html}"
->>>>>>> 529569b (Deploy CalcZen V2)
     }
   }
 }

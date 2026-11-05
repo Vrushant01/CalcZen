@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
@@ -337,11 +337,7 @@ export function ProteinCalculator() {
               </Select>
             </div>
           </div>
-<<<<<<< HEAD
-          
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
           <div className="space-y-2 mt-4">
             <Label htmlFor="activity">Activity Level</Label>
             <Select value={activity} onValueChange={(val) => setActivity(val as ActivityType)}>
@@ -374,154 +370,11 @@ export function ProteinCalculator() {
         </div>
 
         {hasResult && (
-<<<<<<< HEAD
-          <motion.div 
-=======
           <motion.div
->>>>>>> 529569b (Deploy CalcZen V2)
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col gap-6"
           >
-<<<<<<< HEAD
-              <Alert
-                className="medical-alert"
-              >
-                <AlertCircle className="h-4 w-4 medical-alert-icon" />
-                <AlertTitle className="medical-alert-title font-semibold">Medical Disclaimer</AlertTitle>
-                <AlertDescription className="medical-alert-text">
-                  This calculator provides estimates for educational purposes only. It is not
-                  intended as medical advice. Please consult with a healthcare professional or
-                  registered dietitian before significantly changing your diet or protein intake,
-                  especially if you have kidney disease or other medical conditions.
-                </AlertDescription>
-              </Alert>
-
-              <DashboardSection title="Protein Requirement">
-                <HeroMetric
-                  label="Daily Protein Target"
-                  value={`${avgProtein}g`}
-                  sub={`Range: ${minProtein}g to ${maxProtein}g`}
-                  glow="blue"
-                />
-              </DashboardSection>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <StatCard
-                  index={0}
-                  label="Per kg of Bodyweight"
-                  value={`${gPerKg[0]} - ${gPerKg[1]}g`}
-                  accent="green"
-                />
-                <StatCard
-                  index={1}
-                  label="Target Per Meal (4 Meals)"
-                  value={`${minPerMeal} - ${maxPerMeal}g`}
-                  accent="amber"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="lg:col-span-2">
-                  <DashboardSection title="Meal Distribution">
-                    <div className="h-72 w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={mealDistributionData}
-                          margin={{ top: 10, right: 10, left: 0, bottom: 20 }}
-                        >
-                          <CartesianGrid
-                            strokeDasharray="3 3"
-                            vertical={false}
-                            stroke="var(--color-border)"
-                          />
-                          <XAxis
-                            dataKey="meals"
-                            axisLine={false}
-                            tickLine={false}
-                            stroke="var(--color-muted-foreground)"
-                            fontSize={12}
-                          />
-                          <YAxis
-                            axisLine={false}
-                            tickLine={false}
-                            stroke="var(--color-muted-foreground)"
-                            fontSize={12}
-                            tickFormatter={(val) => `${val}g`}
-                          />
-                          <Tooltip
-                            cursor={{ fill: "var(--color-muted)", opacity: 0.4 }}
-                            contentStyle={{
-                              backgroundColor: "var(--color-card)",
-                              borderColor: "var(--color-border)",
-                              borderRadius: "8px",
-                            }}
-                            formatter={(value: number) => [`${value}g`, "Protein per Meal"]}
-                          />
-                          <Bar
-                            dataKey="protein"
-                            fill="var(--color-chart-1)"
-                            radius={[4, 4, 0, 0]}
-                            maxBarSize={50}
-                          />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                    <p className="text-xs text-muted-foreground text-center mt-2">
-                      Protein grams per meal based on meal frequency
-                    </p>
-                  </DashboardSection>
-                </div>
-
-                <div className="lg:col-span-1">
-                  <DashboardSection title="Target Per Meal Frequency">
-                    <div className="flex flex-col gap-2.5 py-1">
-                      {[3, 4, 5, 6].map((numMeals) => {
-                        const amount = Math.round(avgProtein / numMeals);
-                        const minAmount = Math.round(minProtein / numMeals);
-                        const maxAmount = Math.round(maxProtein / numMeals);
-                        return (
-                          <div key={numMeals} className="flex items-center justify-between p-3 rounded-xl bg-card border border-border/50 hover:border-border transition-colors">
-                            <div className="flex flex-col">
-                              <span className="font-semibold text-sm text-foreground">{numMeals} Meals / day</span>
-                              <span className="text-[10px] text-muted-foreground">Range: {minAmount}-{maxAmount}g</span>
-                            </div>
-                            <div className="text-right">
-                              <span className="font-extrabold text-base text-accent">{amount}g</span>
-                              <span className="text-[9px] text-muted-foreground block">per meal</span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </DashboardSection>
-                </div>
-              </div>
-
-              <DashboardSection title="Smart Insights">
-                <div className="flex flex-col gap-2.5">
-                  <InsightCard
-                    index={0}
-                    tone="info"
-                    text="Spread It Out: Distribute your protein intake evenly across 3-5 meals to maximize muscle protein synthesis."
-                  />
-                  <InsightCard
-                    index={1}
-                    tone="success"
-                    text="Focus on Quality: Prioritize complete protein sources like meat, poultry, fish, eggs, dairy, or soy."
-                  />
-                  <InsightCard
-                    index={2}
-                    tone="tip"
-                    text="Post-Workout: Aim for 20-40g of high-quality protein within 2 hours after your workout."
-                  />
-                </div>
-              </DashboardSection>
-
-              <div className="flex flex-col">
-                {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
-              </div>
-=======
             <Alert className="medical-alert">
               <AlertCircle className="h-4 w-4 medical-alert-icon" />
               <AlertTitle className="medical-alert-title font-semibold">
@@ -666,7 +519,6 @@ export function ProteinCalculator() {
             <div className="flex flex-col">
               {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
             </div>
->>>>>>> 529569b (Deploy CalcZen V2)
           </motion.div>
         )}
       </div>

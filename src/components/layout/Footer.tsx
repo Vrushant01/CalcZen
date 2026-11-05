@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-"use client";
-
-import { useState } from "react";
-import { Link } from "@/components/ui/Link";
-=======
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link } from "@tanstack/react-router";
->>>>>>> 529569b (Deploy CalcZen V2)
 import { BrandLogo } from "@/components/BrandLogo";
 import { categories } from "@/data/calculators";
 

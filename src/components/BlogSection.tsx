@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-"use client";
-
-import { Link } from "@/components/ui/Link";
-=======
-import { Link } from "@tanstack/react-router";
->>>>>>> 529569b (Deploy CalcZen V2)
+﻿import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, Sparkles, Calendar } from "lucide-react";
 import { useEffect, useState } from "react";

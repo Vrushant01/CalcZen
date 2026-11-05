@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+﻿import { useEffect, useState, useMemo, useRef } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { blogContent } from "@/data/blogContent";
@@ -609,11 +609,7 @@ ln(e) = 1
         },
         {
           q: "Can it solve trigonometric equations?",
-<<<<<<< HEAD
-          a: 'Yes, it can easily evaluate trigonometric functions and inverse trigonometric equations for any given angle parameter. You must ensure the calculator is set to the correct active mode (Degree or Radian) depending on the equation\'s formatting to prevent calculation errors. If you need simple arithmetic, use our <a href="/calculator/regular-calculator" class="text-primary hover:underline">Standard Calculator</a>.',
-=======
           a: 'Yes, it can easily evaluate trigonometric functions and inverse trigonometric equations for any given angle parameter. You must ensure the calculator is set to the correct active mode (Degree or Radian) depending on the equation\'s formatting to prevent calculation errors. If you need simple arithmetic, use our <a href="/calculator/standard-calculator" class="text-primary hover:underline">Standard Calculator</a>.',
->>>>>>> 529569b (Deploy CalcZen V2)
         },
         {
           q: "Does it support radians and degrees?",

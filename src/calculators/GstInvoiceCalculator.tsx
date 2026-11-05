@@ -890,7 +890,6 @@ export function GstInvoiceCalculator() {
                     <SavePDFButton
                       pdfData={pdfData}
                       disabled={amount <= 0}
-                      className="h-9.5 rounded-xl text-xs px-3.5 font-semibold"
                     />
 
                     <Button
@@ -1417,7 +1416,6 @@ export function GstInvoiceCalculator() {
                   <SavePDFButton
                     pdfData={pdfData}
                     disabled={invoiceResult.totalTaxableValue <= 0}
-                    className="h-9.5 rounded-xl text-xs px-3.5 font-semibold"
                   />
 
                   <Button

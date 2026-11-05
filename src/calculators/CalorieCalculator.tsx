@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -328,16 +328,12 @@ export function CalorieCalculator() {
             <div className="medical-alert border rounded-lg p-4 flex gap-3 text-sm">
               <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 medical-alert-icon" />
               <div className="medical-alert-text">
-<<<<<<< HEAD
-                <strong className="medical-alert-title mr-1">Medical Disclaimer:</strong> This calculator provides calorie targets for informational and fitness tracking purposes only. It is not intended as medical advice or a substitute for professional nutritional counseling. Always consult with a healthcare provider or registered dietitian before starting any calorie-restricted diet, especially if you have an eating disorder, diabetes, or other medical conditions.
-=======
                 <strong className="medical-alert-title mr-1">Medical Disclaimer:</strong> This
                 calculator provides calorie targets for informational and fitness tracking purposes
                 only. It is not intended as medical advice or a substitute for professional
                 nutritional counseling. Always consult with a healthcare provider or registered
                 dietitian before starting any calorie-restricted diet, especially if you have an
                 eating disorder, diabetes, or other medical conditions.
->>>>>>> 529569b (Deploy CalcZen V2)
               </div>
             </div>
 

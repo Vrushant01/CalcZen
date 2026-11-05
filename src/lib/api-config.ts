@@ -1,29 +1,10 @@
-/** Production API (Render). Override with VITE_API_URL in .env files. */
+﻿/** Production API (Render). Override with VITE_API_URL in .env files. */
 export const PRODUCTION_API_URL = "https://calczen.onrender.com";
 
 const REQUEST_TIMEOUT_MS = 30_000;
 
 /** Base URL without trailing slash. Empty in dev = Vite proxy to local API. */
 export function getApiBaseUrl(): string {
-<<<<<<< HEAD
-  // Support Next.js / Node env
-  const nextApiUrl = typeof process !== "undefined" ? process.env.VITE_API_URL || process.env.NEXT_PUBLIC_API_URL : undefined;
-  if (nextApiUrl) {
-    return nextApiUrl.replace(/\/$/, "");
-  }
-
-  // Support Vite env
-  const fromEnv = typeof import.meta !== "undefined" && import.meta.env ? import.meta.env.VITE_API_URL?.trim() : undefined;
-  if (fromEnv) {
-    return fromEnv.replace(/\/$/, "");
-  }
-
-  const isDev = typeof process !== "undefined" ? process.env.NODE_ENV === "development" : (typeof import.meta !== "undefined" && import.meta.env ? import.meta.env.DEV : false);
-  if (isDev) {
-    return "http://localhost:3001/api";
-  }
-
-=======
   const fromEnv = import.meta.env.VITE_API_URL?.trim();
   if (fromEnv) {
     return fromEnv.replace(/\/$/, "");
@@ -31,7 +12,6 @@ export function getApiBaseUrl(): string {
   if (import.meta.env.DEV) {
     return "http://localhost:3001/api";
   }
->>>>>>> 529569b (Deploy CalcZen V2)
   if (typeof window !== "undefined" && window.location) {
     return `${window.location.origin}/api`;
   }

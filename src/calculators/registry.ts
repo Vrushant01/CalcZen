@@ -1,10 +1,8 @@
-import { lazy } from "react";
+﻿import { lazy } from "react";
 import type { ComponentType } from "react";
 
 // Registry maps calculator slug → lazy component.
 export const calculatorComponents: Record<string, ComponentType> = {
-<<<<<<< HEAD
-=======
   "gst-invoice-calculator": lazy(() =>
     import("@/calculators/GstInvoiceCalculator").then((m) => ({
       default: m.GstInvoiceCalculator,
@@ -96,7 +94,6 @@ export const calculatorComponents: Record<string, ComponentType> = {
   "ctc-to-in-hand-salary-calculator": lazy(() =>
     import("@/calculators/SalaryCalculator").then((m) => ({ default: m.SalaryCalculator })),
   ),
->>>>>>> 529569b (Deploy CalcZen V2)
   "mortgage-calculator": lazy(() =>
     import("@/calculators/MortgageCalculator").then((m) => ({ default: m.MortgageCalculator })),
   ),
@@ -141,11 +138,7 @@ export const calculatorComponents: Record<string, ComponentType> = {
   "bmr-calculator": lazy(() =>
     import("@/calculators/BMRCalculator").then((m) => ({ default: m.BMRCalculator })),
   ),
-<<<<<<< HEAD
-  "regular-calculator": lazy(() =>
-=======
   "standard-calculator": lazy(() =>
->>>>>>> 529569b (Deploy CalcZen V2)
     import("@/calculators/StandardCalculator").then((m) => ({ default: m.StandardCalculator })),
   ),
   "scientific-calculator": lazy(() =>
@@ -191,8 +184,6 @@ export const calculatorComponents: Record<string, ComponentType> = {
       default: m.CreditCardEMICalculator,
     })),
   ),
-<<<<<<< HEAD
-=======
   "love-calculator": lazy(() =>
     import("@/calculators/LoveCalculator").then((m) => ({ default: m.LoveCalculator })),
   ),
@@ -204,5 +195,4 @@ export const calculatorComponents: Record<string, ComponentType> = {
       default: m.CoupleAgeDifferenceCalculator,
     })),
   ),
->>>>>>> 529569b (Deploy CalcZen V2)
 };

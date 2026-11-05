@@ -1,17 +1,13 @@
-import bcrypt from "bcryptjs";
+﻿import bcrypt from "bcryptjs";
 import { env, hasDbConfig } from "../config/env.js";
 import { verifySupabaseConnection } from "../config/supabase.js";
 import { adminExists, createAdmin } from "../services/adminService.js";
 
 async function seed() {
   if (!hasDbConfig()) {
-<<<<<<< HEAD
-    console.error("Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_ANON_KEY) in server/.env");
-=======
     console.error(
       "Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_ANON_KEY) in server/.env",
     );
->>>>>>> 529569b (Deploy CalcZen V2)
     process.exit(1);
   }
 
@@ -22,13 +18,9 @@ async function seed() {
 
   const connected = await verifySupabaseConnection();
   if (!connected) {
-<<<<<<< HEAD
-    console.error("Could not connect to Supabase. Check URL/key and run supabase/schema.sql first.");
-=======
     console.error(
       "Could not connect to Supabase. Check URL/key and run supabase/schema.sql first.",
     );
->>>>>>> 529569b (Deploy CalcZen V2)
     process.exit(1);
   }
 

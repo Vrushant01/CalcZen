@@ -1,4 +1,4 @@
-import type { CorsOptions } from "cors";
+﻿import type { CorsOptions } from "cors";
 import type { Request, Response } from "express";
 import { env } from "./env.js";
 
@@ -71,25 +71,11 @@ export function isOriginAllowed(origin: string | undefined): boolean {
     return true;
   }
 
-<<<<<<< HEAD
-  if (
-    protocol === "http:" &&
-    (hostname === "localhost" || hostname === "127.0.0.1")
-  ) {
-    return true;
-  }
-
-  if (
-    protocol === "https:" &&
-    (hostname === "calczen.in" || hostname.endsWith(".calczen.in"))
-  ) {
-=======
   if (protocol === "http:" && (hostname === "localhost" || hostname === "127.0.0.1")) {
     return true;
   }
 
   if (protocol === "https:" && (hostname === "calczen.in" || hostname.endsWith(".calczen.in"))) {
->>>>>>> 529569b (Deploy CalcZen V2)
     return true;
   }
 

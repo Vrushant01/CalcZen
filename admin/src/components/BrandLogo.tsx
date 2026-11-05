@@ -1,4 +1,4 @@
-type BrandLogoProps = {
+﻿type BrandLogoProps = {
   className?: string;
   imageClassName?: string;
   showLabel?: boolean;
@@ -22,13 +22,9 @@ export function BrandLogo({
       {showLabel ? (
         <span className={labelClassName ?? "text-xl font-bold tracking-tight"}>
           <span className="text-white">Calc</span>
-<<<<<<< HEAD
-          <span className="bg-gradient-to-r from-[#1D56D8] via-[#177FE8] to-[#1BC8FF] bg-clip-text text-transparent">Zen</span>
-=======
           <span className="bg-gradient-to-r from-[#1D56D8] via-[#177FE8] to-[#1BC8FF] bg-clip-text text-transparent">
             Zen
           </span>
->>>>>>> 529569b (Deploy CalcZen V2)
         </span>
       ) : null}
     </span>

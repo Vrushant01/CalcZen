@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog, { type BlogContent } from "@/components/CalculatorBlog";
-import SavePDFButton from "@/components/SavePDFButton";
+import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Store,
-  Calculator as CalculatorIcon,
+  Calculator,
 } from "lucide-react";
 import {
   calculateProductProfit,
@@ -295,65 +295,39 @@ export function ProductProfitCalculator() {
   };
 
   // PDF Export data
-  const pdfData = useMemo(() => {
-    return {
-      calculatorName: "Product Profit Calculator",
-      calculatorSlug: "product-profit-calculator",
-      siteName: "CalcZen",
-      siteUrl: "https://www.calczen.in",
-      inputs: [
-        { label: "Product Cost Price", value: formatINR(costPrice) },
-        { label: "Selling Price", value: formatINR(sellingPrice) },
-        { label: "Quantity Sold", value: `${quantity} unit${quantity > 1 ? "s" : ""}` },
-        ...(hasDiscount && discountPct > 0
-          ? [{ label: "Trade Discount", value: `${discountPct}% (${formatINR(result.discountAmountPerUnit)})` }]
-          : []),
-        ...(hasExtraExpenses
-          ? [
-              ...(packagingCost > 0 ? [{ label: "Packaging Cost", value: formatINR(packagingCost) }] : []),
-              ...(shippingCost > 0
-                ? [{ label: "Shipping Cost", value: `${formatINR(shippingCost)} (${shippingType === "per_order" ? "per order" : "per item"})` }]
-                : []),
-              ...(advertisingCost > 0 ? [{ label: "Advertising / CAC", value: formatINR(advertisingCost) }] : []),
-              ...(marketplaceCommissionPct > 0 ? [{ label: "Marketplace Commission", value: `${marketplaceCommissionPct}%` }] : []),
-              ...(paymentGatewayFeePct > 0 ? [{ label: "Payment Gateway Fee", value: `${paymentGatewayFeePct}%` }] : []),
-            ]
-          : []),
-        ...(hasGst && gstRatePct > 0
-          ? [{ label: "GST Rate", value: `${gstRatePct}% (${isSellingPriceGstInclusive ? "Inclusive" : "Exclusive"})` }]
-          : []),
-      ],
-      results: [
-        { label: "Effective Selling Price", value: formatINR(result.actualSellingPrice) },
-        { label: "Gross Revenue", value: formatINR(result.totalRevenue) },
-        { label: "Total Cost of Goods & Fees", value: formatINR(result.totalCostOrder) },
-        { label: "Net Profit Per Unit", value: formatINR(result.profitPerUnit) },
-        { label: "Total Net Profit", value: formatINR(result.totalProfit) },
-        { label: "Net Profit Margin", value: formatPercent(result.profitMarginPct) },
-        { label: "Markup Percentage", value: formatPercent(result.markupPct) },
-        ...(result.breakEvenPrice !== null
-          ? [{ label: "Break-Even Price", value: `${formatINR(result.breakEvenPrice)} / unit` }]
-          : []),
-      ],
-    };
-  }, [
-    costPrice,
-    sellingPrice,
-    quantity,
-    hasDiscount,
-    discountPct,
-    hasExtraExpenses,
-    packagingCost,
-    shippingCost,
-    shippingType,
-    advertisingCost,
-    marketplaceCommissionPct,
-    paymentGatewayFeePct,
-    hasGst,
-    gstRatePct,
-    isSellingPriceGstInclusive,
-    result,
-  ]);
+  const pdfSections = useMemo(() => {
+    return [
+      {
+        title: "Product Profit & Pricing Breakdown",
+        items: [
+          { label: "Product Cost Price", value: formatINR(result.productCostPerUnit) },
+          { label: "Stated Selling Price", value: formatINR(result.originalSellingPrice) },
+          { label: "Quantity", value: `${quantity} units` },
+          {
+            label: "Discount",
+            value:
+              result.discountAmountPerUnit > 0
+                ? `${formatINR(result.discountAmountPerUnit)} (${calculationInput.discountPct}%)`
+                : "None",
+          },
+          { label: "Actual Selling Price", value: formatINR(result.actualSellingPrice) },
+          { label: "Total Revenue", value: formatINR(result.totalRevenue) },
+          { label: "Total Cost of Goods & Fees", value: formatINR(result.totalCostOrder) },
+          { label: "Net Profit Per Unit", value: formatINR(result.profitPerUnit) },
+          { label: "Total Net Profit", value: formatINR(result.totalProfit) },
+          { label: "Profit Margin", value: formatPercent(result.profitMarginPct) },
+          { label: "Markup Percentage", value: formatPercent(result.markupPct) },
+          {
+            label: "Break-Even Price",
+            value:
+              result.breakEvenPrice !== null
+                ? formatINR(result.breakEvenPrice)
+                : "N/A",
+          },
+        ],
+      },
+    ];
+  }, [result, quantity, calculationInput]);
 
   return (
     <CalculatorPageLayout
@@ -529,7 +503,7 @@ export function ProductProfitCalculator() {
                 }}
                 className="w-full h-11 text-sm font-semibold rounded-xl bg-primary text-primary-foreground hover:bg-primary/95 shadow-sm transition-all flex items-center justify-center gap-2"
               >
-                <CalculatorIcon className="h-4 w-4" />
+                <Calculator className="h-4 w-4" />
                 Calculate Profit
               </Button>
             </div>
@@ -1304,10 +1278,11 @@ export function ProductProfitCalculator() {
                   )}
                 </Button>
 
-                <SavePDFButton
-                  pdfData={pdfData}
-                  disabled={!validation.isValid || sellingPrice <= 0}
-                  className="h-9 rounded-xl text-xs px-3 font-semibold"
+                <CalculatorPdfExport
+                  calculatorTitle="Product Profit Estimate"
+                  calculatorCategory="Business"
+                  sections={pdfSections}
+                  accentColor="#059669"
                 />
 
                 <Button

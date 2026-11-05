@@ -1,4 +1,4 @@
-import {
+﻿import {
   Calculator,
   Home,
   Heart,
@@ -13,8 +13,6 @@ import {
   Cake,
   Receipt,
   Moon,
-<<<<<<< HEAD
-=======
   Briefcase,
   Gem,
   Sparkles,
@@ -22,7 +20,6 @@ import {
   Hammer,
   Zap,
   Store,
->>>>>>> 529569b (Deploy CalcZen V2)
   type LucideIcon,
 } from "lucide-react";
 
@@ -63,8 +60,6 @@ export const categories: Category[] = [
     iconColor: "text-violet-600 dark:text-violet-400",
   },
   {
-<<<<<<< HEAD
-=======
     slug: "salary-and-employment",
     name: "Salary & Employment",
     description: "CTC, in-hand pay & tax deductions",
@@ -81,7 +76,6 @@ export const categories: Category[] = [
     iconColor: "text-amber-500 dark:text-amber-400",
   },
   {
->>>>>>> 529569b (Deploy CalcZen V2)
     slug: "everyday",
     name: "Everyday",
     description: "Dates, fuel & lifestyle",
@@ -89,8 +83,6 @@ export const categories: Category[] = [
     color: "category-card-everyday",
     iconColor: "text-amber-600 dark:text-amber-400",
   },
-<<<<<<< HEAD
-=======
   {
     slug: "home-construction",
     name: "Home Construction",
@@ -125,7 +117,6 @@ export const categories: Category[] = [
     color: "category-card-love", // Adding a simple color reference
     iconColor: "text-pink-500 dark:text-pink-400",
   },
->>>>>>> 529569b (Deploy CalcZen V2)
 ];
 
 export type CalculatorMeta = {
@@ -146,8 +137,6 @@ export type CalculatorMeta = {
 
 export const calculators: CalculatorMeta[] = [
   {
-<<<<<<< HEAD
-=======
     slug: "gst-invoice-calculator",
     name: "GST Invoice Calculator",
     category: "business",
@@ -572,7 +561,6 @@ export const calculators: CalculatorMeta[] = [
     h1: "Love Calculator - Check Compatibility",
   },
   {
->>>>>>> 529569b (Deploy CalcZen V2)
     slug: "mortgage-calculator",
     name: "Mortgage Calculator",
     category: "finance",
@@ -896,11 +884,7 @@ export const calculators: CalculatorMeta[] = [
     h1: "Age Calculator for Birthdays and Exact Time Elapsed",
   },
   {
-<<<<<<< HEAD
-    slug: "regular-calculator",
-=======
     slug: "standard-calculator",
->>>>>>> 529569b (Deploy CalcZen V2)
     name: "Standard Calculator",
     category: "everyday",
     description:
@@ -914,11 +898,7 @@ export const calculators: CalculatorMeta[] = [
     ],
     icon: Calculator,
     popular: true,
-<<<<<<< HEAD
-    metaTitle: "Standard Calculator - Free Online Basic Math Calculator | CalcZen",
-=======
     metaTitle: "Standard Calculator - Standard Basic Online Math Calculator | CalcZen",
->>>>>>> 529569b (Deploy CalcZen V2)
     metaDescription:
       "Use our free online standard calculator for fast addition, subtraction, multiplication, division, fractions, and percentage operations with session history.",
     calculatorType: "arithmetic",
@@ -1169,11 +1149,6 @@ export const calculators: CalculatorMeta[] = [
     ],
     h1: "Credit Card EMI Payment Calculator",
   },
-<<<<<<< HEAD
-];
-
-export const getCalculator = (slug: string) => calculators.find((c) => c.slug === slug);
-=======
   {
     slug: "flames-calculator",
     name: "FLAMES Calculator",
@@ -1258,7 +1233,6 @@ export const getCalculator = (slug: string) => {
     calculators.find((c) => c.slug === slug)
   );
 };
->>>>>>> 529569b (Deploy CalcZen V2)
 
 export const getCategory = (slug: string) => categories.find((c) => c.slug === slug);
 

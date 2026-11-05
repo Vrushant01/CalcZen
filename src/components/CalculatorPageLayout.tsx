@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Link } from "@/components/ui/Link";
-=======
-import { Link } from "@tanstack/react-router";
->>>>>>> 529569b (Deploy CalcZen V2)
+﻿import { Link } from "@tanstack/react-router";
 import { ChevronRight, Share2 } from "lucide-react";
 import { CalculatorExample } from "@/components/CalculatorExample";
 import { CalculatorFormula } from "@/components/CalculatorFormula";
@@ -154,13 +150,8 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Examine compound growth percentages over time using the [Compound Interest Calculator](/calculator/compound-interest-calculator).",
     "scientific-calculator":
       "Solve technical math and logarithmic expressions with our [Scientific Calculator](/calculator/scientific-calculator).",
-<<<<<<< HEAD
-    "regular-calculator":
-      "Solve simple everyday arithmetic operations using our [Standard Calculator](/calculator/regular-calculator).",
-=======
     "standard-calculator":
       "Solve simple everyday arithmetic operations using our [Standard Calculator](/calculator/standard-calculator).",
->>>>>>> 529569b (Deploy CalcZen V2)
   },
   "age-calculator": {
     "percentage-calculator":
@@ -169,13 +160,8 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Splits restaurant dining tabs and gratuity with our [Tip Calculator](/calculator/tip-calculator).",
     "pregnancy-due-date-calculator":
       "Track gestational timelines and baby due dates with the [Pregnancy Due Date Calculator](/calculator/pregnancy-due-date-calculator).",
-<<<<<<< HEAD
-    "regular-calculator":
-      "Compute basic math additions and divisions with our [Standard Calculator](/calculator/regular-calculator).",
-=======
     "standard-calculator":
       "Compute basic math additions and divisions with our [Standard Calculator](/calculator/standard-calculator).",
->>>>>>> 529569b (Deploy CalcZen V2)
   },
   "tip-calculator": {
     "percentage-calculator":
@@ -184,31 +170,18 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
       "Assess personal borrowing costs and monthly repayments with the [Loan EMI Calculator](/calculator/loan-emi-calculator).",
     "age-calculator":
       "Track birthday countdowns and exact dates using the [Age Calculator](/calculator/age-calculator).",
-<<<<<<< HEAD
-    "regular-calculator":
-      "Run simple arithmetic calculations and bill audits using the [Standard Calculator](/calculator/regular-calculator).",
-  },
-  "scientific-calculator": {
-    "regular-calculator":
-      "Perform basic arithmetic, addition, and division using our [Standard Calculator](/calculator/regular-calculator).",
-=======
     "standard-calculator":
       "Run simple arithmetic calculations and bill audits using the [Standard Calculator](/calculator/standard-calculator).",
   },
   "scientific-calculator": {
     "standard-calculator":
       "Perform basic arithmetic, addition, and division using our [Standard Calculator](/calculator/standard-calculator).",
->>>>>>> 529569b (Deploy CalcZen V2)
     "percentage-calculator":
       "Solve percent shifts, increases, and ratio math with the [Percentage Calculator](/calculator/percentage-calculator).",
     "age-calculator":
       "Count exact days, months, and years using the [Age Calculator](/calculator/age-calculator).",
   },
-<<<<<<< HEAD
-  "regular-calculator": {
-=======
   "standard-calculator": {
->>>>>>> 529569b (Deploy CalcZen V2)
     "scientific-calculator":
       "Resolve advanced trigonometric, logarithmic, and root functions with our [Scientific Calculator](/calculator/scientific-calculator).",
     "percentage-calculator":
@@ -216,8 +189,6 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
     "tip-calculator":
       "Split restaurant tabs and calculate gratuity percentages with the [Tip Calculator](/calculator/tip-calculator).",
   },
-<<<<<<< HEAD
-=======
   "love-calculator": {
     "flames-calculator":
       "Play the classic name-matching game and check your destiny with the [FLAMES Calculator](/calculator/flames-calculator).",
@@ -300,7 +271,6 @@ const CONTEXTUAL_LINKS_DICT: Record<string, Record<string, string>> = {
     "ctc-to-in-hand-salary-calculator":
       "Calculate business salary withdrawals and professional net income using the [CTC to In-Hand Salary Calculator](/calculator/ctc-to-in-hand-salary-calculator).",
   },
->>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 function renderContextualSentence(sentence: string) {
@@ -458,11 +428,7 @@ const AUTHORITY_CITATIONS_DICT: Record<string, { name: string; url: string }[]> 
     },
     { name: "US Naval Observatory Time Standards", url: "https://www.usno.navy.mil/USNO" },
   ],
-<<<<<<< HEAD
-  "regular-calculator": [
-=======
   "standard-calculator": [
->>>>>>> 529569b (Deploy CalcZen V2)
     {
       name: "Wolfram MathWorld Arithmetic Standards",
       url: "https://mathworld.wolfram.com/Arithmetic.html",
@@ -489,8 +455,6 @@ const AUTHORITY_CITATIONS_DICT: Record<string, { name: string; url: string }[]> 
       url: "https://mathworld.wolfram.com/",
     },
   ],
-<<<<<<< HEAD
-=======
   "love-calculator": [
     {
       name: "Pythagorean Numerology Methodology & Systems",
@@ -695,7 +659,6 @@ const AUTHORITY_CITATIONS_DICT: Record<string, { name: string; url: string }[]> 
       url: "https://taxinformation.cbic.gov.in/",
     },
   ],
->>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 type Props = {
@@ -721,8 +684,6 @@ export function CalculatorPageLayout({
 
   // Dynamic high-relevance semantic internal linking dictionary for programmatic SEO
   const SEMANTIC_RELATION_MAP: Record<string, string[]> = {
-<<<<<<< HEAD
-=======
     "home-electricity-bill-calculator": [
       "appliance-electricity-cost-calculator",
       "ac-electricity-cost-calculator",
@@ -804,7 +765,6 @@ export function CalculatorPageLayout({
       "gst-calculator",
       "retirement-calculator",
     ],
->>>>>>> 529569b (Deploy CalcZen V2)
     "mortgage-calculator": [
       "loan-emi-calculator",
       "compound-interest-calculator",
@@ -859,8 +819,6 @@ export function CalculatorPageLayout({
     "percentage-calculator": ["tip-calculator", "age-calculator", "compound-interest-calculator"],
     "age-calculator": ["percentage-calculator", "tip-calculator", "pregnancy-due-date-calculator"],
     "tip-calculator": ["percentage-calculator", "loan-emi-calculator", "age-calculator"],
-<<<<<<< HEAD
-=======
     "love-calculator": [
       "couple-age-difference-calculator",
       "flames-calculator",
@@ -880,7 +838,6 @@ export function CalculatorPageLayout({
       "flames-calculator",
       "percentage-calculator",
     ],
->>>>>>> 529569b (Deploy CalcZen V2)
   };
 
   const getRelatedCalculators = (): typeof calculators => {

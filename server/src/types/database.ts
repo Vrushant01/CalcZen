@@ -102,20 +102,11 @@ export type BlogRow = {
   publish_date: string | null;
   created_at: string;
   updated_at: string;
-<<<<<<< HEAD
-  schema: string | null;
-  jsonld: any;
-  canonical: string | null;
-  featured_image: string | null;
-  status: string;
-  discover_ready: boolean;
-  indexed: boolean;
-  og_image: string | null;
-  twitter_image: string | null;
-  faq_json: any;
-  toc: any;
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
+  og_image?: string | null;
+  twitter_image?: string | null;
+  featured_image?: string | null;
+  schema?: any;
+  jsonld?: any;
 };
 
 export type ApiBlog = {
@@ -140,20 +131,5 @@ export type ApiBlog = {
   publishDate: string | null;
   createdAt: string;
   updatedAt: string;
-<<<<<<< HEAD
-  schema: string | null;
-  jsonld: any;
-  canonical: string | null;
-  featuredImage: string | null;
-  status: string;
-  discoverReady: boolean;
-  indexed: boolean;
-  ogImage: string | null;
-  twitterImage: string | null;
-  faqJson: any;
-  toc: any;
+  toc?: Array<{ id: string; text: string; level: number }>;
 };
-
-=======
-};
->>>>>>> 529569b (Deploy CalcZen V2)

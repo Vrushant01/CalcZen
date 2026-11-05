@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, Component, type ErrorInfo, type ReactNode } from "react";
+﻿import { useEffect, useState, useCallback, Component, type ErrorInfo, type ReactNode } from "react";
 import {
   Activity,
   Server,
@@ -18,22 +18,14 @@ import {
   Calendar,
   Clock,
   ArrowRight,
-<<<<<<< HEAD
-  TrendingDown
-=======
   TrendingDown,
->>>>>>> 529569b (Deploy CalcZen V2)
 } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "../components/AdminLayout";
 import { api } from "../services/api";
 
-<<<<<<< HEAD
-type TabName = "overview" | "render" | "supabase" | "resend" | "cloudflare" | "analytics" | "alerts";
-=======
 type TabName =
   "overview" | "render" | "supabase" | "resend" | "cloudflare" | "analytics" | "alerts";
->>>>>>> 529569b (Deploy CalcZen V2)
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -105,11 +97,7 @@ function InfrastructurePageContent() {
   const loadStats = useCallback(async (isAuto = false) => {
     if (!isAuto) setLoading(true);
     else setIsRefreshing(true);
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
     try {
       console.log("[DEBUG] Fetching raw infrastructure stats...");
       const res = await api.infrastructureStats();
@@ -121,25 +109,17 @@ function InfrastructurePageContent() {
 
       const data = res.data;
       if (!data || typeof data !== "object") {
-<<<<<<< HEAD
-        console.error("[DEBUG] Telemetry validation failed: res.data is null, undefined, or not an object.", data);
-=======
         console.error(
           "[DEBUG] Telemetry validation failed: res.data is null, undefined, or not an object.",
           data,
         );
->>>>>>> 529569b (Deploy CalcZen V2)
         throw new Error("Empty or malformed telemetry payload received");
       }
 
       // Track missing fields to aid in debugging
       const expectedSections = ["render", "supabase", "resend", "cloudflare", "calczen", "alerts"];
       const missingFields: string[] = [];
-<<<<<<< HEAD
-      expectedSections.forEach(section => {
-=======
       expectedSections.forEach((section) => {
->>>>>>> 529569b (Deploy CalcZen V2)
         if (!data[section] || typeof data[section] !== "object") {
           missingFields.push(section);
         }
@@ -211,14 +191,10 @@ function InfrastructurePageContent() {
         {/* Skeleton Grid Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((i) => (
-<<<<<<< HEAD
-            <div key={i} className="h-20 bg-[var(--color-card)] border border-[var(--color-card-border)] rounded-xl p-4 flex items-center gap-3">
-=======
             <div
               key={i}
               className="h-20 bg-[var(--color-card)] border border-[var(--color-card-border)] rounded-xl p-4 flex items-center gap-3"
             >
->>>>>>> 529569b (Deploy CalcZen V2)
               <div className="p-2 h-9 w-9 bg-slate-800 rounded shrink-0" />
               <div className="space-y-2 w-full">
                 <div className="h-3 w-16 bg-slate-800/80 rounded" />
@@ -273,17 +249,6 @@ function InfrastructurePageContent() {
   // 1. Render metrics
   const renderFreeHoursUsed = stats?.render?.freeHoursUsed ?? 0;
   const renderFreeHoursLimit = stats?.render?.freeHoursLimit ?? 0;
-<<<<<<< HEAD
-  const renderPlanUsagePercent = stats?.render?.planUsagePercent ?? (
-    renderFreeHoursLimit > 0 ? Math.round((renderFreeHoursUsed / renderFreeHoursLimit) * 100) : 0
-  );
-
-  const renderBandwidthUsedGb = stats?.render?.bandwidthUsedGb ?? 0;
-  const renderBandwidthLimitGb = stats?.render?.bandwidthLimitGb ?? 0;
-  const renderBandwidthPercent = stats?.render?.bandwidthPercent ?? (
-    renderBandwidthLimitGb > 0 ? Math.round((renderBandwidthUsedGb / renderBandwidthLimitGb) * 100) : 0
-  );
-=======
   const renderPlanUsagePercent =
     stats?.render?.planUsagePercent ??
     (renderFreeHoursLimit > 0 ? Math.round((renderFreeHoursUsed / renderFreeHoursLimit) * 100) : 0);
@@ -295,7 +260,6 @@ function InfrastructurePageContent() {
     (renderBandwidthLimitGb > 0
       ? Math.round((renderBandwidthUsedGb / renderBandwidthLimitGb) * 100)
       : 0);
->>>>>>> 529569b (Deploy CalcZen V2)
 
   const renderCpuUsagePercent = stats?.render?.cpuUsagePercent ?? 0;
   const renderMemoryUsagePercent = stats?.render?.memoryUsagePercent ?? 0;
@@ -308,29 +272,6 @@ function InfrastructurePageContent() {
   // 2. Supabase metrics
   const supabaseStorageUsedMb = stats?.supabase?.storageUsedMb ?? 0;
   const supabaseStorageLimitMb = stats?.supabase?.storageLimitMb ?? 0;
-<<<<<<< HEAD
-  const storagePercent = stats?.supabase?.storagePercent ?? (
-    supabaseStorageLimitMb > 0 ? Math.round((supabaseStorageUsedMb / supabaseStorageLimitMb) * 100) : 0
-  );
-
-  const supabaseDatabaseSizeMb = stats?.supabase?.databaseSizeMb ?? 0;
-  const supabaseDatabaseLimitMb = stats?.supabase?.databaseLimitMb ?? 0;
-  const dbSizePercent = stats?.supabase?.dbSizePercent ?? (
-    supabaseDatabaseLimitMb > 0 ? Math.round((supabaseDatabaseSizeMb / supabaseDatabaseLimitMb) * 100) : 0
-  );
-
-  const supabaseBandwidthUsedGb = stats?.supabase?.bandwidthUsedGb ?? 0;
-  const supabaseBandwidthLimitGb = stats?.supabase?.bandwidthLimitGb ?? 0;
-  const supabaseBandwidthPercent = stats?.supabase?.bandwidthPercent ?? (
-    supabaseBandwidthLimitGb > 0 ? Math.round((supabaseBandwidthUsedGb / supabaseBandwidthLimitGb) * 100) : 0
-  );
-
-  const supabaseApiRequests = stats?.supabase?.apiRequests ?? 0;
-  const supabaseApiRequestsLimit = stats?.supabase?.apiRequestsLimit ?? 0;
-  const supabaseApiRequestsPercent = stats?.supabase?.apiRequestsPercent ?? (
-    supabaseApiRequestsLimit > 0 ? Math.round((supabaseApiRequests / supabaseApiRequestsLimit) * 100) : 0
-  );
-=======
   const storagePercent =
     stats?.supabase?.storagePercent ??
     (supabaseStorageLimitMb > 0
@@ -360,7 +301,6 @@ function InfrastructurePageContent() {
     (supabaseApiRequestsLimit > 0
       ? Math.round((supabaseApiRequests / supabaseApiRequestsLimit) * 100)
       : 0);
->>>>>>> 529569b (Deploy CalcZen V2)
 
   const supabaseTotalUsers = stats?.supabase?.totalUsers ?? 0;
   const supabaseStatus = stats?.supabase?.status ?? "Unavailable";
@@ -370,15 +310,9 @@ function InfrastructurePageContent() {
   const resendLimitToday = stats?.resend?.limitToday ?? 0;
   const resendSentThisMonth = stats?.resend?.sentThisMonth ?? 0;
   const resendLimitThisMonth = stats?.resend?.limitThisMonth ?? 0;
-<<<<<<< HEAD
-  const resendLimitPercent = stats?.resend?.limitPercent ?? (
-    resendLimitThisMonth > 0 ? Math.round((resendSentThisMonth / resendLimitThisMonth) * 100) : 0
-  );
-=======
   const resendLimitPercent =
     stats?.resend?.limitPercent ??
     (resendLimitThisMonth > 0 ? Math.round((resendSentThisMonth / resendLimitThisMonth) * 100) : 0);
->>>>>>> 529569b (Deploy CalcZen V2)
   const resendDeliveryRatePercent = stats?.resend?.deliveryRatePercent ?? "Unavailable";
   const resendBounceRatePercent = stats?.resend?.bounceRatePercent ?? "Unavailable";
   const resendStatus = stats?.resend?.status ?? "Unavailable";
@@ -421,11 +355,6 @@ function InfrastructurePageContent() {
   };
 
   const getWarningBadge = (percent: number) => {
-<<<<<<< HEAD
-    if (percent >= 95) return <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase bg-rose-500/15 border border-rose-500/30 text-rose-400 animate-pulse">Critical (95%+)</span>;
-    if (percent >= 90) return <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase bg-amber-500/15 border border-amber-500/30 text-amber-400">Danger (90%+)</span>;
-    if (percent >= 80) return <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase bg-yellow-500/15 border border-yellow-500/30 text-yellow-400">Warning (80%+)</span>;
-=======
     if (percent >= 95)
       return (
         <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase bg-rose-500/15 border border-rose-500/30 text-rose-400 animate-pulse">
@@ -444,7 +373,6 @@ function InfrastructurePageContent() {
           Warning (80%+)
         </span>
       );
->>>>>>> 529569b (Deploy CalcZen V2)
     return null;
   };
 
@@ -456,35 +384,23 @@ function InfrastructurePageContent() {
           title="Infrastructure Systems"
           description="Centralized telemetry for Render, Supabase, Cloudflare, Resend, and platform analytics."
         />
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
         <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
           <div className="text-xs text-[var(--color-muted)] flex items-center gap-1.5 font-mono">
             <Clock size={12} />
             <span>Refresh in {refreshCountdown}s</span>
           </div>
-<<<<<<< HEAD
-          
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
           <button
             type="button"
             onClick={() => loadStats()}
             disabled={isRefreshing}
             className="inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-semibold rounded-lg border border-[var(--color-card-border)] bg-[var(--color-card)] text-white hover:bg-white/5 transition-colors disabled:opacity-50"
           >
-<<<<<<< HEAD
-            <RefreshCw size={14} className={isRefreshing ? "animate-spin text-[var(--color-primary-hover)]" : ""} />
-=======
             <RefreshCw
               size={14}
               className={isRefreshing ? "animate-spin text-[var(--color-primary-hover)]" : ""}
             />
->>>>>>> 529569b (Deploy CalcZen V2)
             Sync Now
           </button>
         </div>
@@ -492,9 +408,6 @@ function InfrastructurePageContent() {
 
       {/* Tabs navigation row */}
       <div className="flex overflow-x-auto gap-1 border-b border-[var(--color-card-border)] pb-px mb-6 scrollbar-hide">
-<<<<<<< HEAD
-        {(["overview", "render", "supabase", "resend", "cloudflare", "analytics", "alerts"] as TabName[]).map((tab) => (
-=======
         {(
           [
             "overview",
@@ -506,7 +419,6 @@ function InfrastructurePageContent() {
             "alerts",
           ] as TabName[]
         ).map((tab) => (
->>>>>>> 529569b (Deploy CalcZen V2)
           <button
             key={tab}
             type="button"
@@ -528,15 +440,6 @@ function InfrastructurePageContent() {
       {activeTab === "overview" && (
         <div className="space-y-6 animate-fade-in">
           {/* Health indicator bar */}
-<<<<<<< HEAD
-          <div className={`p-4 rounded-xl border flex items-center justify-between gap-4 ${
-            stats?.systemHealth === "critical"
-              ? "bg-rose-500/10 border-rose-500/20 text-rose-400"
-              : stats?.systemHealth === "warning"
-                ? "bg-amber-500/10 border-amber-500/20 text-amber-400"
-                : "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-          }`}>
-=======
           <div
             className={`p-4 rounded-xl border flex items-center justify-between gap-4 ${
               stats?.systemHealth === "critical"
@@ -546,7 +449,6 @@ function InfrastructurePageContent() {
                   : "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
             }`}
           >
->>>>>>> 529569b (Deploy CalcZen V2)
             <div className="flex items-center gap-3">
               {stats?.systemHealth === "critical" ? (
                 <XCircle size={24} className="animate-pulse" />
@@ -556,13 +458,6 @@ function InfrastructurePageContent() {
                 <CheckCircle size={24} />
               )}
               <div>
-<<<<<<< HEAD
-                <div className="font-bold text-sm sm:text-base capitalize">Systems Status: {stats?.systemHealth ?? "Healthy"}</div>
-                <div className="text-xs opacity-80 mt-0.5">Telemetry verified at {stats?.lastRefreshed ? new Date(stats.lastRefreshed).toLocaleTimeString() : "N/A"}</div>
-              </div>
-            </div>
-            
-=======
                 <div className="font-bold text-sm sm:text-base capitalize">
                   Systems Status: {stats?.systemHealth ?? "Healthy"}
                 </div>
@@ -575,7 +470,6 @@ function InfrastructurePageContent() {
               </div>
             </div>
 
->>>>>>> 529569b (Deploy CalcZen V2)
             <div className="text-xs font-semibold px-3 py-1 rounded bg-black/20 border border-white/5 uppercase tracking-wide hidden sm:block">
               Free Tier Enforced
             </div>
@@ -584,45 +478,29 @@ function InfrastructurePageContent() {
           {/* Infrastructure cards metrics */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 flex items-center gap-3">
-<<<<<<< HEAD
-              <div className="p-2 rounded bg-emerald-500/10 text-emerald-400 shrink-0"><Server size={20} /></div>
-=======
               <div className="p-2 rounded bg-emerald-500/10 text-emerald-400 shrink-0">
                 <Server size={20} />
               </div>
->>>>>>> 529569b (Deploy CalcZen V2)
               <div>
                 <p className="text-xs text-[var(--color-muted)] font-medium">Backend (Render)</p>
                 <p className="text-lg sm:text-xl font-bold text-white mt-0.5">Healthy</p>
               </div>
             </div>
-<<<<<<< HEAD
-            
-            <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 flex items-center gap-3">
-              <div className="p-2 rounded bg-indigo-500/10 text-indigo-400 shrink-0"><Database size={20} /></div>
-=======
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 flex items-center gap-3">
               <div className="p-2 rounded bg-indigo-500/10 text-indigo-400 shrink-0">
                 <Database size={20} />
               </div>
->>>>>>> 529569b (Deploy CalcZen V2)
               <div>
                 <p className="text-xs text-[var(--color-muted)] font-medium">Database (Supabase)</p>
                 <p className="text-lg sm:text-xl font-bold text-white mt-0.5">Healthy</p>
               </div>
             </div>
-<<<<<<< HEAD
-            
-            <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 flex items-center gap-3">
-              <div className="p-2 rounded bg-amber-500/10 text-amber-400 shrink-0"><Mail size={20} /></div>
-=======
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 flex items-center gap-3">
               <div className="p-2 rounded bg-amber-500/10 text-amber-400 shrink-0">
                 <Mail size={20} />
               </div>
->>>>>>> 529569b (Deploy CalcZen V2)
               <div>
                 <p className="text-xs text-[var(--color-muted)] font-medium">Mailing (Resend)</p>
                 <p className="text-lg sm:text-xl font-bold text-white mt-0.5">Healthy</p>
@@ -630,13 +508,9 @@ function InfrastructurePageContent() {
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 flex items-center gap-3">
-<<<<<<< HEAD
-              <div className="p-2 rounded bg-sky-500/10 text-sky-400 shrink-0"><Shield size={20} /></div>
-=======
               <div className="p-2 rounded bg-sky-500/10 text-sky-400 shrink-0">
                 <Shield size={20} />
               </div>
->>>>>>> 529569b (Deploy CalcZen V2)
               <div>
                 <p className="text-xs text-[var(--color-muted)] font-medium">Proxy (Cloudflare)</p>
                 <p className="text-lg sm:text-xl font-bold text-white mt-0.5">Active</p>
@@ -650,23 +524,15 @@ function InfrastructurePageContent() {
               <Cpu size={18} className="text-indigo-400" />
               Infrastructure Limits & Quotas
             </h2>
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
             <div className="space-y-6">
               {/* Meter 1: Render Instance Hours */}
               <div>
                 <div className="flex justify-between items-center text-xs mb-1.5">
                   <span className="font-semibold text-slate-300">Render Free Instance Hours</span>
-<<<<<<< HEAD
-                  <span className="text-[var(--color-muted)] font-mono">{renderFreeHoursUsed} / {renderFreeHoursLimit} hrs ({renderPlanUsagePercent}%)</span>
-=======
                   <span className="text-[var(--color-muted)] font-mono">
                     {renderFreeHoursUsed} / {renderFreeHoursLimit} hrs ({renderPlanUsagePercent}%)
                   </span>
->>>>>>> 529569b (Deploy CalcZen V2)
                 </div>
                 <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden border border-white/5">
                   <div
@@ -674,13 +540,9 @@ function InfrastructurePageContent() {
                     style={{ width: `${renderPlanUsagePercent}%` }}
                   />
                 </div>
-<<<<<<< HEAD
-                <p className="text-[10px] text-[var(--color-muted)] mt-1.5">Calculates continuous server runtime this month. Resets on 1st of month.</p>
-=======
                 <p className="text-[10px] text-[var(--color-muted)] mt-1.5">
                   Calculates continuous server runtime this month. Resets on 1st of month.
                 </p>
->>>>>>> 529569b (Deploy CalcZen V2)
               </div>
 
               {/* Meter 2: Supabase Storage */}
@@ -690,14 +552,10 @@ function InfrastructurePageContent() {
                     Supabase Storage
                     {getWarningBadge(Math.round(storagePercent))}
                   </span>
-<<<<<<< HEAD
-                  <span className="text-[var(--color-muted)] font-mono">{supabaseStorageUsedMb} / {supabaseStorageLimitMb} MB ({(storagePercent).toFixed(1)}%)</span>
-=======
                   <span className="text-[var(--color-muted)] font-mono">
                     {supabaseStorageUsedMb} / {supabaseStorageLimitMb} MB (
                     {storagePercent.toFixed(1)}%)
                   </span>
->>>>>>> 529569b (Deploy CalcZen V2)
                 </div>
                 <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden border border-white/5">
                   <div
@@ -714,14 +572,10 @@ function InfrastructurePageContent() {
                     Supabase Database Size
                     {getWarningBadge(Math.round(dbSizePercent))}
                   </span>
-<<<<<<< HEAD
-                  <span className="text-[var(--color-muted)] font-mono">{supabaseDatabaseSizeMb} / {supabaseDatabaseLimitMb} MB ({(dbSizePercent).toFixed(1)}%)</span>
-=======
                   <span className="text-[var(--color-muted)] font-mono">
                     {supabaseDatabaseSizeMb} / {supabaseDatabaseLimitMb} MB (
                     {dbSizePercent.toFixed(1)}%)
                   </span>
->>>>>>> 529569b (Deploy CalcZen V2)
                 </div>
                 <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden border border-white/5">
                   <div
@@ -738,14 +592,10 @@ function InfrastructurePageContent() {
                     Resend Monthly Email Quota
                     {getWarningBadge(Math.round(resendLimitPercent))}
                   </span>
-<<<<<<< HEAD
-                  <span className="text-[var(--color-muted)] font-mono">{resendSentThisMonth} / {resendLimitThisMonth} Emails ({resendLimitPercent.toFixed(1)}%)</span>
-=======
                   <span className="text-[var(--color-muted)] font-mono">
                     {resendSentThisMonth} / {resendLimitThisMonth} Emails (
                     {resendLimitPercent.toFixed(1)}%)
                   </span>
->>>>>>> 529569b (Deploy CalcZen V2)
                 </div>
                 <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden border border-white/5">
                   <div
@@ -770,11 +620,7 @@ function InfrastructurePageContent() {
                 Healthy <span className="h-2 w-2 bg-emerald-500 rounded-full animate-ping" />
               </p>
             </div>
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Backend Uptime</p>
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">{renderUptime}%</p>
@@ -782,51 +628,30 @@ function InfrastructurePageContent() {
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">API Response Time</p>
-<<<<<<< HEAD
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{renderResponseTime}ms</p>
-=======
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">
                 {renderResponseTime}ms
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Active Connections</p>
-<<<<<<< HEAD
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{renderActiveRequests} req/s</p>
-=======
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">
                 {renderActiveRequests} req/s
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Limit breakdown */}
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
-<<<<<<< HEAD
-              <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider text-indigo-400">Monthly Resource Limits</h3>
-              
-=======
               <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider text-indigo-400">
                 Monthly Resource Limits
               </h3>
 
->>>>>>> 529569b (Deploy CalcZen V2)
               <div className="space-y-5">
                 <div>
                   <div className="flex justify-between items-center text-xs mb-1">
                     <span className="text-slate-300">Free Instance Hours</span>
-<<<<<<< HEAD
-                    <span className="font-semibold text-white">{renderFreeHoursUsed} / {renderFreeHoursLimit} hrs</span>
-                  </div>
-                  <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/5">
-                    <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${renderPlanUsagePercent}%` }} />
-                  </div>
-                  <p className="text-[10px] text-[var(--color-muted)] mt-1">{renderFreeHoursLimit - renderFreeHoursUsed} hours remaining this billing month.</p>
-=======
                     <span className="font-semibold text-white">
                       {renderFreeHoursUsed} / {renderFreeHoursLimit} hrs
                     </span>
@@ -840,20 +665,11 @@ function InfrastructurePageContent() {
                   <p className="text-[10px] text-[var(--color-muted)] mt-1">
                     {renderFreeHoursLimit - renderFreeHoursUsed} hours remaining this billing month.
                   </p>
->>>>>>> 529569b (Deploy CalcZen V2)
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center text-xs mb-1">
                     <span className="text-slate-300">Outbound Bandwidth Egress</span>
-<<<<<<< HEAD
-                    <span className="font-semibold text-white">{renderBandwidthUsedGb} / {renderBandwidthLimitGb} GB</span>
-                  </div>
-                  <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/5">
-                    <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${renderBandwidthPercent}%` }} />
-                  </div>
-                  <p className="text-[10px] text-[var(--color-muted)] mt-1">{Math.max(0, Math.round(renderBandwidthLimitGb - renderBandwidthUsedGb))} GB free bandwidth remaining.</p>
-=======
                     <span className="font-semibold text-white">
                       {renderBandwidthUsedGb} / {renderBandwidthLimitGb} GB
                     </span>
@@ -868,22 +684,16 @@ function InfrastructurePageContent() {
                     {Math.max(0, Math.round(renderBandwidthLimitGb - renderBandwidthUsedGb))} GB
                     free bandwidth remaining.
                   </p>
->>>>>>> 529569b (Deploy CalcZen V2)
                 </div>
               </div>
             </div>
 
             {/* Performance Indicators */}
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
-<<<<<<< HEAD
-              <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider text-indigo-400">Server Metrics & Deployments</h3>
-              
-=======
               <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider text-indigo-400">
                 Server Metrics & Deployments
               </h3>
 
->>>>>>> 529569b (Deploy CalcZen V2)
               <dl className="grid grid-cols-2 gap-4 text-xs">
                 <div className="border border-white/5 bg-black/20 p-3.5 rounded-lg">
                   <dt className="text-[var(--color-muted)] flex items-center gap-1.5 mb-1">
@@ -932,24 +742,13 @@ function InfrastructurePageContent() {
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">API Requests</p>
-<<<<<<< HEAD
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{supabaseApiRequests.toLocaleString()}</p>
-=======
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">
                 {supabaseApiRequests.toLocaleString()}
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Database Size</p>
-<<<<<<< HEAD
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{supabaseDatabaseSizeMb} MB</p>
-            </div>
-
-            <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
-              <p className="text-xs text-[var(--color-muted)] font-semibold">Total Registered Users</p>
-=======
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">
                 {supabaseDatabaseSizeMb} MB
               </p>
@@ -959,32 +758,20 @@ function InfrastructurePageContent() {
               <p className="text-xs text-[var(--color-muted)] font-semibold">
                 Total Registered Users
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">{supabaseTotalUsers}</p>
             </div>
           </div>
 
           {/* Database sizes progress meters */}
           <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
-<<<<<<< HEAD
-            <h3 className="text-sm font-bold text-white mb-5 uppercase tracking-wider text-indigo-400">Database Quotas Breakdown</h3>
-            
-=======
             <h3 className="text-sm font-bold text-white mb-5 uppercase tracking-wider text-indigo-400">
               Database Quotas Breakdown
             </h3>
 
->>>>>>> 529569b (Deploy CalcZen V2)
             <div className="space-y-6">
               <div>
                 <div className="flex justify-between items-center text-xs mb-1.5">
                   <span className="font-semibold text-slate-300">Database Size</span>
-<<<<<<< HEAD
-                  <span className="text-[var(--color-muted)] font-mono">{supabaseDatabaseSizeMb} / {supabaseDatabaseLimitMb} MB ({dbSizePercent.toFixed(2)}%)</span>
-                </div>
-                <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/5">
-                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${dbSizePercent}%` }} />
-=======
                   <span className="text-[var(--color-muted)] font-mono">
                     {supabaseDatabaseSizeMb} / {supabaseDatabaseLimitMb} MB (
                     {dbSizePercent.toFixed(2)}%)
@@ -995,19 +782,12 @@ function InfrastructurePageContent() {
                     className="bg-indigo-500 h-full rounded-full"
                     style={{ width: `${dbSizePercent}%` }}
                   />
->>>>>>> 529569b (Deploy CalcZen V2)
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between items-center text-xs mb-1.5">
                   <span className="font-semibold text-slate-300">Storage Size</span>
-<<<<<<< HEAD
-                  <span className="text-[var(--color-muted)] font-mono">{supabaseStorageUsedMb} / {supabaseStorageLimitMb} MB ({storagePercent.toFixed(2)}%)</span>
-                </div>
-                <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/5">
-                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${storagePercent}%` }} />
-=======
                   <span className="text-[var(--color-muted)] font-mono">
                     {supabaseStorageUsedMb} / {supabaseStorageLimitMb} MB (
                     {storagePercent.toFixed(2)}%)
@@ -1018,19 +798,12 @@ function InfrastructurePageContent() {
                     className="bg-indigo-500 h-full rounded-full"
                     style={{ width: `${storagePercent}%` }}
                   />
->>>>>>> 529569b (Deploy CalcZen V2)
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between items-center text-xs mb-1.5">
                   <span className="font-semibold text-slate-300">Storage Bandwidth</span>
-<<<<<<< HEAD
-                  <span className="text-[var(--color-muted)] font-mono">{supabaseBandwidthUsedGb} / {supabaseBandwidthLimitGb} GB ({supabaseBandwidthPercent.toFixed(2)}%)</span>
-                </div>
-                <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/5">
-                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${supabaseBandwidthPercent}%` }} />
-=======
                   <span className="text-[var(--color-muted)] font-mono">
                     {supabaseBandwidthUsedGb} / {supabaseBandwidthLimitGb} GB (
                     {supabaseBandwidthPercent.toFixed(2)}%)
@@ -1041,7 +814,6 @@ function InfrastructurePageContent() {
                     className="bg-indigo-500 h-full rounded-full"
                     style={{ width: `${supabaseBandwidthPercent}%` }}
                   />
->>>>>>> 529569b (Deploy CalcZen V2)
                 </div>
               </div>
             </div>
@@ -1058,59 +830,31 @@ function InfrastructurePageContent() {
               <p className="text-xs text-[var(--color-muted)] font-semibold">Resend Status</p>
               <p className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">Healthy</p>
             </div>
-<<<<<<< HEAD
-            
-            <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
-              <p className="text-xs text-[var(--color-muted)] font-semibold">Emails Sent Today</p>
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{resendSentToday} / {resendLimitToday}</p>
-=======
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Emails Sent Today</p>
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">
                 {resendSentToday} / {resendLimitToday}
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Delivery Rate</p>
-<<<<<<< HEAD
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{resendDeliveryRatePercent}%</p>
-=======
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">
                 {resendDeliveryRatePercent}%
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Bounce Rate</p>
-<<<<<<< HEAD
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{resendBounceRatePercent}%</p>
-=======
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">
                 {resendBounceRatePercent}%
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
           </div>
 
           {/* Limit progress */}
           <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
-<<<<<<< HEAD
-            <h3 className="text-sm font-bold text-white mb-5 uppercase tracking-wider text-indigo-400">Monthly Email Limit</h3>
-            
-            <div>
-              <div className="flex justify-between items-center text-xs mb-1.5">
-                <span className="font-semibold text-slate-300">Free Tier Limit</span>
-                <span className="text-[var(--color-muted)] font-mono">{resendSentThisMonth} / {resendLimitThisMonth} Emails Used</span>
-              </div>
-              <div className="w-full bg-black/40 h-3 rounded-full overflow-hidden border border-white/5">
-                <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${resendLimitPercent}%` }} />
-              </div>
-              <p className="text-xs text-[var(--color-muted)] mt-2">Provides {Math.max(0, resendLimitThisMonth - resendSentThisMonth)} emails remaining this billing month.</p>
-=======
             <h3 className="text-sm font-bold text-white mb-5 uppercase tracking-wider text-indigo-400">
               Monthly Email Limit
             </h3>
@@ -1132,7 +876,6 @@ function InfrastructurePageContent() {
                 Provides {Math.max(0, resendLimitThisMonth - resendSentThisMonth)} emails remaining
                 this billing month.
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
           </div>
         </div>
@@ -1145,46 +888,30 @@ function InfrastructurePageContent() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">DNS / SSL Status</p>
-<<<<<<< HEAD
-              <p className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1 capitalize">{cloudflareDnsStatus} / {cloudflareSslStatus}</p>
-=======
               <p className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1 capitalize">
                 {cloudflareDnsStatus} / {cloudflareSslStatus}
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Total Requests</p>
-<<<<<<< HEAD
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{cloudflareTotalRequests.toLocaleString()}</p>
-=======
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">
                 {cloudflareTotalRequests.toLocaleString()}
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Cache Hit Rate</p>
-<<<<<<< HEAD
-              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{cloudflareCacheHitRatePercent}%</p>
-=======
               <p className="text-xl sm:text-2xl font-bold text-white mt-1">
                 {cloudflareCacheHitRatePercent}%
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4">
               <p className="text-xs text-[var(--color-muted)] font-semibold">Security Blocked</p>
-<<<<<<< HEAD
-              <p className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">{cloudflareThreatsBlocked} threats</p>
-=======
               <p className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">
                 {cloudflareThreatsBlocked} threats
               </p>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
           </div>
 
@@ -1193,11 +920,7 @@ function InfrastructurePageContent() {
             <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider text-indigo-400 flex items-center gap-2">
               <TrendingUp size={16} /> Request Traffic Trends (7-Day Cache & Egress)
             </h3>
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
             <div className="h-56 relative w-full pt-4">
               {/* We construct an ultra-premium neon glowing SVG Area Chart representing Cloudflare Cached vs Uncached Requests */}
               <svg className="w-full h-full" viewBox="0 0 700 200" preserveAspectRatio="none">
@@ -1213,11 +936,6 @@ function InfrastructurePageContent() {
                 </defs>
 
                 {/* Gridlines */}
-<<<<<<< HEAD
-                <line x1="0" y1="50" x2="700" y2="50" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-                <line x1="0" y1="100" x2="700" y2="100" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-                <line x1="0" y1="150" x2="700" y2="150" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-=======
                 <line
                   x1="0"
                   y1="50"
@@ -1242,7 +960,6 @@ function InfrastructurePageContent() {
                   stroke="rgba(255,255,255,0.04)"
                   strokeWidth="1"
                 />
->>>>>>> 529569b (Deploy CalcZen V2)
 
                 {/* Area 1: Total requests */}
                 <path
@@ -1303,11 +1020,7 @@ function InfrastructurePageContent() {
                 />
               </svg>
             </div>
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
             {/* Legend row */}
             <div className="flex justify-between items-center text-xs mt-3 border-t border-white/5 pt-3">
               <div className="flex items-center gap-4">
@@ -1318,13 +1031,9 @@ function InfrastructurePageContent() {
                   <span className="h-2.5 w-2.5 bg-emerald-500 rounded-full" /> Cached Requests
                 </span>
               </div>
-<<<<<<< HEAD
-              <span className="text-[var(--color-muted)] font-mono font-semibold">Cache hit: {cloudflareCacheHitRatePercent}%</span>
-=======
               <span className="text-[var(--color-muted)] font-mono font-semibold">
                 Cache hit: {cloudflareCacheHitRatePercent}%
               </span>
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
           </div>
         </div>
@@ -1336,12 +1045,6 @@ function InfrastructurePageContent() {
           {/* Metric cards grid */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 flex items-center gap-3">
-<<<<<<< HEAD
-              <div className="p-2 rounded bg-indigo-500/10 text-indigo-400"><Users size={20} /></div>
-              <div>
-                <p className="text-xs text-[var(--color-muted)] font-semibold">Unique Visitors Today</p>
-                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{calczenVisitorsToday.toLocaleString()}</p>
-=======
               <div className="p-2 rounded bg-indigo-500/10 text-indigo-400">
                 <Users size={20} />
               </div>
@@ -1352,17 +1055,10 @@ function InfrastructurePageContent() {
                 <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">
                   {calczenVisitorsToday.toLocaleString()}
                 </p>
->>>>>>> 529569b (Deploy CalcZen V2)
               </div>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 flex items-center gap-3">
-<<<<<<< HEAD
-              <div className="p-2 rounded bg-indigo-500/10 text-indigo-400"><Activity size={20} /></div>
-              <div>
-                <p className="text-xs text-[var(--color-muted)] font-semibold">Calculator Calculations</p>
-                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{calczenTotalCalculatorUses.toLocaleString()}</p>
-=======
               <div className="p-2 rounded bg-indigo-500/10 text-indigo-400">
                 <Activity size={20} />
               </div>
@@ -1373,17 +1069,10 @@ function InfrastructurePageContent() {
                 <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">
                   {calczenTotalCalculatorUses.toLocaleString()}
                 </p>
->>>>>>> 529569b (Deploy CalcZen V2)
               </div>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 flex items-center gap-3">
-<<<<<<< HEAD
-              <div className="p-2 rounded bg-indigo-500/10 text-indigo-400"><Mail size={20} /></div>
-              <div>
-                <p className="text-xs text-[var(--color-muted)] font-semibold">Newsletter Subscriptions</p>
-                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{calczenNewsletterSubscribers.toLocaleString()}</p>
-=======
               <div className="p-2 rounded bg-indigo-500/10 text-indigo-400">
                 <Mail size={20} />
               </div>
@@ -1394,17 +1083,10 @@ function InfrastructurePageContent() {
                 <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">
                   {calczenNewsletterSubscribers.toLocaleString()}
                 </p>
->>>>>>> 529569b (Deploy CalcZen V2)
               </div>
             </div>
 
             <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 flex items-center gap-3">
-<<<<<<< HEAD
-              <div className="p-2 rounded bg-indigo-500/10 text-indigo-400"><Sparkles size={20} /></div>
-              <div>
-                <p className="text-xs text-[var(--color-muted)] font-semibold">Total Blog Views</p>
-                <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">{calczenBlogViews.toLocaleString()}</p>
-=======
               <div className="p-2 rounded bg-indigo-500/10 text-indigo-400">
                 <Sparkles size={20} />
               </div>
@@ -1413,7 +1095,6 @@ function InfrastructurePageContent() {
                 <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">
                   {calczenBlogViews.toLocaleString()}
                 </p>
->>>>>>> 529569b (Deploy CalcZen V2)
               </div>
             </div>
           </div>
@@ -1424,11 +1105,7 @@ function InfrastructurePageContent() {
               <h3 className="text-sm font-bold text-white mb-5 uppercase tracking-wider text-indigo-400 flex items-center gap-2">
                 <BarChart3 size={16} /> Visitors & Calculator Engagement (7-Day Trend)
               </h3>
-<<<<<<< HEAD
-              
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
               <div className="h-56 relative w-full pt-4 flex items-end justify-between px-2 gap-4">
                 {/* 7 responsive columns of customized CSS/SVG bar elements representing traffic scale */}
                 {calczenUsageTrends.map((trend: any, idx: number) => {
@@ -1439,37 +1116,23 @@ function InfrastructurePageContent() {
 
                   return (
                     <div key={idx} className="flex-1 flex flex-col items-center">
-<<<<<<< HEAD
-                       <div className="w-full flex items-end justify-center gap-1 h-36">
-                        {/* Visitors Bar */}
-                        <div 
-=======
                       <div className="w-full flex items-end justify-center gap-1 h-36">
                         {/* Visitors Bar */}
                         <div
->>>>>>> 529569b (Deploy CalcZen V2)
                           className="w-2.5 sm:w-3.5 bg-indigo-500 rounded-t shadow-[0_0_8px_rgba(99,102,241,0.25)]"
                           style={{ height: `${visitorsHeight}%` }}
                           title={`Visitors: ${visitors}`}
                         />
                         {/* Calculator Uses Bar */}
-<<<<<<< HEAD
-                        <div 
-=======
                         <div
->>>>>>> 529569b (Deploy CalcZen V2)
                           className="w-2.5 sm:w-3.5 bg-sky-400 rounded-t shadow-[0_0_8px_rgba(56,189,248,0.25)]"
                           style={{ height: `${calcUsesHeight}%` }}
                           title={`Calculation Runs: ${calcUses}`}
                         />
                       </div>
-<<<<<<< HEAD
-                      <span className="text-[10px] text-[var(--color-muted)] mt-2 font-mono">{trend?.date ?? "N/A"}</span>
-=======
                       <span className="text-[10px] text-[var(--color-muted)] mt-2 font-mono">
                         {trend?.date ?? "N/A"}
                       </span>
->>>>>>> 529569b (Deploy CalcZen V2)
                     </div>
                   );
                 })}
@@ -1488,15 +1151,10 @@ function InfrastructurePageContent() {
 
             {/* Popular tools metrics details */}
             <div className="lg:col-span-4 rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5 flex flex-col justify-between">
-<<<<<<< HEAD
-              <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider text-indigo-400">Calculator Popularity</h3>
-              
-=======
               <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider text-indigo-400">
                 Calculator Popularity
               </h3>
 
->>>>>>> 529569b (Deploy CalcZen V2)
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-black/20 border border-white/5">
                   <div className="text-xs text-[var(--color-muted)]">Popular Tool This Week</div>
@@ -1533,11 +1191,7 @@ function InfrastructurePageContent() {
             <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider text-indigo-400 flex items-center gap-2">
               <AlertTriangle size={16} /> Integrated Systems Status Log
             </h3>
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
             <div className="space-y-3">
               {alerts.map((alert: any) => (
                 <div
@@ -1567,11 +1221,7 @@ function InfrastructurePageContent() {
                       <span className="font-semibold">{alert?.message ?? "Metrics check ok"}</span>
                     </div>
                   </div>
-<<<<<<< HEAD
-                  
-=======
 
->>>>>>> 529569b (Deploy CalcZen V2)
                   <div className="text-[10px] opacity-70 font-mono self-end sm:self-center">
                     {alert?.timestamp ? new Date(alert.timestamp).toLocaleTimeString() : "N/A"}
                   </div>

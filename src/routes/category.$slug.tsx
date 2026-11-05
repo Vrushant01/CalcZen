@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+﻿import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageShell } from "@/components/layout/PageShell";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { CalculatorCard } from "@/components/CalculatorCard";
@@ -143,8 +143,6 @@ const CATEGORY_LANDING_DATA: Record<
       { slug: "math", name: "Math Calculators" },
     ],
   },
-<<<<<<< HEAD
-=======
   "salary-and-employment": {
     intro:
       "Explore comprehensive salary and employment calculators designed for employees, HR specialists, and hiring managers. Calculate your monthly take-home salary from total annual CTC, break down statutory EPF, Gratuity, ESI, Professional Tax, and compare tax liability under the New and Old Tax Regimes for FY 2026-27.",
@@ -283,7 +281,6 @@ const CATEGORY_LANDING_DATA: Record<
       { slug: "math", name: "Math & Percentage Calculators" },
     ],
   },
->>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 function CategoryPage() {
@@ -317,9 +314,6 @@ function CategoryPage() {
                 ? "Scientific Health, Fitness, and Wellness Calculators"
                 : cat.slug === "math"
                   ? "Free Math, Percentage, and Everyday Arithmetic Calculators"
-<<<<<<< HEAD
-                  : "Useful Lifestyle, Bill Splitting, and Date Calculators"}
-=======
                   : cat.slug === "salary-and-employment"
                     ? "Salary, CTC, In-Hand Pay & Employment Calculators"
                     : cat.slug === "jewellery"
@@ -331,7 +325,6 @@ function CategoryPage() {
                           : cat.slug === "business"
                             ? "Business, Profit Margin, Markup & Pricing Calculators"
                             : "Useful Lifestyle, Bill Splitting, and Date Calculators"}
->>>>>>> 529569b (Deploy CalcZen V2)
           </h1>
           <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-4xl leading-relaxed">
             {data.intro}

@@ -1,4 +1,4 @@
-import fs from "node:fs";
+﻿import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express, { type Express, type NextFunction, type Request, type Response } from "express";
@@ -20,14 +20,7 @@ import newsletterRoutes from "./routes/newsletterRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import subscribeRoutes from "./routes/subscribeRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
-<<<<<<< HEAD
-import { findPublishedBlogBySlug, listPublishedBlogs } from "./services/blogService.js";
-import { renderBlogDetailHtml, renderBlogListHtml } from "./utils/blogHtmlRenderer.js";
-import type { ApiBlog } from "./types/database.js";
-import { backfillBase64Images } from "./scripts/backfillBase64Images.js";
-=======
 import { findPublishedBlogBySlug } from "./services/blogService.js";
->>>>>>> 529569b (Deploy CalcZen V2)
 
 import { formatDbError } from "./utils/errors.js";
 
@@ -47,14 +40,7 @@ function resolveAdminDist(): string {
 }
 
 function resolvePublicDist(): string {
-<<<<<<< HEAD
-  const candidates = [
-    path.resolve(process.cwd(), "dist"),
-    path.resolve(__dirname, "../../dist"),
-  ];
-=======
   const candidates = [path.resolve(process.cwd(), "dist"), path.resolve(__dirname, "../../dist")];
->>>>>>> 529569b (Deploy CalcZen V2)
   for (const dir of candidates) {
     if (fs.existsSync(path.join(dir, "index.html"))) {
       return dir;
@@ -69,15 +55,9 @@ async function ensureDb(): Promise<void> {
   if (!dbVerified && hasDbConfig()) {
     const ok = await verifySupabaseConnection();
     if (!ok) {
-<<<<<<< HEAD
-      console.warn("Supabase connection check failed — ensure tables exist (run supabase/schema.sql).");
-    } else {
-      void backfillBase64Images();
-=======
       console.warn(
         "Supabase connection check failed — ensure tables exist (run supabase/schema.sql).",
       );
->>>>>>> 529569b (Deploy CalcZen V2)
     }
     dbVerified = true;
   }
@@ -86,50 +66,6 @@ async function ensureDb(): Promise<void> {
 const calculatorMeta: Record<string, { title: string; description: string }> = {
   "mortgage-calculator": {
     title: "Mortgage Calculator - Estimate Monthly Home Loan Payments | CalcZen",
-<<<<<<< HEAD
-    description: "Calculate monthly mortgage payments, interest rates, taxes, and HOA fees instantly. Estimate your home loan costs and budget with our free calculator."
-  },
-  "compound-interest-calculator": {
-    title: "Compound Interest Calculator - Calculate Savings Growth Online | CalcZen",
-    description: "Calculate compound interest growth for your savings and investments. See detailed annual compound schedules and charts to visualize your future wealth."
-  },
-  "loan-emi-calculator": {
-    title: "Loan EMI Calculator - Calculate Monthly Loan Payments Online | CalcZen",
-    description: "Calculate your monthly loan EMI payouts, interest payable, and total loan payment instantly. Plan home, car, or personal loan budgets with our tool."
-  },
-  "bmi-calculator": {
-    title: "BMI Calculator - Calculate Body Mass Index Online | CalcZen",
-    description: "Calculate your Body Mass Index (BMI) instantly. Understand your healthy weight category and track your health fitness metrics online with our tool."
-  },
-  "calorie-calculator": {
-    title: "Calorie Calculator - Calculate Daily Calorie Needs Online | CalcZen",
-    description: "Estimate daily calorie needs for weight loss, gain, or maintenance. Calculate your TDEE based on height, weight, activity, and fitness goals easily."
-  },
-  "water-intake-calculator": {
-    title: "Water Intake Calculator - Calculate Daily Hydration Needs | CalcZen",
-    description: "Calculate your daily water intake needs based on weight, exercise time, and climate. Keep hydrated and track your daily hydration goals with ease."
-  },
-  "pregnancy-due-date-calculator": {
-    title: "Pregnancy Due Date Calculator - Calculate Baby Due Date | CalcZen",
-    description: "Estimate your baby's due date, gestational age, and pregnancy progress timeline instantly. Track your pregnancy milestones online using clinical metrics."
-  },
-  "percentage-calculator": {
-    title: "Percentage Calculator - Calculate Percent Shifts and Ratios | CalcZen",
-    description: "Calculate percentage increases, decreases, differences, and fractional shifts instantly. Solve school or business percent math equations in seconds."
-  },
-  "age-calculator": {
-    title: "Age Calculator - Calculate Exact Age from Date of Birth | CalcZen",
-    description: "Calculate your exact age in years, months, days, minutes, and seconds from your birthdate. Find the time remaining until your next birthday instantly."
-  },
-  "tip-calculator": {
-    title: "Tip Calculator - Calculate Restaurant Tips & Split Bills | CalcZen",
-    description: "Calculate tip percentages and split restaurant bills evenly among friends in seconds. Manage tipping amounts and group payment transactions fairly."
-  },
-  "bmr-calculator": {
-    title: "BMR Calculator - Calculate Basal Metabolic Rate Online | CalcZen",
-    description: "Calculate your Basal Metabolic Rate (BMR) instantly. Estimate calories burned at rest based on height, weight, gender, and age for fitness planning."
-  }
-=======
     description:
       "Calculate monthly mortgage payments, interest rates, taxes, and HOA fees instantly. Estimate your home loan costs and budget with our free calculator.",
   },
@@ -183,28 +119,11 @@ const calculatorMeta: Record<string, { title: string; description: string }> = {
     description:
       "Calculate your Basal Metabolic Rate (BMR) instantly. Estimate calories burned at rest based on height, weight, gender, and age for fitness planning.",
   },
->>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 const categoryMeta: Record<string, { title: string; description: string }> = {
   finance: {
     title: "Finance Calculators - Loans, investments, savings & more | CalcZen",
-<<<<<<< HEAD
-    description: "Explore our free online finance calculators for mortgages, loan EMIs, compound interest growth, and daily financial planning."
-  },
-  health: {
-    title: "Health & Fitness Calculators - BMI, calories, BMR & more | CalcZen",
-    description: "Track your fitness goals with our free health calculators. Estimate BMI, daily calorie targets, BMR, water intake, and pregnancy milestones."
-  },
-  math: {
-    title: "Math & Percentage Calculators - Ratios, age & GPA | CalcZen",
-    description: "Solve math equations and daily figures easily. Free percentage calculators, age estimators, ratio solvers, and academic GPA helpers."
-  },
-  everyday: {
-    title: "Everyday Calculators - Tips, dates, fuel & lifestyle | CalcZen",
-    description: "Simple online tools for daily tasks. Split restaurant bills, calculate tips, analyze fuel costs, and organize your lifestyle with ease."
-  }
-=======
     description:
       "Explore our free online finance calculators for mortgages, loan EMIs, compound interest growth, and daily financial planning.",
   },
@@ -223,336 +142,10 @@ const categoryMeta: Record<string, { title: string; description: string }> = {
     description:
       "Simple online tools for daily tasks. Split restaurant bills, calculate tips, analyze fuel costs, and organize your lifestyle with ease.",
   },
->>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 function getCanonicalUrl(urlPath: string): string {
   const pathPart = urlPath.endsWith("/") && urlPath !== "/" ? urlPath.slice(0, -1) : urlPath;
-<<<<<<< HEAD
-  return `https://calczen.in${pathPart}`;
-}
-
-interface DynamicMetadata {
-  title: string;
-  description: string;
-  canonical: string;
-  h1: string;
-  jsonld?: any;
-  featured_image?: string | null;
-  notFound?: boolean;
-  bodyHtml?: string;
-}
-
-export function isBrowserPageRequest(req: Request): boolean {
-  if (req.path.startsWith("/admin")) return false;
-
-  // Determine the true path (checking for Vercel's rewrite headers)
-  let checkPath = req.path;
-  const matchedPath = req.headers["x-matched-path"];
-  if (typeof matchedPath === "string" && matchedPath) {
-    checkPath = matchedPath;
-  } else {
-    const originalUrl = req.headers["x-original-url"];
-    if (typeof originalUrl === "string" && originalUrl) {
-      checkPath = originalUrl.split("?")[0];
-    } else {
-      const forwardedUrl = req.headers["x-forwarded-url"];
-      if (typeof forwardedUrl === "string" && forwardedUrl) {
-        try {
-          if (forwardedUrl.startsWith("http")) {
-            checkPath = new URL(forwardedUrl).pathname;
-          } else {
-            checkPath = forwardedUrl.split("?")[0];
-          }
-        } catch {}
-      }
-    }
-  }
-
-  // It is a page request if the true path does NOT start with /api, /admin, and has no file extension
-  const startsWithApi = checkPath.startsWith("/api") || req.path.startsWith("/api");
-  const startsWithAdmin = checkPath.startsWith("/admin") || req.path.startsWith("/admin");
-  const hasFileExtension = !!checkPath.match(/\.[a-zA-Z0-9]+$/) || !!req.path.match(/\.[a-zA-Z0-9]+$/);
-
-  return !startsWithApi && !startsWithAdmin && !hasFileExtension;
-}
-
-export function getOriginalRequestPath(req: Request): string {
-  const matchedPath = req.headers["x-matched-path"];
-  if (typeof matchedPath === "string" && matchedPath) {
-    return matchedPath;
-  }
-  const originalUrl = req.headers["x-original-url"];
-  if (typeof originalUrl === "string" && originalUrl) {
-    return originalUrl.split("?")[0];
-  }
-  const forwardedUrl = req.headers["x-forwarded-url"];
-  if (typeof forwardedUrl === "string" && forwardedUrl) {
-    try {
-      if (forwardedUrl.startsWith("http")) {
-        return new URL(forwardedUrl).pathname;
-      }
-      return forwardedUrl.split("?")[0];
-    } catch {}
-  }
-  return req.path;
-}
-
-async function getDynamicMetadata(urlPath: string): Promise<DynamicMetadata> {
-  const canonical = getCanonicalUrl(urlPath);
-  
-  let title = "Free Online Calculators for Finance, Health & Math | CalcZen";
-  let description = "Discover free online calculators for personal finance, health tracking, mathematics, and daily helpers. Get fast, accurate results with transparent formulas.";
-  let h1 = "Free Online Calculators";
-  let jsonld: any = null;
-  let featured_image: string | null = null;
-  let bodyHtml: string | undefined = undefined;
-
-  try {
-    const searchParams = new URL(urlPath, "https://calczen.in").searchParams;
-    const cleanPath = urlPath.split("?")[0];
-    const pathPart = cleanPath.endsWith("/") && cleanPath !== "/" ? cleanPath.slice(0, -1) : cleanPath;
-    const lowercasePath = pathPart.toLowerCase();
-
-    if (lowercasePath === "" || lowercasePath === "/") {
-      title = "Free Online Calculators for Finance, Health & Math | CalcZen";
-      description = "Discover free online calculators for personal finance, health tracking, mathematics, and daily helpers. Get fast, accurate results with transparent formulas.";
-      h1 = "Free Online Calculators";
-      jsonld = [
-        {
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "@id": "https://calczen.in/#website",
-          "url": "https://calczen.in",
-          "name": "CalcZen",
-          "description": description
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "@id": "https://calczen.in/#organization",
-          "url": "https://calczen.in",
-          "name": "CalcZen",
-          "logo": "https://calczen.in/icons/android-chrome-512x512.png"
-        }
-      ];
-    } else if (lowercasePath.startsWith("/calculator/")) {
-      const slug = lowercasePath.replace("/calculator/", "");
-      const meta = calculatorMeta[slug];
-      if (meta) {
-        title = meta.title;
-        description = meta.description;
-        h1 = title.split(" - ")[0];
-        jsonld = [
-          {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://calczen.in"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Calculators",
-                "item": "https://calczen.in/calculators"
-              },
-              {
-                "@type": "ListItem",
-                "position": 3,
-                "name": h1,
-                "item": canonical
-              }
-            ]
-          },
-          {
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "@id": `${canonical}#webapp`,
-            "url": canonical,
-            "name": h1,
-            "applicationCategory": "EducationalApplication",
-            "operatingSystem": "All",
-            "browserRequirements": "Requires HTML5/JavaScript",
-            "description": description
-          }
-        ];
-      } else {
-        title = "Calculator Not Found | CalcZen";
-        description = "The requested calculator could not be found on our platform.";
-        h1 = "Calculator Not Found";
-        return { title, description, canonical, h1, notFound: true };
-      }
-    } else if (lowercasePath.startsWith("/category/")) {
-      const slug = lowercasePath.replace("/category/", "");
-      const meta = categoryMeta[slug];
-      if (meta) {
-        title = meta.title;
-        description = meta.description;
-        const categoryName = slug.charAt(0).toUpperCase() + slug.slice(1);
-        h1 = `${categoryName} Calculators`;
-        jsonld = [
-          {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://calczen.in"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": h1,
-                "item": canonical
-              }
-            ]
-          },
-          {
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "url": canonical,
-            "name": title,
-            "description": description
-          }
-        ];
-      } else {
-        title = "Category Not Found | CalcZen";
-        description = "The requested calculator category could not be found.";
-        h1 = "Category Not Found";
-        return { title, description, canonical, h1, notFound: true };
-      }
-    } else if (lowercasePath.startsWith("/blog/")) {
-      const parts = lowercasePath.split("/").filter(Boolean);
-      const slug = parts[parts.length - 1];
-      try {
-        const blog = await findPublishedBlogBySlug(slug);
-        if (blog) {
-          title = blog.metaTitle || `${blog.title} | CalcZen`;
-          description = blog.metaDescription || blog.excerpt || (blog.content.replace(/<[^>]*>/g, "").substring(0, 155) + "...");
-          h1 = blog.title;
-          jsonld = blog.jsonld;
-          featured_image = blog.featuredImage || blog.thumbnail || null;
-          if (featured_image && !featured_image.startsWith("http") && !featured_image.startsWith("/")) {
-            featured_image = "/" + featured_image;
-          }
-          if (featured_image && featured_image.startsWith("/")) {
-            featured_image = `https://calczen.in${featured_image}`;
-          }
-
-          // Fetch related blogs to compile complete HTML pre-rendering
-          let relatedBlogs: ApiBlog[] = [];
-          try {
-            const relResult = await listPublishedBlogs({
-              category: blog.category,
-              page: 1,
-              limit: 3
-            });
-            relatedBlogs = relResult.blogs.filter(b => b._id !== blog._id).slice(0, 2);
-          } catch (relErr) {
-            console.error("Failed to fetch related blogs for pre-rendering", relErr);
-          }
-
-          bodyHtml = renderBlogDetailHtml(blog, relatedBlogs);
-        } else {
-          title = "Article Not Found | CalcZen";
-          description = "The requested blog article could not be found on CalcZen.";
-          h1 = "Article Not Found";
-          return { title, description, canonical, h1, notFound: true };
-        }
-      } catch (err: any) {
-        console.error(`[METADATA BLOG FETCH ERROR] Failed to fetch blog database entry for slug: ${slug}`, err.message, err.stack);
-      }
-    } else if (lowercasePath === "/about") {
-      title = "About Us - CalcZen";
-      description = "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience.";
-      h1 = "About CalcZen";
-    } else if (lowercasePath === "/contact") {
-      title = "Contact Us - CalcZen";
-      description = "Have questions, feedback, or requests for new calculator tools? Get in touch with the CalcZen team using our contact form for fast, helpful assistance.";
-      h1 = "Contact CalcZen";
-    } else if (lowercasePath === "/privacy") {
-      title = "Privacy Policy - CalcZen";
-      description = "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.";
-      h1 = "Privacy Policy";
-    } else if (lowercasePath === "/terms") {
-      title = "Terms of Service - CalcZen";
-      description = "Read the CalcZen Terms of Service to understand the rules, guidelines, and terms of use for our online calculators, tools, and blog content.";
-      h1 = "Terms of Service";
-    } else if (lowercasePath === "/disclaimer") {
-      title = "Disclaimer - CalcZen";
-      description = "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results.";
-      h1 = "Disclaimer";
-    } else if (lowercasePath === "/calculators") {
-      title = "All Calculators - CalcZen";
-      description = "Browse and search our full directory of free online calculators. Access accurate tools for personal finance, health tracking, math, and daily helpers.";
-      h1 = "All Online Calculators";
-    } else if (lowercasePath === "/blog") {
-      title = "CalcZen Blog - Financial Tips, Health Insights & Math Guides";
-      description = "Expert guides, calculator tutorials, and practical articles on managing personal finance, tracking fitness goals, and solving math problems.";
-      h1 = "CalcZen Blog";
-      try {
-        const categoryQuery = searchParams.get("category") || "";
-        const { blogs, total } = await listPublishedBlogs({
-          category: categoryQuery,
-          page: 1,
-          limit: 10
-        });
-        bodyHtml = renderBlogListHtml(blogs, total, categoryQuery);
-      } catch (err: any) {
-        console.error("Failed to render blog list", err);
-      }
-    }
-  } catch (globalMetaErr: any) {
-    console.error("[METADATA ENGINE CRITICAL ERROR] Failed during metadata generation for path:", urlPath, globalMetaErr.message, globalMetaErr.stack);
-  }
-
-  return { title, description, canonical, h1, jsonld, featured_image, bodyHtml };
-}
-
-// Fallback HTML template in case index.html is missing on production server filesystem
-const fallbackHtmlTemplate = (metadata: DynamicMetadata) => `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>${metadata.title}</title>
-  <meta name="description" content="${metadata.description}" />
-  <link rel="canonical" href="${metadata.canonical}" />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-  <meta property="og:title" content="${metadata.title}" />
-  <meta property="og:description" content="${metadata.description}" />
-  <meta property="og:url" content="${metadata.canonical}" />
-  <meta property="og:type" content="article" />
-  <meta property="og:site_name" content="CalcZen" />
-  <meta property="og:image" content="${metadata.featured_image || 'https://calczen.in/icons/android-chrome-512x512.png'}" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${metadata.title}" />
-  <meta name="twitter:description" content="${metadata.description}" />
-  <meta name="twitter:image" content="${metadata.featured_image || 'https://calczen.in/icons/android-chrome-512x512.png'}" />
-  <link rel="icon" type="image/png" href="/icons/favicon-32x32.png" />
-  ${metadata.jsonld ? (Array.isArray(metadata.jsonld) ? metadata.jsonld : [metadata.jsonld]).map(node => `<script type="application/ld+json">${JSON.stringify(node)}</script>`).join("\n") : ""}
-</head>
-<body style="background:#0f172a;color:#cbd5e1;font-family:system-ui,sans-serif;margin:0;padding:2rem;display:flex;justify-content:center;">
-  <div style="max-width:800px;width:100%;">
-    <header style="margin-bottom:2rem;"><a href="/" style="color:#6366f1;font-weight:bold;text-decoration:none;font-size:1.5rem;">CalcZen</a></header>
-    <main>
-      <h1 style="color:#f8fafc;font-size:2.25rem;margin-bottom:1rem;">${metadata.h1}</h1>
-      <p style="font-size:1.125rem;line-height:1.75;margin-bottom:2rem;">${metadata.description}</p>
-      <div style="background:#1e293b;padding:1.5rem;border-radius:0.75rem;border:1px solid #334155;">
-        <p style="margin:0;font-size:0.875rem;color:#94a3b8;">Please enable JavaScript to access all interactive tools, calculators, and sliders on this page.</p>
-      </div>
-    </main>
-  </div>
-</body>
-</html>`;
-
-=======
   return `https://www.calczen.in${pathPart}`;
 }
 
@@ -634,7 +227,6 @@ async function getDynamicMetadata(
   return { title, description, canonical };
 }
 
->>>>>>> 529569b (Deploy CalcZen V2)
 /**
  * Express app — production order:
  * 1. trust proxy (Render / rate-limit)
@@ -674,11 +266,6 @@ export async function createApp(): Promise<Express> {
     console.log(`[ROUTE AUDIT] Incoming Request: ${req.method} ${req.originalUrl || req.url}`);
     res.on("finish", () => {
       if (res.statusCode >= 400) {
-<<<<<<< HEAD
-        console.warn(`[ROUTE AUDIT] Request FAILED: ${req.method} ${req.originalUrl || req.url} -> Status ${res.statusCode}`);
-      } else {
-        console.log(`[ROUTE AUDIT] Request SUCCEEDED: ${req.method} ${req.originalUrl || req.url} -> Status ${res.statusCode}`);
-=======
         console.warn(
           `[ROUTE AUDIT] Request FAILED: ${req.method} ${req.originalUrl || req.url} -> Status ${res.statusCode}`,
         );
@@ -686,7 +273,6 @@ export async function createApp(): Promise<Express> {
         console.log(
           `[ROUTE AUDIT] Request SUCCEEDED: ${req.method} ${req.originalUrl || req.url} -> Status ${res.statusCode}`,
         );
->>>>>>> 529569b (Deploy CalcZen V2)
       }
     });
     next();
@@ -741,20 +327,6 @@ export async function createApp(): Promise<Express> {
   app.use("/api/newsletters", newsletterRoutes);
   app.use("/api/blogs", blogRoutes);
 
-<<<<<<< HEAD
-  // Serve static uploaded images
-  const uploadsDir = path.resolve(process.cwd(), "uploads");
-  if (!fs.existsSync(uploadsDir)) {
-    try {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    } catch (mkdirErr) {
-      console.warn("[BOOT] Failed to create uploads directory (could be read-only filesystem):", mkdirErr);
-    }
-  }
-  app.use("/uploads", express.static(uploadsDir));
-
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
   const adminDist = resolveAdminDist();
   app.use("/admin", express.static(adminDist, { index: "index.html" }));
   app.get(["/admin", "/admin/*path"], (req, res, next) => {
@@ -773,82 +345,6 @@ export async function createApp(): Promise<Express> {
 
   // Serve public frontend static assets (robots.txt, ads.txt, assets/, sitemaps, etc.)
   const publicDist = resolvePublicDist();
-<<<<<<< HEAD
-  app.use(express.static(publicDist, {
-    maxAge: "1y",
-    immutable: true,
-    setHeaders: (res, filePath) => {
-      if (filePath.includes(path.sep + "assets" + path.sep)) {
-        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
-      } else {
-        res.setHeader("Cache-Control", "public, max-age=3600, must-revalidate");
-      }
-    }
-  }));
-
-  // Serve public frontend index.html with dynamic metadata for crawlers/SEO
-  app.get(/^\/(?!api|admin|assets).*/, async (req, res, next) => {
-    // Skip if it's not a public browser page request (e.g. API endpoint, static file)
-    if (!isBrowserPageRequest(req)) {
-      return next();
-    }
-
-    const originalPath = getOriginalRequestPath(req);
-    console.log(`[SEO PRERENDER] Processing page request for path: ${originalPath} (Express req.path: ${req.path})`);
-
-    let metadata: DynamicMetadata | null = null;
-    try {
-      metadata = await getDynamicMetadata(originalPath);
-    } catch (metaErr: any) {
-      console.error("[CRITICAL META FAILURE] getDynamicMetadata crashed completely for path:", originalPath, metaErr.message, metaErr.stack);
-      metadata = {
-        title: "Free Online Calculators for Finance, Health & Math | CalcZen",
-        description: "Free online calculators for finance, health, math and everyday life.",
-        canonical: `https://calczen.in${originalPath}`,
-        h1: "Free Online Calculators",
-      };
-    }
-
-    // Handle 404 for missing blog posts, calculators, or categories
-    if (metadata.notFound) {
-      res.status(404).setHeader("Content-Type", "text/html");
-      res.send(`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>${metadata.title}</title>
-  <meta name="description" content="${metadata.description}" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body { background: #0F172A; color: #F8FAFC; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    .container { text-align: center; max-width: 500px; padding: 2rem; }
-    h1 { color: #F59E0B; font-size: 2.5rem; margin-bottom: 1rem; }
-    p { color: #94A3B8; font-size: 1.1rem; line-height: 1.6; }
-    a { color: #6366F1; text-decoration: none; font-weight: bold; }
-    a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>${metadata.h1}</h1>
-    <p>${metadata.description} Check the URL or return to the <a href="/">Homepage</a>.</p>
-  </div>
-</body>
-</html>`);
-      return;
-    }
-
-    const publicDist = resolvePublicDist();
-    const indexPath = path.join(publicDist, "index.html");
-
-    // Fallback to dynamic template if index.html is missing
-    if (!fs.existsSync(indexPath)) {
-      console.warn(`[PRERENDER WARNING] index.html not found at: ${indexPath}. Rendering page via fallback HTML template.`);
-      res.setHeader("Content-Type", "text/html");
-      res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
-      res.send(fallbackHtmlTemplate(metadata));
-      return;
-=======
   app.use(express.static(publicDist));
 
   // Serve public frontend index.html with dynamic metadata for crawlers/SEO
@@ -868,108 +364,21 @@ export async function createApp(): Promise<Express> {
     if (!fs.existsSync(indexPath)) {
       console.warn("Public index.html not found at:", indexPath);
       return next(); // Fallback to 404
->>>>>>> 529569b (Deploy CalcZen V2)
     }
 
     fs.readFile(indexPath, "utf8", async (err, html) => {
       if (err) {
-<<<<<<< HEAD
-        console.error(`[PRERENDER FILE READ ERROR] Failed to read public index.html from path: ${indexPath}. rendering fallback HTML template.`, err.message, err.stack);
-        res.setHeader("Content-Type", "text/html");
-        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
-        res.send(fallbackHtmlTemplate(metadata!));
-        return;
-      }
-
-      try {
-=======
         console.error("Failed to read public index.html:", err);
         return res.status(500).send("Internal server error");
       }
       try {
         const metadata = await getDynamicMetadata(req.path);
 
->>>>>>> 529569b (Deploy CalcZen V2)
         // 1. Remove all old SEO tags to prevent duplicates and handle minification attribute re-ordering
         let modifiedHtml = html;
         modifiedHtml = modifiedHtml.replace(/<title[^>]*>[^<]*<\/title>/gi, "");
         modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?description["']?[^>]*>/gi, "");
         modifiedHtml = modifiedHtml.replace(/<link\s+[^>]*rel=["']?canonical["']?[^>]*>/gi, "");
-<<<<<<< HEAD
-        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*property=["']?og:(title|description|url|image|type|site_name)["']?[^>]*>/gi, "");
-        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?twitter:(title|description|card|image)["']?[^>]*>/gi, "");
-        modifiedHtml = modifiedHtml.replace(/<meta\s+[^>]*name=["']?robots["']?[^>]*>/gi, "");
-
-        // 2. Inject fresh, verified dynamic metadata inside the head
-        const ogImage = metadata!.featured_image || "https://calczen.in/icons/android-chrome-512x512.png";
-        let seoMetaTags = `
-    <title>${metadata!.title}</title>
-    <meta name="description" content="${metadata!.description}" />
-    <link rel="canonical" href="${metadata!.canonical}" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta property="og:title" content="${metadata!.title}" />
-    <meta property="og:description" content="${metadata!.description}" />
-    <meta property="og:url" content="${metadata!.canonical}" />
-    <meta property="og:type" content="${originalPath.startsWith("/blog/") ? "article" : "website"}" />
-    <meta property="og:site_name" content="CalcZen" />
-    <meta property="og:image" content="${ogImage}" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${metadata!.title}" />
-    <meta name="twitter:description" content="${metadata!.description}" />
-    <meta name="twitter:image" content="${ogImage}" />
-        `;
-
-        if (metadata!.featured_image && originalPath.startsWith("/blog/")) {
-          seoMetaTags += `
-    <link rel="preload" as="image" href="${metadata!.featured_image}" imagesrcset="${metadata!.featured_image} 1200w, ${metadata!.featured_image}?w=800 800w, ${metadata!.featured_image}?w=400 400w" imagesizes="(max-width: 768px) 100vw, 800px" />`;
-        }
-
-        if (metadata!.jsonld) {
-          const graphs = Array.isArray(metadata!.jsonld) ? metadata!.jsonld : [metadata!.jsonld];
-          graphs.forEach(node => {
-            seoMetaTags += `
-    <script type="application/ld+json">${JSON.stringify(node)}</script>`;
-          });
-        }
-
-        modifiedHtml = modifiedHtml.replace("</head>", `${seoMetaTags}\n</head>`);
-
-        // 3. Inject dynamic body/H1 fallback inside #root
-        let dynamicSeoContent = "";
-        if (metadata!.bodyHtml) {
-          dynamicSeoContent = metadata!.bodyHtml;
-        } else {
-          dynamicSeoContent = `
-    <noscript>
-      <h1>${metadata!.h1}</h1>
-      <p>${metadata!.description}</p>
-    </noscript>
-          `;
-        }
-        modifiedHtml = modifiedHtml.replace(
-          /<!--seo-content-->[\s\S]*?<!--\/seo-content-->/gi,
-          `<!--seo-content-->${dynamicSeoContent}<!--/seo-content-->`
-        );
-
-        // 4. Implement proper caching headers: 1 hour cache, must-revalidate on client side, 1 day on edge CDN for blogs
-        if (originalPath.startsWith("/blog") || originalPath.startsWith("/blog/")) {
-          res.setHeader("Cache-Control", "public, max-age=3600, s-maxage=86400, must-revalidate");
-          res.setHeader("Last-Modified", new Date().toUTCString());
-        } else {
-          res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
-          res.setHeader("Pragma", "no-cache");
-          res.setHeader("Expires", "0");
-        }
-
-        res.setHeader("Content-Type", "text/html");
-        res.send(modifiedHtml);
-      } catch (seoErr: any) {
-        console.error("[PRERENDER ENGINE EXCEPTION] Failed to compile rewrites inside index.html templates.", seoErr.message, seoErr.stack);
-        // Fallback to sending dynamic fallback template
-        res.setHeader("Content-Type", "text/html");
-        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
-        res.send(fallbackHtmlTemplate(metadata!));
-=======
         modifiedHtml = modifiedHtml.replace(
           /<meta\s+[^>]*property=["']?og:(title|description|url)["']?[^>]*>/gi,
           "",
@@ -1013,83 +422,10 @@ export async function createApp(): Promise<Express> {
         res.setHeader("Expires", "0");
         res.setHeader("Content-Type", "text/html");
         res.send(html);
->>>>>>> 529569b (Deploy CalcZen V2)
       }
     });
   });
 
-<<<<<<< HEAD
-  // Global Page-aware 404 Handler
-  app.use((req, res) => {
-    if (isBrowserPageRequest(req)) {
-      res.status(404).setHeader("Content-Type", "text/html");
-      res.send(`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Page Not Found | CalcZen</title>
-  <meta name="description" content="The page you are looking for does not exist." />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body { background: #0F172A; color: #F8FAFC; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    .container { text-align: center; max-width: 500px; padding: 2rem; }
-    h1 { color: #F59E0B; font-size: 2.5rem; margin-bottom: 1rem; }
-    p { color: #94A3B8; font-size: 1.1rem; line-height: 1.6; }
-    a { color: #6366F1; text-decoration: none; font-weight: bold; }
-    a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Page Not Found</h1>
-    <p>The page you are looking for does not exist. Check the URL or return to the <a href="/">Homepage</a>.</p>
-  </div>
-</body>
-</html>`);
-      return;
-    }
-    res.status(404).json({ success: false, message: "Not found" });
-  });
-
-  // Global Error Handler
-  app.use(
-    (err: unknown, req: Request, res: Response, _next: NextFunction) => {
-      console.error("[GLOBAL ERROR INTERCEPTOR] Express unhandled exception caught:", err);
-      applyCorsHeaders(req, res);
-      const { status, message } = formatDbError(err);
-      
-      if (isBrowserPageRequest(req)) {
-        res.status(status).setHeader("Content-Type", "text/html");
-        res.send(`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Internal Server Error | CalcZen</title>
-  <meta name="description" content="An internal server error occurred. Please try again." />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body { background: #0F172A; color: #F8FAFC; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    .container { text-align: center; max-width: 500px; padding: 2rem; }
-    h1 { color: #EF4444; font-size: 2.5rem; margin-bottom: 1rem; }
-    p { color: #94A3B8; font-size: 1.1rem; line-height: 1.6; }
-    a { color: #6366F1; text-decoration: none; font-weight: bold; }
-    a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Internal Server Error</h1>
-    <p>We encountered an error while processing your request. Please go back to the <a href="/">Homepage</a> or try again later.</p>
-  </div>
-</body>
-</html>`);
-        return;
-      }
-
-      res.status(status).json({ success: false, message });
-    },
-  );
-=======
   app.use((_req, res) => {
     res.status(404).json({ success: false, message: "Not found" });
   });
@@ -1100,7 +436,6 @@ export async function createApp(): Promise<Express> {
     const { status, message } = formatDbError(err);
     res.status(status).json({ success: false, message });
   });
->>>>>>> 529569b (Deploy CalcZen V2)
 
   return app;
 }

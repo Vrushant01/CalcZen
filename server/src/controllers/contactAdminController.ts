@@ -1,4 +1,4 @@
-import type { Response } from "express";
+﻿import type { Response } from "express";
 import { z } from "zod";
 import { hasEmailConfig } from "../config/env.js";
 import type { AuthRequest } from "../middleware/auth.js";
@@ -70,14 +70,7 @@ export async function getContactMessageHandler(req: AuthRequest, res: Response):
   }
 }
 
-<<<<<<< HEAD
-export async function replyToContactMessageHandler(
-  req: AuthRequest,
-  res: Response,
-): Promise<void> {
-=======
 export async function replyToContactMessageHandler(req: AuthRequest, res: Response): Promise<void> {
->>>>>>> 529569b (Deploy CalcZen V2)
   const { id, reply } = req.body as { id: string; reply: string };
 
   try {
@@ -120,14 +113,10 @@ export async function replyToContactMessageHandler(req: AuthRequest, res: Respon
     const { status, message } = formatDbError(err);
     res.status(status >= 400 ? status : 500).json({
       success: false,
-<<<<<<< HEAD
-      message: err instanceof Error && status === 500 ? "Failed to send reply. Please try again." : message,
-=======
       message:
         err instanceof Error && status === 500
           ? "Failed to send reply. Please try again."
           : message,
->>>>>>> 529569b (Deploy CalcZen V2)
     });
   }
 }

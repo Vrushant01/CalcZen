@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button, type ButtonProps } from "@/components/ui/button";
@@ -13,12 +13,6 @@ import {
   Star,
   Clock,
   Calendar,
-<<<<<<< HEAD
-} from "lucide-react";
-
-export interface CalculateButtonProps extends ButtonProps {
-  category: "health" | "finance" | "math" | "everyday";
-=======
   Briefcase,
 } from "lucide-react";
 
@@ -32,7 +26,6 @@ export interface CalculateButtonProps extends ButtonProps {
     | "salary-and-employment"
     | "jewellery"
     | "home-construction";
->>>>>>> 529569b (Deploy CalcZen V2)
 }
 
 interface Particle {
@@ -65,8 +58,6 @@ const CATEGORY_COLORS = {
     ringColor: "rgba(245, 158, 11, 0.45)", // Amber
     particles: ["#f59e0b", "#f97316", "#eab308", "#14b8a6"],
   },
-<<<<<<< HEAD
-=======
   "love-and-relationships": {
     ringColor: "rgba(236, 72, 153, 0.45)", // Pink
     particles: ["#ec4899", "#f43f5e", "#fb7185", "#e11d48"],
@@ -83,7 +74,6 @@ const CATEGORY_COLORS = {
     ringColor: "rgba(245, 158, 11, 0.45)", // Amber Construction
     particles: ["#f59e0b", "#ea580c", "#d97706", "#f97316"],
   },
->>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 export function CalculateButton({
@@ -219,8 +209,6 @@ export function CalculateButton({
     } else if (cat === "math") {
       const symbols = ["➕", "➖", "✖️", "➗", "=", "🔢", "📐", "π", "x", "y", "7", "5"];
       return symbols[index % symbols.length];
-<<<<<<< HEAD
-=======
     } else if (cat === "salary-and-employment") {
       const items = [
         "💼",
@@ -241,7 +229,6 @@ export function CalculateButton({
         <Star className="w-full h-full text-yellow-400 fill-yellow-300" key="st" />,
       ];
       return items[index % items.length];
->>>>>>> 529569b (Deploy CalcZen V2)
     } else {
       // everyday
       const items = [

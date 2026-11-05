@@ -1,4 +1,4 @@
-import type { CalculatorEducationalContent } from "../content-types";
+﻿import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
@@ -49,11 +49,7 @@ const content: CalculatorEducationalContent = {
     { text: "Centers for Disease Control and Prevention (CDC)", url: "https://www.cdc.gov/" },
   ],
 
-<<<<<<< HEAD
-  relatedCalculators: ["regular-calculator", "age-calculator", "bmi-calculator"],
-=======
   relatedCalculators: ["standard-calculator", "age-calculator", "bmi-calculator"],
->>>>>>> 529569b (Deploy CalcZen V2)
 };
 
 export default content;

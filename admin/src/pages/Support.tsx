@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+﻿import { useCallback, useEffect, useState } from "react";
 import { Inbox, Mail, Search, Send, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "../components/AdminLayout";
@@ -73,13 +73,7 @@ export function SupportPage() {
         setSelected(res.data);
         setReplyText(res.data.adminReply ?? "");
         setMessages((prev) =>
-<<<<<<< HEAD
-          prev.map((m) =>
-            m._id === id ? { ...m, status: res.data!.status } : m,
-          ),
-=======
           prev.map((m) => (m._id === id ? { ...m, status: res.data!.status } : m)),
->>>>>>> 529569b (Deploy CalcZen V2)
         );
       }
     } catch (err) {
@@ -105,13 +99,7 @@ export function SupportPage() {
       toast.success(res.message ?? "Reply sent");
       if (res.data) {
         setSelected(res.data);
-<<<<<<< HEAD
-        setMessages((prev) =>
-          prev.map((m) => (m._id === res.data!._id ? res.data! : m)),
-        );
-=======
         setMessages((prev) => prev.map((m) => (m._id === res.data!._id ? res.data! : m)));
->>>>>>> 529569b (Deploy CalcZen V2)
       }
       loadList();
     } catch (err) {
@@ -132,17 +120,11 @@ export function SupportPage() {
 
       <div className="flex flex-col lg:flex-row gap-4 min-h-[520px]">
         {/* Messages List Column - hidden on mobile when a message is selected */}
-<<<<<<< HEAD
-        <div className={`lg:w-[380px] shrink-0 flex flex-col rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] overflow-hidden ${
-          selectedId ? "hidden lg:flex" : "flex"
-        }`}>
-=======
         <div
           className={`lg:w-[380px] shrink-0 flex flex-col rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] overflow-hidden ${
             selectedId ? "hidden lg:flex" : "flex"
           }`}
         >
->>>>>>> 529569b (Deploy CalcZen V2)
           <div className="p-3 border-b border-[var(--color-card-border)] space-y-3">
             <div className="relative">
               <Search
@@ -193,26 +175,18 @@ export function SupportPage() {
                       type="button"
                       onClick={() => loadDetail(m._id)}
                       className={`w-full text-left px-4 py-3 border-b border-[var(--color-card-border)] transition-colors hover:bg-white/5 ${
-<<<<<<< HEAD
-                        selectedId === m._id ? "bg-[var(--color-primary)]/15 border-l-2 border-l-[var(--color-primary)]" : ""
-=======
                         selectedId === m._id
                           ? "bg-[var(--color-primary)]/15 border-l-2 border-l-[var(--color-primary)]"
                           : ""
->>>>>>> 529569b (Deploy CalcZen V2)
                       }`}
                     >
                       <div className="flex items-start justify-between gap-2">
                         <span className="font-medium text-sm truncate">{m.name}</span>
                         {m.status === "unread" && (
-<<<<<<< HEAD
-                          <span className="shrink-0 w-2 h-2 rounded-full bg-amber-400 mt-1.5" title="Unread" />
-=======
                           <span
                             className="shrink-0 w-2 h-2 rounded-full bg-amber-400 mt-1.5"
                             title="Unread"
                           />
->>>>>>> 529569b (Deploy CalcZen V2)
                         )}
                       </div>
                       <p className="text-xs text-[var(--color-muted)] truncate mt-0.5">{m.email}</p>
@@ -256,17 +230,11 @@ export function SupportPage() {
         </div>
 
         {/* Message Details Column - hidden on mobile when no message is selected */}
-<<<<<<< HEAD
-        <div className={`flex-1 rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 md:p-6 min-h-[320px] ${
-          selectedId ? "flex flex-col" : "hidden lg:flex flex-col"
-        }`}>
-=======
         <div
           className={`flex-1 rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-4 md:p-6 min-h-[320px] ${
             selectedId ? "flex flex-col" : "hidden lg:flex flex-col"
           }`}
         >
->>>>>>> 529569b (Deploy CalcZen V2)
           {!selectedId ? (
             <div className="h-full flex flex-col items-center justify-center text-[var(--color-muted)] text-sm my-auto">
               <Mail size={40} className="mb-3 opacity-40" />
@@ -276,26 +244,18 @@ export function SupportPage() {
               )}
             </div>
           ) : loadingDetail ? (
-<<<<<<< HEAD
-            <div className="py-12 text-center text-sm text-[var(--color-muted)] my-auto">Loading…</div>
-=======
             <div className="py-12 text-center text-sm text-[var(--color-muted)] my-auto">
               Loading…
             </div>
->>>>>>> 529569b (Deploy CalcZen V2)
           ) : selected ? (
             <div className="flex flex-col h-full">
               {/* Back button on mobile to return to list */}
               <button
                 type="button"
-<<<<<<< HEAD
-                onClick={() => { setSelectedId(null); setSelected(null); }}
-=======
                 onClick={() => {
                   setSelectedId(null);
                   setSelected(null);
                 }}
->>>>>>> 529569b (Deploy CalcZen V2)
                 className="lg:hidden mb-4 inline-flex items-center gap-1.5 text-xs text-[var(--color-muted)] hover:text-white transition-colors py-1.5 w-fit"
               >
                 <ArrowLeft size={14} /> Back to messages

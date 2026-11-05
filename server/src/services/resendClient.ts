@@ -1,4 +1,4 @@
-import { Resend } from "resend";
+﻿import { Resend } from "resend";
 import { env, hasEmailConfig } from "../config/env.js";
 
 let client: Resend | null = null;
@@ -21,12 +21,6 @@ export function getFromAddress(): string {
 /** Support replies to contact form users */
 export function getSupportFromAddress(): string {
   const from = env.emailFrom;
-<<<<<<< HEAD
-  const email = from.includes("<")
-    ? (from.match(/<([^>]+)>/)?.[1] ?? from)
-    : from;
-=======
   const email = from.includes("<") ? (from.match(/<([^>]+)>/)?.[1] ?? from) : from;
->>>>>>> 529569b (Deploy CalcZen V2)
   return `CalcZen Support <${email}>`;
 }

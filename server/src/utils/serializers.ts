@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   AdminRow,
   ApiAdmin,
   ApiContactMessage,
@@ -55,13 +55,7 @@ export function toApiNewsletter(
     sentAt: row.sent_at,
     recipientCount: row.recipient_count,
     sentBy: row.sent_by,
-<<<<<<< HEAD
-    sentByAdmin: row.admins
-      ? { email: row.admins.email, name: row.admins.name }
-      : null,
-=======
     sentByAdmin: row.admins ? { email: row.admins.email, name: row.admins.name } : null,
->>>>>>> 529569b (Deploy CalcZen V2)
   };
 }
 
@@ -88,22 +82,5 @@ export function toApiBlog(row: BlogRow): ApiBlog {
     publishDate: row.publish_date,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
-<<<<<<< HEAD
-    schema: row.schema,
-    jsonld: row.jsonld,
-    canonical: row.canonical,
-    featuredImage: row.featured_image,
-    status: row.status,
-    discoverReady: row.discover_ready,
-    indexed: row.indexed,
-    ogImage: row.og_image,
-    twitterImage: row.twitter_image,
-    faqJson: row.faq_json,
-    toc: row.toc,
   };
 }
-
-=======
-  };
-}
->>>>>>> 529569b (Deploy CalcZen V2)

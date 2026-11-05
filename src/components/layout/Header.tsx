@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-"use client";
-
-import { Link } from "@/components/ui/Link";
-=======
-import { Link } from "@tanstack/react-router";
->>>>>>> 529569b (Deploy CalcZen V2)
+﻿import { Link } from "@tanstack/react-router";
 import { Menu, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BrandLogo } from "@/components/BrandLogo";

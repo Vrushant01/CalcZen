@@ -1,4 +1,4 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+﻿import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { env, hasDbConfig } from "./env.js";
 
 let client: SupabaseClient | null = null;
@@ -22,13 +22,9 @@ export function getSupabase(): SupabaseClient {
 export async function verifySupabaseConnection(): Promise<boolean> {
   if (!hasDbConfig()) return false;
   try {
-<<<<<<< HEAD
-    const { error } = await getSupabase().from("subscribers").select("id", { count: "exact", head: true });
-=======
     const { error } = await getSupabase()
       .from("subscribers")
       .select("id", { count: "exact", head: true });
->>>>>>> 529569b (Deploy CalcZen V2)
     return !error;
   } catch {
     return false;

@@ -1,26 +1,6 @@
-import { getSupabase } from "../config/supabase.js";
+﻿import { getSupabase } from "../config/supabase.js";
 import type { ApiBlog, BlogRow } from "../types/database.js";
 import { toApiBlog } from "../utils/serializers.js";
-<<<<<<< HEAD
-import { generateSeoData } from "../utils/seo.js";
-import { optimizeAndStoreImage, generateOgImage } from "../utils/imageOptimizer.js";
-import { triggerSitemapUpdate } from "../utils/sitemap.js";
-
-interface CacheEntry<T> {
-  data: T;
-  expiry: number;
-}
-
-const blogCache = new Map<string, CacheEntry<ApiBlog | null>>();
-const listCache = new Map<string, CacheEntry<{ blogs: ApiBlog[]; total: number }>>();
-const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes cache TTL
-
-export function clearBlogCache(slug: string): void {
-  blogCache.delete(slug.toLowerCase().trim());
-  listCache.clear();
-}
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
 
 function isUniqueViolation(error: { code?: string }): boolean {
   return error.code === "23505";
@@ -33,15 +13,6 @@ export async function listPublishedBlogs(options: {
   page: number;
   limit: number;
 }): Promise<{ blogs: ApiBlog[]; total: number }> {
-<<<<<<< HEAD
-  const cacheKey = JSON.stringify(options);
-  const cached = listCache.get(cacheKey);
-  if (cached && cached.expiry > Date.now()) {
-    return cached.data;
-  }
-
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
   const { category, search, page, limit } = options;
   const from = (page - 1) * limit;
   const to = from + limit - 1;
@@ -63,61 +34,23 @@ export async function listPublishedBlogs(options: {
   const { data, error, count } = await query.range(from, to);
   if (error) throw error;
 
-<<<<<<< HEAD
-  const result = {
-    blogs: (data as BlogRow[]).map(toApiBlog),
-    total: count ?? 0,
-  };
-
-  listCache.set(cacheKey, {
-    data: result,
-    expiry: Date.now() + CACHE_TTL_MS,
-  });
-
-  return result;
-=======
   return {
     blogs: (data as BlogRow[]).map(toApiBlog),
     total: count ?? 0,
   };
->>>>>>> 529569b (Deploy CalcZen V2)
 }
 
 /** Public: Find a published blog by its unique slug */
 export async function findPublishedBlogBySlug(slug: string): Promise<ApiBlog | null> {
-<<<<<<< HEAD
-  const cleanSlug = slug.toLowerCase().trim();
-  const cached = blogCache.get(cleanSlug);
-  if (cached && cached.expiry > Date.now()) {
-    return cached.data;
-  }
-
-  const { data, error } = await getSupabase()
-    .from("blogs")
-    .select("*")
-    .eq("slug", cleanSlug)
-=======
   const { data, error } = await getSupabase()
     .from("blogs")
     .select("*")
     .eq("slug", slug.toLowerCase().trim())
->>>>>>> 529569b (Deploy CalcZen V2)
     .eq("published", true)
     .maybeSingle();
 
   if (error) throw error;
-<<<<<<< HEAD
-  
-  const result = data ? toApiBlog(data as BlogRow) : null;
-  blogCache.set(cleanSlug, {
-    data: result,
-    expiry: Date.now() + CACHE_TTL_MS,
-  });
-
-  return result;
-=======
   return data ? toApiBlog(data as BlogRow) : null;
->>>>>>> 529569b (Deploy CalcZen V2)
 }
 
 /** Increment a blog's view count in the database */
@@ -125,13 +58,6 @@ export async function incrementBlogViews(id: string): Promise<void> {
   // Safe raw query counter increment inside Supabase
   const supabase = getSupabase();
   const { error } = await supabase.rpc("increment_blog_views", { blog_id: id });
-<<<<<<< HEAD
-  
-  if (error) {
-    // If the RPC is not installed yet (e.g. migration has not been run or it's not present),
-    // fallback to a standard fetch-update to increment.
-    const { data: current } = await supabase.from("blogs").select("views").eq("id", id).maybeSingle();
-=======
 
   if (error) {
     // If the RPC is not installed yet (e.g. migration has not been run or it's not present),
@@ -141,7 +67,6 @@ export async function incrementBlogViews(id: string): Promise<void> {
       .select("views")
       .eq("id", id)
       .maybeSingle();
->>>>>>> 529569b (Deploy CalcZen V2)
     if (current) {
       await supabase
         .from("blogs")
@@ -191,15 +116,7 @@ export async function listBlogsAdmin(options: {
 
 /** Admin: Get blog by ID */
 export async function getBlogByIdAdmin(id: string): Promise<ApiBlog | null> {
-<<<<<<< HEAD
-  const { data, error } = await getSupabase()
-    .from("blogs")
-    .select("*")
-    .eq("id", id)
-    .maybeSingle();
-=======
   const { data, error } = await getSupabase().from("blogs").select("*").eq("id", id).maybeSingle();
->>>>>>> 529569b (Deploy CalcZen V2)
 
   if (error) throw error;
   return data ? toApiBlog(data as BlogRow) : null;
@@ -226,57 +143,6 @@ export async function createBlogAdmin(input: {
 }): Promise<ApiBlog> {
   const publishDate = input.published ? new Date().toISOString() : null;
 
-<<<<<<< HEAD
-  // Run SEO Optimization Engine automatically
-  const seo = generateSeoData({
-    title: input.title,
-    slug: input.slug,
-    excerpt: input.excerpt,
-    content: input.content,
-    thumbnail: input.thumbnail,
-    category: input.category,
-    tags: input.tags,
-    metaTitle: input.metaTitle,
-    metaDescription: input.metaDescription,
-    keywords: input.keywords,
-    author: input.author || "CalcZen Team",
-    faqs: input.faqs,
-    publishDate,
-  });
-
-  // Download and optimize thumbnail or generate branded OG card
-  let optimizedThumbnail = input.thumbnail || null;
-  if (seo.slug) {
-    if (optimizedThumbnail && optimizedThumbnail.trim()) {
-      optimizedThumbnail = await optimizeAndStoreImage(optimizedThumbnail, seo.slug);
-    } else {
-      optimizedThumbnail = await generateOgImage(seo.title, seo.slug);
-    }
-    seo.ogImage = optimizedThumbnail;
-    seo.twitterImage = optimizedThumbnail;
-    if (seo.jsonld) {
-      const graph = Array.isArray(seo.jsonld) ? seo.jsonld : [seo.jsonld];
-      if (graph[0] && graph[0]["@type"] === "BlogPosting") {
-        graph[0].image = [optimizedThumbnail];
-      }
-      seo.schema = JSON.stringify(graph);
-    }
-  }
-
-  const { data, error } = await getSupabase()
-    .from("blogs")
-    .insert({
-      title: seo.title,
-      slug: seo.slug,
-      excerpt: seo.excerpt,
-      content: seo.content,
-      thumbnail: optimizedThumbnail,
-      category: input.category,
-      tags: input.tags || [],
-      meta_title: seo.metaTitle,
-      meta_description: seo.metaDescription,
-      keywords: seo.keywords,
-=======
   const { data, error } = await getSupabase()
     .from("blogs")
     .insert({
@@ -290,32 +156,14 @@ export async function createBlogAdmin(input: {
       meta_title: input.metaTitle || null,
       meta_description: input.metaDescription || null,
       keywords: input.keywords || [],
->>>>>>> 529569b (Deploy CalcZen V2)
       author: input.author || "CalcZen Team",
       calculator_links: input.calculatorLinks || [],
       featured: input.featured ?? false,
       published: input.published ?? false,
       views: 0,
-<<<<<<< HEAD
-      reading_time: seo.readingTime,
-      publish_date: publishDate,
-      faqs: input.faqs || [],
-      schema: seo.schema,
-      jsonld: seo.jsonld,
-      canonical: seo.canonical,
-      featured_image: optimizedThumbnail,
-      status: input.published ? "published" : "draft",
-      discover_ready: seo.discoverReady,
-      indexed: false,
-      og_image: seo.ogImage,
-      twitter_image: seo.twitterImage,
-      faq_json: input.faqs || [],
-      toc: seo.toc,
-=======
       reading_time: input.readingTime || 0,
       publish_date: publishDate,
       faqs: input.faqs || [],
->>>>>>> 529569b (Deploy CalcZen V2)
     })
     .select("*")
     .single();
@@ -329,11 +177,6 @@ export async function createBlogAdmin(input: {
     throw error;
   }
 
-<<<<<<< HEAD
-  clearBlogCache(seo.slug);
-  void triggerSitemapUpdate();
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
   return toApiBlog(data as BlogRow);
 }
 
@@ -359,10 +202,7 @@ export async function updateBlogAdmin(
     faqs?: { question: string; answer: string }[];
   },
 ): Promise<ApiBlog> {
-<<<<<<< HEAD
-=======
   // Fetch existing blog to determine publish date logic
->>>>>>> 529569b (Deploy CalcZen V2)
   const supabase = getSupabase();
   const { data: existing, error: fetchErr } = await supabase
     .from("blogs")
@@ -375,104 +215,6 @@ export async function updateBlogAdmin(
     throw new Error("BLOG_NOT_FOUND");
   }
 
-<<<<<<< HEAD
-  // Merge existing values with updates to process fresh SEO metrics
-  const title = input.title !== undefined ? input.title : existing.title;
-  const slugInput = input.slug !== undefined ? input.slug : existing.slug;
-  const excerptInput = input.excerpt !== undefined ? input.excerpt : existing.excerpt;
-  const contentInput = input.content !== undefined ? input.content : existing.content;
-  const thumbnailInput = input.thumbnail !== undefined ? input.thumbnail : existing.thumbnail;
-  const categoryInput = input.category !== undefined ? input.category : existing.category;
-  const tagsInput = input.tags !== undefined ? input.tags : existing.tags;
-  const metaTitleInput = input.metaTitle !== undefined ? input.metaTitle : existing.meta_title;
-  const metaDescriptionInput = input.metaDescription !== undefined ? input.metaDescription : existing.meta_description;
-  const keywordsInput = input.keywords !== undefined ? input.keywords : existing.keywords;
-  const authorInput = input.author !== undefined ? input.author : existing.author;
-  const faqsInput = input.faqs !== undefined ? input.faqs : existing.faqs;
-
-  let published = existing.published;
-  let publishDate = existing.publish_date;
-  if (input.published !== undefined) {
-    published = input.published;
-    if (input.published && !existing.published) {
-      publishDate = new Date().toISOString();
-    } else if (!input.published) {
-      publishDate = null;
-    }
-  }
-
-  // Run SEO Optimization Engine dynamically
-  const seo = generateSeoData({
-    title,
-    slug: slugInput,
-    excerpt: excerptInput,
-    content: contentInput,
-    thumbnail: thumbnailInput,
-    category: categoryInput,
-    tags: tagsInput,
-    metaTitle: metaTitleInput,
-    metaDescription: metaDescriptionInput,
-    keywords: keywordsInput,
-    author: authorInput,
-    faqs: faqsInput,
-    publishDate,
-  });
-
-  // Download and optimize thumbnail or generate branded OG card
-  let optimizedThumbnail = thumbnailInput || null;
-  if (seo.slug) {
-    if (optimizedThumbnail && optimizedThumbnail.trim()) {
-      optimizedThumbnail = await optimizeAndStoreImage(optimizedThumbnail, seo.slug);
-    } else {
-      optimizedThumbnail = await generateOgImage(seo.title, seo.slug);
-    }
-    seo.ogImage = optimizedThumbnail;
-    seo.twitterImage = optimizedThumbnail;
-    if (seo.jsonld) {
-      const graph = Array.isArray(seo.jsonld) ? seo.jsonld : [seo.jsonld];
-      if (graph[0] && graph[0]["@type"] === "BlogPosting") {
-        graph[0].image = [optimizedThumbnail];
-      }
-      seo.schema = JSON.stringify(graph);
-    }
-  }
-
-  const updates: Record<string, any> = {
-    title: seo.title,
-    slug: seo.slug,
-    excerpt: seo.excerpt,
-    content: seo.content,
-    meta_title: seo.metaTitle,
-    meta_description: seo.metaDescription,
-    keywords: seo.keywords,
-    reading_time: seo.readingTime,
-    discover_ready: seo.discoverReady,
-    schema: seo.schema,
-    jsonld: seo.jsonld,
-    canonical: seo.canonical,
-    og_image: seo.ogImage,
-    twitter_image: seo.twitterImage,
-    toc: seo.toc,
-    faq_json: faqsInput !== undefined ? faqsInput : (existing.faq_json || existing.faqs || []),
-    faqs: faqsInput !== undefined ? faqsInput : (existing.faqs || existing.faq_json || []),
-    status: published ? "published" : "draft",
-    updated_at: new Date().toISOString(),
-  };
-
-  if (input.thumbnail !== undefined) {
-    updates.thumbnail = optimizedThumbnail;
-    updates.featured_image = optimizedThumbnail;
-  }
-  if (input.category !== undefined) updates.category = input.category;
-  if (input.tags !== undefined) updates.tags = input.tags;
-  if (input.author !== undefined) updates.author = input.author;
-  if (input.calculatorLinks !== undefined) updates.calculator_links = input.calculatorLinks;
-  if (input.featured !== undefined) updates.featured = input.featured;
-  if (input.published !== undefined) {
-    updates.published = published;
-    updates.publish_date = publishDate;
-  }
-=======
   const updates: Record<string, any> = {};
   if (input.title !== undefined) updates.title = input.title.trim();
   if (input.slug !== undefined) updates.slug = input.slug.toLowerCase().trim();
@@ -498,7 +240,6 @@ export async function updateBlogAdmin(
     }
   }
   if (input.readingTime !== undefined) updates.reading_time = input.readingTime;
->>>>>>> 529569b (Deploy CalcZen V2)
 
   const { data, error } = await supabase
     .from("blogs")
@@ -516,41 +257,17 @@ export async function updateBlogAdmin(
     throw error;
   }
 
-<<<<<<< HEAD
-  // Clear cache for old and new slugs
-  clearBlogCache(existing.slug);
-  clearBlogCache(seo.slug);
-  void triggerSitemapUpdate();
-
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
   return toApiBlog(data as BlogRow);
 }
 
 /** Admin: Delete blog by ID */
 export async function deleteBlogByIdAdmin(id: string): Promise<boolean> {
-<<<<<<< HEAD
-  const supabase = getSupabase();
-  const { data: blog } = await supabase.from("blogs").select("slug").eq("id", id).maybeSingle();
-
-  const { error, count } = await supabase
-=======
   const { error, count } = await getSupabase()
->>>>>>> 529569b (Deploy CalcZen V2)
     .from("blogs")
     .delete({ count: "exact" })
     .eq("id", id);
 
   if (error) throw error;
-<<<<<<< HEAD
-
-  if (blog && blog.slug) {
-    clearBlogCache(blog.slug);
-  }
-  void triggerSitemapUpdate();
-
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
   return (count ?? 0) > 0;
 }
 
@@ -575,14 +292,10 @@ export async function getBlogStatsAdmin(): Promise<{
   if (draftsRes.error) throw draftsRes.error;
   if (viewsRes.error) throw viewsRes.error;
 
-<<<<<<< HEAD
-  const totalViews = (viewsRes.data as { views: number }[]).reduce((sum, row) => sum + (row.views || 0), 0);
-=======
   const totalViews = (viewsRes.data as { views: number }[]).reduce(
     (sum, row) => sum + (row.views || 0),
     0,
   );
->>>>>>> 529569b (Deploy CalcZen V2)
 
   return {
     total: totalRes.count ?? 0,

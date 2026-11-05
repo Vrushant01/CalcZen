@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { CalculatorCurrencyBar } from "@/components/CurrencySelector";
@@ -529,11 +529,7 @@ export function CreditCardEMICalculator() {
             </DashboardSection>
 
             <div className="flex flex-col">
-<<<<<<< HEAD
-            {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
-=======
               {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
->>>>>>> 529569b (Deploy CalcZen V2)
             </div>
           </motion.div>
         )}

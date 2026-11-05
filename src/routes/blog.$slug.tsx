@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
-import { fetchBlogBySlug } from "@/lib/blog-api";
-
-// This route acts as a legacy redirect to the new canonical structure: /blog/$category/$slug
-=======
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+﻿import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
   Calendar,
@@ -28,31 +22,12 @@ import { calculators, getCalculator } from "@/data/calculators";
 import { fetchBlogBySlug, fetchPublishedBlogs, trackBlogView, type Blog } from "@/lib/blog-api";
 
 // 1. TanStack Router file-route mapping
->>>>>>> 529569b (Deploy CalcZen V2)
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
     const res = await fetchBlogBySlug(params.slug);
     if (!res.ok || !res.data) {
       throw notFound();
     }
-<<<<<<< HEAD
-
-    const blog = res.data;
-    const category = (blog.category || "finance").toLowerCase();
-
-    // Trigger immediate, clean router redirect to the correct category route
-    throw redirect({
-      to: "/blog/$category/$slug",
-      params: {
-        category,
-        slug: blog.slug,
-      },
-      replace: true,
-    });
-  },
-  component: () => null,
-});
-=======
     return { blog: res.data };
   },
   head: ({ loaderData }) => {
@@ -629,4 +604,3 @@ function BlogPage() {
     </PageShell>
   );
 }
->>>>>>> 529569b (Deploy CalcZen V2)

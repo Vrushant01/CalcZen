@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, useState } from "react";
+﻿import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./styles.css";
@@ -23,16 +23,12 @@ function AdminBoot() {
 
   if (!ready) {
     return (
-<<<<<<< HEAD
-      <div className="admin-loader" role="status" aria-live="polite" aria-label="Loading CalcZen Admin">
-=======
       <div
         className="admin-loader"
         role="status"
         aria-live="polite"
         aria-label="Loading CalcZen Admin"
       >
->>>>>>> 529569b (Deploy CalcZen V2)
         <img src="/brand/calczen-logo.png" alt="CalcZen" className="admin-loader-logo" />
       </div>
     );

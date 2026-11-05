@@ -9,67 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-<<<<<<< HEAD
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as DisclaimerRouteImport } from './routes/disclaimer'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CalculatorsRouteImport } from './routes/calculators'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as CalculatorsRouteImport } from './routes/calculators'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as CategorySlugRouteImport } from './routes/category.$slug'
-import { Route as CalculatorSlugRouteImport } from './routes/calculator.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as CalculatorSlugRouteImport } from './routes/calculator.$slug'
+import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as BlogCategorySlugRouteImport } from './routes/blog.$category.$slug'
-
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DisclaimerRoute = DisclaimerRouteImport.update({
-  id: '/disclaimer',
-  path: '/disclaimer',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CalculatorsRoute = CalculatorsRouteImport.update({
-  id: '/calculators',
-  path: '/calculators',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-=======
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as CalculatorsRouteImport } from './routes/calculators'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as DisclaimerRouteImport } from './routes/disclaimer'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as CalculatorSlugRouteImport } from './routes/calculator.$slug'
-import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
->>>>>>> 529569b (Deploy CalcZen V2)
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -77,11 +33,6 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-<<<<<<< HEAD
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-=======
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -110,7 +61,6 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
->>>>>>> 529569b (Deploy CalcZen V2)
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -118,39 +68,25 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BlogRoute,
 } as any)
-<<<<<<< HEAD
-const CategorySlugRoute = CategorySlugRouteImport.update({
-  id: '/category/$slug',
-  path: '/category/$slug',
-  getParentRoute: () => rootRouteImport,
-=======
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => BlogRoute,
->>>>>>> 529569b (Deploy CalcZen V2)
 } as any)
 const CalculatorSlugRoute = CalculatorSlugRouteImport.update({
   id: '/calculator/$slug',
   path: '/calculator/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-<<<<<<< HEAD
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BlogRoute,
+const CategorySlugRoute = CategorySlugRouteImport.update({
+  id: '/category/$slug',
+  path: '/category/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BlogCategorySlugRoute = BlogCategorySlugRouteImport.update({
   id: '/$category/$slug',
   path: '/$category/$slug',
   getParentRoute: () => BlogRoute,
-=======
-const CategorySlugRoute = CategorySlugRouteImport.update({
-  id: '/category/$slug',
-  path: '/category/$slug',
-  getParentRoute: () => rootRouteImport,
->>>>>>> 529569b (Deploy CalcZen V2)
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -166,10 +102,7 @@ export interface FileRoutesByFullPath {
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$slug': typeof CategorySlugRoute
   '/blog/': typeof BlogIndexRoute
-<<<<<<< HEAD
   '/blog/$category/$slug': typeof BlogCategorySlugRoute
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -183,10 +116,7 @@ export interface FileRoutesByTo {
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$slug': typeof CategorySlugRoute
   '/blog': typeof BlogIndexRoute
-<<<<<<< HEAD
   '/blog/$category/$slug': typeof BlogCategorySlugRoute
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -202,10 +132,7 @@ export interface FileRoutesById {
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$slug': typeof CategorySlugRoute
   '/blog/': typeof BlogIndexRoute
-<<<<<<< HEAD
   '/blog/$category/$slug': typeof BlogCategorySlugRoute
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -222,10 +149,7 @@ export interface FileRouteTypes {
     | '/calculator/$slug'
     | '/category/$slug'
     | '/blog/'
-<<<<<<< HEAD
     | '/blog/$category/$slug'
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -239,10 +163,7 @@ export interface FileRouteTypes {
     | '/calculator/$slug'
     | '/category/$slug'
     | '/blog'
-<<<<<<< HEAD
     | '/blog/$category/$slug'
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
   id:
     | '__root__'
     | '/'
@@ -257,10 +178,7 @@ export interface FileRouteTypes {
     | '/calculator/$slug'
     | '/category/$slug'
     | '/blog/'
-<<<<<<< HEAD
     | '/blog/$category/$slug'
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -278,54 +196,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-<<<<<<< HEAD
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/disclaimer': {
-      id: '/disclaimer'
-      path: '/disclaimer'
-      fullPath: '/disclaimer'
-      preLoaderRoute: typeof DisclaimerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/calculators': {
-      id: '/calculators'
-      path: '/calculators'
-      fullPath: '/calculators'
-      preLoaderRoute: typeof CalculatorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-=======
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
->>>>>>> 529569b (Deploy CalcZen V2)
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -335,13 +210,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-<<<<<<< HEAD
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-=======
     '/blog': {
       id: '/blog'
       path: '/blog'
@@ -382,7 +250,6 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
->>>>>>> 529569b (Deploy CalcZen V2)
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -392,21 +259,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof BlogRoute
     }
-<<<<<<< HEAD
-    '/category/$slug': {
-      id: '/category/$slug'
-      path: '/category/$slug'
-      fullPath: '/category/$slug'
-      preLoaderRoute: typeof CategorySlugRouteImport
-      parentRoute: typeof rootRouteImport
-=======
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/$slug'
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
->>>>>>> 529569b (Deploy CalcZen V2)
     }
     '/calculator/$slug': {
       id: '/calculator/$slug'
@@ -415,13 +273,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalculatorSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-<<<<<<< HEAD
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRoute
+    '/category/$slug': {
+      id: '/category/$slug'
+      path: '/category/$slug'
+      fullPath: '/category/$slug'
+      preLoaderRoute: typeof CategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/blog/$category/$slug': {
       id: '/blog/$category/$slug'
@@ -429,14 +286,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/blog/$category/$slug'
       preLoaderRoute: typeof BlogCategorySlugRouteImport
       parentRoute: typeof BlogRoute
-=======
-    '/category/$slug': {
-      id: '/category/$slug'
-      path: '/category/$slug'
-      fullPath: '/category/$slug'
-      preLoaderRoute: typeof CategorySlugRouteImport
-      parentRoute: typeof rootRouteImport
->>>>>>> 529569b (Deploy CalcZen V2)
     }
   }
 }
@@ -444,19 +293,13 @@ declare module '@tanstack/react-router' {
 interface BlogRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
-<<<<<<< HEAD
   BlogCategorySlugRoute: typeof BlogCategorySlugRoute
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
 }
 
 const BlogRouteChildren: BlogRouteChildren = {
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
-<<<<<<< HEAD
   BlogCategorySlugRoute: BlogCategorySlugRoute,
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
 }
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)

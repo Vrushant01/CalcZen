@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+﻿import React, { useState, useMemo } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { CalculatorCurrencyBar } from "@/components/CurrencySelector";
@@ -24,16 +24,7 @@ import {
 } from "recharts";
 import CalculatorBlog, { type BlogContent } from "@/components/CalculatorBlog";
 import { motion } from "framer-motion";
-<<<<<<< HEAD
-import {
-  HeroMetric,
-  StatCard,
-  DashboardSection,
-  InsightCard,
-} from "@/components/dashboard";
-=======
 import { HeroMetric, StatCard, DashboardSection, InsightCard } from "@/components/dashboard";
->>>>>>> 529569b (Deploy CalcZen V2)
 
 export function InflationCalculator() {
   const calc = getCalculator("inflation-calculator")!;
@@ -92,26 +83,6 @@ export function InflationCalculator() {
     if (e.key === "Enter" && !isButtonDisabled) handleCalculate();
   };
 
-<<<<<<< HEAD
-  const pdfData = hasResult ? {
-    calculatorName: "Inflation Calculator",
-    calculatorSlug: "inflation-calculator",
-    siteName: "CalcZen",
-    siteUrl: "https://calczen.com",
-    inputs: [
-      { label: "Current Amount", value: formatPdfUsd(calcAmount) },
-      { label: "Inflation Rate", value: `${calcRate}%` },
-      { label: "Time Period", value: `${calcYears} years` },
-    ],
-    results: [
-      { label: "Future Cost", value: formatPdfUsd(result.futureCost), highlight: true },
-      { label: "Purchasing Power", value: formatPdfUsd(result.purchasingPower), highlight: false },
-      { label: "Purchasing Power Loss", value: formatPdfUsd(result.loss), highlight: false },
-    ],
-    summary: `At a ${calcRate}% inflation rate over ${calcYears} years, your ${formatPdfUsd(calcAmount)} will require ${formatPdfUsd(result.futureCost)} to have the same purchasing power. Meanwhile, ${formatPdfUsd(calcAmount)} kept in cash will lose ${formatPdfUsd(result.loss)} in value.`,
-    chartElementId: "inflation-chart",
-  } : null;
-=======
   const pdfData = hasResult
     ? {
         calculatorName: "Inflation Calculator",
@@ -136,7 +107,6 @@ export function InflationCalculator() {
         chartElementId: "inflation-chart",
       }
     : null;
->>>>>>> 529569b (Deploy CalcZen V2)
 
   const faqs = [
     {
@@ -174,16 +144,12 @@ export function InflationCalculator() {
   ];
 
   const tooltipStyle = {
-<<<<<<< HEAD
-    contentStyle: { background: "var(--color-card)", borderColor: "var(--color-border)", borderRadius: "8px", fontSize: 12 },
-=======
     contentStyle: {
       background: "var(--color-card)",
       borderColor: "var(--color-border)",
       borderRadius: "8px",
       fontSize: 12,
     },
->>>>>>> 529569b (Deploy CalcZen V2)
     labelStyle: { color: "var(--color-foreground)" },
     itemStyle: { color: "var(--color-foreground)" },
   };
@@ -191,48 +157,28 @@ export function InflationCalculator() {
   const inflationBlogContent: BlogContent = {
     primaryKeyword: "inflation",
     category: "Economics & Finance",
-<<<<<<< HEAD
-    introText: "Inflation is the gradual decline of purchasing power of a given currency over time. A quantitative estimate of the rate at which the decline in purchasing power occurs can be reflected in the increase of an average price level of a basket of selected goods and services in an economy over some period of time. Our Inflation Calculator helps you visualize exactly how this economic phenomenon impacts your hard-earned money.",
-=======
     introText:
       "Inflation is the gradual decline of purchasing power of a given currency over time. A quantitative estimate of the rate at which the decline in purchasing power occurs can be reflected in the increase of an average price level of a basket of selected goods and services in an economy over some period of time. Our Inflation Calculator helps you visualize exactly how this economic phenomenon impacts your hard-earned money.",
->>>>>>> 529569b (Deploy CalcZen V2)
     sections: [
       {
         title: "How Inflation Affects Purchasing Power",
         paragraphs: [
           "This tool uses standard compound interest formulas in reverse to calculate the future value and the erosion of purchasing power. There are two primary perspectives when dealing with inflation:",
-<<<<<<< HEAD
-          "<strong>Future Cost:</strong> This answers the question: \"If an item costs $10,000 today, how much will the exact same item cost in 10 years?\" If inflation averages 3.5% per year, you will need more dollars to buy that same item.",
-          "<strong>Purchasing Power:</strong> This answers the question: \"If I hide $10,000 under my mattress today, what will it be worth in 10 years?\" Because prices rise, your static $10,000 buys fewer goods and services in the future."
-        ]
-=======
           '<strong>Future Cost:</strong> This answers the question: "If an item costs $10,000 today, how much will the exact same item cost in 10 years?" If inflation averages 3.5% per year, you will need more dollars to buy that same item.',
           '<strong>Purchasing Power:</strong> This answers the question: "If I hide $10,000 under my mattress today, what will it be worth in 10 years?" Because prices rise, your static $10,000 buys fewer goods and services in the future.',
         ],
->>>>>>> 529569b (Deploy CalcZen V2)
       },
       {
         title: "The Inflation Formula",
         paragraphs: [
           "To calculate the Future Cost of an item currently priced at P, with an annual inflation rate of r over t years, we use a simple compounding formula.",
-<<<<<<< HEAD
-          "Similarly, to calculate the future Purchasing Power of an amount P held today, we use the inverse formula."
-=======
           "Similarly, to calculate the future Purchasing Power of an amount P held today, we use the inverse formula.",
->>>>>>> 529569b (Deploy CalcZen V2)
         ],
         formulaBox: {
           title: "Inflation Formulas",
           formula: "Future Cost = P × (1 + r)^t\nPurchasing Power = P / (1 + r)^t",
           variables: [
             { name: "P", desc: "Current amount" },
-<<<<<<< HEAD
-            { name: "r", desc: "Annual inflation rate (expressed as a decimal, e.g. 0.035 for 3.5%)" },
-            { name: "t", desc: "Time period in years" }
-          ]
-        }
-=======
             {
               name: "r",
               desc: "Annual inflation rate (expressed as a decimal, e.g. 0.035 for 3.5%)",
@@ -240,44 +186,22 @@ export function InflationCalculator() {
             { name: "t", desc: "Time period in years" },
           ],
         },
->>>>>>> 529569b (Deploy CalcZen V2)
       },
       {
         title: "Real World Example",
         paragraphs: [
-<<<<<<< HEAD
-          "Let's look at a realistic scenario where you are considering keeping your money in cash versus investing it. Imagine you place $50,000 in a safe in your home, intending to use it for a down payment on a house in 15 years."
-=======
           "Let's look at a realistic scenario where you are considering keeping your money in cash versus investing it. Imagine you place $50,000 in a safe in your home, intending to use it for a down payment on a house in 15 years.",
->>>>>>> 529569b (Deploy CalcZen V2)
         ],
         exampleBox: {
           title: "Purchasing Power Loss Calculation",
           inputs: [
             { name: "Current Amount", val: "$50,000" },
             { name: "Annual Inflation Rate", val: "4%" },
-<<<<<<< HEAD
-            { name: "Time Period", val: "15 Years" }
-=======
             { name: "Time Period", val: "15 Years" },
->>>>>>> 529569b (Deploy CalcZen V2)
           ],
           steps: [
             "Convert the annual inflation rate to a decimal: r = 0.04.",
             "Calculate the denominator: (1 + 0.04)^15 ≈ 1.8009.",
-<<<<<<< HEAD
-            "Apply the formula: Purchasing Power = $50,000 / 1.8009."
-          ],
-          result: "The purchasing power of your $50,000 drops to just <strong>$27,763</strong>. You have essentially lost <strong>$22,237</strong> of value simply by not investing the money to pace with or beat inflation."
-        }
-      }
-    ]
-  };
-
-  return (
-    <CalculatorPageLayout 
-      calc={calc} 
-=======
             "Apply the formula: Purchasing Power = $50,000 / 1.8009.",
           ],
           result:
@@ -290,7 +214,6 @@ export function InflationCalculator() {
   return (
     <CalculatorPageLayout
       calc={calc}
->>>>>>> 529569b (Deploy CalcZen V2)
       faqs={faqs}
       intro="Understand how inflation erodes your purchasing power over time. Use this calculator to project the future cost of goods or determine the future value of your current cash."
       formula={`Future Cost = P × (1 + r)^n\nPurchasing Power = P / (1 + r)^n\nwhere:\nP = Current amount\nr = Annual inflation rate\nn = Time period in years`}
@@ -370,16 +293,7 @@ export function InflationCalculator() {
                   value={format(result.purchasingPower)}
                   accent="green"
                 />
-<<<<<<< HEAD
-                <StatCard
-                  index={2}
-                  label="Value Lost"
-                  value={format(result.loss)}
-                  accent="amber"
-                />
-=======
                 <StatCard index={2} label="Value Lost" value={format(result.loss)} accent="amber" />
->>>>>>> 529569b (Deploy CalcZen V2)
                 <StatCard
                   index={3}
                   label="Inflation Impact %"
@@ -390,12 +304,6 @@ export function InflationCalculator() {
             </DashboardSection>
 
             <DashboardSection title="Value Trajectory Over Time">
-<<<<<<< HEAD
-              <div id="inflation-chart" className="rounded-xl border border-border/60 bg-card p-4 shadow-soft">
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={result.chartData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
-=======
               <div
                 id="inflation-chart"
                 className="rounded-xl border border-border/60 bg-card p-4 shadow-soft"
@@ -406,7 +314,6 @@ export function InflationCalculator() {
                       data={result.chartData}
                       margin={{ top: 4, right: 4, left: 0, bottom: 0 }}
                     >
->>>>>>> 529569b (Deploy CalcZen V2)
                       <defs>
                         <linearGradient id="colorFuture" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3} />
@@ -479,11 +386,6 @@ export function InflationCalculator() {
             </div>
           </motion.div>
         )}
-<<<<<<< HEAD
-        
-        
-=======
->>>>>>> 529569b (Deploy CalcZen V2)
       </div>
     </CalculatorPageLayout>
   );

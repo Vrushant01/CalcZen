@@ -109,6 +109,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.calczen.in/category/science</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.calczen.in/calculator/gst-invoice-calculator</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>weekly</changefreq>

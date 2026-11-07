@@ -1,4 +1,4 @@
-﻿import {
+import {
   Calculator,
   Home,
   Heart,
@@ -116,6 +116,14 @@ export const categories: Category[] = [
     icon: Heart,
     color: "category-card-love", // Adding a simple color reference
     iconColor: "text-pink-500 dark:text-pink-400",
+  },
+  {
+    slug: "science",
+    name: "Science",
+    description: "Scientific calculations, trigonometry, engineering & formula solvers",
+    icon: Sparkles,
+    color: "category-card-math",
+    iconColor: "text-indigo-600 dark:text-indigo-400",
   },
 ];
 
@@ -1218,6 +1226,7 @@ export const SLUG_ALIASES: Record<string, string> = {
   "igst-calculator": "gst-invoice-calculator",
   "gst-invoice": "gst-invoice-calculator",
   "gst-bill-calculator": "gst-invoice-calculator",
+  "regular-calculator": "standard-calculator",
 };
 
 export const getCalculator = (slug: string) => {

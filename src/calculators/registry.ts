@@ -1,4 +1,4 @@
-﻿import { lazy } from "react";
+import { lazy } from "react";
 import type { ComponentType } from "react";
 
 // Registry maps calculator slug → lazy component.
@@ -139,6 +139,9 @@ export const calculatorComponents: Record<string, ComponentType> = {
     import("@/calculators/BMRCalculator").then((m) => ({ default: m.BMRCalculator })),
   ),
   "standard-calculator": lazy(() =>
+    import("@/calculators/StandardCalculator").then((m) => ({ default: m.StandardCalculator })),
+  ),
+  "regular-calculator": lazy(() =>
     import("@/calculators/StandardCalculator").then((m) => ({ default: m.StandardCalculator })),
   ),
   "scientific-calculator": lazy(() =>

@@ -202,5 +202,9 @@ export const categoryMeta: Record<string, { title: string; description: string }
   "love-and-relationships": {
     "title": "Love & Relationships Calculators - Free Online Tools | CalcZen",
     "description": "Compatibility & fun matches"
+  },
+  "science": {
+    "title": "Science Calculators - Free Online Tools | CalcZen",
+    "description": "Scientific calculations, trigonometry, engineering & formula solvers"
   }
 };

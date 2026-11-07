@@ -311,7 +311,12 @@ async function prerender() {
     const canonical = `${siteUrl}/category/${cat.slug}`;
     const title = `${cat.name} Calculators - Free Online Tools | CalcZen`;
     const description = `Explore free online ${cat.name.toLowerCase()} calculators on CalcZen. Fast, accurate, and easy-to-use tools for ${cat.description.toLowerCase()}.`;
-    const catCalcs = calculators.filter((c) => c.category === cat.slug);
+    const catCalcs = calculators.filter(
+      (c) =>
+        c.category === cat.slug ||
+        (cat.slug === "science" &&
+          (c.slug === "scientific-calculator" || c.slug === "standard-calculator")),
+    );
 
     const bodyHtml = `
       ${renderHeaderHtml()}

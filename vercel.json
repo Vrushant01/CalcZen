@@ -7,6 +7,11 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/calculator/regular-calculator",
+      "destination": "/calculator/standard-calculator",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {

@@ -1,4 +1,4 @@
-﻿import fs from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express, { type Express, type NextFunction, type Request, type Response } from "express";
@@ -63,86 +63,7 @@ async function ensureDb(): Promise<void> {
   }
 }
 
-const calculatorMeta: Record<string, { title: string; description: string }> = {
-  "mortgage-calculator": {
-    title: "Mortgage Calculator - Estimate Monthly Home Loan Payments | CalcZen",
-    description:
-      "Calculate monthly mortgage payments, interest rates, taxes, and HOA fees instantly. Estimate your home loan costs and budget with our free calculator.",
-  },
-  "compound-interest-calculator": {
-    title: "Compound Interest Calculator - Calculate Savings Growth Online | CalcZen",
-    description:
-      "Calculate compound interest growth for your savings and investments. See detailed annual compound schedules and charts to visualize your future wealth.",
-  },
-  "loan-emi-calculator": {
-    title: "Loan EMI Calculator - Calculate Monthly Loan Payments Online | CalcZen",
-    description:
-      "Calculate your monthly loan EMI payouts, interest payable, and total loan payment instantly. Plan home, car, or personal loan budgets with our tool.",
-  },
-  "bmi-calculator": {
-    title: "BMI Calculator - Calculate Body Mass Index Online | CalcZen",
-    description:
-      "Calculate your Body Mass Index (BMI) instantly. Understand your healthy weight category and track your health fitness metrics online with our tool.",
-  },
-  "calorie-calculator": {
-    title: "Calorie Calculator - Calculate Daily Calorie Needs Online | CalcZen",
-    description:
-      "Estimate daily calorie needs for weight loss, gain, or maintenance. Calculate your TDEE based on height, weight, activity, and fitness goals easily.",
-  },
-  "water-intake-calculator": {
-    title: "Water Intake Calculator - Calculate Daily Hydration Needs | CalcZen",
-    description:
-      "Calculate your daily water intake needs based on weight, exercise time, and climate. Keep hydrated and track your daily hydration goals with ease.",
-  },
-  "pregnancy-due-date-calculator": {
-    title: "Pregnancy Due Date Calculator - Calculate Baby Due Date | CalcZen",
-    description:
-      "Estimate your baby's due date, gestational age, and pregnancy progress timeline instantly. Track your pregnancy milestones online using clinical metrics.",
-  },
-  "percentage-calculator": {
-    title: "Percentage Calculator - Calculate Percent Shifts and Ratios | CalcZen",
-    description:
-      "Calculate percentage increases, decreases, differences, and fractional shifts instantly. Solve school or business percent math equations in seconds.",
-  },
-  "age-calculator": {
-    title: "Age Calculator - Calculate Exact Age from Date of Birth | CalcZen",
-    description:
-      "Calculate your exact age in years, months, days, minutes, and seconds from your birthdate. Find the time remaining until your next birthday instantly.",
-  },
-  "tip-calculator": {
-    title: "Tip Calculator - Calculate Restaurant Tips & Split Bills | CalcZen",
-    description:
-      "Calculate tip percentages and split restaurant bills evenly among friends in seconds. Manage tipping amounts and group payment transactions fairly.",
-  },
-  "bmr-calculator": {
-    title: "BMR Calculator - Calculate Basal Metabolic Rate Online | CalcZen",
-    description:
-      "Calculate your Basal Metabolic Rate (BMR) instantly. Estimate calories burned at rest based on height, weight, gender, and age for fitness planning.",
-  },
-};
-
-const categoryMeta: Record<string, { title: string; description: string }> = {
-  finance: {
-    title: "Finance Calculators - Loans, investments, savings & more | CalcZen",
-    description:
-      "Explore our free online finance calculators for mortgages, loan EMIs, compound interest growth, and daily financial planning.",
-  },
-  health: {
-    title: "Health & Fitness Calculators - BMI, calories, BMR & more | CalcZen",
-    description:
-      "Track your fitness goals with our free health calculators. Estimate BMI, daily calorie targets, BMR, water intake, and pregnancy milestones.",
-  },
-  math: {
-    title: "Math & Percentage Calculators - Ratios, age & GPA | CalcZen",
-    description:
-      "Solve math equations and daily figures easily. Free percentage calculators, age estimators, ratio solvers, and academic GPA helpers.",
-  },
-  everyday: {
-    title: "Everyday Calculators - Tips, dates, fuel & lifestyle | CalcZen",
-    description:
-      "Simple online tools for daily tasks. Split restaurant bills, calculate tips, analyze fuel costs, and organize your lifestyle with ease.",
-  },
-};
+import { calculatorMeta, categoryMeta } from "./config/metaData.js";
 
 function getCanonicalUrl(urlPath: string): string {
   const pathPart = urlPath.endsWith("/") && urlPath !== "/" ? urlPath.slice(0, -1) : urlPath;

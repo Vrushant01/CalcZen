@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, ChevronDown } from "lucide-react";
 import { useRef, useState } from "react";
@@ -111,9 +111,9 @@ export const Route = createFileRoute("/")({
           "Use free online calculators for finance, health, math, and everyday calculations. Fast, accurate tools with instant results.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://calczen.com/" },
+      { property: "og:url", content: "https://www.calczen.in/" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.com/" }],
+    links: [{ rel: "canonical", href: "https://www.calczen.in/" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -121,8 +121,8 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "CalcZen",
-          url: "https://calczen.com",
-          logo: "https://calczen.com/logo.png",
+          url: "https://www.calczen.in",
+          logo: "https://www.calczen.in/icons/android-chrome-512x512.png",
           sameAs: [],
         }),
       },
@@ -132,10 +132,10 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "CalcZen",
-          url: "https://calczen.com",
+          url: "https://www.calczen.in",
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://calczen.com/search?q={search_term_string}",
+            target: "https://www.calczen.in/search?q={search_term_string}",
             "query-input": "required name=search_term_string",
           },
         }),
@@ -155,7 +155,7 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          "@id": "https://calczen.com/#faq",
+          "@id": "https://www.calczen.in/#faq",
           mainEntity: [
             {
               "@type": "Question",

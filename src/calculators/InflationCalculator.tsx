@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { CalculatorCurrencyBar } from "@/components/CurrencySelector";
@@ -88,7 +88,7 @@ export function InflationCalculator() {
         calculatorName: "Inflation Calculator",
         calculatorSlug: "inflation-calculator",
         siteName: "CalcZen",
-        siteUrl: "https://calczen.com",
+        siteUrl: "https://www.calczen.in",
         inputs: [
           { label: "Current Amount", value: formatPdfUsd(calcAmount) },
           { label: "Inflation Rate", value: `${calcRate}%` },

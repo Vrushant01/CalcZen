@@ -7,6 +7,17 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "calczen\\.in"
+        }
+      ],
+      "destination": "https://www.calczen.in/:path*",
+      "permanent": true
+    },
+    {
       "source": "/admin/:path*",
       "has": [
         {
@@ -44,7 +55,8 @@
     { "source": "/api", "destination": "/api/index.ts" },
     { "source": "/api/(.*)", "destination": "/api/index.ts" },
     { "source": "/admin", "destination": "/api/index.ts" },
-    { "source": "/admin/(.*)", "destination": "/api/index.ts" }
+    { "source": "/admin/(.*)", "destination": "/api/index.ts" },
+    { "source": "/((?!api/|admin/).*)", "destination": "/index.html" }
   ],
   "functions": {
     "api/index.ts": {

@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog, { BlogContent } from "@/components/CalculatorBlog";
@@ -143,6 +145,7 @@ const attendanceBlogContent: BlogContent = {
 export function AttendanceCalculator() {
   const calc = getCalculator("attendance-calculator");
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (Number(conducted) !== calcConducted || Number(attended) !== calcAttended);
 
   const [conducted, setConducted] = useState<number | "">("");
   const [attended, setAttended] = useState<number | "">("");
@@ -270,13 +273,16 @@ export function AttendanceCalculator() {
           </div>
         </div>
 
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-2 flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             <DashboardSection title="Current Status">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <HeroMetric
@@ -362,6 +368,11 @@ export function AttendanceCalculator() {
               </div>
             </DashboardSection>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="math"
+          />
         )}
       </div>
     </CalculatorPageLayout>

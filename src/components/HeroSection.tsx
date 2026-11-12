@@ -340,7 +340,7 @@ export function HeroSection() {
   };
 
   const navLinks = [
-    { to: "/calculators", label: "Calculators" },
+    { to: "/calculators", label: "All Calculators" },
     { to: "/category/finance", label: "Finance" },
     { to: "/category/health", label: "Health" },
     { to: "/category/math", label: "Math" },

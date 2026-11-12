@@ -88,6 +88,171 @@ export const calculatorComponents: Record<string, ComponentType> = {
       default: m.GoldJewelleryBillCalculator,
     })),
   ),
+  "old-gold-exchange-value-calculator": lazy(() =>
+    import("@/calculators/OldGoldExchangeValueCalculator").then((m) => ({
+      default: m.OldGoldExchangeValueCalculator,
+    })),
+  ),
+  "old-gold-calculator": lazy(() =>
+    import("@/calculators/OldGoldExchangeValueCalculator").then((m) => ({
+      default: m.OldGoldExchangeValueCalculator,
+    })),
+  ),
+  "gold-exchange-calculator": lazy(() =>
+    import("@/calculators/OldGoldExchangeValueCalculator").then((m) => ({
+      default: m.OldGoldExchangeValueCalculator,
+    })),
+  ),
+  "old-gold-value-calculator": lazy(() =>
+    import("@/calculators/OldGoldExchangeValueCalculator").then((m) => ({
+      default: m.OldGoldExchangeValueCalculator,
+    })),
+  ),
+  "gold-resale-calculator": lazy(() =>
+    import("@/calculators/OldGoldExchangeValueCalculator").then((m) => ({
+      default: m.OldGoldExchangeValueCalculator,
+    })),
+  ),
+  "silver-jewellery-bill-calculator": lazy(() =>
+    import("@/calculators/SilverJewelleryBillCalculator").then((m) => ({
+      default: m.SilverJewelleryBillCalculator,
+    })),
+  ),
+  "silver-calculator": lazy(() =>
+    import("@/calculators/SilverJewelleryBillCalculator").then((m) => ({
+      default: m.SilverJewelleryBillCalculator,
+    })),
+  ),
+  "silver-jewellery-calculator": lazy(() =>
+    import("@/calculators/SilverJewelleryBillCalculator").then((m) => ({
+      default: m.SilverJewelleryBillCalculator,
+    })),
+  ),
+  "silver-rate-calculator": lazy(() =>
+    import("@/calculators/SilverJewelleryBillCalculator").then((m) => ({
+      default: m.SilverJewelleryBillCalculator,
+    })),
+  ),
+  "silver-bill-calculator": lazy(() =>
+    import("@/calculators/SilverJewelleryBillCalculator").then((m) => ({
+      default: m.SilverJewelleryBillCalculator,
+    })),
+  ),
+  "silver-price-calculator": lazy(() =>
+    import("@/calculators/SilverJewelleryBillCalculator").then((m) => ({
+      default: m.SilverJewelleryBillCalculator,
+    })),
+  ),
+  "gold-purity-karat-converter": lazy(() =>
+    import("@/calculators/GoldPurityKaratConverter").then((m) => ({
+      default: m.GoldPurityKaratConverter,
+    })),
+  ),
+  "gold-purity-calculator": lazy(() =>
+    import("@/calculators/GoldPurityKaratConverter").then((m) => ({
+      default: m.GoldPurityKaratConverter,
+    })),
+  ),
+  "gold-karat-converter": lazy(() =>
+    import("@/calculators/GoldPurityKaratConverter").then((m) => ({
+      default: m.GoldPurityKaratConverter,
+    })),
+  ),
+  "gold-fineness-calculator": lazy(() =>
+    import("@/calculators/GoldPurityKaratConverter").then((m) => ({
+      default: m.GoldPurityKaratConverter,
+    })),
+  ),
+  "karat-to-percentage-calculator": lazy(() =>
+    import("@/calculators/GoldPurityKaratConverter").then((m) => ({
+      default: m.GoldPurityKaratConverter,
+    })),
+  ),
+  "916-gold-purity-calculator": lazy(() =>
+    import("@/calculators/GoldPurityKaratConverter").then((m) => ({
+      default: m.GoldPurityKaratConverter,
+    })),
+  ),
+  "diamond-jewellery-price-calculator": lazy(() =>
+    import("@/calculators/DiamondJewelleryPriceCalculator").then((m) => ({
+      default: m.DiamondJewelleryPriceCalculator,
+    })),
+  ),
+  "diamond-jewellery-calculator": lazy(() =>
+    import("@/calculators/DiamondJewelleryPriceCalculator").then((m) => ({
+      default: m.DiamondJewelleryPriceCalculator,
+    })),
+  ),
+  "diamond-price-calculator": lazy(() =>
+    import("@/calculators/DiamondJewelleryPriceCalculator").then((m) => ({
+      default: m.DiamondJewelleryPriceCalculator,
+    })),
+  ),
+  "diamond-ring-price-calculator": lazy(() =>
+    import("@/calculators/DiamondJewelleryPriceCalculator").then((m) => ({
+      default: m.DiamondJewelleryPriceCalculator,
+    })),
+  ),
+  "gold-loan-against-jewellery-calculator": lazy(() =>
+    import("@/calculators/GoldLoanAgainstJewelleryCalculator").then((m) => ({
+      default: m.GoldLoanAgainstJewelleryCalculator,
+    })),
+  ),
+  "gold-loan-calculator": lazy(() =>
+    import("@/calculators/GoldLoanAgainstJewelleryCalculator").then((m) => ({
+      default: m.GoldLoanAgainstJewelleryCalculator,
+    })),
+  ),
+  "loan-against-gold-calculator": lazy(() =>
+    import("@/calculators/GoldLoanAgainstJewelleryCalculator").then((m) => ({
+      default: m.GoldLoanAgainstJewelleryCalculator,
+    })),
+  ),
+  "jewellery-loan-calculator": lazy(() =>
+    import("@/calculators/GoldLoanAgainstJewelleryCalculator").then((m) => ({
+      default: m.GoldLoanAgainstJewelleryCalculator,
+    })),
+  ),
+  "gold-loan-emi-calculator": lazy(() =>
+    import("@/calculators/GoldLoanAgainstJewelleryCalculator").then((m) => ({
+      default: m.GoldLoanAgainstJewelleryCalculator,
+    })),
+  ),
+  "jewellery-budget-to-weight-calculator": lazy(() =>
+    import("@/calculators/JewelleryBudgetToWeightCalculator").then((m) => ({
+      default: m.JewelleryBudgetToWeightCalculator,
+    })),
+  ),
+  "jewellery-budget-calculator": lazy(() =>
+    import("@/calculators/JewelleryBudgetToWeightCalculator").then((m) => ({
+      default: m.JewelleryBudgetToWeightCalculator,
+    })),
+  ),
+  "gold-budget-calculator": lazy(() =>
+    import("@/calculators/JewelleryBudgetToWeightCalculator").then((m) => ({
+      default: m.JewelleryBudgetToWeightCalculator,
+    })),
+  ),
+  "gold-weight-calculator": lazy(() =>
+    import("@/calculators/JewelleryBudgetToWeightCalculator").then((m) => ({
+      default: m.JewelleryBudgetToWeightCalculator,
+    })),
+  ),
+  "gold-weight-by-budget-calculator": lazy(() =>
+    import("@/calculators/JewelleryBudgetToWeightCalculator").then((m) => ({
+      default: m.JewelleryBudgetToWeightCalculator,
+    })),
+  ),
+  "how-much-gold-can-i-buy": lazy(() =>
+    import("@/calculators/JewelleryBudgetToWeightCalculator").then((m) => ({
+      default: m.JewelleryBudgetToWeightCalculator,
+    })),
+  ),
+  "diamond-calculator": lazy(() =>
+    import("@/calculators/DiamondJewelleryPriceCalculator").then((m) => ({
+      default: m.DiamondJewelleryPriceCalculator,
+    })),
+  ),
   "job-offer-comparison-calculator": lazy(() =>
     import("@/calculators/JobOfferCalculator").then((m) => ({ default: m.JobOfferCalculator })),
   ),

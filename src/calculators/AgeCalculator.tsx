@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
@@ -15,6 +17,7 @@ import { motion } from "framer-motion";
 export function AgeCalculator() {
   const calc = getCalculator("age-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (dob !== calcDob || on !== calcOn);
   const today = new Date().toISOString().slice(0, 10);
 
   // Live states
@@ -194,13 +197,16 @@ Age = 29 years, 6 months, 26 days.`}
           </div>
         </div>
 
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, height: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, height: "auto", scale: 1, y: 0 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
             className="mt-6 pt-6 border-t border-border space-y-6 overflow-hidden relative"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             <div
               className="absolute inset-0 pointer-events-none blur-3xl opacity-15 -z-10"
               style={{
@@ -265,6 +271,11 @@ Age = 29 years, 6 months, 26 days.`}
               </p>
             )}
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="everyday"
+          />
         )}
       </div>
     </CalculatorPageLayout>

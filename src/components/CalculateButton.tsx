@@ -1,4 +1,4 @@
-﻿import * as React from "react";
+import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button, type ButtonProps } from "@/components/ui/button";
@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 export interface CalculateButtonProps extends ButtonProps {
-  category:
+  category?:
     | "health"
     | "finance"
     | "math"
@@ -25,7 +25,10 @@ export interface CalculateButtonProps extends ButtonProps {
     | "love-and-relationships"
     | "salary-and-employment"
     | "jewellery"
-    | "home-construction";
+    | "home-construction"
+    | "electricity"
+    | "business"
+    | (string & {});
 }
 
 interface Particle {
@@ -73,6 +76,14 @@ const CATEGORY_COLORS = {
   "home-construction": {
     ringColor: "rgba(245, 158, 11, 0.45)", // Amber Construction
     particles: ["#f59e0b", "#ea580c", "#d97706", "#f97316"],
+  },
+  electricity: {
+    ringColor: "rgba(234, 179, 8, 0.45)", // Yellow Amber
+    particles: ["#eab308", "#f59e0b", "#06b6d4", "#3b82f6"],
+  },
+  business: {
+    ringColor: "rgba(59, 130, 246, 0.45)", // Blue
+    particles: ["#3b82f6", "#10b981", "#6366f1", "#0ea5e9"],
   },
 };
 

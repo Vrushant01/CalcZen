@@ -9,6 +9,8 @@ import { CalculateButton } from "@/components/CalculateButton";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { motion } from "framer-motion";
 import { HeroMetric, StatCard, DashboardSection, InsightCard } from "@/components/dashboard";
 import {
@@ -167,6 +169,21 @@ export function CGPACalculator() {
     { id: "3", name: "Course 3", grade: "A-", credits: 4 },
   ]);
 
+  const [calcCgpaInputs, setCalcCgpaInputs] = useState<{
+    prevCGPA: number | "";
+    prevCredits: number | "";
+    subjects: Subject[];
+  } | null>(null);
+
+  const isOutdated =
+    hasResult &&
+    Boolean(
+      calcCgpaInputs &&
+        (prevCGPA !== calcCgpaInputs.prevCGPA ||
+          prevCredits !== calcCgpaInputs.prevCredits ||
+          JSON.stringify(subjects) !== JSON.stringify(calcCgpaInputs.subjects))
+    );
+
   const [result, setResult] = useState<{
     sgpa: number;
     cgpa: number | null;
@@ -236,6 +253,11 @@ export function CGPACalculator() {
       totalPoints,
     });
 
+    setCalcCgpaInputs({
+      prevCGPA,
+      prevCredits,
+      subjects: JSON.parse(JSON.stringify(subjects)),
+    });
     markCalculated();
   };
 
@@ -248,6 +270,7 @@ export function CGPACalculator() {
       { id: "3", name: "Course 3", grade: "A-", credits: 4 },
     ]);
     setResult(null);
+    setCalcCgpaInputs(null);
     resetCalculated();
   };
 
@@ -424,13 +447,16 @@ export function CGPACalculator() {
           </div>
         </div>
 
-        {hasResult && result && (
+        {hasResult && result ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-2 flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             <HeroMetric
               label={result.cgpa !== null ? "Cumulative GPA (CGPA)" : "Semester GPA (SGPA)"}
               value={result.cgpa !== null ? result.cgpa.toFixed(2) : result.sgpa.toFixed(2)}
@@ -497,6 +523,11 @@ export function CGPACalculator() {
               {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="math"
+          />
         )}
       </div>
     </CalculatorPageLayout>

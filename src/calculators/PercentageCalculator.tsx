@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
@@ -32,6 +34,7 @@ import {
 export function PercentageCalculator() {
   const calc = getCalculator("percentage-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (Number(a) !== calcA || Number(b) !== calcB || Number(x) !== calcX || Number(y) !== calcY || Number(from) !== calcFrom || Number(to) !== calcTo);
 
   const [a, setA] = useState<number | "">(15);
   const [b, setB] = useState<number | "">(200);
@@ -219,13 +222,16 @@ export function PercentageCalculator() {
           </div>
         </div>
 
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-2 flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             {/* 3 Hero Results */}
             <DashboardSection title="Results">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -412,6 +418,11 @@ export function PercentageCalculator() {
               <CalculatorPdfExport pdfData={pdfData} />
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="math"
+          />
         )}
       </div>
     </CalculatorPageLayout>

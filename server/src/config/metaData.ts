@@ -36,6 +36,30 @@ export const calculatorMeta: Record<string, { title: string; description: string
     "title": "Gold Jewellery Bill Calculator India – Gold Price, Making Charges & GST | CalcZen",
     "description": "Calculate your gold jewellery bill in India using gold purity, weight, making charges, wastage, stones, discounts, and GST. Get a detailed price breakdown with CalcZen."
   },
+  "old-gold-exchange-value-calculator": {
+    "title": "Old Gold Exchange Value Calculator India – Resale Price & Deductions | CalcZen",
+    "description": "Calculate the estimated exchange or cash resale value of your old gold jewellery in India based on 22K/18K BIS hallmark fineness, pure gold weight, and live market rates with CalcZen."
+  },
+  "silver-jewellery-bill-calculator": {
+    "title": "Silver Jewellery Bill Calculator India – Calculate Silver Price with GST | CalcZen",
+    "description": "Calculate your silver jewellery price in India using weight, purity, silver rate, making charges, discounts and GST. Get an easy bill breakdown."
+  },
+  "gold-purity-karat-converter": {
+    "title": "Gold Purity & Karat Converter – 22K, 18K, 14K to Fineness | CalcZen",
+    "description": "Convert gold karat into purity percentage and fineness. Easily understand 22K, 18K, 14K and 24K gold with this simple gold purity converter."
+  },
+  "diamond-jewellery-price-calculator": {
+    "title": "Diamond Jewellery Price Calculator India – Calculate Diamond Ring Price | CalcZen",
+    "description": "Calculate your estimated diamond jewellery price using diamond value, gold weight, metal rate, making charges and GST. Get a simple price breakdown."
+  },
+  "gold-loan-against-jewellery-calculator": {
+    "title": "Gold Loan Calculator India – Loan Against Gold Jewellery | CalcZen",
+    "description": "Calculate how much loan you may get against gold jewellery using weight, purity, gold rate and loan-to-value limits. Estimate interest and EMI with CalcZen."
+  },
+  "jewellery-budget-to-weight-calculator": {
+    "title": "Jewellery Budget Calculator – How Much Gold Can I Buy? | CalcZen",
+    "description": "Find out how many grams of gold or silver jewellery you can buy within your budget. Calculate affordable weight with making charges, wastage and GST."
+  },
   "ctc-to-in-hand-salary-calculator": {
     "title": "CTC to In-Hand Salary Calculator India FY 2026-27 | CalcZen",
     "description": "Calculate your estimated monthly in-hand salary from CTC in India. Compare new and old tax regimes, PF, gratuity, ESI and professional tax with our free calculator."
@@ -181,7 +205,7 @@ export const categoryMeta: Record<string, { title: string; description: string }
   },
   "jewellery": {
     "title": "Jewellery Calculators - Free Online Tools | CalcZen",
-    "description": "Gold rates, making charges, wastage & GST"
+    "description": "Calculate silver and gold jewellery prices, exchange values and other jewellery costs with simple tools."
   },
   "everyday": {
     "title": "Everyday Calculators - Free Online Tools | CalcZen",

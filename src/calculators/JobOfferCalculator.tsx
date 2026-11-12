@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { CalculateButton } from "@/components/CalculateButton";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   HeroMetric,
@@ -185,6 +187,33 @@ export function JobOfferCalculator() {
   );
   const [deductCommute, setDeductCommute] = useState<boolean>(true);
 
+  const [calcJobInputs, setCalcJobInputs] = useState<{
+    offers: JobOfferInput[];
+    bonusScenario: string;
+    equityValuation: string;
+    deductCommute: boolean;
+  } | null>(null);
+
+  const isOutdated =
+    hasResult &&
+    Boolean(
+      calcJobInputs &&
+        (JSON.stringify(offers) !== JSON.stringify(calcJobInputs.offers) ||
+          bonusScenario !== calcJobInputs.bonusScenario ||
+          equityValuation !== calcJobInputs.equityValuation ||
+          deductCommute !== calcJobInputs.deductCommute)
+    );
+
+  const handleCalculate = () => {
+    setCalcJobInputs({
+      offers: JSON.parse(JSON.stringify(offers)),
+      bonusScenario,
+      equityValuation,
+      deductCommute,
+    });
+    markCalculated();
+  };
+
   // Collapsible accordion per offer tab
   const [openSection, setOpenSection] = useState<Record<string, Record<string, boolean>>>({
     "offer-a": { variableBonus: true, equity: false, benefits: false, commute: false, culture: false },
@@ -260,6 +289,7 @@ export function JobOfferCalculator() {
   const handleReset = () => {
     setOffers([{ ...DEFAULT_OFFER_A }, { ...DEFAULT_OFFER_B }]);
     setActiveTab("offer-a");
+    setCalcJobInputs(null);
     resetCalculated();
   };
 
@@ -267,7 +297,6 @@ export function JobOfferCalculator() {
   const handleLoadSample = () => {
     setOffers([{ ...DEFAULT_OFFER_A }, { ...DEFAULT_OFFER_B }]);
     setActiveTab("offer-a");
-    markCalculated();
   };
 
   // Adjusted inputs based on scenario toggles
@@ -1061,7 +1090,7 @@ export function JobOfferCalculator() {
                 category="salary-and-employment"
                 className="flex-1 min-h-12 text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-md cursor-pointer"
                 disabled={offers.some((o) => !o.annualCTC || o.annualCTC <= 0)}
-                onClick={markCalculated}
+                onClick={handleCalculate}
               >
                 <span>Compare Job Offers</span>
               </CalculateButton>
@@ -1078,13 +1107,16 @@ export function JobOfferCalculator() {
         </div>
 
         {/* Results Presentation Dashboard */}
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             {/* Sensitivity & Scenario Modeling Bar */}
             <div className="bg-card border border-border/70 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2">
@@ -1581,6 +1613,11 @@ export function JobOfferCalculator() {
               />
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="salary-and-employment"
+          />
         )}
       </div>
     </CalculatorPageLayout>

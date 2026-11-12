@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { CalculateButton } from "@/components/CalculateButton";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   HeroMetric,
@@ -282,7 +284,7 @@ export function GoldMakingChargesCalculator() {
     markCalculated();
   };
 
-  const hasResult = hasCalculated || (Number(goldWeight) > 0 && Number(goldRate) > 0);
+  const hasResult = hasCalculated;
 
   // Educational Blog Content for SEO
   const blogContent: BlogContent = {

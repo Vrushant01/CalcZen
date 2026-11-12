@@ -6,7 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getCalculator } from "@/data/calculators";
-import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { useCalculatorState } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import {
   Building2,
   Layers,
@@ -81,7 +83,33 @@ function convertUnitValue(val: number, fromUnit: DimensionUnit, toUnit: Dimensio
 
 export function RccPriceCalculator() {
   const calc = getCalculator("rcc-price-calculator")!;
-  const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const currentInputs = useMemo(() => ({
+    inputs,
+    directVolumeMode,
+    directVolume,
+    directVolumeUnit,
+    estimateMode,
+    includeShuttering,
+    includeLabour,
+    steelEntryMode,
+    customSteelTotalKg,
+    bbsBars,
+  }), [
+    inputs,
+    directVolumeMode,
+    directVolume,
+    directVolumeUnit,
+    estimateMode,
+    includeShuttering,
+    includeLabour,
+    steelEntryMode,
+    customSteelTotalKg,
+    bbsBars,
+  ]);
+
+  const { hasResult, isOutdated, calculatedInputs, markCalculated, resetCalculated } =
+    useCalculatorState(currentInputs);
+  const activeInputs = calculatedInputs || currentInputs;
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Mode: Quick Estimate (default) vs Detailed Estimate
@@ -295,18 +323,18 @@ export function RccPriceCalculator() {
     }
 
     // Quick / Detailed mode options overrides
-    if (estimateMode === "quick") {
-      if (!includeShuttering) {
+    if (activeInputs.estimateMode === "quick") {
+      if (!activeInputs.includeShuttering) {
         finalInputs = { ...finalInputs, shutteringRatePerSqFt: 0 };
       }
-      if (!includeLabour) {
+      if (!activeInputs.includeLabour) {
         finalInputs = { ...finalInputs, labourRatePerM3: 0, labourRatePerSqFt: 0 };
       }
       if (steelEntryMode === "actual_weight" && customSteelTotalKg > 0) {
         // Adjust preliminary steel rate to match entered kg
         const rawVolM3 = finalInputs.elements.reduce((acc, el) => acc + calculateElementVolumeM3(el), 0);
         if (rawVolM3 > 0) {
-          finalInputs = { ...finalInputs, preliminarySteelKgPerM3: customSteelTotalKg / rawVolM3 };
+          finalInputs = { ...finalInputs, preliminarySteelKgPerM3: activeInputs.customSteelTotalKg / rawVolM3 };
         }
       }
     } else {

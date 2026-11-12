@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useEffect, useState, useMemo } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
@@ -41,6 +43,7 @@ import { motion } from "framer-motion";
 export function Four01kCalculator() {
   const calc = getCalculator("401k-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (Number(currentAge) !== calcCurrentAge || Number(retirementAge) !== calcRetirementAge || Number(currentSavings) !== calcCurrentSavings || Number(salary) !== calcSalary || Number(employeeContrPct) !== calcEmployeeContrPct || Number(employerMatchPct) !== calcEmployerMatchPct || Number(employerLimitPct) !== calcEmployerLimitPct || Number(salaryGrowthPct) !== calcSalaryGrowthPct || Number(expectedReturn) !== calcExpectedReturn || Number(inflationRate) !== calcInflationRate || inflationScenario !== calcInflationScenario || marketPerformance !== calcMarketPerformance);
 
   // Unified formatting helper
   function formatCurrency(val: number) {
@@ -706,13 +709,16 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
         </div>
 
         {/* RIGHT COLUMN: STICKY STYLED RESULTS PANEL (Revealed after calculation) */}
-        {hasResult && results401k && (
+        {hasResult && results401k ? (
           <motion.div
             initial={{ opacity: 0, height: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, height: "auto", scale: 1, y: 0 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
             className="mt-6 pt-6 border-t border-border space-y-6 overflow-hidden relative"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             <div
               className="absolute inset-0 pointer-events-none blur-3xl opacity-15 -z-10"
               style={{
@@ -1014,6 +1020,11 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
               <CalculatorPdfExport hasResult={hasResult} pdfData={pdfData} />
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="finance"
+          />
         )}
       </div>
     </CalculatorPageLayout>

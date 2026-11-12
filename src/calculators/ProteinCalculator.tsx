@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 ﻿import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
@@ -82,6 +84,7 @@ const GOAL_LABELS: Record<GoalType, string> = {
 export function ProteinCalculator() {
   const calc = getCalculator("protein-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (unit !== calcUnit || Number(weightKg) !== calcWeightKg || Number(weightLb) !== calcWeightLb || goal !== calcGoal || activity !== calcActivity);
 
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
   const [weightKg, setWeightKg] = useState<number | "">(70);
@@ -369,12 +372,15 @@ export function ProteinCalculator() {
           </div>
         </div>
 
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             <Alert className="medical-alert">
               <AlertCircle className="h-4 w-4 medical-alert-icon" />
               <AlertTitle className="medical-alert-title font-semibold">
@@ -520,6 +526,11 @@ export function ProteinCalculator() {
               {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="health"
+          />
         )}
       </div>
     </CalculatorPageLayout>

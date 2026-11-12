@@ -1,4 +1,4 @@
-﻿import { Link } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { ChevronRight, Share2 } from "lucide-react";
 import { CalculatorExample } from "@/components/CalculatorExample";
 import { CalculatorFormula } from "@/components/CalculatorFormula";
@@ -581,6 +581,86 @@ const AUTHORITY_CITATIONS_DICT: Record<string, { name: string; url: string }[]> 
       url: "https://www.gold.org/",
     },
   ],
+  "jewellery-budget-to-weight-calculator": [
+    {
+      name: "Central Board of Indirect Taxes and Customs (CBIC GST Guidance on Retail Jewellery)",
+      url: "https://cbic-gst.gov.in/",
+    },
+    {
+      name: "Bureau of Indian Standards (BIS Hallmarking Guidelines & Standards)",
+      url: "https://www.bis.gov.in/hallmarking-overview/",
+    },
+    {
+      name: "World Gold Council (Gold Demand & Pricing Standards in India)",
+      url: "https://www.gold.org/",
+    },
+  ],
+  "silver-jewellery-bill-calculator": [
+    {
+      name: "Central Board of Indirect Taxes and Customs (CBIC GST Guidance on Retail Jewellery)",
+      url: "https://cbic-gst.gov.in/",
+    },
+    {
+      name: "Bureau of Indian Standards (BIS Silver Hallmarking Standards IS 2112:2014)",
+      url: "https://www.bis.gov.in/hallmarking-overview/",
+    },
+    {
+      name: "The Silver Institute (Global Silver Pricing & Industry Research)",
+      url: "https://www.silverinstitute.org/",
+    },
+  ],
+  "old-gold-exchange-value-calculator": [
+    {
+      name: "Bureau of Indian Standards (BIS Hallmarking Guidelines & Standards)",
+      url: "https://www.bis.gov.in/hallmarking-overview/",
+    },
+    {
+      name: "Reserve Bank of India (Master Direction – Gold Loans & Lending Guidelines)",
+      url: "https://www.rbi.org.in/",
+    },
+    {
+      name: "World Gold Council (India Gold Market Valuation Guidelines)",
+      url: "https://www.gold.org/",
+    },
+  ],
+  "gold-purity-karat-converter": [
+    {
+      name: "Bureau of Indian Standards (IS 1417:2019 Gold and Gold Alloys Hallmarking Specification)",
+      url: "https://www.bis.gov.in/",
+    },
+    {
+      name: "World Gold Council (Gold Purity & Karat Calculation Reference)",
+      url: "https://www.gold.org/",
+    },
+  ],
+  "diamond-jewellery-price-calculator": [
+    {
+      name: "Gemological Institute of America (GIA 4Cs Diamond Grading Guidelines)",
+      url: "https://www.gia.edu/gem-education/four-cs",
+    },
+    {
+      name: "Central Board of Indirect Taxes and Customs (CBIC GST Guidance on Cut & Polished Diamonds)",
+      url: "https://cbic-gst.gov.in/",
+    },
+    {
+      name: "Bureau of Indian Standards (BIS Hallmarking Guidelines for Diamond Jewellery)",
+      url: "https://www.bis.gov.in/hallmarking-overview/",
+    },
+  ],
+  "gold-loan-against-jewellery-calculator": [
+    {
+      name: "Reserve Bank of India (RBI Master Direction on Gold Lending & 75% LTV Cap)",
+      url: "https://www.rbi.org.in/",
+    },
+    {
+      name: "Indian Bullion and Jewellers Association (IBJA 30-Day Moving Average Price Benchmark)",
+      url: "https://ibja.co/",
+    },
+    {
+      name: "Bureau of Indian Standards (BIS Hallmarking Scheme & Karat Assay Norms)",
+      url: "https://www.bis.gov.in/hallmarking-overview/",
+    },
+  ],
   "home-electricity-bill-calculator": [
     {
       name: "Gujarat Electricity Regulatory Commission (GERC Tariff Orders)",
@@ -743,12 +823,56 @@ export function CalculatorPageLayout({
       "sip-calculator",
     ],
     "gold-jewellery-bill-calculator": [
+      "jewellery-budget-to-weight-calculator",
       "gold-making-charges-calculator",
-      "gst-calculator",
-      "percentage-calculator",
-      "ctc-to-in-hand-salary-calculator",
-      "sip-calculator",
-      "compound-interest-calculator",
+      "gold-loan-against-jewellery-calculator",
+      "old-gold-exchange-value-calculator",
+      "gold-purity-karat-converter",
+      "silver-jewellery-bill-calculator",
+    ],
+    "jewellery-budget-to-weight-calculator": [
+      "gold-jewellery-bill-calculator",
+      "silver-jewellery-bill-calculator",
+      "old-gold-exchange-value-calculator",
+      "gold-purity-karat-converter",
+      "gold-loan-against-jewellery-calculator",
+      "diamond-jewellery-price-calculator",
+    ],
+    "silver-jewellery-bill-calculator": [
+      "jewellery-budget-to-weight-calculator",
+      "gold-jewellery-bill-calculator",
+      "old-gold-exchange-value-calculator",
+      "gold-purity-karat-converter",
+      "diamond-jewellery-price-calculator",
+    ],
+    "old-gold-exchange-value-calculator": [
+      "jewellery-budget-to-weight-calculator",
+      "gold-jewellery-bill-calculator",
+      "gold-purity-karat-converter",
+      "gold-loan-against-jewellery-calculator",
+      "silver-jewellery-bill-calculator",
+    ],
+    "gold-purity-karat-converter": [
+      "jewellery-budget-to-weight-calculator",
+      "gold-jewellery-bill-calculator",
+      "old-gold-exchange-value-calculator",
+      "gold-loan-against-jewellery-calculator",
+      "diamond-jewellery-price-calculator",
+    ],
+    "diamond-jewellery-price-calculator": [
+      "jewellery-budget-to-weight-calculator",
+      "gold-jewellery-bill-calculator",
+      "silver-jewellery-bill-calculator",
+      "gold-purity-karat-converter",
+      "gold-loan-against-jewellery-calculator",
+    ],
+    "gold-loan-against-jewellery-calculator": [
+      "jewellery-budget-to-weight-calculator",
+      "old-gold-exchange-value-calculator",
+      "gold-purity-karat-converter",
+      "gold-jewellery-bill-calculator",
+      "loan-emi-calculator",
+      "gold-making-charges-calculator",
     ],
     "job-offer-comparison-calculator": [
       "ctc-to-in-hand-salary-calculator",

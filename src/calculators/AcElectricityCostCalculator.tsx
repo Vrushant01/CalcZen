@@ -7,7 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { getCalculator } from "@/data/calculators";
-import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { useCalculatorState } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import {
   Zap,
   RotateCcw,
@@ -70,11 +72,13 @@ const DEFAULT_INPUTS: AcCalculationInputs = {
 
 export function AcElectricityCostCalculator() {
   const calc = getCalculator("ac-electricity-cost-calculator")!;
-  const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Master Inputs State
   const [inputs, setInputs] = useState<AcCalculationInputs>(DEFAULT_INPUTS);
+  const { hasResult, isOutdated, calculatedInputs, markCalculated, resetCalculated } =
+    useCalculatorState(inputs);
+  const activeInputs = calculatedInputs || inputs;
 
   // UI Accordion & Section Toggles
   const [showTonnageHelper, setShowTonnageHelper] = useState<boolean>(false);
@@ -142,7 +146,6 @@ export function AcElectricityCostCalculator() {
         simpleRatePerUnitINR: 8,
       }));
     }
-    markCalculated();
   };
 
   // Reset Handler
@@ -156,8 +159,8 @@ export function AcElectricityCostCalculator() {
 
   // Active Calculation Result
   const result = useMemo(() => {
-    return masterCalculateAcCost(inputs);
-  }, [inputs]);
+    return masterCalculateAcCost(activeInputs);
+  }, [activeInputs]);
 
   // Comparison Result
   const comparisonResult = useMemo(() => {
@@ -889,7 +892,12 @@ export function AcElectricityCostCalculator() {
         {/* RESULTS DASHBOARD                                         */}
         {/* ========================================================= */}
         <div ref={resultsRef} className="space-y-6 pt-2">
-          {/* RESULT 1: HERO CARD - MONTHLY AC COST */}
+          {hasResult ? (
+            <>
+              {isOutdated && (
+                <OutdatedResultBanner onCalculate={handleCalculateClick} />
+              )}
+              {/* RESULT 1: HERO CARD - MONTHLY AC COST */}
           <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-amber-500/10 via-card to-background border-2 border-amber-500/40 shadow-xl space-y-5 text-center relative overflow-hidden">
             <div className="space-y-1">
               <span className="text-xs sm:text-sm font-bold tracking-widest text-amber-600 dark:text-amber-400 uppercase">
@@ -1255,6 +1263,13 @@ export function AcElectricityCostCalculator() {
               </div>
             )}
           </div>
+            </>
+          ) : (
+            <EmptyResultPlaceholder
+              message="Ready to calculate AC running cost"
+              subMessage="Select your AC specs, daily usage, and electricity rate, then press Calculate AC Running Cost & Units."
+            />
+          )}
         </div>
       </div>
     </CalculatorPageLayout>

@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useMemo, useState } from "react";
 import { CalculateButton } from "@/components/CalculateButton";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
@@ -34,6 +36,7 @@ import {
 export function WaterIntakeCalculator() {
   const calc = getCalculator("water-intake-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (Number(weightKg) !== calcWeightKg || Number(activityMin) !== calcActivityMin);
 
   const [weightKg, setWeightKg] = useState<number | "">(70);
   const [activityMin, setActivityMin] = useState<number | "">(30);
@@ -222,13 +225,16 @@ export function WaterIntakeCalculator() {
           </div>
         </div>
 
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-2 flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             {/* Hero */}
             <HeroMetric
               label="Recommended Daily Intake"
@@ -403,6 +409,11 @@ export function WaterIntakeCalculator() {
               <CalculatorPdfExport pdfData={pdfData} />
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="health"
+          />
         )}
       </div>
     </CalculatorPageLayout>

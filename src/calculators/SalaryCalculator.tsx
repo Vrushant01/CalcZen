@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog, { type BlogContent } from "@/components/CalculatorBlog";
@@ -151,6 +153,7 @@ const QUICK_CTC_CHIPS = [
 export function SalaryCalculator() {
   const calc = getCalculator("ctc-to-in-hand-salary-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && Boolean(calcParams && JSON.stringify(params) !== JSON.stringify(calcParams));
 
   // Basic Details State
   const [ctcInput, setCtcInput] = useState<number | "">(1200000);
@@ -847,13 +850,16 @@ export function SalaryCalculator() {
         </div>
 
         {/* Results Presentation Section */}
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             {/* Prominent HeroMetric: Estimated Monthly In-Hand Salary */}
             <HeroMetric
               label="Estimated Monthly In-Hand Salary"
@@ -1165,6 +1171,11 @@ export function SalaryCalculator() {
               <CalculatorPdfExport pdfData={pdfData} />
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="salary-and-employment"
+          />
         )}
       </div>
     </CalculatorPageLayout>

@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 ﻿import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -54,6 +56,7 @@ export function BodyFatCalculator() {
   };
 
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && Boolean(calcState && JSON.stringify(state) !== JSON.stringify(calcState));
   const [unit, setUnit] = useState<"metric" | "imperial">("imperial");
   const [gender, setGender] = useState<"male" | "female">("male");
 
@@ -542,13 +545,16 @@ export function BodyFatCalculator() {
           </div>
         </div>
 
-        {hasResult && calcState && (
+        {hasResult && calcState ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-2 flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             {/* Hero Metric */}
             <HeroMetric
               label="Body Fat Percentage"
@@ -642,6 +648,11 @@ export function BodyFatCalculator() {
               {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="health"
+          />
         )}
       </div>
     </CalculatorPageLayout>

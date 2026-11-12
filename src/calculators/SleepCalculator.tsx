@@ -1,4 +1,4 @@
-﻿import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -11,6 +11,8 @@ import { CalculateButton } from "@/components/CalculateButton";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Moon,
@@ -138,12 +140,38 @@ export function SleepCalculator() {
   const [customBedtime, setCustomBedtime] = useState<string>("22:30");
   const [customWakeTime, setCustomWakeTime] = useState<string>("06:30");
 
+  const [calcSleepInputs, setCalcSleepInputs] = useState<{
+    activeTab: string;
+    latency: number;
+    wakeTime: string;
+    customBedtime: string;
+    customWakeTime: string;
+  } | null>(null);
+
+  const isOutdated =
+    hasResult &&
+    Boolean(
+      calcSleepInputs &&
+        (activeTab !== calcSleepInputs.activeTab ||
+          Number(latency) !== calcSleepInputs.latency ||
+          wakeTime !== calcSleepInputs.wakeTime ||
+          customBedtime !== calcSleepInputs.customBedtime ||
+          customWakeTime !== calcSleepInputs.customWakeTime)
+    );
+
   // Output options & selection
   const [options, setOptions] = useState<SleepOption[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<SleepOption | null>(null);
 
   // Run calculation based on mode
   const handleCalculate = () => {
+    setCalcSleepInputs({
+      activeTab,
+      latency: Number(latency) || 0,
+      wakeTime,
+      customBedtime,
+      customWakeTime,
+    });
     const lat = Number(latency) || 0;
     let computedOptions: SleepOption[] = [];
     let selected: SleepOption | null = null;
@@ -236,6 +264,7 @@ export function SleepCalculator() {
     setCustomWakeTime("06:30");
     setOptions([]);
     setSelectedPlan(null);
+    setCalcSleepInputs(null);
     resetCalculated();
   };
 
@@ -592,13 +621,16 @@ export function SleepCalculator() {
         </div>
 
         {/* Premium Results Dashboard */}
-        {hasResult && selectedPlan && (
+        {hasResult && selectedPlan ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             {/* Health Disclaimer Banner */}
             <div className="medical-alert border rounded-lg p-4 flex gap-3 text-sm text-left">
               <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 medical-alert-icon" />
@@ -963,6 +995,11 @@ export function SleepCalculator() {
               {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="health"
+          />
         )}
       </div>
     </CalculatorPageLayout>

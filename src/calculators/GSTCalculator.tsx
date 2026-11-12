@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog, { type BlogContent } from "@/components/CalculatorBlog";
@@ -158,6 +160,7 @@ export function GSTCalculator() {
   const calc = getCalculator("gst-calculator")!;
   const { format } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (mode !== calcMode || Number(amount) !== calcAmount || Number(rate) !== calcRate);
 
   const [mode, setMode] = useState<"add" | "remove">("add");
   const [amount, setAmount] = useState<number | "">(1000);
@@ -340,13 +343,16 @@ export function GSTCalculator() {
           </div>
         </div>
 
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-2 flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             <HeroMetric
               label={calcMode === "add" ? "Total Amount (Inc. GST)" : "Base Amount (Exc. GST)"}
               value={format(calcMode === "add" ? result.finalAmount : result.baseAmount)}
@@ -446,6 +452,11 @@ export function GSTCalculator() {
               <CalculatorPdfExport pdfData={pdfData} />
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="finance"
+          />
         )}
       </div>
     </CalculatorPageLayout>

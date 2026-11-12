@@ -6,7 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getCalculator } from "@/data/calculators";
-import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { useCalculatorState } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import {
   TrendingUp,
   Percent,
@@ -48,7 +50,6 @@ import {
 
 export function ProductProfitCalculator() {
   const calc = getCalculator("product-profit-calculator")!;
-  const { markCalculated, resetCalculated } = useHasCalculated();
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // 1. Basic 3 visible inputs
@@ -143,10 +144,22 @@ export function ProductProfitCalculator() {
     return validateProfitInput(calculationInput);
   }, [calculationInput]);
 
+  const { hasResult, isOutdated, calculatedInputs, markCalculated, resetCalculated } =
+    useCalculatorState(calculationInput);
+  const activeInput = calculatedInputs || calculationInput;
+
   // Calculation results
   const result: ProfitCalculationResult = useMemo(() => {
-    return calculateProductProfit(calculationInput);
-  }, [calculationInput]);
+    return calculateProductProfit(activeInput);
+  }, [activeInput]);
+
+  const handleCalculate = () => {
+    if (!validation.isValid) return;
+    markCalculated();
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
 
   // Target price calculation
   const targetPriceResult = useMemo(() => {
@@ -241,7 +254,6 @@ export function ProductProfitCalculator() {
       setShowGst(false);
       setActivePresetId("own_website");
     }
-    markCalculated();
   };
 
   // Reset all
@@ -425,7 +437,6 @@ export function ProductProfitCalculator() {
                       value={costPrice === 0 ? "" : costPrice}
                       onChange={(e) => {
                         setCostPrice(e.target.value === "" ? 0 : Number(e.target.value));
-                        markCalculated();
                       }}
                       placeholder="e.g. 500"
                       className="pl-8 text-base font-medium"
@@ -456,7 +467,6 @@ export function ProductProfitCalculator() {
                       value={sellingPrice === 0 ? "" : sellingPrice}
                       onChange={(e) => {
                         setSellingPrice(e.target.value === "" ? 0 : Number(e.target.value));
-                        markCalculated();
                       }}
                       placeholder="e.g. 800"
                       className="pl-8 text-base font-medium"
@@ -483,7 +493,6 @@ export function ProductProfitCalculator() {
                     value={quantity === 0 ? "" : quantity}
                     onChange={(e) => {
                       setQuantity(Math.max(1, Number(e.target.value)));
-                      markCalculated();
                     }}
                     placeholder="1"
                     className="text-base font-medium"
@@ -497,10 +506,7 @@ export function ProductProfitCalculator() {
               {/* Primary Action Button */}
               <Button
                 type="button"
-                onClick={() => {
-                  markCalculated();
-                  resultsRef.current?.scrollIntoView({ behavior: "smooth" });
-                }}
+                onClick={handleCalculate}
                 className="w-full h-11 text-sm font-semibold rounded-xl bg-primary text-primary-foreground hover:bg-primary/95 shadow-sm transition-all flex items-center justify-center gap-2"
               >
                 <Calculator className="h-4 w-4" />
@@ -980,7 +986,6 @@ export function ProductProfitCalculator() {
                               type="button"
                               onClick={() => {
                                 setSellingPrice(Math.round(targetPriceResult.requiredSellingPrice!));
-                                markCalculated();
                               }}
                               className="text-xs font-semibold underline hover:no-underline ml-2"
                             >
@@ -1094,7 +1099,12 @@ export function ProductProfitCalculator() {
           {/* RIGHT COLUMN: HERO RESULTS DASHBOARD                      */}
           {/* ========================================================= */}
           <div ref={resultsRef} className="lg:col-span-5 space-y-6">
-            <div className="p-6 bg-card border border-border rounded-2xl shadow-sm space-y-6 lg:sticky lg:top-24">
+            {hasResult ? (
+              <>
+                {isOutdated && (
+                  <OutdatedResultBanner onCalculate={handleCalculate} />
+                )}
+                <div className="p-6 bg-card border border-border rounded-2xl shadow-sm space-y-6 lg:sticky lg:top-24">
               {/* Header Title */}
               <div className="flex items-center justify-between border-b border-border/40 pb-3">
                 <div className="flex items-center gap-2">
@@ -1297,7 +1307,14 @@ export function ProductProfitCalculator() {
                 </Button>
               </div>
             </div>
-          </div>
+          </>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="business"
+          />
+        )}
+      </div>
         </div>
       </div>
     </CalculatorPageLayout>

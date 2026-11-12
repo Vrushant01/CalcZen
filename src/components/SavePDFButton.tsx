@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FileDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -8,11 +8,12 @@ export type PdfData = Record<string, unknown>;
 type Props = {
   pdfData: PdfData;
   disabled?: boolean;
+  className?: string;
 };
 
 type ExportState = "idle" | "exporting" | "success";
 
-export default function SavePDFButton({ pdfData, disabled }: Props) {
+export default function SavePDFButton({ pdfData, disabled, className }: Props) {
   const [exportState, setExportState] = useState<ExportState>("idle");
   const [progress, setProgress] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -94,7 +95,7 @@ export default function SavePDFButton({ pdfData, disabled }: Props) {
       }
       whileTap={!disabled && exportState === "idle" && !prefersReducedMotion ? { scale: 0.97 } : {}}
       className={cn(
-        "inline-flex shrink-0 items-center justify-center gap-2.5 rounded-lg border px-5 py-2.5 text-sm font-semibold select-none cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
+        "inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border px-4 py-2 text-xs font-semibold select-none cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
 
         // IDLE STATE COLORS
         exportState === "idle" && "pdf-btn-idle",
@@ -112,6 +113,7 @@ export default function SavePDFButton({ pdfData, disabled }: Props) {
         ],
 
         disabled && "cursor-not-allowed opacity-50",
+        className,
       )}
     >
       {/* Icon Wrapper (transitions between Down, Progress ring, and Checkmark) */}

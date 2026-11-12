@@ -6,7 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getCalculator } from "@/data/calculators";
-import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { useCalculatorState } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import {
   Zap,
   RotateCcw,
@@ -50,7 +52,6 @@ import {
 
 export function HomeElectricityBillCalculator() {
   const calc = getCalculator("home-electricity-bill-calculator")!;
-  const { markCalculated, resetCalculated } = useHasCalculated();
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Mode: "monthly_units" (Method A - Recommended) or "appliances" (Method B)
@@ -128,14 +129,18 @@ export function HomeElectricityBillCalculator() {
     additionalChargesINR,
   ]);
 
+  const { hasResult, isOutdated, calculatedInputs, markCalculated, resetCalculated } =
+    useCalculatorState(currentBillInput);
+  const activeBillInput = calculatedInputs || currentBillInput;
+
   // Calculation Result
   const calculationResult = useMemo(() => {
-    const val = validateHomeBillInput(currentBillInput);
+    const val = validateHomeBillInput(activeBillInput);
     if (!val.isValid) {
       return null;
     }
-    return calculateHomeElectricityBill(currentBillInput);
-  }, [currentBillInput]);
+    return calculateHomeElectricityBill(activeBillInput);
+  }, [activeBillInput]);
 
   // Month Comparison Result
   const comparisonResult = useMemo(() => {
@@ -665,11 +670,15 @@ export function HomeElectricityBillCalculator() {
         )}
 
         {/* ─── STEP 4: PROMINENT RESULTS DASHBOARD ─── */}
-        {calculationResult && (
-          <div
-            ref={resultsRef}
-            className="bg-card border border-border/80 rounded-2xl p-5 sm:p-8 shadow-sm space-y-6"
-          >
+        {hasResult && calculationResult ? (
+          <>
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
+            <div
+              ref={resultsRef}
+              className="bg-card border border-border/80 rounded-2xl p-5 sm:p-8 shadow-sm space-y-6"
+            >
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-border/60 pb-5">
               <div>
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-primary/10 text-primary mb-1">
@@ -900,7 +909,6 @@ export function HomeElectricityBillCalculator() {
               )}
             </div>
           </div>
-        )}
 
         {/* ─── OPTIONAL FEATURE: MONTH-OVER-MONTH BILL COMPARISON (PHASE 8) ─── */}
         <div className="bg-card border border-border/70 rounded-2xl p-5 shadow-xs space-y-4">
@@ -996,6 +1004,13 @@ export function HomeElectricityBillCalculator() {
             </div>
           )}
         </div>
+      </>
+    ) : (
+      <EmptyResultPlaceholder
+        onCalculate={handleCalculate}
+        category="electricity"
+      />
+    )}
       </div>
     </CalculatorPageLayout>
   );

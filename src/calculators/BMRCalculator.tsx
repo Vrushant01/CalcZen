@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
@@ -42,6 +44,7 @@ const ACTIVITY_LEVELS = [
 export function BMRCalculator() {
   const calc = getCalculator("bmr-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (sex !== calcSex || Number(age) !== calcAge || Number(heightCm) !== calcHeightCm || Number(weightKg) !== calcWeightKg);
 
   const [sex, setSex] = useState<"male" | "female">("male");
   const [age, setAge] = useState<number | "">(30);
@@ -235,13 +238,16 @@ export function BMRCalculator() {
           </div>
         </div>
 
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-2 flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             {/* Hero */}
             <HeroMetric
               label="Basal Metabolic Rate"
@@ -382,6 +388,11 @@ export function BMRCalculator() {
               {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="health"
+          />
         )}
       </div>
     </CalculatorPageLayout>

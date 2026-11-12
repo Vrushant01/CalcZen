@@ -6,7 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getCalculator } from "@/data/calculators";
-import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { useCalculatorState } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import {
   Zap,
   RotateCcw,
@@ -45,7 +47,6 @@ import {
 
 export function ApplianceElectricityCostCalculator() {
   const calc = getCalculator("appliance-electricity-cost-calculator")!;
-  const { markCalculated, resetCalculated } = useHasCalculated();
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Mode: "single" for 1-appliance fast calculation, "multi" for combined household bill
@@ -106,27 +107,48 @@ export function ApplianceElectricityCostCalculator() {
     return APPLIANCE_PRESETS.find((p) => p.id === selectedPresetId) || APPLIANCE_PRESETS[0];
   }, [selectedPresetId]);
 
+  const currentInputs = useMemo(
+    () => ({
+      activeMode,
+      ratePerKWh,
+      singleItem,
+      multiItems,
+    }),
+    [activeMode, ratePerKWh, singleItem, multiItems],
+  );
+
+  const { hasResult, isOutdated, calculatedInputs, markCalculated, resetCalculated } =
+    useCalculatorState(currentInputs);
+  const activeInputs = calculatedInputs || currentInputs;
+
   // Single Calculation Result
   const singleResult = useMemo(() => {
-    const val = validateApplianceItem(singleItem, ratePerKWh);
+    const val = validateApplianceItem(activeInputs.singleItem, activeInputs.ratePerKWh);
     if (!val.isValid) {
       return null;
     }
-    return calculateApplianceItem(singleItem, ratePerKWh);
-  }, [singleItem, ratePerKWh]);
+    return calculateApplianceItem(activeInputs.singleItem, activeInputs.ratePerKWh);
+  }, [activeInputs.singleItem, activeInputs.ratePerKWh]);
 
   // Multi Calculation Result
   const multiResult = useMemo(() => {
-    if (multiItems.length === 0) return null;
-    return calculateMultiAppliance(multiItems, ratePerKWh);
-  }, [multiItems, ratePerKWh]);
+    if (activeInputs.multiItems.length === 0) return null;
+    return calculateMultiAppliance(activeInputs.multiItems, activeInputs.ratePerKWh);
+  }, [activeInputs.multiItems, activeInputs.ratePerKWh]);
 
   // Calculate Action Click
   const handleCalculate = () => {
-    const val = validateApplianceItem(singleItem, ratePerKWh);
-    if (!val.isValid) {
-      setValidationError(val.error || "Please check your inputs.");
-      return;
+    if (activeMode === "single") {
+      const val = validateApplianceItem(singleItem, ratePerKWh);
+      if (!val.isValid) {
+        setValidationError(val.error || "Please check your inputs.");
+        return;
+      }
+    } else {
+      if (multiItems.length === 0) {
+        setValidationError("Please add at least one appliance.");
+        return;
+      }
     }
     setValidationError(null);
     markCalculated();
@@ -798,11 +820,15 @@ export function ApplianceElectricityCostCalculator() {
             </div>
 
             {/* Step 4: Prominent Results Dashboard */}
-            {singleResult && (
-              <div
-                ref={resultsRef}
-                className="bg-card border border-border/80 rounded-2xl p-5 sm:p-8 shadow-sm space-y-6"
-              >
+            {hasResult && singleResult ? (
+              <>
+                {isOutdated && (
+                  <OutdatedResultBanner onCalculate={handleCalculate} />
+                )}
+                <div
+                  ref={resultsRef}
+                  className="bg-card border border-border/80 rounded-2xl p-5 sm:p-8 shadow-sm space-y-6"
+                >
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-border/60 pb-5">
                   <div>
                     <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-primary/10 text-primary mb-1">
@@ -1022,7 +1048,13 @@ export function ApplianceElectricityCostCalculator() {
                   )}
                 </div>
               </div>
-            )}
+            </>
+          ) : (
+            <EmptyResultPlaceholder
+              onCalculate={handleCalculate}
+              category="electricity"
+            />
+          )}
           </div>
         )}
 
@@ -1198,11 +1230,22 @@ export function ApplianceElectricityCostCalculator() {
                   <Plus className="w-3.5 h-3.5" /> Geyser (2000W)
                 </Button>
               </div>
+
+              <Button
+                onClick={handleCalculate}
+                className="w-full py-3 font-bold text-sm shadow-sm"
+              >
+                Calculate Combined Cost
+              </Button>
             </div>
 
             {/* Combined Multi-Appliance Results Dashboard */}
-            {multiResult && (
-              <div className="bg-card border border-border/80 rounded-2xl p-5 sm:p-8 shadow-sm space-y-6">
+            {hasResult && multiResult ? (
+              <>
+                {isOutdated && (
+                  <OutdatedResultBanner onCalculate={handleCalculate} />
+                )}
+                <div className="bg-card border border-border/80 rounded-2xl p-5 sm:p-8 shadow-sm space-y-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-border/60 pb-5">
                   <div>
                     <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-primary/10 text-primary mb-1">
@@ -1341,7 +1384,13 @@ export function ApplianceElectricityCostCalculator() {
                   </div>
                 </div>
               </div>
-            )}
+            </>
+          ) : (
+            <EmptyResultPlaceholder
+              onCalculate={handleCalculate}
+              category="electricity"
+            />
+          )}
           </div>
         )}
       </div>

@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import React, { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -36,6 +38,7 @@ export function SIPCalculator() {
   const calc = getCalculator("sip-calculator");
   const { format, formatAxis } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (Number(monthly) !== calcMonthly || Number(rate) !== calcRate || Number(years) !== calcYears);
 
   const [monthly, setMonthly] = useState<number | "">(500);
   const [rate, setRate] = useState<number | "">(12);
@@ -404,13 +407,16 @@ export function SIPCalculator() {
           </div>
         </div>
 
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-2 flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             {/* Hero */}
             <HeroMetric
               label="Total Value"
@@ -553,6 +559,11 @@ export function SIPCalculator() {
               <CalculatorPdfExport pdfData={pdfData} />
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="finance"
+          />
         )}
       </div>
     </CalculatorPageLayout>

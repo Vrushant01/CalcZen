@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 ﻿import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
@@ -64,6 +66,7 @@ function getBmiCategory(bmi: number): BmiCategory {
 export function BMICalculator() {
   const calc = getCalculator("bmi-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (unit !== calcUnit || Number(heightCm) !== calcHeightCm || Number(weightKg) !== calcWeightKg || Number(heightIn) !== calcHeightIn || Number(weightLb) !== calcWeightLb);
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
 
   const [heightCm, setHeightCm] = useState<number | "">(175);
@@ -318,13 +321,16 @@ export function BMICalculator() {
           </div>
         </div>
 
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-2 flex flex-col gap-6"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             {/* Medical Disclaimer Banner */}
             <div className="medical-alert border rounded-lg p-4 flex gap-3 text-sm">
               <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 medical-alert-icon" />
@@ -518,6 +524,11 @@ export function BMICalculator() {
               {pdfData && <CalculatorPdfExport pdfData={pdfData} />}
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="health"
+          />
         )}
       </div>
     </CalculatorPageLayout>

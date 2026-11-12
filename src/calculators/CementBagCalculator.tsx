@@ -6,7 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getCalculator } from "@/data/calculators";
-import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { useCalculatorState } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import {
   Building2,
   Layers,
@@ -87,11 +89,13 @@ const WORK_CATEGORIES: Array<{
 
 export function CementBagCalculator() {
   const calc = getCalculator("cement-bag-calculator")!;
-  const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Core State
   const [inputs, setInputs] = useState<CementCalculatorInputs>(DEFAULT_CEMENT_INPUTS);
+  const { hasResult, isOutdated, calculatedInputs, markCalculated, resetCalculated } =
+    useCalculatorState(inputs);
+  const activeInputs = calculatedInputs || inputs;
   const [friendlyType, setFriendlyType] = useState<FriendlyWorkType>("concrete");
   const [concreteMode, setConcreteMode] = useState<"dimensions" | "volume">("dimensions");
   const [isCopied, setIsCopied] = useState(false);
@@ -106,8 +110,8 @@ export function CementBagCalculator() {
 
   // Calculate live results
   const result = useMemo(() => {
-    return calculateCementBagEstimate(inputs);
-  }, [inputs]);
+    return calculateCementBagEstimate(activeInputs);
+  }, [activeInputs]);
 
   // Helpers to update inputs safely
   const updateInputs = (patch: Partial<CementCalculatorInputs>) => {

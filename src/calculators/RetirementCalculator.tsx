@@ -1,3 +1,5 @@
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useEffect, useState, useMemo } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
@@ -39,6 +41,7 @@ import { motion } from "framer-motion";
 export function RetirementCalculator() {
   const calc = getCalculator("retirement-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const isOutdated = hasResult && (Number(currentAge) !== calcCurrentAge || Number(retirementAge) !== calcRetirementAge || Number(lifeExpectancy) !== calcLifeExpectancy || Number(currentSavings) !== calcCurrentSavings || Number(monthlyContribution) !== calcMonthlyContribution || Number(expectedReturn) !== calcExpectedReturn || Number(inflationRate) !== calcInflationRate || Number(desiredIncome) !== calcDesiredIncome || Number(pension) !== calcPension || Number(socialSecurity) !== calcSocialSecurity || Number(rentalIncome) !== calcRentalIncome || Number(otherIncome) !== calcOtherIncome || Number(federalTax) !== calcFederalTax || Number(stateTax) !== calcStateTax || inflationScenario !== calcInflationScenario || marketPerformance !== calcMarketPerformance);
 
   // Unified formatting helper
   function formatCurrency(val: number) {
@@ -863,13 +866,16 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
         </div>
 
         {/* RIGHT COLUMN: STICKY STYLED RESULTS PANEL (Revealed after calculation) */}
-        {hasResult && retirementResults && (
+        {hasResult && retirementResults ? (
           <motion.div
             initial={{ opacity: 0, height: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, height: "auto", scale: 1, y: 0 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
             className="mt-6 pt-6 border-t border-border space-y-6 overflow-hidden relative"
           >
+            {isOutdated && (
+              <OutdatedResultBanner onCalculate={handleCalculate} />
+            )}
             <div
               className="absolute inset-0 pointer-events-none blur-3xl opacity-15 -z-10"
               style={{
@@ -1206,6 +1212,11 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
               <CalculatorPdfExport pdfData={pdfData} />
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            onCalculate={handleCalculate}
+            category="finance"
+          />
         )}
       </div>
     </CalculatorPageLayout>

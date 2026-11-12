@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { CalculateButton } from "@/components/CalculateButton";
 import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
+import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
+import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   HeroMetric,
@@ -1369,7 +1371,7 @@ export function GoldJewelleryBillCalculator() {
         </div>
 
         {/* RESULTS PRESENTATION DASHBOARD */}
-        {hasResult && (
+        {hasResult ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1682,6 +1684,11 @@ export function GoldJewelleryBillCalculator() {
               />
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            message="Ready to calculate gold jewellery bill"
+            subMessage="Enter gold weight, purity, and rate, then press Calculate Jewellery Bill to see full tax invoice breakdown."
+          />
         )}
       </div>
     </CalculatorPageLayout>

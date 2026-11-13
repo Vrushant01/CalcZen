@@ -13,34 +13,9 @@ import { FaqAccordion } from "@/components/FaqAccordion";
 import { UniversalSearch } from "@/components/UniversalSearch";
 import { HeroSection } from "@/components/HeroSection";
 import { categories, calculators } from "@/data/calculators";
+import { homeIntro, featuredCalculatorSlugs } from "@/data/homeContent";
+import { homeFaqs } from "@/data/homeFaqs";
 import { subscribeEmail } from "@/lib/subscribe-api";
-
-const homeFaqs = [
-  {
-    q: "What calculators are available on CalcZen?",
-    a: "CalcZen offers a comprehensive suite of free online tools categorized under finance, health, math, and everyday helpers. You can calculate mortgages, compound interest, personal loan EMIs, daily calorie needs, percentage changes, age countdowns, restaurant tips, and perform advanced operations using our scientific calculator. We continually add new calculators to expand our offerings.",
-  },
-  {
-    q: "Are these calculators free to use?",
-    a: "Yes, all calculators on CalcZen are completely free and require no account registration, subscriptions, or hidden fees. You can access tools like our mortgage calculator, BMI calculator, and standard calculator instantly on any device without restrictions. We keep the platform accessible to everyone by relying on unobtrusive, privacy-friendly advertising.",
-  },
-  {
-    q: "How accurate are the calculator results?",
-    a: "Our calculators use industry-standard formulas, such as the fixed-rate amortization equation for mortgages or the Harris-Benedict formula for BMR. While these calculations provide highly accurate estimates for planning, actual financial or health metrics may vary based on individual circumstances, local taxes, lender terms, or medical factors. Always consult a professional for critical decisions.",
-  },
-  {
-    q: "Can I use these calculators on mobile devices?",
-    a: "Yes, the entire CalcZen platform is optimized for mobile responsiveness. Whether you are using a smartphone, tablet, or desktop computer, the layouts adapt automatically to provide a premium, touch-friendly user experience. All inputs, buttons, and charts are designed to be fully functional on smaller touchscreens, allowing you to calculate on the go.",
-  },
-  {
-    q: "Do these calculators store my personal data?",
-    a: "No, we value your privacy. All inputs entered into our tools are processed locally in your browser during your session and are never stored on our servers, shared with third parties, or used for tracking. You can use our financial and health calculators with complete peace of mind, knowing your data remains entirely private.",
-  },
-  {
-    q: "Which calculator should I use for my needs?",
-    a: "If you are looking to buy a home or evaluate debt, start with our Mortgage Calculator or Loan EMI Calculator. For fitness and weight management goals, explore our BMI Calculator and Calorie Calculator to track daily targets. If you need general calculations, our Percentage Calculator and Scientific Calculator are excellent choices for quick math.",
-  },
-];
 
 function NewsletterSubscribe() {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -122,7 +97,7 @@ export const Route = createFileRoute("/")({
           "@type": "Organization",
           name: "CalcZen",
           url: "https://www.calczen.in",
-          logo: "https://www.calczen.in/icons/android-chrome-512x512.png",
+          logo: "https://www.calczen.in/brand/calczen-logo.png",
           sameAs: [],
         }),
       },
@@ -135,7 +110,7 @@ export const Route = createFileRoute("/")({
           url: "https://www.calczen.in",
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://www.calczen.in/search?q={search_term_string}",
+            target: "https://www.calczen.in/calculators?q={search_term_string}",
             "query-input": "required name=search_term_string",
           },
         }),
@@ -348,6 +323,94 @@ function Index() {
             One short email a month. New tools, finance tips, no spam.
           </p>
           <NewsletterSubscribe />
+        </div>
+      </section>
+
+      {/* About CalcZen Calculators Section */}
+      <section className="page-container mt-8 sm:mt-28 md:mt-32 max-w-4xl min-w-0 text-left">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4 sm:mb-6">
+          {homeIntro.title}
+        </h2>
+        <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-[1.8] font-normal">
+          {homeIntro.paragraphs.map((para, pIdx) => (
+            <p key={pIdx}>
+              {para.map((seg, sIdx) =>
+                seg.href ? (
+                  seg.external ? (
+                    <a
+                      key={sIdx}
+                      href={seg.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline font-medium"
+                    >
+                      {seg.text}
+                    </a>
+                  ) : (
+                    <Link
+                      key={sIdx}
+                      to={seg.href}
+                      className="text-primary hover:underline font-medium"
+                    >
+                      {seg.text}
+                    </Link>
+                  )
+                ) : (
+                  seg.text
+                )
+              )}
+            </p>
+          ))}
+        </div>
+
+        {/* Directory: Categories */}
+        <div className="mt-8 pt-8 border-t border-border/50">
+          <h3 className="text-base sm:text-lg font-bold text-foreground tracking-tight mb-4">
+            Browse by Category
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+            {categories.map((cat) => (
+              <Link
+                key={cat.slug}
+                to="/category/$slug"
+                params={{ slug: cat.slug }}
+                className="px-3.5 py-2.5 rounded-xl border border-border/70 bg-card hover:border-primary/50 hover:text-primary text-xs sm:text-sm font-medium text-foreground transition-all flex items-center justify-between"
+              >
+                <span>{cat.name}</span>
+                <span className="text-muted-foreground text-xs">&rarr;</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Directory: Featured Calculators */}
+        <div className="mt-8 pt-8 border-t border-border/50">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
+              Featured Calculators
+            </h3>
+            <Link
+              to="/calculators"
+              className="text-xs sm:text-sm font-medium text-primary hover:underline"
+            >
+              View All Calculators &rarr;
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+            {calculators
+              .filter((c) => featuredCalculatorSlugs.includes(c.slug))
+              .map((calc) => (
+                <Link
+                  key={calc.slug}
+                  to="/calculator/$slug"
+                  params={{ slug: calc.slug }}
+                  className="px-3 py-2 rounded-lg border border-border/60 bg-card hover:border-primary/50 hover:text-primary text-xs sm:text-sm text-foreground transition-all truncate"
+                  title={calc.name}
+                >
+                  {calc.name}
+                </Link>
+              ))}
+          </div>
         </div>
       </section>
     </PageShell>

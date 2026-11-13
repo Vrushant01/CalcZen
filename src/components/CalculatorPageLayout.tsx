@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CalculatorCard } from "@/components/CalculatorCard";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { calculators, getCategory, type CalculatorMeta } from "@/data/calculators";
+import { getCategorySources } from "@/data/categorySources";
 import { motion } from "framer-motion";
 type FAQ = { q: string; a: string };
 
@@ -1085,25 +1086,25 @@ export function CalculatorPageLayout({
           </section>
         )}
 
-        {/* REFERENCES SECTION */}
+        {/* Sources & further reading */}
         {(() => {
-          const citations = AUTHORITY_CITATIONS_DICT[calc.slug] || [];
-          if (citations.length === 0) return null;
+          const sources = getCategorySources(calc.category);
+          if (!sources || sources.length === 0) return null;
           return (
             <section className="min-w-0 surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 text-left mt-5 sm:mt-8">
               <h2 className="text-xl sm:text-2xl font-bold mb-4 border-b border-border/40 pb-3">
-                References
+                Sources &amp; further reading
               </h2>
               <ul className="list-disc list-inside space-y-2 text-sm sm:text-base text-muted-foreground/90">
-                {citations.map((c, i) => (
+                {sources.map((s, i) => (
                   <li key={i}>
                     <a
-                      href={c.url}
+                      href={s.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:underline font-medium"
                     >
-                      {c.name}
+                      {s.name}
                     </a>
                   </li>
                 ))}

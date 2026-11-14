@@ -1,4 +1,4 @@
-﻿import { getSupabase } from "../config/supabase.js";
+import { getSupabase } from "../config/supabase.js";
 import type { ApiNewsletter, NewsletterRow } from "../types/database.js";
 import { toApiNewsletter } from "../utils/serializers.js";
 

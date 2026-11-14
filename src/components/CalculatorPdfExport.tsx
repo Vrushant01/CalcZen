@@ -1,4 +1,4 @@
-﻿import SavePDFButton, { type PdfData } from "@/components/SavePDFButton";
+import SavePDFButton, { type PdfData } from "@/components/SavePDFButton";
 
 type Props = {
   pdfData?: PdfData | null;

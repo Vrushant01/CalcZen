@@ -1,4 +1,4 @@
-﻿import { Trash2, Users } from "lucide-react";
+import { Trash2, Users } from "lucide-react";
 import { EmptyState } from "./EmptyState";
 import { LoadingTable } from "./LoadingTable";
 

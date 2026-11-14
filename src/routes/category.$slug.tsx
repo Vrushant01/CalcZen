@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageShell } from "@/components/layout/PageShell";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { CalculatorCard } from "@/components/CalculatorCard";

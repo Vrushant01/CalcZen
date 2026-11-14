@@ -1,4 +1,4 @@
-﻿import { Info, CheckCircle, AlertTriangle, Lightbulb } from "lucide-react";
+import { Info, CheckCircle, AlertTriangle, Lightbulb } from "lucide-react";
 import { motion } from "framer-motion";
 
 export type InsightTone = "info" | "success" | "warning" | "tip" | "note";

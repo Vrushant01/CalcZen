@@ -1,4 +1,4 @@
-﻿import type { CalculatorEducationalContent } from "../content-types";
+import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:

@@ -1,4 +1,4 @@
-﻿import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { env, hasDbConfig } from "./env.js";
 
 let client: SupabaseClient | null = null;

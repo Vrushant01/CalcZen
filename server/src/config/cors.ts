@@ -1,4 +1,4 @@
-﻿import type { CorsOptions } from "cors";
+import type { CorsOptions } from "cors";
 import type { Request, Response } from "express";
 import { env } from "./env.js";
 

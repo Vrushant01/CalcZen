@@ -1,4 +1,4 @@
-﻿import { getSupabase } from "../config/supabase.js";
+import { getSupabase } from "../config/supabase.js";
 import type { AdminRow, ApiAdmin } from "../types/database.js";
 import { toApiAdmin } from "../utils/serializers.js";
 

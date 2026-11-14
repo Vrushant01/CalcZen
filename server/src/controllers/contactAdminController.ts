@@ -1,4 +1,4 @@
-﻿import type { Response } from "express";
+import type { Response } from "express";
 import { z } from "zod";
 import { hasEmailConfig } from "../config/env.js";
 import type { AuthRequest } from "../middleware/auth.js";

@@ -1,4 +1,4 @@
-﻿import { getSupabase } from "../config/supabase.js";
+import { getSupabase } from "../config/supabase.js";
 import type { ApiSubscriber, SubscriberRow, SubscriberStatus } from "../types/database.js";
 import { toApiSubscriber } from "../utils/serializers.js";
 

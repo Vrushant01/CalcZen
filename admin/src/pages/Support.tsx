@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Inbox, Mail, Search, Send, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "../components/AdminLayout";

@@ -1,4 +1,4 @@
-﻿import type { BlogContent } from "@/components/CalculatorBlog";
+import type { BlogContent } from "@/components/CalculatorBlog";
 
 export const blogContent: Record<string, BlogContent> = {
   mortgage: {

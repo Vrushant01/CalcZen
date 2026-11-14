@@ -1,4 +1,4 @@
-﻿import type { Response } from "express";
+import type { Response } from "express";
 import type { SubscriberStatus } from "../types/database.js";
 import { subscribersToCsv } from "../utils/csvExport.js";
 import type { AuthRequest } from "../middleware/auth.js";

@@ -1,4 +1,4 @@
-﻿import { Resend } from "resend";
+import { Resend } from "resend";
 import { env, hasEmailConfig } from "../config/env.js";
 
 let client: Resend | null = null;

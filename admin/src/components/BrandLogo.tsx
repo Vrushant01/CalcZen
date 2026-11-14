@@ -1,4 +1,4 @@
-﻿type BrandLogoProps = {
+type BrandLogoProps = {
   className?: string;
   imageClassName?: string;
   showLabel?: boolean;

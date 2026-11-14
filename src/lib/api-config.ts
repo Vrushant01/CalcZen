@@ -1,4 +1,4 @@
-﻿/** Production API (Render). Override with VITE_API_URL in .env files. */
+/** Production API (Render). Override with VITE_API_URL in .env files. */
 export const PRODUCTION_API_URL = "https://calczen.onrender.com";
 
 const REQUEST_TIMEOUT_MS = 30_000;

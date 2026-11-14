@@ -1,4 +1,4 @@
-﻿import { assertProductionEnv, env, hasDbConfig, hasEmailConfig } from "./config/env.js";
+import { assertProductionEnv, env, hasDbConfig, hasEmailConfig } from "./config/env.js";
 import { getCorsPolicySummary } from "./config/cors.js";
 import { createApp } from "./app.js";
 

@@ -1,4 +1,4 @@
-﻿import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { env, hasDbConfig } from "../config/env.js";
 import { getSupabase } from "../config/supabase.js";
 

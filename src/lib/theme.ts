@@ -1,4 +1,4 @@
-﻿export const THEME_STORAGE_KEY = "calczen-theme";
+export const THEME_STORAGE_KEY = "calczen-theme";
 
 export type Theme = "light" | "dark";
 

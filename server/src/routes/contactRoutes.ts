@@ -1,4 +1,4 @@
-﻿import { Router } from "express";
+import { Router } from "express";
 import { z } from "zod";
 import { submitContact } from "../controllers/contactController.js";
 import { createRateLimiter } from "../middleware/rate-limit.js";

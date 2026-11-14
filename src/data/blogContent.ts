@@ -186,6 +186,65 @@ export const blogContent: Record<string, BlogContent> = {
         },
       },
       {
+        title: "How to Calculate EMI Manually",
+        paragraphs: [
+          "Calculating your Equated Monthly Instalment manually helps you verify bank loan sanction letters, understand amortisation schedules, and compare competing financing offers. The universal formula used across retail banking is:",
+          "<strong>EMI = P × r × (1 + r)^n / ((1 + r)^n − 1)</strong>",
+          "Each variable represents a critical parameter of your borrowing agreement:",
+          "• <strong>P (Loan Principal):</strong> The total amount borrowed from the bank or financial institution (e.g., ₹5,00,000).",
+          "• <strong>r (Monthly Interest Rate):</strong> The annual interest rate divided by 12 and then divided by 100 (annual rate ÷ 12 ÷ 100). For an annual rate of 9%, r = 9 ÷ 1200 = 0.0075.",
+          "• <strong>n (Loan Tenure in Months):</strong> The total number of monthly repayment instalments (loan duration in years multiplied by 12). For a 5-year loan, n = 5 × 12 = 60 months.",
+        ],
+        formulaBox: {
+          title: "Manual Loan EMI Formula",
+          formula: "EMI = P × r × (1 + r)^n / ((1 + r)^n − 1)",
+          variables: [
+            { name: "P", desc: "Principal loan amount borrowed" },
+            { name: "r", desc: "Monthly interest rate (annual interest rate ÷ 12 ÷ 100)" },
+            { name: "n", desc: "Number of monthly instalments (tenure in years × 12)" },
+          ],
+        },
+        callout: {
+          type: "proTip",
+          title: "Avoid the Annual Rate Mistake",
+          text: "A common error when calculating EMI manually is plugging the annual interest rate directly into the formula. You must divide the annual percentage by 12 months and convert to decimal form (e.g. 9% becomes 0.0075 per month) before evaluating exponents.",
+        },
+      },
+      {
+        title: "Worked Example: ₹5,00,000 Loan at 9% p.a. for 5 Years",
+        paragraphs: [
+          "To demonstrate the formula in real numbers, consider borrowing a ₹5,00,000 car or personal loan at an interest rate of 9% per annum for a 5-year term (60 months). Here is the verified step-by-step arithmetic breakdown:",
+        ],
+        exampleBox: {
+          title: "Step-by-Step EMI Calculation for ₹5,00,000 Loan",
+          inputs: [
+            { name: "Principal (P)", val: "₹5,00,000" },
+            { name: "Annual Interest Rate", val: "9% per annum" },
+            { name: "Monthly Interest Rate (r)", val: "9 ÷ 12 ÷ 100 = 0.0075" },
+            { name: "Repayment Tenure (n)", val: "5 years × 12 = 60 monthly instalments" },
+          ],
+          steps: [
+            "Compute monthly interest compounding factor: (1 + r)^n = (1 + 0.0075)^60 = (1.0075)^60 ≈ 1.565681.",
+            "Compute numerator: P × r × (1 + r)^n = 5,00,000 × 0.0075 × 1.565681 = 3,750 × 1.565681 = ₹5,871.30.",
+            "Compute denominator: (1 + r)^n − 1 = 1.565681 − 1 = 0.565681.",
+            "Solve for Monthly EMI: ₹5,871.30 ÷ 0.565681 ≈ ₹10,379.18 per month (rounded to ₹10,379).",
+            "Calculate total repayment over 60 months: 60 × ₹10,379.18 = ₹6,22,751 total payment.",
+            "Calculate total interest payable: ₹6,22,751 total payment − ₹5,00,000 principal = ₹1,22,751 total interest.",
+          ],
+          result:
+            "For a ₹5,00,000 loan at 9% for 5 years, your monthly EMI is <strong>₹10,379</strong>. Total repayment over 60 months is <strong>₹6,22,751</strong>, representing ₹5,00,000 principal plus <strong>₹1,22,751</strong> in total interest payable.",
+        },
+      },
+      {
+        title: "How EMI Works on a Car Loan",
+        paragraphs: [
+          "When taking a car loan in India, your monthly EMI covers both the depreciation of the vehicle (principal repayment) and the lender's cost of capital (interest charges). The proportion of principal versus interest changes continuously over the repayment schedule:",
+          "<strong>1. Principal vs Interest Split:</strong> During the initial 12 to 24 months, a substantial share of your monthly EMI pays down accumulated interest. As the principal drops, interest decreases and a greater share of your payment directly builds equity in the car.",
+          "<strong>2. Effect of Loan Tenure:</strong> Opting for an extended car loan tenure (e.g., 7 years instead of 4 or 5 years) reduces your monthly instalment, making premium cars appear more affordable in your monthly budget. However, because automobiles depreciate quickly, a longer tenure drastically inflates your total interest bill and risks putting you in a 'negative equity' position where the loan balance exceeds the market value of the car.",
+          "<strong>3. Impact of Down Payment:</strong> Putting down a higher upfront payment (such as 20% to 30% of the on-road vehicle price) lowers the initial principal borrowed. A smaller principal lowers your monthly EMI, shortens repayment timelines, and saves tens of thousands of rupees in cumulative interest.",
+        ],
+      },
+      {
         title: "A Practical Loan EMI Example",
         paragraphs: [
           "Suppose you borrow $15,000 on a personal loan with a 10% annual interest rate and a repayment term of 3 years (36 months) to finance a home renovation project.",
@@ -200,7 +259,7 @@ export const blogContent: Record<string, BlogContent> = {
           steps: [
             "Calculate monthly interest rate: r = 10 / 12 / 100 = 0.008333.",
             "Calculate (1 + r)^n: (1.008333)^36 = 1.34818.",
-            "Apply the EMI formula: E = $15,000 * 0.008333 * 1.34818 / [1.34818 - 1].",
+            "Apply the EMI formula: E = $15,00,0 * 0.008333 * 1.34818 / [1.34818 - 1].",
             "Solve: E = $15,000 * 0.011235 / 0.34818 = $484.01.",
           ],
           result:
@@ -216,8 +275,24 @@ export const blogContent: Record<string, BlogContent> = {
     ],
     faqs: [
       {
-        q: "What is the difference between flat interest rate and reducing balance interest rate?",
-        a: "In a flat interest rate scheme, interest is calculated on the initial principal loan amount for the entire duration, making it much more expensive overall. In a reducing balance rate scheme (which is standard for EMIs), interest is calculated only on the outstanding principal balance each month, meaning your interest charges drop as you steadily repay the loan.",
+        q: "What is EMI?",
+        a: 'An Equated Monthly Instalment (EMI) is a fixed payment made by a borrower to a lender on a set calendar date every month. Each EMI is divided into two parts: principal repayment and interest charges. Under the standard reducing-balance method, your monthly payment stays constant, while the principal portion grows and interest shrinks over time. For home purchases, you can compare property loan payments with our <a href="/calculator/mortgage-calculator" class="text-primary hover:underline">Mortgage Calculator</a>.',
+      },
+      {
+        q: "How to calculate car loan EMI?",
+        a: "To calculate car loan EMI, use the standard formula EMI = P × r × (1 + r)^n / ((1 + r)^n − 1). P is the vehicle loan amount after subtracting your down payment, r is the monthly interest rate (annual rate divided by 1200), and n is the tenure in months. Enter your loan amount and interest rate in our free EMI tool to get an instant breakdown of monthly payments, total interest, and amortisation.",
+      },
+      {
+        q: "Does a longer tenure reduce EMI?",
+        a: 'Yes, choosing a longer loan tenure reduces your monthly EMI because the principal repayment is spread across more months. However, a longer tenure substantially increases the total interest payable over the loan lifetime because interest compounds for a longer duration. To understand how compounding increases costs over long horizons, explore our <a href="/calculator/compound-interest-calculator" class="text-primary hover:underline">Compound Interest Calculator</a> to evaluate short versus long borrowing terms.',
+      },
+      {
+        q: "What is the difference between flat and reducing-balance interest?",
+        a: "In a flat interest rate loan, interest is calculated on the entire initial principal for the full tenure, resulting in an effective interest rate nearly double the stated rate. In a reducing-balance loan, interest is calculated only on the outstanding principal balance each month. As you pay off debt, monthly interest charges decline progressively, saving thousands of rupees in borrowing expenses compared to deceptive flat-rate schemes.",
+      },
+      {
+        q: "Can I prepay a loan?",
+        a: "Yes, most Indian banks and NBFCs permit partial prepayments or full foreclosure. Prepaying directly reduces the outstanding principal, which permanently cuts subsequent interest charges and shortens your remaining repayment period. Under Reserve Bank of India (RBI) guidelines, floating-rate personal, car, and home loans to individual borrowers cannot carry prepayment penalties. Always verify with your lender whether any foreclosure charges apply to fixed-rate loan facilities.",
       },
       {
         q: "Are there pre-payment penalties on personal loans?",

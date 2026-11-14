@@ -6,17 +6,48 @@ import { calculatorComponents } from "@/calculators/registry";
 
 const OG_IMAGE_SLUGS = new Set([
   "401k-calculator",
+  "ac-electricity-cost-calculator",
   "age-calculator",
+  "appliance-electricity-cost-calculator",
+  "attendance-calculator",
   "bmi-calculator",
   "bmr-calculator",
+  "body-fat-calculator",
   "calorie-calculator",
+  "cement-bag-calculator",
+  "cgpa-calculator",
   "compound-interest-calculator",
+  "couple-age-difference-calculator",
+  "credit-card-emi-calculator",
+  "ctc-to-in-hand-salary-calculator",
+  "diamond-jewellery-price-calculator",
+  "fd-calculator",
+  "flames-calculator",
+  "gold-jewellery-bill-calculator",
+  "gold-loan-against-jewellery-calculator",
+  "gold-making-charges-calculator",
+  "gold-purity-karat-converter",
+  "gst-calculator",
+  "gst-invoice-calculator",
+  "home-electricity-bill-calculator",
+  "inflation-calculator",
+  "jewellery-budget-to-weight-calculator",
+  "job-offer-comparison-calculator",
+  "loan-eligibility-calculator",
   "loan-emi-calculator",
+  "love-calculator",
   "mortgage-calculator",
+  "old-gold-exchange-value-calculator",
   "percentage-calculator",
   "pregnancy-due-date-calculator",
+  "product-profit-calculator",
+  "protein-calculator",
+  "rcc-price-calculator",
   "retirement-calculator",
   "scientific-calculator",
+  "silver-jewellery-bill-calculator",
+  "sip-calculator",
+  "sleep-calculator",
   "standard-calculator",
   "tip-calculator",
   "water-intake-calculator",
@@ -38,6 +69,9 @@ export const Route = createFileRoute("/calculator/$slug")({
     const ogImage = OG_IMAGE_SLUGS.has(calc.slug)
       ? `https://www.calczen.in/og/${calc.slug}.png`
       : "https://www.calczen.in/og/default-og.png";
+    const is1200x630 =
+      ogImage.endsWith("/default-og.png") ||
+      (calc.slug !== "bmi-calculator" && calc.slug !== "scientific-calculator");
 
     return {
       meta: [
@@ -49,6 +83,13 @@ export const Route = createFileRoute("/calculator/$slug")({
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
         { property: "og:image", content: ogImage },
+        ...(is1200x630
+          ? [
+              { property: "og:image:width", content: "1200" },
+              { property: "og:image:height", content: "630" },
+              { property: "og:image:type", content: "image/png" },
+            ]
+          : []),
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: desc },

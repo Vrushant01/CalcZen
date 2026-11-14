@@ -30,17 +30,48 @@ function getRelatedCalculators(currentSlug: string, categorySlug: string, count 
 
 const OG_IMAGE_SLUGS = new Set([
   "401k-calculator",
+  "ac-electricity-cost-calculator",
   "age-calculator",
+  "appliance-electricity-cost-calculator",
+  "attendance-calculator",
   "bmi-calculator",
   "bmr-calculator",
+  "body-fat-calculator",
   "calorie-calculator",
+  "cement-bag-calculator",
+  "cgpa-calculator",
   "compound-interest-calculator",
+  "couple-age-difference-calculator",
+  "credit-card-emi-calculator",
+  "ctc-to-in-hand-salary-calculator",
+  "diamond-jewellery-price-calculator",
+  "fd-calculator",
+  "flames-calculator",
+  "gold-jewellery-bill-calculator",
+  "gold-loan-against-jewellery-calculator",
+  "gold-making-charges-calculator",
+  "gold-purity-karat-converter",
+  "gst-calculator",
+  "gst-invoice-calculator",
+  "home-electricity-bill-calculator",
+  "inflation-calculator",
+  "jewellery-budget-to-weight-calculator",
+  "job-offer-comparison-calculator",
+  "loan-eligibility-calculator",
   "loan-emi-calculator",
+  "love-calculator",
   "mortgage-calculator",
+  "old-gold-exchange-value-calculator",
   "percentage-calculator",
   "pregnancy-due-date-calculator",
+  "product-profit-calculator",
+  "protein-calculator",
+  "rcc-price-calculator",
   "retirement-calculator",
   "scientific-calculator",
+  "silver-jewellery-bill-calculator",
+  "sip-calculator",
+  "sleep-calculator",
   "standard-calculator",
   "tip-calculator",
   "water-intake-calculator",
@@ -89,6 +120,16 @@ function injectMetadata(
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CalcZen" />
     <meta property="og:image" content="${ogImage}" />
+    ${
+      ogImage.includes("/og/") &&
+      !ogImage.endsWith("/bmi-calculator.png") &&
+      !ogImage.endsWith("/scientific-calculator.png") &&
+      !ogImage.endsWith("/homepage-og.png")
+        ? `<meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />`
+        : ""
+    }
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${safeTitle}" />
     <meta name="twitter:description" content="${safeDesc}" />

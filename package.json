@@ -20,6 +20,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "og": "node scripts/generate-og-images.mjs",
     "seed:admin": "npm run seed:admin --prefix server",
     "admin:reset-password": "npm run admin:reset-password --prefix server"
   },

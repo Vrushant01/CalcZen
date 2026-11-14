@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog, { type BlogContent } from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -89,6 +89,14 @@ const QUICK_BUDGET_CHIPS = [
 export function GoldMakingChargesCalculator() {
   const calcMeta = getCalculator("gold-making-charges-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  const handleCalculate = () => {
+    markCalculated();
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  };
 
   // Mode Selection
   const [calculatorMode, setCalculatorMode] = useState<CalculatorMode>("standard");
@@ -280,7 +288,7 @@ export function GoldMakingChargesCalculator() {
     setWastageType("none");
     setDiscountType("percentage");
     setDiscountValue(10); // 10% promotional discount on making charges
-    markCalculated();
+    handleCalculate();
   };
 
   // Educational Blog Content for SEO
@@ -1376,7 +1384,7 @@ export function GoldMakingChargesCalculator() {
                 category="jewellery"
                 className="flex-1 min-h-12 text-sm font-bold bg-amber-500 hover:bg-amber-600 text-white rounded-xl shadow-md cursor-pointer"
                 disabled={!goldRate || Number(goldWeight) <= 0}
-                onClick={markCalculated}
+                onClick={handleCalculate}
               >
                 <span className="sm:hidden">Calculate Making Fee</span>
                 <span className="hidden sm:inline">Calculate Gold Making Charges</span>
@@ -1394,8 +1402,9 @@ export function GoldMakingChargesCalculator() {
         </div>
 
         {/* RESULTS PRESENTATION DASHBOARD */}
-        {hasResult && (
-          <motion.div
+        <div ref={resultsRef} className="scroll-mt-6">
+          {hasResult ? (
+            <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
@@ -1670,7 +1679,13 @@ export function GoldMakingChargesCalculator() {
               </div>
             </div>
           </motion.div>
+        ) : (
+          <EmptyResultPlaceholder
+            message="Ready to calculate gold making charges"
+            subMessage="Enter your gold weight, purity, rate and making charges, then click Calculate Gold Making Charges to see the complete cost & GST breakdown."
+          />
         )}
+        </div>
       </div>
     </CalculatorPageLayout>
   );

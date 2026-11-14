@@ -22,6 +22,181 @@
       "permanent": true
     },
     {
+      "source": "/calculator/gst-calculator-india",
+      "destination": "/calculator/gst-invoice-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/cgst-sgst-calculator",
+      "destination": "/calculator/gst-invoice-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/igst-calculator",
+      "destination": "/calculator/gst-invoice-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gst-bill-calculator",
+      "destination": "/calculator/gst-invoice-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/profit-calculator",
+      "destination": "/calculator/product-profit-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/profit-margin-calculator",
+      "destination": "/calculator/product-profit-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/product-profit",
+      "destination": "/calculator/product-profit-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/business-profit-calculator",
+      "destination": "/calculator/product-profit-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/old-gold-calculator",
+      "destination": "/calculator/old-gold-exchange-value-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gold-exchange-calculator",
+      "destination": "/calculator/old-gold-exchange-value-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/old-gold-value-calculator",
+      "destination": "/calculator/old-gold-exchange-value-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gold-resale-calculator",
+      "destination": "/calculator/old-gold-exchange-value-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/silver-calculator",
+      "destination": "/calculator/silver-jewellery-bill-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/silver-jewellery-calculator",
+      "destination": "/calculator/silver-jewellery-bill-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/silver-rate-calculator",
+      "destination": "/calculator/silver-jewellery-bill-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/silver-bill-calculator",
+      "destination": "/calculator/silver-jewellery-bill-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/silver-price-calculator",
+      "destination": "/calculator/silver-jewellery-bill-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gold-purity-calculator",
+      "destination": "/calculator/gold-purity-karat-converter",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gold-karat-converter",
+      "destination": "/calculator/gold-purity-karat-converter",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gold-fineness-calculator",
+      "destination": "/calculator/gold-purity-karat-converter",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/karat-to-percentage-calculator",
+      "destination": "/calculator/gold-purity-karat-converter",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/916-gold-purity-calculator",
+      "destination": "/calculator/gold-purity-karat-converter",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/diamond-jewellery-calculator",
+      "destination": "/calculator/diamond-jewellery-price-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/diamond-price-calculator",
+      "destination": "/calculator/diamond-jewellery-price-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/diamond-ring-price-calculator",
+      "destination": "/calculator/diamond-jewellery-price-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/diamond-calculator",
+      "destination": "/calculator/diamond-jewellery-price-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gold-loan-calculator",
+      "destination": "/calculator/gold-loan-against-jewellery-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/loan-against-gold-calculator",
+      "destination": "/calculator/gold-loan-against-jewellery-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/jewellery-loan-calculator",
+      "destination": "/calculator/gold-loan-against-jewellery-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gold-loan-emi-calculator",
+      "destination": "/calculator/gold-loan-against-jewellery-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/jewellery-budget-calculator",
+      "destination": "/calculator/jewellery-budget-to-weight-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gold-budget-calculator",
+      "destination": "/calculator/jewellery-budget-to-weight-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gold-weight-calculator",
+      "destination": "/calculator/jewellery-budget-to-weight-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/gold-weight-by-budget-calculator",
+      "destination": "/calculator/jewellery-budget-to-weight-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/how-much-gold-can-i-buy",
+      "destination": "/calculator/jewellery-budget-to-weight-calculator",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {
@@ -67,11 +242,26 @@
     }
   ],
   "rewrites": [
-    { "source": "/api", "destination": "/api/index.ts" },
-    { "source": "/api/(.*)", "destination": "/api/index.ts" },
-    { "source": "/admin", "destination": "/api/index.ts" },
-    { "source": "/admin/(.*)", "destination": "/api/index.ts" },
-    { "source": "/((?!api/|admin/).*)", "destination": "/index.html" }
+    {
+      "source": "/api",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/admin",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/admin/(.*)",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/((?!api/|admin/).*)",
+      "destination": "/index.html"
+    }
   ],
   "functions": {
     "api/index.ts": {

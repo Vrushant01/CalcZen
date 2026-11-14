@@ -56,8 +56,8 @@ export function Four01kCalculator() {
   // ----------------------------------------------------
   // 401(K) CALCULATOR INPUT STATES (Live)
   // ----------------------------------------------------
-  const [currentAge, setCurrentAge] = useState(30);
-  const [retirementAge, setRetirementAge] = useState(65);
+  const [currentAge, setCurrentAge] = useState<number | "">(30);
+  const [retirementAge, setRetirementAge] = useState<number | "">(65);
   const [currentSavings, setCurrentSavings] = useState<number | "">(50000); // 401k Balance
   const [salary, setSalary] = useState<number | "">(80000);
   const [employeeContrPct, setEmployeeContrPct] = useState<number | "">(6);
@@ -490,7 +490,7 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
                 </label>
                 <input
                   type="range"
-                  min={Math.max(18, currentAge + 1)}
+                  min={Math.max(18, (Number(currentAge) || 0) + 1)}
                   max="95"
                   value={retirementAge}
                   onChange={(e) => setRetirementAge(Number(e.target.value))}
@@ -1021,10 +1021,7 @@ Inflation Adjusted Value = NominalBalance ÷ (1 + InflationRate)ⁿ`}
             </div>
           </motion.div>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="finance"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
     </CalculatorPageLayout>

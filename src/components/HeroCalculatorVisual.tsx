@@ -225,7 +225,8 @@ export function HeroCalculatorVisual({ layout = "desktop" }: HeroCalculatorVisua
               className="hidden lg:block absolute -top-7 sm:-top-8 -left-4 sm:-left-8 lg:-left-10 z-30"
             >
               <Link
-                to="/calculator/loan-emi-calculator"
+                to="/calculator/$slug"
+                params={{ slug: "loan-emi-calculator" }}
                 className="cz-hero-badge group backdrop-blur-xl rounded-2xl px-3 sm:px-3.5 py-2 sm:py-2.5 border flex items-center gap-2 sm:gap-2.5 transition-all duration-200 hover:scale-[1.04] active:scale-[0.98] cursor-pointer"
                 title="Explore Finance Calculators"
               >
@@ -254,7 +255,8 @@ export function HeroCalculatorVisual({ layout = "desktop" }: HeroCalculatorVisua
               className="hidden lg:block absolute -top-7 sm:-top-8 -right-4 sm:-right-8 lg:-right-10 z-30"
             >
               <Link
-                to="/calculator/bmi-calculator"
+                to="/calculator/$slug"
+                params={{ slug: "bmi-calculator" }}
                 className="cz-hero-badge group backdrop-blur-xl rounded-2xl px-3 sm:px-3.5 py-2 sm:py-2.5 border flex items-center gap-2 sm:gap-2.5 transition-all duration-200 hover:scale-[1.04] active:scale-[0.98] cursor-pointer"
                 title="Explore Health Calculators"
               >
@@ -283,7 +285,8 @@ export function HeroCalculatorVisual({ layout = "desktop" }: HeroCalculatorVisua
               className="hidden lg:block absolute -bottom-6 sm:-bottom-7 -left-4 sm:-left-8 lg:-left-10 z-30"
             >
               <Link
-                to="/calculator/age-calculator"
+                to="/calculator/$slug"
+                params={{ slug: "age-calculator" }}
                 className="cz-hero-badge group backdrop-blur-xl rounded-2xl px-3 sm:px-3.5 py-1.5 sm:py-2 border flex items-center gap-2 sm:gap-2.5 transition-all duration-200 hover:scale-[1.04] active:scale-[0.98] cursor-pointer"
                 title="Explore Everyday Calculators"
               >
@@ -312,7 +315,8 @@ export function HeroCalculatorVisual({ layout = "desktop" }: HeroCalculatorVisua
               className="hidden lg:block absolute -bottom-6 sm:-bottom-7 -right-4 sm:-right-8 lg:-right-10 z-30"
             >
               <Link
-                to="/calculator/percentage-calculator"
+                to="/calculator/$slug"
+                params={{ slug: "percentage-calculator" }}
                 className="cz-hero-badge group backdrop-blur-xl rounded-2xl px-3 sm:px-3.5 py-1.5 sm:py-2 border flex items-center gap-2 sm:gap-2.5 transition-all duration-200 hover:scale-[1.04] active:scale-[0.98] cursor-pointer"
                 title="Explore Math Calculators"
               >
@@ -588,7 +592,8 @@ export function HeroCalculatorVisual({ layout = "desktop" }: HeroCalculatorVisua
           <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full mt-4 sm:mt-5">
             {/* 1. Mobile Finance Badge */}
             <Link
-              to="/calculator/loan-emi-calculator"
+              to="/calculator/$slug"
+              params={{ slug: "loan-emi-calculator" }}
               className="cz-hero-badge group backdrop-blur-xl rounded-2xl px-2.5 py-2.5 border flex items-center gap-2 transition-all duration-200 active:scale-[0.98] cursor-pointer min-w-0"
               title="Explore Finance Calculators"
             >
@@ -610,7 +615,8 @@ export function HeroCalculatorVisual({ layout = "desktop" }: HeroCalculatorVisua
 
             {/* 2. Mobile Health Badge */}
             <Link
-              to="/calculator/bmi-calculator"
+              to="/calculator/$slug"
+              params={{ slug: "bmi-calculator" }}
               className="cz-hero-badge group backdrop-blur-xl rounded-2xl px-2.5 py-2.5 border flex items-center gap-2 transition-all duration-200 active:scale-[0.98] cursor-pointer min-w-0"
               title="Explore Health Calculators"
             >
@@ -632,7 +638,8 @@ export function HeroCalculatorVisual({ layout = "desktop" }: HeroCalculatorVisua
 
             {/* 3. Mobile Everyday Badge */}
             <Link
-              to="/calculator/age-calculator"
+              to="/calculator/$slug"
+              params={{ slug: "age-calculator" }}
               className="cz-hero-badge group backdrop-blur-xl rounded-2xl px-2.5 py-2.5 border flex items-center gap-2 transition-all duration-200 active:scale-[0.98] cursor-pointer min-w-0"
               title="Explore Everyday Calculators"
             >
@@ -654,7 +661,8 @@ export function HeroCalculatorVisual({ layout = "desktop" }: HeroCalculatorVisua
 
             {/* 4. Mobile Maths Badge */}
             <Link
-              to="/calculator/percentage-calculator"
+              to="/calculator/$slug"
+              params={{ slug: "percentage-calculator" }}
               className="cz-hero-badge group backdrop-blur-xl rounded-2xl px-2.5 py-2.5 border flex items-center gap-2 transition-all duration-200 active:scale-[0.98] cursor-pointer min-w-0"
               title="Explore Math Calculators"
             >

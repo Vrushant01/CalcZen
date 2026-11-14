@@ -53,7 +53,6 @@ import {
   formatINR,
   formatINRWithDecimals,
   PURITY_DEFINITIONS,
-  WEIGHT_UNIT_CONVERSIONS,
   type GoldPurity,
   type WeightUnit,
   type RateBasis,
@@ -89,7 +88,7 @@ const QUICK_BUDGET_CHIPS = [
 
 export function GoldMakingChargesCalculator() {
   const calcMeta = getCalculator("gold-making-charges-calculator")!;
-  const { hasCalculated, markCalculated, resetCalculated } = useHasCalculated();
+  const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
 
   // Mode Selection
   const [calculatorMode, setCalculatorMode] = useState<CalculatorMode>("standard");
@@ -284,10 +283,8 @@ export function GoldMakingChargesCalculator() {
     markCalculated();
   };
 
-  const hasResult = hasCalculated;
-
   // Educational Blog Content for SEO
-  const blogContent: BlogContent = {
+  const blogContent: any = {
     title: "Gold Making Charges in India: The Complete Buyer's Guide & Pricing Formula",
     description:
       "Understand how Indian jewellers calculate making charges using percentage, per-gram, and flat pricing. Learn how to convert between methods, compare quotations, negotiate discounts, and verify 3% GST.",
@@ -1564,7 +1561,7 @@ export function GoldMakingChargesCalculator() {
                         </td>
                       </tr>
 
-                      {result.gstTransactionType === "intra_state" ? (
+                      {gstTransactionType === "intra_state" ? (
                         <>
                           <tr className="text-muted-foreground">
                             <td className="p-3">CGST (1.5%)</td>

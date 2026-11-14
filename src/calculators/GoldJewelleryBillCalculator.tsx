@@ -1688,7 +1688,7 @@ export function GoldJewelleryBillCalculator() {
           <EmptyResultPlaceholder
             message="Ready to calculate gold jewellery bill"
             subMessage="Enter gold weight, purity, and rate, then press Calculate Jewellery Bill to see full tax invoice breakdown."
-          />
+           />
         )}
       </div>
     </CalculatorPageLayout>

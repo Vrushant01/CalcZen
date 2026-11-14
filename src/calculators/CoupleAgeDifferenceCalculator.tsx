@@ -445,10 +445,10 @@ export function CoupleAgeDifferenceCalculator() {
         <section aria-labelledby="explore-more">
           <h2 id="explore-more">Explore More Calculators</h2>
           <p>
-            If you're interested in discovering more about your timeline or your relationship, you can check your own precise life milestones using our <Link to="/calculator/age-calculator" className="font-semibold text-primary hover:underline">Age Calculator</Link>. 
+            If you're interested in discovering more about your timeline or your relationship, you can check your own precise life milestones using our <Link to="/calculator/$slug" params={{ slug: "age-calculator" }} className="font-semibold text-primary hover:underline">Age Calculator</Link>. 
           </p>
           <p>
-            Looking for something more romantic? Try our fun <Link to="/calculator/love-calculator" className="font-semibold text-primary hover:underline">Love Calculator</Link> to check your compatibility score, or play the classic <Link to="/calculator/flames-calculator" className="font-semibold text-primary hover:underline">FLAMES Calculator</Link> game to find your relationship destiny!
+            Looking for something more romantic? Try our fun <Link to="/calculator/$slug" params={{ slug: "love-calculator" }} className="font-semibold text-primary hover:underline">Love Calculator</Link> to check your compatibility score, or play the classic <Link to="/calculator/$slug" params={{ slug: "flames-calculator" }} className="font-semibold text-primary hover:underline">FLAMES Calculator</Link> game to find your relationship destiny!
           </p>
         </section>
       </div>

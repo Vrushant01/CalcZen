@@ -17,6 +17,7 @@
     "vercel-build": "npm run build:vercel",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
     "seed:admin": "npm run seed:admin --prefix server",

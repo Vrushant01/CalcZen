@@ -10,6 +10,9 @@ type Props = {
   label: string;
   value: string;
   subValue?: string;
+  sub?: string;
+  subLabel?: string;
+  icon?: React.ReactNode;
   accent?: StatAccent;
   trend?: StatTrend;
   trendLabel?: string;
@@ -139,6 +142,9 @@ export function StatCard({
   label,
   value,
   subValue,
+  sub,
+  subLabel,
+  icon,
   accent = "default",
   trend,
   trendLabel,
@@ -146,6 +152,7 @@ export function StatCard({
   className,
   index = 0,
 }: Props) {
+  const effectiveSubValue = subValue ?? sub ?? subLabel;
   const a = accentStyles[accent];
 
   return (
@@ -181,7 +188,7 @@ export function StatCard({
         {value}
       </div>
 
-      {(subValue || trend) && (
+      {(effectiveSubValue || trend) && (
         <div className="flex items-center gap-1.5 flex-wrap">
           {trend && (
             <span
@@ -191,7 +198,7 @@ export function StatCard({
               {trendLabel}
             </span>
           )}
-          {subValue && !trend && <span className="text-xs text-muted-foreground">{subValue}</span>}
+          {effectiveSubValue && !trend && <span className="text-xs text-muted-foreground">{effectiveSubValue}</span>}
         </div>
       )}
     </motion.div>

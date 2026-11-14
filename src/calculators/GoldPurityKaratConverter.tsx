@@ -534,7 +534,7 @@ export function GoldPurityKaratConverter() {
 }
 
 // RICH EDUCATIONAL BLOG CONTENT & FAQS
-export const GOLD_PURITY_BLOG_CONTENT: BlogContent = {
+export const GOLD_PURITY_BLOG_CONTENT: any = {
   title: "Gold Purity & Karat Converter: Complete Guide to Karat, Fineness & BIS Hallmarks",
   description:
     "Learn how gold karat converts into purity percentage and parts-per-thousand fineness under Indian BIS IS 1417 standards. Convert 22K, 18K, 14K and 24K gold easily.",

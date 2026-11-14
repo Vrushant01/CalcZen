@@ -1006,10 +1006,7 @@ export function HomeElectricityBillCalculator() {
         </div>
       </>
     ) : (
-      <EmptyResultPlaceholder
-        onCalculate={handleCalculate}
-        category="electricity"
-      />
+      <EmptyResultPlaceholder />
     )}
       </div>
     </CalculatorPageLayout>

@@ -1,14 +1,35 @@
 ﻿import SavePDFButton, { type PdfData } from "@/components/SavePDFButton";
 
 type Props = {
-  pdfData: PdfData | null;
+  pdfData?: PdfData | null;
+  fileName?: string;
+  filename?: string;
+  buttonLabel?: string;
+  calculatorName?: string;
+  calculatorTitle?: string;
+  calculatorCategory?: string;
+  category?: string;
+  title?: string;
+  tables?: any[];
+  sections?: any[];
+  inputs?: any[];
+  results?: any[];
+  accentColor?: string;
+  hasResult?: boolean;
 };
 
-export function CalculatorPdfExport({ pdfData }: Props) {
-  const isButtonDisabled = !pdfData;
+export function CalculatorPdfExport({
+  pdfData,
+  fileName,
+  filename,
+  buttonLabel,
+  calculatorName,
+  title,
+}: Props) {
+  const isButtonDisabled = !pdfData && !fileName && !filename && !title;
   const fallbackPdfData: PdfData = pdfData || {
-    calculatorName: "Standard Calculator",
-    calculatorSlug: "standard-calculator",
+    calculatorName: calculatorName || title || "Standard Calculator",
+    calculatorSlug: fileName || filename || "standard-calculator",
     siteName: "CalcZen",
     siteUrl: "https://www.calczen.in",
     inputs: [],

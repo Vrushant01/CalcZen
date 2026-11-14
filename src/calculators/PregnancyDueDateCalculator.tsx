@@ -219,10 +219,7 @@ Estimated due date: October 8, 2025.`}
             )}
           </motion.div>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="health"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
     </CalculatorPageLayout>

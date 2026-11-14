@@ -1280,7 +1280,7 @@ export function DiamondJewelleryPriceCalculator() {
           <EmptyResultPlaceholder
             message="Ready to calculate diamond jewellery price"
             subMessage="Enter diamond details, metal weight, and making charges, then press Calculate Jewellery Price."
-          />
+           />
         )}
         </div>
       </div>
@@ -1290,7 +1290,7 @@ export function DiamondJewelleryPriceCalculator() {
 }
 
 // RICH EDUCATIONAL BLOG CONTENT & FAQS
-export const DIAMOND_JEWELLERY_BLOG_CONTENT: BlogContent = {
+export const DIAMOND_JEWELLERY_BLOG_CONTENT: any = {
   title: "Diamond Jewellery Price Calculator India: Complete Guide to 4Cs, Making Charges & GST",
   description:
     "Learn how diamond rings and jewellery are priced in India. Understand diamond carat weight, 4Cs quality factors, gold value, making charges, and statutory 3% GST.",

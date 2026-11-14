@@ -1062,7 +1062,7 @@ Generated at: https://www.calczen.in/calculator/silver-jewellery-bill-calculator
               <EmptyResultPlaceholder
                 message="Ready to calculate silver jewellery bill"
                 subMessage="Enter your weight, purity, and rate, then press Calculate Price to see your itemized bill estimate."
-              />
+               />
             )}
           </div>
         </div>
@@ -1072,7 +1072,7 @@ Generated at: https://www.calczen.in/calculator/silver-jewellery-bill-calculator
 }
 
 // RICH EDUCATIONAL BLOG CONTENT & FAQS
-export const SILVER_JEWELLERY_BLOG_CONTENT: BlogContent = {
+export const SILVER_JEWELLERY_BLOG_CONTENT: any = {
   title: "Silver Jewellery Bill Calculator India: Complete Price Breakdown Guide",
   description:
     "Learn how Indian jewellers calculate silver jewellery prices, making charges, purity fineness, and 3% GST. Calculate transparent silver bills before buying.",

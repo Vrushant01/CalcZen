@@ -1050,10 +1050,7 @@ export function ApplianceElectricityCostCalculator() {
               </div>
             </>
           ) : (
-            <EmptyResultPlaceholder
-              onCalculate={handleCalculate}
-              category="electricity"
-            />
+            <EmptyResultPlaceholder />
           )}
           </div>
         )}
@@ -1386,10 +1383,7 @@ export function ApplianceElectricityCostCalculator() {
               </div>
             </>
           ) : (
-            <EmptyResultPlaceholder
-              onCalculate={handleCalculate}
-              category="electricity"
-            />
+            <EmptyResultPlaceholder />
           )}
           </div>
         )}

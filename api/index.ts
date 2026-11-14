@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+// @ts-ignore - server/dist is built separately in deployment
 import { createApp } from "../server/dist/app.js";
 
 let appPromise: ReturnType<typeof createApp> | null = null;

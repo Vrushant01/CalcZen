@@ -324,9 +324,12 @@ export interface BoqItem {
   category: "Material" | "Steel" | "Formwork" | "Labour" | "Machinery" | "Overhead";
   name: string;
   quantity: number;
+  quantityFormatted?: string;
   unit: string;
   rate: number;
+  unitRateINR?: number;
   amount: number;
+  totalCostINR?: number;
   description?: string;
 }
 

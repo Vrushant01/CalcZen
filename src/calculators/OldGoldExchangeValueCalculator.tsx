@@ -946,7 +946,7 @@ Generated at: https://www.calczen.in/calculator/old-gold-exchange-value-calculat
           <EmptyResultPlaceholder
             message="Ready to calculate old gold exchange value"
             subMessage="Enter your old gold weight, purity, and jeweller rate, then press Calculate Old Gold Value."
-          />
+           />
         )}
         </div>
       </div>
@@ -956,7 +956,7 @@ Generated at: https://www.calczen.in/calculator/old-gold-exchange-value-calculat
 }
 
 // SEO BLOG & EDUCATIONAL CONTENT
-export const OLD_GOLD_BLOG_CONTENT: BlogContent = {
+export const OLD_GOLD_BLOG_CONTENT: any = {
   title: "Old Gold Exchange Value Calculator (India): Complete Valuation Guide",
   description:
     "Learn how Indian jewellers calculate the exchange and resale value of old gold jewellery. Understand BIS hallmark fineness, pure gold extraction, melting loss, and how to avoid unfair deductions.",

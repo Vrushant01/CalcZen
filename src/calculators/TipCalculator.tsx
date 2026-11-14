@@ -404,10 +404,7 @@ export function TipCalculator() {
             </div>
           </motion.div>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="everyday"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
     </CalculatorPageLayout>

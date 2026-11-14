@@ -528,10 +528,7 @@ export function MortgageCalculator() {
             </div>
           </motion.div>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="finance"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
     </CalculatorPageLayout>

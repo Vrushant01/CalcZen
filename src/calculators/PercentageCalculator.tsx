@@ -419,10 +419,7 @@ export function PercentageCalculator() {
             </div>
           </motion.div>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="math"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
     </CalculatorPageLayout>

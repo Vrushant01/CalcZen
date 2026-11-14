@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { CalculateButton } from "@/components/CalculateButton";
 import { PDF_SITE_NAME, PDF_SITE_URL } from "@/constants/pdfBrand";
-import { getCalculator } from "@/data/calculators";
+import { getCalculator, type CalculatorMeta } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
 import { useCurrency } from "@/hooks/use-currency";
 import { formatPdfUsd } from "@/utils/formatPdfUsd";
@@ -38,10 +38,10 @@ import {
 import { motion } from "framer-motion";
 
 export function FDCalculator() {
-  const calc = getCalculator("fd-calculator") || {
+  const calc = (getCalculator("fd-calculator") || {
     name: "Fixed Deposit Calculator",
     description: "Calculate your FD maturity amount and interest earned.",
-  };
+  }) as CalculatorMeta;
   const { format, formatAxis } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
 
@@ -110,7 +110,7 @@ export function FDCalculator() {
     return data;
   }, [calcPrincipal, calcRate, calcFrequency, result.totalYears]);
 
-  const isOutdated = hasResult && (Number(principal) !== calcPrincipal || Number(rate) !== calcRate || Number(years) !== calcYears || Number(months) !== calcMonths || frequency !== calcFrequency);
+  const isOutdated = hasResult && (Number(principal) !== calcPrincipal || Number(rate) !== calcRate || Number(years) !== calcYears || Number(months) !== calcMonths || Number(frequency) !== calcFrequency);
   const isButtonDisabled =
     !principal ||
     principal <= 0 ||
@@ -622,10 +622,7 @@ export function FDCalculator() {
             </div>
           </motion.div>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="finance"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
     </CalculatorPageLayout>

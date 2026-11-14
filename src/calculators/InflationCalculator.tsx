@@ -59,7 +59,9 @@ export function InflationCalculator() {
       });
     }
 
-    return { futureCost, purchasingPower, loss, chartData };
+    const impactPct = a > 0 ? Math.round((loss / a) * 100) : 0;
+
+    return { futureCost, purchasingPower, loss, chartData, impactPct };
   }, [calcAmount, calcRate, calcYears]);
 
   const handleCalculate = () => {
@@ -392,10 +394,7 @@ export function InflationCalculator() {
             </div>
           </motion.div>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="finance"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
     </CalculatorPageLayout>

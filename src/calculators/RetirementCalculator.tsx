@@ -54,9 +54,9 @@ export function RetirementCalculator() {
   // ----------------------------------------------------
   // RETIREMENT CALCULATOR INPUT STATES (Live)
   // ----------------------------------------------------
-  const [currentAge, setCurrentAge] = useState(30);
-  const [retirementAge, setRetirementAge] = useState(65);
-  const [lifeExpectancy, setLifeExpectancy] = useState(85);
+  const [currentAge, setCurrentAge] = useState<number | "">(30);
+  const [retirementAge, setRetirementAge] = useState<number | "">(65);
+  const [lifeExpectancy, setLifeExpectancy] = useState<number | "">(85);
   const [currentSavings, setCurrentSavings] = useState<number | "">(50000);
   const [monthlyContribution, setMonthlyContribution] = useState<number | "">(500);
   const [expectedReturn, setExpectedReturn] = useState<number | "">(7);
@@ -552,7 +552,7 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
                 </label>
                 <input
                   type="range"
-                  min={Math.max(18, currentAge + 1)}
+                  min={Math.max(18, (Number(currentAge) || 0) + 1)}
                   max="95"
                   value={retirementAge}
                   onChange={(e) => setRetirementAge(Number(e.target.value))}
@@ -567,7 +567,7 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
                 </label>
                 <input
                   type="range"
-                  min={Math.max(18, retirementAge + 1)}
+                  min={Math.max(18, (Number(retirementAge) || 0) + 1)}
                   max="110"
                   value={lifeExpectancy}
                   onChange={(e) => setLifeExpectancy(Number(e.target.value))}
@@ -1213,10 +1213,7 @@ Safe Corpus Needed = Σ [WithdrawalGap × (1+InflationRate)ⁿ / (1+ReturnRate)�
             </div>
           </motion.div>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="finance"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
     </CalculatorPageLayout>

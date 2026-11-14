@@ -48,7 +48,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
   console.error(error);
   const router = useRouter();
 
@@ -169,7 +169,7 @@ function RootComponent() {
         try {
           const headResult: any =
             typeof route.options.head === "function"
-              ? route.options.head({
+              ? (route.options.head as any)({
                   loaderData: match.loaderData as any,
                   params: match.params as any,
                   context: match.context as any,

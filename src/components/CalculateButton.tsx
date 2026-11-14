@@ -149,7 +149,8 @@ export function CalculateButton({
   const generateParticles = (cat: typeof category): Particle[] => {
     const count = 8 + Math.floor(Math.random() * 5); // Clean count: 8-12 particles
     const list: Particle[] = [];
-    const colors = CATEGORY_COLORS[cat].particles;
+    const safeCat = cat && cat in CATEGORY_COLORS ? (cat as keyof typeof CATEGORY_COLORS) : "finance";
+    const colors = CATEGORY_COLORS[safeCat].particles;
 
     for (let i = 0; i < count; i++) {
       // Perfect radial distribution for even spread
@@ -274,8 +275,8 @@ export function CalculateButton({
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none z-10 w-full aspect-square max-w-[150px]"
             style={{
-              border: `1.5px solid ${CATEGORY_COLORS[category].ringColor}`,
-              boxShadow: `0 0 12px ${CATEGORY_COLORS[category].ringColor}`,
+              border: `1.5px solid ${(category && category in CATEGORY_COLORS ? CATEGORY_COLORS[category as keyof typeof CATEGORY_COLORS] : CATEGORY_COLORS.finance).ringColor}`,
+              boxShadow: `0 0 12px ${(category && category in CATEGORY_COLORS ? CATEGORY_COLORS[category as keyof typeof CATEGORY_COLORS] : CATEGORY_COLORS.finance).ringColor}`,
             }}
           />
         )}

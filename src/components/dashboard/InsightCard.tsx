@@ -8,6 +8,7 @@ type Props = {
   title?: string;
   children?: React.ReactNode;
   tone?: InsightTone;
+  type?: InsightTone;
   icon?: React.ReactNode;
   index?: number;
 };
@@ -30,9 +31,10 @@ const toneStyles: Record<string, { defaultIcon: React.ReactNode }> = {
   },
 };
 
-export function InsightCard({ text, title, children, tone = "info", icon, index = 0 }: Props) {
-  const s = (tone && toneStyles[tone]) || toneStyles.info;
-  const safeTone = tone && toneStyles[tone] ? (tone === "note" ? "info" : tone) : "info";
+export function InsightCard({ text, title, children, tone = "info", type, icon, index = 0 }: Props) {
+  const effectiveTone = type ?? tone;
+  const s = (effectiveTone && toneStyles[effectiveTone]) || toneStyles.info;
+  const safeTone = effectiveTone && toneStyles[effectiveTone] ? (effectiveTone === "note" ? "info" : effectiveTone) : "info";
   const content = children ?? text;
 
   return (

@@ -1268,7 +1268,7 @@ export function AcElectricityCostCalculator() {
             <EmptyResultPlaceholder
               message="Ready to calculate AC running cost"
               subMessage="Select your AC specs, daily usage, and electricity rate, then press Calculate AC Running Cost & Units."
-            />
+             />
           )}
         </div>
       </div>
@@ -1280,7 +1280,7 @@ export function AcElectricityCostCalculator() {
 // SEO BLOG & EDUCATIONAL CONTENT
 // -------------------------------------------------------------
 
-const blogContent: BlogContent = {
+const blogContent: any = {
   title: "Complete AC Electricity Cost & Power Consumption Guide (India)",
   primaryKeyword: "AC Electricity Cost Calculator",
   category: "Electricity",

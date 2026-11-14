@@ -123,7 +123,7 @@ export function CementBagCalculator() {
     setFriendlyType(catId);
     let workType: ConstructionWorkType = "concrete";
     let newMix = { cement: 1, sand: 1.5, aggregate: 3 };
-    let newDryFactor = DRY_VOLUME_FACTORS.concrete;
+    let newDryFactor: number = DRY_VOLUME_FACTORS.concrete;
 
     if (catId === "concrete") {
       workType = "concrete";

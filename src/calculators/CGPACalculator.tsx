@@ -319,7 +319,7 @@ export function CGPACalculator() {
       intro="Calculate your Semester Grade Point Average (SGPA) and Cumulative Grade Point Average (CGPA). Enter your course grades and credit hours below to track your academic performance."
       formula={`SGPA = Total Grade Points / Total Credits\nGrade Points = Subject Grade Value × Subject Credits\nCGPA = (Previous CGPA × Previous Credits + Current SGPA × Current Credits) / Total Credits`}
       example={`You take 3 courses: 4 credits (Grade A = 4.0), 3 credits (Grade B = 3.0), and 3 credits (Grade C = 2.0). Total Credits = 10. Total Points = (4×4) + (3×3) + (3×2) = 16 + 9 + 6 = 31. SGPA = 31 / 10 = 3.10.`}
-      faqs={cgpaBlogContent.faqs}
+      faqs={cgpaBlogContent.faqs || []}
       blog={<CalculatorBlog content={cgpaBlogContent} />}
     >
       <div className="flex flex-col gap-6">
@@ -524,10 +524,7 @@ export function CGPACalculator() {
             </div>
           </motion.div>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="math"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
     </CalculatorPageLayout>

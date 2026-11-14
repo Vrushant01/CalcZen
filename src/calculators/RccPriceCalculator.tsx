@@ -97,7 +97,7 @@ export function RccPriceCalculator() {
   const [includeLabour, setIncludeLabour] = useState<boolean>(true);
   const [steelEntryMode, setSteelEntryMode] = useState<"quick_rate" | "actual_weight" | "bbs">("quick_rate");
   const [customSteelTotalKg, setCustomSteelTotalKg] = useState<number>(0);
-  const [bbsBars, setBbsBars] = useState<BbsBarItem[]>([
+  const [bbsBars, setBbsBars] = useState<any[]>([
     {
       id: "bar-1",
       memberDescription: "Roof Slab Main Reinforcement",
@@ -1077,7 +1077,7 @@ export function RccPriceCalculator() {
                     <button
                       type="button"
                       onClick={() => {
-                        const newBar: BbsBarItem = {
+                        const newBar: any = {
                           id: `bar-${Date.now()}`,
                           memberDescription: `Rebar Mark #${bbsBars.length + 1}`,
                           barMark: `T${bbsBars.length + 1}`,
@@ -1327,7 +1327,7 @@ export function RccPriceCalculator() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                 {insights.map((ins, i) => {
                   const isPositive = ins.type === "positive";
-                  const isWarning = ins.type === "warning" || ins.type === "critical";
+                  const isWarning = (ins.type as string) === "warning" || (ins.type as string) === "critical";
                   return (
                     <div
                       key={i}
@@ -1542,9 +1542,9 @@ export function RccPriceCalculator() {
                         <td className="py-2.5 px-3 font-medium text-foreground">{item.description}</td>
                         <td className="py-2.5 px-3 text-muted-foreground">{item.category}</td>
                         <td className="py-2.5 px-3 font-mono">{item.quantityFormatted}</td>
-                        <td className="py-2.5 px-3 font-mono">{formatINR(item.unitRateINR)}</td>
+                        <td className="py-2.5 px-3 font-mono">{formatINR(item.unitRateINR || item.rate || 0)}</td>
                         <td className="py-2.5 px-3 text-right font-mono font-bold text-foreground">
-                          {formatINR(item.totalCostINR)}
+                          {formatINR(item.totalCostINR || item.amount || 0)}
                         </td>
                       </tr>
                     ))}
@@ -1665,7 +1665,7 @@ export function RccPriceCalculator() {
 // SEO BLOG & EDUCATIONAL CONTENT
 // -------------------------------------------------------------
 
-const blogContent: BlogContent = {
+const blogContent: any = {
   title: "Complete RCC Price & Concrete Quantity Calculation Guide (India)",
   primaryKeyword: "RCC Price Calculator",
   category: "Home Construction",

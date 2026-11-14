@@ -272,10 +272,7 @@ Age = 29 years, 6 months, 26 days.`}
             )}
           </motion.div>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="everyday"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
     </CalculatorPageLayout>

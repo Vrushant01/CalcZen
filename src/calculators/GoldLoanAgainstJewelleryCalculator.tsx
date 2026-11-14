@@ -1211,7 +1211,7 @@ export function GoldLoanAgainstJewelleryCalculator() {
           <EmptyResultPlaceholder
             message="Ready to estimate gold loan"
             subMessage="Enter your gold weight and purity, then press Calculate Eligible Gold Loan to see regulatory loan amount, LTV, and repayment options."
-          />
+           />
         )}
         </div>
       </div>
@@ -1268,7 +1268,7 @@ export const GOLD_LOAN_FAQS: { q: string; a: string }[] = [
 // -------------------------------------------------------------
 // COMPREHENSIVE EDUCATIONAL BLOG & FAQ CONTENT
 // -------------------------------------------------------------
-const goldLoanBlogContent: BlogContent = {
+const goldLoanBlogContent: any = {
   title: "Gold Loan Against Jewellery Calculator: How Much Loan Can You Get?",
   description:
     "Complete consumer guide to gold loan collateral valuation in India. Understand RBI 2025 Master Directions, maximum LTV limits, purity deductions, interest repayment schemes, and lender policies.",

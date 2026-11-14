@@ -1309,10 +1309,7 @@ export function ProductProfitCalculator() {
             </div>
           </>
         ) : (
-          <EmptyResultPlaceholder
-            onCalculate={handleCalculate}
-            category="business"
-          />
+          <EmptyResultPlaceholder />
         )}
       </div>
         </div>

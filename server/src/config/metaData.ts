@@ -29,8 +29,8 @@ export const calculatorMeta: Record<string, { title: string; description: string
     "description": "Calculate exact cement bags required for concrete, slabs, plastering, brickwork mortar, and flooring screed in India. Free, instant material takeoff per IS 456."
   },
   "gold-making-charges-calculator": {
-    "title": "Gold Making Charges Calculator India – Percentage, Per Gram & Flat Fee | CalcZen",
-    "description": "Calculate gold jewellery making charges in India using percentage, per-gram, or flat fees. Compare jewellers, calculate savings, and understand GST with CalcZen."
+    "title": "Gold Making Charges Calculator – 916 Hallmark | CalcZen",
+    "description": "Calculate 916 hallmark gold making charges, wastage, and 3% GST on jewellery in India. Compare per-gram and percentage rates to save instantly on gold."
   },
   "gold-jewellery-bill-calculator": {
     "title": "Gold Jewellery Bill Calculator India – Gold Price, Making Charges & GST | CalcZen",
@@ -81,8 +81,8 @@ export const calculatorMeta: Record<string, { title: string; description: string
     "description": "Calculate compound interest growth for your savings and investments. See detailed annual compound schedules and charts to visualize your future wealth."
   },
   "loan-emi-calculator": {
-    "title": "Loan EMI Calculator - Calculate Monthly Loan Payments Online | CalcZen",
-    "description": "Calculate your monthly loan EMI payouts, interest payable, and total loan payment instantly. Plan home, car, or personal loan budgets with our tool."
+    "title": "EMI Calculator – Car, Home & Personal Loan EMI | CalcZen",
+    "description": "Calculate monthly payment and total interest for car, home, or personal loans. Plan your loan repayment easily with our free, instant EMI calculator."
   },
   "retirement-calculator": {
     "title": "Retirement Calculator – Plan Your Future Retirement Savings | CalcZen",
@@ -97,12 +97,12 @@ export const calculatorMeta: Record<string, { title: string; description: string
     "description": "Calculate your Body Mass Index (BMI) instantly. Understand your healthy weight category and track your health fitness metrics online with our tool."
   },
   "calorie-calculator": {
-    "title": "Calorie Calculator - Calculate Daily Calorie Needs Online | CalcZen",
-    "description": "Estimate daily calorie needs for weight loss, gain, or maintenance. Calculate your TDEE based on height, weight, activity, and fitness goals easily."
+    "title": "Calorie Calculator – Daily Calorie Needs & Goals | CalcZen",
+    "description": "Calculate your daily calorie needs for weight loss, maintenance, or muscle gain. Free, instant calorie intake calculator tailored to your age and activity."
   },
   "water-intake-calculator": {
-    "title": "Water Intake Calculator - Calculate Daily Hydration Needs | CalcZen",
-    "description": "Calculate your daily water intake needs based on weight, exercise time, and climate. Keep hydrated and track your daily hydration goals with ease."
+    "title": "Water Intake Calculator – Daily Hydration Target | CalcZen",
+    "description": "Find out how much water should I drink a day. Calculate your personalized daily hydration target based on weight and activity with our free, instant tool."
   },
   "sleep-calculator": {
     "title": "Sleep Calculator – Calculate Perfect Bedtime & Wake-Up Time",
@@ -121,8 +121,8 @@ export const calculatorMeta: Record<string, { title: string; description: string
     "description": "Calculate percentage increases, decreases, differences, and fractional shifts instantly. Solve school or business percent math equations in seconds."
   },
   "age-calculator": {
-    "title": "Age Calculator - Calculate Exact Age from Date of Birth | CalcZen",
-    "description": "Calculate your exact age in years, months, days, minutes, and seconds from your birthdate. Find the time remaining until your next birthday instantly."
+    "title": "Age Calculator – Calculate Age on Any Date | CalcZen",
+    "description": "Calculate age in exact years, months, and days from date of birth or check age on a date. Free, instant age calculator for official forms and milestones."
   },
   "standard-calculator": {
     "title": "Standard Calculator - Standard Basic Online Math Calculator | CalcZen",

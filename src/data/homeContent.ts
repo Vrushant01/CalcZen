@@ -64,11 +64,11 @@ export const homeIntro: HomeIntroContent = {
         text: ", and statutory GST slabs. To deepen your understanding of smart financial management, energy efficiency, and everyday arithmetic, explore our comprehensive ",
       },
       {
-        text: "CalcZen Blog",
-        href: "/blog",
+        text: "CalcZen Tools",
+        href: "/tools",
       },
       {
-        text: ", where our team publishes in-depth guides and articles designed to make complex numbers simple, actionable, and practical for everyone.",
+        text: ", designed to make complex numbers simple, actionable, and practical for everyone.",
       },
     ],
   ],

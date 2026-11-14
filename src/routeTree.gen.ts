@@ -11,17 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
-import { Route as BlogRouteImport } from './routes/blog'
 import { Route as CalculatorsRouteImport } from './routes/calculators'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as TermsRouteImport } from './routes/terms'
-import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as CalculatorSlugRouteImport } from './routes/calculator.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
-import { Route as BlogCategorySlugRouteImport } from './routes/blog.$category.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -31,11 +28,6 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalculatorsRoute = CalculatorsRouteImport.update({
@@ -63,15 +55,10 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => BlogRoute,
-} as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BlogRoute,
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CalculatorSlugRoute = CalculatorSlugRouteImport.update({
   id: '/calculator/$slug',
@@ -83,26 +70,18 @@ const CategorySlugRoute = CategorySlugRouteImport.update({
   path: '/category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogCategorySlugRoute = BlogCategorySlugRouteImport.update({
-  id: '/$category/$slug',
-  path: '/$category/$slug',
-  getParentRoute: () => BlogRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRouteWithChildren
   '/calculators': typeof CalculatorsRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/blog/$slug': typeof BlogSlugRoute
+  '/tools': typeof ToolsRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$slug': typeof CategorySlugRoute
-  '/blog/': typeof BlogIndexRoute
-  '/blog/$category/$slug': typeof BlogCategorySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -112,44 +91,36 @@ export interface FileRoutesByTo {
   '/disclaimer': typeof DisclaimerRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/blog/$slug': typeof BlogSlugRoute
+  '/tools': typeof ToolsRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$slug': typeof CategorySlugRoute
-  '/blog': typeof BlogIndexRoute
-  '/blog/$category/$slug': typeof BlogCategorySlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRouteWithChildren
   '/calculators': typeof CalculatorsRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/blog/$slug': typeof BlogSlugRoute
+  '/tools': typeof ToolsRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$slug': typeof CategorySlugRoute
-  '/blog/': typeof BlogIndexRoute
-  '/blog/$category/$slug': typeof BlogCategorySlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
-    | '/blog'
     | '/calculators'
     | '/contact'
     | '/disclaimer'
     | '/privacy'
     | '/terms'
-    | '/blog/$slug'
+    | '/tools'
     | '/calculator/$slug'
     | '/category/$slug'
-    | '/blog/'
-    | '/blog/$category/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -159,37 +130,32 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/privacy'
     | '/terms'
-    | '/blog/$slug'
+    | '/tools'
     | '/calculator/$slug'
     | '/category/$slug'
-    | '/blog'
-    | '/blog/$category/$slug'
   id:
     | '__root__'
     | '/'
     | '/about'
-    | '/blog'
     | '/calculators'
     | '/contact'
     | '/disclaimer'
     | '/privacy'
     | '/terms'
-    | '/blog/$slug'
+    | '/tools'
     | '/calculator/$slug'
     | '/category/$slug'
-    | '/blog/'
-    | '/blog/$category/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  BlogRoute: typeof BlogRouteWithChildren
   CalculatorsRoute: typeof CalculatorsRoute
   ContactRoute: typeof ContactRoute
   DisclaimerRoute: typeof DisclaimerRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
+  ToolsRoute: typeof ToolsRoute
   CalculatorSlugRoute: typeof CalculatorSlugRoute
   CategorySlugRoute: typeof CategorySlugRoute
 }
@@ -208,13 +174,6 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calculators': {
@@ -252,19 +211,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/': {
-      id: '/blog/'
-      path: '/'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
-      parentRoute: typeof BlogRoute
-    }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRoute
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/calculator/$slug': {
       id: '/calculator/$slug'
@@ -280,39 +232,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/$category/$slug': {
-      id: '/blog/$category/$slug'
-      path: '/$category/$slug'
-      fullPath: '/blog/$category/$slug'
-      preLoaderRoute: typeof BlogCategorySlugRouteImport
-      parentRoute: typeof BlogRoute
-    }
   }
 }
-
-interface BlogRouteChildren {
-  BlogSlugRoute: typeof BlogSlugRoute
-  BlogIndexRoute: typeof BlogIndexRoute
-  BlogCategorySlugRoute: typeof BlogCategorySlugRoute
-}
-
-const BlogRouteChildren: BlogRouteChildren = {
-  BlogSlugRoute: BlogSlugRoute,
-  BlogIndexRoute: BlogIndexRoute,
-  BlogCategorySlugRoute: BlogCategorySlugRoute,
-}
-
-const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  BlogRoute: BlogRouteWithChildren,
   CalculatorsRoute: CalculatorsRoute,
   ContactRoute: ContactRoute,
   DisclaimerRoute: DisclaimerRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
+  ToolsRoute: ToolsRoute,
   CalculatorSlugRoute: CalculatorSlugRoute,
   CategorySlugRoute: CategorySlugRoute,
 }

@@ -7,7 +7,6 @@
     "start": "node server.js",
     "seed:admin": "tsx src/utils/seedAdmin.ts",
     "admin:reset-password": "tsx src/utils/resetAdminPassword.ts",
-    "db:migrate-blogs": "tsx src/scripts/backfillSeoWithImages.ts",
     "build:admin": "npm install --prefix ../admin && npm run build --prefix ../admin",
     "build:vercel": "tsc"
   },

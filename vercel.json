@@ -7,6 +7,16 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/blog",
+      "destination": "/tools",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/tools",
+      "permanent": true
+    },
+    {
       "source": "/calculator/regular-calculator",
       "destination": "/calculator/standard-calculator",
       "permanent": true

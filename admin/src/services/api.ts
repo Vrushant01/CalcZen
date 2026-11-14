@@ -1,4 +1,4 @@
-﻿import { apiFetch, getApiBaseUrl, getNetworkErrorMessage } from "../lib/api-config";
+import { apiFetch, getApiBaseUrl, getNetworkErrorMessage } from "../lib/api-config";
 
 export function getToken(): string | null {
   return localStorage.getItem("admin_token");
@@ -85,37 +85,6 @@ export type ContactMessage = {
   message: string;
   status: "unread" | "read" | "replied";
   adminReply: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type BlogStats = {
-  total: number;
-  published: number;
-  drafts: number;
-  views: number;
-};
-
-export type Blog = {
-  _id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  thumbnail: string | null;
-  category: string;
-  tags: string[];
-  metaTitle: string | null;
-  metaDescription: string | null;
-  keywords: string[];
-  author: string;
-  calculatorLinks: any;
-  faqs: { question: string; answer: string }[];
-  featured: boolean;
-  published: boolean;
-  views: number;
-  readingTime: number;
-  publishDate: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -221,44 +190,6 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ id, reply }),
     }),
-
-  blogStats: () => request<BlogStats>("/api/admin/blogs/stats"),
-
-  blogs: (params?: {
-    search?: string;
-    category?: string;
-    status?: string;
-    page?: number;
-    limit?: number;
-  }) => {
-    const q = new URLSearchParams();
-    if (params?.search) q.set("search", params.search);
-    if (params?.category) q.set("category", params.category);
-    if (params?.status) q.set("status", params.status);
-    if (params?.page) q.set("page", String(params.page));
-    if (params?.limit) q.set("limit", String(params.limit));
-    const query = q.toString() ? `?${q}` : "";
-    return request<{
-      blogs: Blog[];
-      pagination: { page: number; limit: number; total: number; pages: number };
-    }>(`/api/admin/blogs${query}`);
-  },
-
-  blog: (id: string) => request<Blog>(`/api/admin/blogs/${id}`),
-
-  createBlog: (body: Partial<Blog>) =>
-    request<Blog>("/api/admin/blogs", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
-
-  updateBlog: (id: string, body: Partial<Blog>) =>
-    request<Blog>(`/api/admin/blogs/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(body),
-    }),
-
-  deleteBlog: (id: string) => request(`/api/admin/blogs/${id}`, { method: "DELETE" }),
 
   infrastructureStats: () => request<any>("/api/admin/infrastructure/stats"),
 };

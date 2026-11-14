@@ -447,31 +447,19 @@ export const staticPagesContent: Record<string, StaticPageData> = {
     ],
   },
 
-  blog: {
-    title: "CalcZen Blog — Financial Insights, Health Tips & Math Guides",
+  tools: {
+    title: "Tools - Coming Soon | CalcZen",
     description:
-      "Explore the CalcZen Blog for expert guides, financial tips, health calculator breakdowns, tax advice, and practical guides on online tool calculations.",
-    canonical: "https://www.calczen.in/blog",
-    h1: "Financial Insights, Health Guides, and Calculation Tips",
+      "We're building a set of free tools. Coming soon.",
+    canonical: "https://www.calczen.in/tools",
+    h1: "Tools",
     intro:
-      "Master the calculations, equations, and financial models behind everyday decisions. Simplified mathematics, finance, and wellness guides.",
+      "We're building a set of free tools. Coming soon.",
     sections: [
       {
-        title: "Explore Calculation Topics",
+        title: "Coming Soon",
         paragraphs: [
-          "Browse comprehensive articles designed to simplify mathematics, personal finance, health tracking, and practical computation.",
-        ],
-        listItems: [
-          "Personal Finance — Loan EMI planning, home mortgage amortization, and compound wealth generation",
-          "Health & Fitness — Calorie management, basal metabolic rate benchmarks, and hydration targets",
-          "Business & Taxes — Goods and Services Tax (GST) calculations, profit margins, and salary breakdowns",
-          "Practical Math — Percentage shifts, proportion analysis, and everyday estimation models",
-        ],
-      },
-      {
-        title: "Stay Updated with CalcZen",
-        paragraphs: [
-          "Our articles break down complex formulas into easy step-by-step guides so you can verify the math and make informed financial and health decisions.",
+          "We are actively developing a suite of free productivity and utility tools to accompany our calculators. Stay tuned for updates.",
         ],
       },
     ],

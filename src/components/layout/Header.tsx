@@ -1,4 +1,4 @@
-﻿import { Link } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Menu, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BrandLogo } from "@/components/BrandLogo";
@@ -13,7 +13,7 @@ export function Header() {
     { to: "/category/finance", label: "Finance" },
     { to: "/category/health", label: "Health" },
     { to: "/category/math", label: "Math" },
-    { to: "/blog", label: "Blog" },
+    { to: "/tools", label: "Tools" },
     { to: "/about", label: "About" },
   ];
 

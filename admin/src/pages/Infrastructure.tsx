@@ -1,4 +1,4 @@
-﻿import { useEffect, useState, useCallback, Component, type ErrorInfo, type ReactNode } from "react";
+import { useEffect, useState, useCallback, Component, type ErrorInfo, type ReactNode } from "react";
 import {
   Activity,
   Server,
@@ -333,7 +333,6 @@ function InfrastructurePageContent() {
   const calczenPopularCalculator = stats?.calczen?.popularCalculator ?? "Unavailable";
   const calczenNewsletterSubscribers = stats?.calczen?.newsletterSubscribers ?? 0;
   const calczenContactSubmissions = stats?.calczen?.contactSubmissions ?? 0;
-  const calczenBlogViews = stats?.calczen?.blogViews ?? 0;
   const calczenUsageTrends = stats?.calczen?.usageTrends ?? [];
   const alerts = stats?.alerts ?? [];
 
@@ -1091,9 +1090,9 @@ function InfrastructurePageContent() {
                 <Sparkles size={20} />
               </div>
               <div>
-                <p className="text-xs text-[var(--color-muted)] font-semibold">Total Blog Views</p>
+                <p className="text-xs text-[var(--color-muted)] font-semibold">Contact Inquiries</p>
                 <p className="text-lg sm:text-2xl font-bold text-white mt-0.5">
-                  {calczenBlogViews.toLocaleString()}
+                  {calczenContactSubmissions.toLocaleString()}
                 </p>
               </div>
             </div>

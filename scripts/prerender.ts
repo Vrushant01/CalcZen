@@ -111,7 +111,7 @@ function renderHeaderHtml(): string {
           <a href="/category/finance" class="hidden sm:inline hover:text-foreground transition-colors">Finance</a>
           <a href="/category/business" class="hidden sm:inline hover:text-foreground transition-colors">Business</a>
           <a href="/category/electricity" class="hidden sm:inline hover:text-foreground transition-colors">Electricity</a>
-          <a href="/blog" class="hover:text-foreground transition-colors">Blog</a>
+          <a href="/tools" class="hover:text-foreground transition-colors">Tools</a>
           <a href="/about" class="hidden md:inline hover:text-foreground transition-colors">About</a>
         </nav>
       </div>
@@ -642,8 +642,8 @@ async function prerender() {
     count++;
   }
 
-  // 4. Prerender Static Pages (/about, /contact, /privacy, /terms, /disclaimer, /blog)
-  const staticSlugs = ["about", "contact", "privacy", "terms", "disclaimer", "blog"] as const;
+  // 4. Prerender Static Pages (/about, /contact, /privacy, /terms, /disclaimer, /tools)
+  const staticSlugs = ["about", "contact", "privacy", "terms", "disclaimer", "tools"] as const;
   for (const slug of staticSlugs) {
     const data = staticPagesContent[slug];
     if (!data) continue;
@@ -728,48 +728,13 @@ async function prerender() {
           </div>
         </main>
       `;
-    } else if (slug === "blog") {
+    } else if (slug === "tools") {
       contentHtml = `
-        <main class="min-h-screen bg-background text-foreground">
-          <section class="relative overflow-hidden py-16 sm:py-20 text-center bg-gradient-hero">
-            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-indigo-950/60 text-indigo-300 border border-indigo-500/30 mb-4">Insights &amp; Guides</span>
-              <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
-                ${escapeHtml(data.h1)}
-              </h1>
-              <p class="mt-4 text-base sm:text-lg text-white/80 max-w-xl mx-auto leading-relaxed">
-                ${escapeHtml(data.intro || "")}
-              </p>
-            </div>
-          </section>
-          <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="space-y-12">
-              <div>
-                <h2 class="text-2xl font-bold text-foreground mb-6">Explore Calculation Topics</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  ${calculators
-                    .filter((c) => c.popular)
-                    .slice(0, 6)
-                    .map(
-                      (c) => `
-                    <a href="/calculator/${c.slug}" class="block p-5 rounded-2xl border border-border/80 bg-card hover:border-primary/50 transition-all">
-                      <span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-muted text-muted-foreground mb-2">${escapeHtml(getCategoryName(c.category))}</span>
-                      <h3 class="text-base font-bold text-foreground mb-1">${escapeHtml(c.name)} Guide</h3>
-                      <p class="text-xs text-muted-foreground line-clamp-2 leading-relaxed">${escapeHtml(c.description)}</p>
-                    </a>
-                  `,
-                    )
-                    .join("")}
-                </div>
-              </div>
-              <div class="border-t border-border/40 pt-8">
-                <h2 class="text-xl font-bold text-foreground mb-4">Stay Updated with CalcZen</h2>
-                <p class="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
-                  Our articles break down complex formulas into easy step-by-step guides so you can verify the math and make informed financial and health decisions.
-                </p>
-              </div>
-            </div>
-          </section>
+        <main class="min-h-[70vh] flex flex-col items-center justify-center px-4 text-center select-none bg-background text-foreground">
+          <h1 class="sr-only">Tools</h1>
+          <p class="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-foreground">
+            Coming Soon
+          </p>
         </main>
       `;
     } else {

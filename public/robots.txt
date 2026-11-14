@@ -5,4 +5,3 @@ Disallow: /admin/
 Disallow: /api/
 
 Sitemap: https://www.calczen.in/sitemap.xml
-Sitemap: https://www.calczen.in/sitemap-blogs.xml

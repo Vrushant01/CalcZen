@@ -9,7 +9,6 @@ import { PageShell } from "@/components/layout/PageShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CalculatorCard } from "@/components/CalculatorCard";
-import { BlogSection } from "@/components/BlogSection";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { categories } from "@/data/calculators";
 import { subscribeEmail } from "@/lib/subscribe-api";
@@ -218,8 +217,6 @@ export default function HomeClient({ popularSlugs }: HomeClientProps) {
           ))}
         </div>
       </section>
-
-      <BlogSection />
 
       {/* Why Use Online Calculators Section */}
       <section className="page-container mt-8 sm:mt-32 md:mt-36 max-w-4xl min-w-0 text-left">

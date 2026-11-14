@@ -19,8 +19,6 @@ import authRoutes from "./routes/authRoutes.js";
 import newsletterRoutes from "./routes/newsletterRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import subscribeRoutes from "./routes/subscribeRoutes.js";
-import blogRoutes from "./routes/blogRoutes.js";
-import { findPublishedBlogBySlug } from "./services/blogService.js";
 
 import { formatDbError } from "./utils/errors.js";
 
@@ -102,47 +100,9 @@ async function getDynamicMetadata(
       title = meta.title;
       description = meta.description;
     }
-  } else if (lowercasePath.startsWith("/blog/")) {
-    const slug = lowercasePath.replace("/blog/", "");
-    try {
-      const blog = await findPublishedBlogBySlug(slug);
-      if (blog) {
-        title = blog.metaTitle || `${blog.title} | CalcZen Blog`;
-        description =
-          blog.metaDescription ||
-          blog.excerpt ||
-          blog.content.replace(/<[^>]*>/g, "").substring(0, 155) + "...";
-      }
-    } catch (err) {
-      console.error(`Failed to fetch blog metadata for slug ${slug}:`, err);
-    }
-  } else if (lowercasePath === "/about") {
-    title = "About Us - CalcZen";
-    description =
-      "Learn more about CalcZen, our mission to build beautiful online tools, and our standards for mathematical accuracy.";
-  } else if (lowercasePath === "/contact") {
-    title = "Contact Us - CalcZen";
-    description =
-      "Have feedback or a request for a new calculator? Reach out to the CalcZen team directly.";
-  } else if (lowercasePath === "/privacy") {
-    title = "Privacy Policy - CalcZen";
-    description =
-      "Read the CalcZen privacy policy to understand how we secure your data and maintain privacy.";
-  } else if (lowercasePath === "/terms") {
-    title = "Terms of Service - CalcZen";
-    description = "View the terms and conditions for using CalcZen calculators and resources.";
-  } else if (lowercasePath === "/disclaimer") {
-    title = "Disclaimer - CalcZen";
-    description =
-      "Read our site disclaimer regarding the informational nature of our calculation results.";
-  } else if (lowercasePath === "/calculators") {
-    title = "All Calculators - CalcZen";
-    description =
-      "Browse our complete directory of free online calculators for finance, health, math, and everyday tasks.";
-  } else if (lowercasePath === "/blog") {
-    title = "CalcZen Blog - Financial Tips, Health Insights & Math Guides";
-    description =
-      "Expert guides, calculator tutorials, and practical articles on managing personal finance, tracking fitness goals, and solving math problems.";
+  } else if (lowercasePath === "/tools") {
+    title = "Tools - Coming Soon | CalcZen";
+    description = "We're building a set of free tools. Coming soon.";
   }
 
   return { title, description, canonical };
@@ -246,7 +206,6 @@ export async function createApp(): Promise<Express> {
   app.use("/api/auth", authRoutes);
   app.use("/api/admin", adminRoutes);
   app.use("/api/newsletters", newsletterRoutes);
-  app.use("/api/blogs", blogRoutes);
 
   const adminDist = resolveAdminDist();
   app.use("/admin", express.static(adminDist, { index: "index.html" }));

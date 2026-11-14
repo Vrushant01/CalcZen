@@ -1,4 +1,4 @@
-﻿import type { Response } from "express";
+import type { Response } from "express";
 import { getSupabase } from "../config/supabase.js";
 import type { AuthRequest } from "../middleware/auth.js";
 
@@ -7,27 +7,18 @@ export async function getInfrastructureStats(req: AuthRequest, res: Response): P
     const supabase = getSupabase();
 
     // 1. Fetch REAL Supabase Metrics in Parallel
-    const [subscribersRes, messagesRes, blogsRes, blogViewsRes, adminsRes] = await Promise.all([
+    const [subscribersRes, messagesRes, adminsRes] = await Promise.all([
       supabase
         .from("subscribers")
         .select("*", { count: "exact", head: true })
         .eq("status", "active"),
       supabase.from("contact_messages").select("*", { count: "exact", head: true }),
-      supabase.from("blogs").select("*", { count: "exact", head: true }),
-      supabase.from("blogs").select("views"),
       supabase.from("admins").select("*", { count: "exact", head: true }),
     ]);
 
     const activeSubscribers = subscribersRes.count ?? 0;
     const totalSubmissions = messagesRes.count ?? 0;
-    const totalBlogs = blogsRes.count ?? 0;
     const totalAdmins = adminsRes.count ?? 0;
-
-    // Sum all views from the blogs views database
-    const totalBlogViews = (blogViewsRes.data ?? []).reduce(
-      (sum, item) => sum + (Number(item.views) || 0),
-      0,
-    );
 
     // 2. Render Bandwidth & Usage Calculations
     const now = new Date();
@@ -40,20 +31,20 @@ export async function getInfrastructureStats(req: AuthRequest, res: Response): P
     const renderPlanPercent = Math.round((elapsedFreeHours / 750) * 100);
     const renderBandwidthUsed = Math.min(
       100,
-      Number((18.4 + activeSubscribers * 0.15 + totalBlogViews * 0.002).toFixed(1)),
+      Number((18.4 + activeSubscribers * 0.15).toFixed(1)),
     );
 
     // 3. Supabase Dynamic Quotas
     // Estimate size of tables realistically based on actual row counts
     const estimatedDbSize = Number(
-      (1.2 + totalBlogs * 0.05 + activeSubscribers * 0.005 + totalSubmissions * 0.01).toFixed(2),
+      (1.2 + activeSubscribers * 0.005 + totalSubmissions * 0.01).toFixed(2),
     );
-    const estimatedStorageUsed = Number((8.5 + totalBlogs * 0.35).toFixed(1));
+    const estimatedStorageUsed = 8.5;
     const dbSizePercent = (estimatedDbSize / 500) * 100;
     const storagePercent = (estimatedStorageUsed / 500) * 100;
     const supabaseBandwidthUsed = Math.min(
       50,
-      Number((0.8 + activeSubscribers * 0.006 + totalBlogViews * 0.0008).toFixed(2)),
+      Number((0.8 + activeSubscribers * 0.006).toFixed(2)),
     );
 
     // 4. Resend Dynamic Sent Counts
@@ -69,7 +60,7 @@ export async function getInfrastructureStats(req: AuthRequest, res: Response): P
 
     // 5. Cloudflare Traffic Statistics Simulation
     const cfCacheHitRate = 78.4;
-    const cfTotalRequests = Math.round(15243 + activeSubscribers * 12 + totalBlogViews * 2.5);
+    const cfTotalRequests = Math.round(15243 + activeSubscribers * 12);
     const cfCachedRequests = Math.round(cfTotalRequests * (cfCacheHitRate / 100));
     const threatsBlocked = Math.round(4 + (totalSubmissions % 3) + (activeSubscribers % 5));
 
@@ -165,7 +156,7 @@ export async function getInfrastructureStats(req: AuthRequest, res: Response): P
         responseTime: 145, // ms
         activeRequests: Math.round(2 + (now.getSeconds() % 4)),
         lastDeploy: "2 hours ago",
-        totalDeployments: 12 + totalBlogs,
+        totalDeployments: 12,
         planUsagePercent: renderPlanPercent,
         bandwidthUsedGb: renderBandwidthUsed,
         bandwidthLimitGb: 100,
@@ -212,10 +203,10 @@ export async function getInfrastructureStats(req: AuthRequest, res: Response): P
         visitorsToday: Math.round(280 + activeSubscribers * 0.8),
         visitorsThisMonth: Math.round(cfTotalRequests * 0.28),
         totalCalculatorUses: Math.round(cfTotalRequests * 0.94),
-        popularCalculator: totalBlogs % 2 === 0 ? "Mortgage Calculator" : "BMI Calculator",
+        popularCalculator: "Mortgage Calculator",
         newsletterSubscribers: activeSubscribers,
         contactSubmissions: totalSubmissions,
-        blogViews: totalBlogViews,
+        toolsViews: 0,
         usageTrends,
       },
       alerts,

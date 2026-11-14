@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { BrandLogo } from "@/components/BrandLogo";
 import { categories } from "@/data/calculators";
@@ -101,8 +101,8 @@ export function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/blog" className={linkClass} onClick={() => setOpenSection(null)}>
-                      Blog
+                    <Link to="/tools" className={linkClass} onClick={() => setOpenSection(null)}>
+                      Tools
                     </Link>
                   </li>
                   <li>

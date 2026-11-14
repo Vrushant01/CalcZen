@@ -47,6 +47,126 @@ import {
   type DiamondJewelleryResult,
 } from "@/utils/diamondJewelleryUtils";
 
+// RICH EDUCATIONAL BLOG CONTENT & FAQS
+export const DIAMOND_JEWELLERY_BLOG_CONTENT: any = {
+  title: "Diamond Jewellery Price Calculator India: Complete Guide to 4Cs, Making Charges & GST",
+  description:
+    "Learn how diamond rings and jewellery are priced in India. Understand diamond carat weight, 4Cs quality factors, gold value, making charges, and statutory 3% GST.",
+  author: "CalcZen Jewellery Domain Specialists",
+  publishDate: "November 2026",
+  readTime: "7 min read",
+  sections: [
+    {
+      title: "1. How Diamond Jewellery is Priced in India",
+      paragraphs: [
+        "Unlike plain gold or silver jewellery which is priced strictly by weight and daily metal rates, diamond jewellery pricing involves multiple distinct components:",
+        "**Final Diamond Jewellery Price = Diamond Cost + Metal Value + Making Charges + Other Charges − Discounts + GST (3%)**",
+        "Because diamonds are individual gemstones with unique optical and physical traits, two rings of the same total weight can have radically different prices based on diamond quality, cut craftsmanship, and certification.",
+      ],
+    },
+    {
+      title: "2. The GIA 4Cs of Diamond Quality",
+      paragraphs: [
+        "The Gemological Institute of America (GIA) established the universal standard for diamond grading, known as the 4Cs:",
+        "• **Carat Weight (ct)**: The physical weight of the diamond, where 1 carat equals exactly 0.20 grams (200 milligrams). As carat weight increases, diamond rarity and price per carat rise exponentially.",
+        "• **Cut**: Evaluates how effectively the diamond's facets interact with light to create sparkle, fire, and brilliance. GIA grades round diamonds from Excellent to Poor.",
+        "• **Colour**: Evaluated on an alphabetical scale from D (completely colourless) to Z (light yellow or brown). D–F diamonds command the highest rarity premium.",
+        "• **Clarity**: Measures internal marks (inclusions) and surface blemishes under 10× magnification, ranging from Flawless (FL) to Included (I1–I3).",
+      ],
+      callout: {
+        type: "tip",
+        title: "Carat Weight vs Gold Karat",
+        text: "Never confuse diamond carat (ct) with gold karat (K). Carat with a 'C' measures gemstone weight (0.20g). Karat with a 'K' measures gold purity out of 24 parts (e.g. 18K is 75% pure gold).",
+      },
+    },
+    {
+      title: "3. Natural vs. Lab-Grown Diamonds",
+      paragraphs: [
+        "In modern jewellery showrooms, diamonds are available in two forms with identical chemical, physical, and optical properties:",
+        "• **Natural Diamonds**: Formed over billions of years deep within the Earth under extreme heat and pressure. Valued for natural rarity and long-term resale retention.",
+        "• **Lab-Grown Diamonds (CVD / HPHT)**: Created in high-tech laboratories replicating natural crystallization conditions. They are real diamonds with identical carbon lattice structures, but are priced significantly lower (often 50% to 80% less per carat) due to controlled supply.",
+        "Reputable jewellers and certificates always explicitly disclose whether a stone is Natural or Lab-Grown.",
+      ],
+    },
+    {
+      title: "4. Understanding Making Charges and GST on Diamond Jewellery",
+      paragraphs: [
+        "Making charges on diamond jewellery compensate skilled gem-setters (prongs, pave, bezel, or channel setting) and polishers. In Indian showrooms, making charges are predominantly calculated as a percentage of the gold metal value (typically 10% to 25%), or as a flat design fee.",
+        "Under Central Board of Indirect Taxes and Customs (CBIC) rules (HSN 7113), the retail purchase of finished diamond jewellery carries a statutory composite **GST rate of 3%** on the entire taxable invoice total.",
+      ],
+      callout: {
+        type: "warning",
+        title: "Estimation Tool vs. Official Gemological Appraisal",
+        text: "This calculator is designed to help consumers understand price components and audit jeweller quotations. It cannot establish standalone market values for unpriced diamonds without a certified jeweller's price-per-carat rate.",
+      },
+    },
+  ],
+  faqs: [
+    {
+      q: "How do jewellers calculate diamond jewellery prices in India?",
+      a: "Jewellers add the diamond cost (carat weight × price per carat) to the gold metal value, plus making charges and certification fees, subtract any promotional discounts, and apply 3% GST to calculate the final bill.",
+    },
+    {
+      q: "What is 1 carat of diamond in grams?",
+      a: "1 carat (ct) equals exactly 0.20 grams (200 milligrams). For example, a 0.50-carat diamond weighs 0.10 grams.",
+    },
+    {
+      q: "What is the GST rate on diamond jewellery in India?",
+      a: "The retail sale of finished diamond jewellery attracts 3% GST on the total composite invoice amount under CBIC HSN code 7113.",
+    },
+    {
+      q: "Why does diamond price per carat increase with larger stones?",
+      a: "Large, gem-quality diamond crystals are exponentially rarer in nature than small diamonds. Therefore, a single 1.00-carat diamond costs significantly more than two 0.50-carat diamonds of identical quality.",
+    },
+    {
+      q: "What is the best gold purity for diamond jewellery?",
+      a: "18K gold (75% pure gold) and 14K gold (58.5% pure gold) are the global and Indian industry standards for diamond jewellery because they are significantly stronger and harder than 22K gold, securely holding diamond prongs.",
+    },
+    {
+      q: "What diamond certifications are trusted in India?",
+      a: "The most respected independent gemological certification laboratories are GIA (Gemological Institute of America), IGI (International Gemological Institute), and SGL (Solitaire Gemological Laboratories).",
+    },
+    {
+      q: "How do I check if my diamond jewellery quotation is fair?",
+      a: "Ask for an itemized quotation separating the diamond price per carat, the gold weight and purity rate, making charges, and GST. Use this calculator to verify the math.",
+    },
+    {
+      q: "Are lab-grown diamonds real diamonds?",
+      a: "Yes. Lab-grown diamonds have the exact same chemical composition (pure crystallized carbon), hardness (10 on Mohs scale), refractive index, and brilliance as natural diamonds, but trade at lower market prices.",
+    },
+    {
+      q: "Are making charges calculated on diamond value or gold value?",
+      a: "In most Indian retail showrooms, percentage making charges are calculated on the gold metal value, or charged as a flat design fee per ornament.",
+    },
+    {
+      q: "Can this calculator verify if a diamond is real?",
+      a: "No. This tool calculates estimated pricing based on user-entered values. Authentic gem verification requires examination by certified gemologists using thermal probes, microscopic magnification, and laboratory spectrometry.",
+    },
+  ],
+  internalLinks: [
+    {
+      text: "Calculate Gold Jewellery Bills with Making Charges & 3% GST",
+      calculatorName: "Gold Jewellery Bill Calculator",
+      href: "/calculator/gold-jewellery-bill-calculator",
+    },
+    {
+      text: "Convert Gold Karat, Purity Percentage & Fineness (BIS IS 1417)",
+      calculatorName: "Gold Purity & Karat Converter",
+      href: "/calculator/gold-purity-karat-converter",
+    },
+    {
+      text: "Estimate Old Gold Jewellery Resale & Exchange Value",
+      calculatorName: "Old Gold Exchange Value Calculator",
+      href: "/calculator/old-gold-exchange-value-calculator",
+    },
+    {
+      text: "Calculate Silver Jewellery Prices with Purity & Making Charges",
+      calculatorName: "Silver Jewellery Bill Calculator",
+      href: "/calculator/silver-jewellery-bill-calculator",
+    },
+  ],
+};
+
 export function DiamondJewelleryPriceCalculator() {
   const calc = getCalculator("diamond-jewellery-price-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -1288,124 +1408,3 @@ export function DiamondJewelleryPriceCalculator() {
     </CalculatorPageLayout>
   );
 }
-
-// RICH EDUCATIONAL BLOG CONTENT & FAQS
-export const DIAMOND_JEWELLERY_BLOG_CONTENT: any = {
-  title: "Diamond Jewellery Price Calculator India: Complete Guide to 4Cs, Making Charges & GST",
-  description:
-    "Learn how diamond rings and jewellery are priced in India. Understand diamond carat weight, 4Cs quality factors, gold value, making charges, and statutory 3% GST.",
-  author: "CalcZen Jewellery Domain Specialists",
-  publishDate: "November 2026",
-  readTime: "7 min read",
-  sections: [
-    {
-      title: "1. How Diamond Jewellery is Priced in India",
-      paragraphs: [
-        "Unlike plain gold or silver jewellery which is priced strictly by weight and daily metal rates, diamond jewellery pricing involves multiple distinct components:",
-        "**Final Diamond Jewellery Price = Diamond Cost + Metal Value + Making Charges + Other Charges − Discounts + GST (3%)**",
-        "Because diamonds are individual gemstones with unique optical and physical traits, two rings of the same total weight can have radically different prices based on diamond quality, cut craftsmanship, and certification.",
-      ],
-    },
-    {
-      title: "2. The GIA 4Cs of Diamond Quality",
-      paragraphs: [
-        "The Gemological Institute of America (GIA) established the universal standard for diamond grading, known as the 4Cs:",
-        "• **Carat Weight (ct)**: The physical weight of the diamond, where 1 carat equals exactly 0.20 grams (200 milligrams). As carat weight increases, diamond rarity and price per carat rise exponentially.",
-        "• **Cut**: Evaluates how effectively the diamond's facets interact with light to create sparkle, fire, and brilliance. GIA grades round diamonds from Excellent to Poor.",
-        "• **Colour**: Evaluated on an alphabetical scale from D (completely colourless) to Z (light yellow or brown). D–F diamonds command the highest rarity premium.",
-        "• **Clarity**: Measures internal marks (inclusions) and surface blemishes under 10× magnification, ranging from Flawless (FL) to Included (I1–I3).",
-      ],
-      callout: {
-        type: "tip",
-        title: "Carat Weight vs Gold Karat",
-        text: "Never confuse diamond carat (ct) with gold karat (K). Carat with a 'C' measures gemstone weight (0.20g). Karat with a 'K' measures gold purity out of 24 parts (e.g. 18K is 75% pure gold).",
-      },
-    },
-    {
-      title: "3. Natural vs. Lab-Grown Diamonds",
-      paragraphs: [
-        "In modern jewellery showrooms, diamonds are available in two forms with identical chemical, physical, and optical properties:",
-        "• **Natural Diamonds**: Formed over billions of years deep within the Earth under extreme heat and pressure. Valued for natural rarity and long-term resale retention.",
-        "• **Lab-Grown Diamonds (CVD / HPHT)**: Created in high-tech laboratories replicating natural crystallization conditions. They are real diamonds with identical carbon lattice structures, but are priced significantly lower (often 50% to 80% less per carat) due to controlled supply.",
-        "Reputable jewellers and certificates always explicitly disclose whether a stone is Natural or Lab-Grown.",
-      ],
-    },
-    {
-      title: "4. Understanding Making Charges and GST on Diamond Jewellery",
-      paragraphs: [
-        "Making charges on diamond jewellery compensate skilled gem-setters (prongs, pave, bezel, or channel setting) and polishers. In Indian showrooms, making charges are predominantly calculated as a percentage of the gold metal value (typically 10% to 25%), or as a flat design fee.",
-        "Under Central Board of Indirect Taxes and Customs (CBIC) rules (HSN 7113), the retail purchase of finished diamond jewellery carries a statutory composite **GST rate of 3%** on the entire taxable invoice total.",
-      ],
-      callout: {
-        type: "warning",
-        title: "Estimation Tool vs. Official Gemological Appraisal",
-        text: "This calculator is designed to help consumers understand price components and audit jeweller quotations. It cannot establish standalone market values for unpriced diamonds without a certified jeweller's price-per-carat rate.",
-      },
-    },
-  ],
-  faqs: [
-    {
-      q: "How do jewellers calculate diamond jewellery prices in India?",
-      a: "Jewellers add the diamond cost (carat weight × price per carat) to the gold metal value, plus making charges and certification fees, subtract any promotional discounts, and apply 3% GST to calculate the final bill.",
-    },
-    {
-      q: "What is 1 carat of diamond in grams?",
-      a: "1 carat (ct) equals exactly 0.20 grams (200 milligrams). For example, a 0.50-carat diamond weighs 0.10 grams.",
-    },
-    {
-      q: "What is the GST rate on diamond jewellery in India?",
-      a: "The retail sale of finished diamond jewellery attracts 3% GST on the total composite invoice amount under CBIC HSN code 7113.",
-    },
-    {
-      q: "Why does diamond price per carat increase with larger stones?",
-      a: "Large, gem-quality diamond crystals are exponentially rarer in nature than small diamonds. Therefore, a single 1.00-carat diamond costs significantly more than two 0.50-carat diamonds of identical quality.",
-    },
-    {
-      q: "What is the best gold purity for diamond jewellery?",
-      a: "18K gold (75% pure gold) and 14K gold (58.5% pure gold) are the global and Indian industry standards for diamond jewellery because they are significantly stronger and harder than 22K gold, securely holding diamond prongs.",
-    },
-    {
-      q: "What diamond certifications are trusted in India?",
-      a: "The most respected independent gemological certification laboratories are GIA (Gemological Institute of America), IGI (International Gemological Institute), and SGL (Solitaire Gemological Laboratories).",
-    },
-    {
-      q: "How do I check if my diamond jewellery quotation is fair?",
-      a: "Ask for an itemized quotation separating the diamond price per carat, the gold weight and purity rate, making charges, and GST. Use this calculator to verify the math.",
-    },
-    {
-      q: "Are lab-grown diamonds real diamonds?",
-      a: "Yes. Lab-grown diamonds have the exact same chemical composition (pure crystallized carbon), hardness (10 on Mohs scale), refractive index, and brilliance as natural diamonds, but trade at lower market prices.",
-    },
-    {
-      q: "Are making charges calculated on diamond value or gold value?",
-      a: "In most Indian retail showrooms, percentage making charges are calculated on the gold metal value, or charged as a flat design fee per ornament.",
-    },
-    {
-      q: "Can this calculator verify if a diamond is real?",
-      a: "No. This tool calculates estimated pricing based on user-entered values. Authentic gem verification requires examination by certified gemologists using thermal probes, microscopic magnification, and laboratory spectrometry.",
-    },
-  ],
-  internalLinks: [
-    {
-      text: "Calculate Gold Jewellery Bills with Making Charges & 3% GST",
-      calculatorName: "Gold Jewellery Bill Calculator",
-      href: "/calculator/gold-jewellery-bill-calculator",
-    },
-    {
-      text: "Convert Gold Karat, Purity Percentage & Fineness (BIS IS 1417)",
-      calculatorName: "Gold Purity & Karat Converter",
-      href: "/calculator/gold-purity-karat-converter",
-    },
-    {
-      text: "Estimate Old Gold Jewellery Resale & Exchange Value",
-      calculatorName: "Old Gold Exchange Value Calculator",
-      href: "/calculator/old-gold-exchange-value-calculator",
-    },
-    {
-      text: "Calculate Silver Jewellery Prices with Purity & Making Charges",
-      calculatorName: "Silver Jewellery Bill Calculator",
-      href: "/calculator/silver-jewellery-bill-calculator",
-    },
-  ],
-};
-

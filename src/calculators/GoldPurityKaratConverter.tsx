@@ -30,6 +30,127 @@ import {
   type GoldConversionResult,
 } from "@/utils/goldPurityConverterUtils";
 
+// RICH EDUCATIONAL BLOG CONTENT & FAQS
+export const GOLD_PURITY_BLOG_CONTENT: any = {
+  title: "Gold Purity & Karat Converter: Complete Guide to Karat, Fineness & BIS Hallmarks",
+  description:
+    "Learn how gold karat converts into purity percentage and parts-per-thousand fineness under Indian BIS IS 1417 standards. Convert 22K, 18K, 14K and 24K gold easily.",
+  author: "CalcZen Jewellery Domain Specialists",
+  publishDate: "November 2026",
+  readTime: "6 min read",
+  sections: [
+    {
+      title: "1. The Mathematics of Gold Karat and Pure Gold",
+      paragraphs: [
+        "In precious metals terminology, **24 Karat (24K)** is universally defined as pure elemental gold containing 100% gold with zero added alloys.",
+        "Because pure gold is extremely soft and malleable, crafting durable rings, chains, bangles, and stone-studded jewellery requires blending pure gold with stronger alloy metals such as copper, silver, zinc, and nickel.",
+        "The karat rating indicates how many parts out of 24 consist of pure gold:",
+        "**Purity Percentage (%) = (Karat / 24) × 100**",
+        "For example, 22K gold means 22 parts out of 24 are pure gold: (22 / 24) × 100 = 91.67% pure gold.",
+      ],
+    },
+    {
+      title: "2. Understanding Gold Fineness (Parts per 1,000)",
+      paragraphs: [
+        "While consumers in India frequently refer to gold by its Karat rating, international mints, refiners, and hallmarking laboratories measure purity using **fineness**, which counts the number of pure gold parts per 1,000 total parts.",
+        "The mathematical conversion is straightforward: **Fineness = (Karat / 24) × 1,000** or **Purity Percentage × 10**.",
+        "For instance, 75% pure gold corresponds to exactly 750 fineness (18K gold).",
+      ],
+    },
+    {
+      title: "3. Bureau of Indian Standards (BIS) IS 1417 Hallmark Grades",
+      paragraphs: [
+        "Under Bureau of Indian Standards standard IS 1417, hallmarking in India standardizes gold articles into specific recognized grade designations.",
+        "It is important to understand that hallmark grades designate minimum legally required fineness thresholds rather than exact theoretical divisions:",
+        "• **22K916**: Requires a minimum fineness of 916.0 (91.6% pure gold). Note that exact mathematical division of 22/24 is 916.67.",
+        "• **18K750**: Exactly matches both mathematical division (18/24) and the BIS hallmark threshold of 750 fineness (75% pure gold).",
+        "• **14K585**: Requires a minimum fineness of 585.0 (58.5% pure gold). Exact mathematical division of 14/24 is 583.33, so hallmarked jewellery contains slightly higher gold to guarantee meeting the 585 mark.",
+        "• **20K833 & 23K958**: Traditional high-purity regional standards recognized by BIS.",
+        "• **24KS (995) & 24KF (999)**: Commercial pure gold coins and investment bullion bars.",
+      ],
+      callout: {
+        type: "tip",
+        title: "Karat (K) vs Carat (ct): Don't Confuse Purity with Weight",
+        text: "Karat (with a 'K') measures gold purity on a 24-part scale. Carat (with a 'C', abbreviated ct) is a unit of mass used for diamonds and gemstones, where 1 carat equals exactly 200 milligrams (0.2 grams).",
+      },
+    },
+    {
+      title: "4. How to Verify Genuine BIS Hallmarking on Jewellery",
+      paragraphs: [
+        "Under Government of India hallmarking regulations, mandatory hallmarked gold jewellery in India carries three clear laser-engraved hallmarks:",
+        "1. **The BIS Logo**: The iconic triangular hallmark symbol of the Bureau of Indian Standards.",
+        "2. **Purity / Fineness Mark**: For example, 22K916, 18K750, or 14K585.",
+        "3. **6-Digit Alphanumeric HUID**: A unique Hallmark Unique Identification code assigned to each individual jewellery piece.",
+        "Consumers can verify any 6-digit HUID code using the free official **BIS CARE** mobile app published by the Government of India to check the jeweller's registration, hallmarking center details, and registered article type.",
+      ],
+      callout: {
+        type: "warning",
+        title: "Mathematical Calculator vs Physical Verification",
+        text: "This calculator provides mathematical conversions and standard reference grades. It cannot verify whether an actual piece of jewellery is authentic gold or genuine hallmarked stock. For physical testing, consult an authorized BIS Assaying & Hallmarking Centre (AHC) or reputed jeweller.",
+      },
+    },
+  ],
+  faqs: [
+    {
+      q: "What does 22K gold mean?",
+      a: "22K gold contains 22 parts of pure gold and 2 parts of alloy metals out of 24 parts. This equals approximately 91.67% pure gold, providing the ideal balance of rich golden color and physical durability for Indian jewellery.",
+    },
+    {
+      q: "What does 916 mean on gold jewellery?",
+      a: "916 denotes the fineness of 22K gold under Indian BIS hallmarking standards. It means that the ornament contains at least 916 parts of pure gold per 1,000 parts (91.6% pure gold).",
+    },
+    {
+      q: "What is the difference between karat and carat?",
+      a: "Karat (K) measures the purity of gold on a scale of 24. Carat (ct) is a unit of weight used for diamonds and gemstones, where 1 carat equals 200 milligrams (0.2 grams).",
+    },
+    {
+      q: "Is 24K gold 100% pure?",
+      a: "Mathematically, 24K represents 100% pure gold. However, in practical refining, 100.00% absolute purity is impossible to achieve. Commercial 24K gold is categorized as 24KS (99.5% minimum purity) or 24KF (99.9% fine bullion).",
+    },
+    {
+      q: "What is 18K gold?",
+      a: "18K gold contains 18 parts pure gold and 6 parts alloy metals (75.0% purity, marked 18K750). It is harder than 22K gold and is the preferred standard for diamond, gemstone, and everyday lifestyle jewellery.",
+    },
+    {
+      q: "Why is 14K marked 585 instead of 583?",
+      a: "Mathematically, 14/24 equals 58.33% (583.33 fineness). To ensure ornaments comfortably exceed legal minimum standards, the Bureau of Indian Standards and international hallmark conventions mandate a minimum fineness of 585 (58.5%).",
+    },
+    {
+      q: "How do I check gold purity at home?",
+      a: "Look for the three mandatory hallmarks: the BIS triangle logo, the purity mark (such as 22K916), and the 6-digit alphanumeric HUID. You can verify the HUID code directly on the Government of India's BIS CARE app.",
+    },
+    {
+      q: "Does this calculator verify whether my gold is genuine?",
+      a: "No. This tool performs mathematical conversions between karat, percentage, and fineness. Only certified chemical assaying (fire assay or XRF spectrometry) at an authorized BIS hallmarking center can determine physical authenticity.",
+    },
+    {
+      q: "Can I convert decimal karats like 21.5K?",
+      a: "Yes. Simply enter 21.5 in the Karat input. The calculator uses exact formulas: 21.5 / 24 × 100 = 89.58% purity and 895.83 fineness.",
+    },
+    {
+      q: "What metals are mixed with pure gold in jewellery?",
+      a: "Jewellers commonly blend copper, silver, zinc, and nickel. Yellow gold typically uses equal parts silver and copper, rose gold uses higher copper content, and white gold is alloyed with nickel, palladium, or silver and plated with rhodium.",
+    },
+  ],
+  internalLinks: [
+    {
+      text: "Estimate Old Gold Jewellery Resale & Exchange Value",
+      calculatorName: "Old Gold Exchange Value Calculator",
+      href: "/calculator/old-gold-exchange-value-calculator",
+    },
+    {
+      text: "Calculate Complete Gold Jewellery Bills with Making Charges & GST",
+      calculatorName: "Gold Jewellery Bill Calculator",
+      href: "/calculator/gold-jewellery-bill-calculator",
+    },
+    {
+      text: "Calculate Silver Jewellery Prices with Purity & Making Charges",
+      calculatorName: "Silver Jewellery Bill Calculator",
+      href: "/calculator/silver-jewellery-bill-calculator",
+    },
+  ],
+};
+
 export function GoldPurityKaratConverter() {
   const calc = getCalculator("gold-purity-karat-converter")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -532,125 +653,3 @@ export function GoldPurityKaratConverter() {
     </CalculatorPageLayout>
   );
 }
-
-// RICH EDUCATIONAL BLOG CONTENT & FAQS
-export const GOLD_PURITY_BLOG_CONTENT: any = {
-  title: "Gold Purity & Karat Converter: Complete Guide to Karat, Fineness & BIS Hallmarks",
-  description:
-    "Learn how gold karat converts into purity percentage and parts-per-thousand fineness under Indian BIS IS 1417 standards. Convert 22K, 18K, 14K and 24K gold easily.",
-  author: "CalcZen Jewellery Domain Specialists",
-  publishDate: "November 2026",
-  readTime: "6 min read",
-  sections: [
-    {
-      title: "1. The Mathematics of Gold Karat and Pure Gold",
-      paragraphs: [
-        "In precious metals terminology, **24 Karat (24K)** is universally defined as pure elemental gold containing 100% gold with zero added alloys.",
-        "Because pure gold is extremely soft and malleable, crafting durable rings, chains, bangles, and stone-studded jewellery requires blending pure gold with stronger alloy metals such as copper, silver, zinc, and nickel.",
-        "The karat rating indicates how many parts out of 24 consist of pure gold:",
-        "**Purity Percentage (%) = (Karat / 24) × 100**",
-        "For example, 22K gold means 22 parts out of 24 are pure gold: (22 / 24) × 100 = 91.67% pure gold.",
-      ],
-    },
-    {
-      title: "2. Understanding Gold Fineness (Parts per 1,000)",
-      paragraphs: [
-        "While consumers in India frequently refer to gold by its Karat rating, international mints, refiners, and hallmarking laboratories measure purity using **fineness**, which counts the number of pure gold parts per 1,000 total parts.",
-        "The mathematical conversion is straightforward: **Fineness = (Karat / 24) × 1,000** or **Purity Percentage × 10**.",
-        "For instance, 75% pure gold corresponds to exactly 750 fineness (18K gold).",
-      ],
-    },
-    {
-      title: "3. Bureau of Indian Standards (BIS) IS 1417 Hallmark Grades",
-      paragraphs: [
-        "Under Bureau of Indian Standards standard IS 1417, hallmarking in India standardizes gold articles into specific recognized grade designations.",
-        "It is important to understand that hallmark grades designate minimum legally required fineness thresholds rather than exact theoretical divisions:",
-        "• **22K916**: Requires a minimum fineness of 916.0 (91.6% pure gold). Note that exact mathematical division of 22/24 is 916.67.",
-        "• **18K750**: Exactly matches both mathematical division (18/24) and the BIS hallmark threshold of 750 fineness (75% pure gold).",
-        "• **14K585**: Requires a minimum fineness of 585.0 (58.5% pure gold). Exact mathematical division of 14/24 is 583.33, so hallmarked jewellery contains slightly higher gold to guarantee meeting the 585 mark.",
-        "• **20K833 & 23K958**: Traditional high-purity regional standards recognized by BIS.",
-        "• **24KS (995) & 24KF (999)**: Commercial pure gold coins and investment bullion bars.",
-      ],
-      callout: {
-        type: "tip",
-        title: "Karat (K) vs Carat (ct): Don't Confuse Purity with Weight",
-        text: "Karat (with a 'K') measures gold purity on a 24-part scale. Carat (with a 'C', abbreviated ct) is a unit of mass used for diamonds and gemstones, where 1 carat equals exactly 200 milligrams (0.2 grams).",
-      },
-    },
-    {
-      title: "4. How to Verify Genuine BIS Hallmarking on Jewellery",
-      paragraphs: [
-        "Under Government of India hallmarking regulations, mandatory hallmarked gold jewellery in India carries three clear laser-engraved hallmarks:",
-        "1. **The BIS Logo**: The iconic triangular hallmark symbol of the Bureau of Indian Standards.",
-        "2. **Purity / Fineness Mark**: For example, 22K916, 18K750, or 14K585.",
-        "3. **6-Digit Alphanumeric HUID**: A unique Hallmark Unique Identification code assigned to each individual jewellery piece.",
-        "Consumers can verify any 6-digit HUID code using the free official **BIS CARE** mobile app published by the Government of India to check the jeweller's registration, hallmarking center details, and registered article type.",
-      ],
-      callout: {
-        type: "warning",
-        title: "Mathematical Calculator vs Physical Verification",
-        text: "This calculator provides mathematical conversions and standard reference grades. It cannot verify whether an actual piece of jewellery is authentic gold or genuine hallmarked stock. For physical testing, consult an authorized BIS Assaying & Hallmarking Centre (AHC) or reputed jeweller.",
-      },
-    },
-  ],
-  faqs: [
-    {
-      q: "What does 22K gold mean?",
-      a: "22K gold contains 22 parts of pure gold and 2 parts of alloy metals out of 24 parts. This equals approximately 91.67% pure gold, providing the ideal balance of rich golden color and physical durability for Indian jewellery.",
-    },
-    {
-      q: "What does 916 mean on gold jewellery?",
-      a: "916 denotes the fineness of 22K gold under Indian BIS hallmarking standards. It means that the ornament contains at least 916 parts of pure gold per 1,000 parts (91.6% pure gold).",
-    },
-    {
-      q: "What is the difference between karat and carat?",
-      a: "Karat (K) measures the purity of gold on a scale of 24. Carat (ct) is a unit of weight used for diamonds and gemstones, where 1 carat equals 200 milligrams (0.2 grams).",
-    },
-    {
-      q: "Is 24K gold 100% pure?",
-      a: "Mathematically, 24K represents 100% pure gold. However, in practical refining, 100.00% absolute purity is impossible to achieve. Commercial 24K gold is categorized as 24KS (99.5% minimum purity) or 24KF (99.9% fine bullion).",
-    },
-    {
-      q: "What is 18K gold?",
-      a: "18K gold contains 18 parts pure gold and 6 parts alloy metals (75.0% purity, marked 18K750). It is harder than 22K gold and is the preferred standard for diamond, gemstone, and everyday lifestyle jewellery.",
-    },
-    {
-      q: "Why is 14K marked 585 instead of 583?",
-      a: "Mathematically, 14/24 equals 58.33% (583.33 fineness). To ensure ornaments comfortably exceed legal minimum standards, the Bureau of Indian Standards and international hallmark conventions mandate a minimum fineness of 585 (58.5%).",
-    },
-    {
-      q: "How do I check gold purity at home?",
-      a: "Look for the three mandatory hallmarks: the BIS triangle logo, the purity mark (such as 22K916), and the 6-digit alphanumeric HUID. You can verify the HUID code directly on the Government of India's BIS CARE app.",
-    },
-    {
-      q: "Does this calculator verify whether my gold is genuine?",
-      a: "No. This tool performs mathematical conversions between karat, percentage, and fineness. Only certified chemical assaying (fire assay or XRF spectrometry) at an authorized BIS hallmarking center can determine physical authenticity.",
-    },
-    {
-      q: "Can I convert decimal karats like 21.5K?",
-      a: "Yes. Simply enter 21.5 in the Karat input. The calculator uses exact formulas: 21.5 / 24 × 100 = 89.58% purity and 895.83 fineness.",
-    },
-    {
-      q: "What metals are mixed with pure gold in jewellery?",
-      a: "Jewellers commonly blend copper, silver, zinc, and nickel. Yellow gold typically uses equal parts silver and copper, rose gold uses higher copper content, and white gold is alloyed with nickel, palladium, or silver and plated with rhodium.",
-    },
-  ],
-  internalLinks: [
-    {
-      text: "Estimate Old Gold Jewellery Resale & Exchange Value",
-      calculatorName: "Old Gold Exchange Value Calculator",
-      href: "/calculator/old-gold-exchange-value-calculator",
-    },
-    {
-      text: "Calculate Complete Gold Jewellery Bills with Making Charges & GST",
-      calculatorName: "Gold Jewellery Bill Calculator",
-      href: "/calculator/gold-jewellery-bill-calculator",
-    },
-    {
-      text: "Calculate Silver Jewellery Prices with Purity & Making Charges",
-      calculatorName: "Silver Jewellery Bill Calculator",
-      href: "/calculator/silver-jewellery-bill-calculator",
-    },
-  ],
-};
-

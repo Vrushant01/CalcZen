@@ -87,6 +87,131 @@ const WORK_CATEGORIES: Array<{
   },
 ];
 
+const CEMENT_BAG_BLOG_CONTENT: BlogContent = {
+  primaryKeyword: "Cement Bag Calculator",
+  category: "Home Construction",
+  introText:
+    "Accurately estimating cement bag requirements is one of the most critical steps in Indian home construction, renovation, and structural casting. Buying too few bags risks disastrous cold joints during slab pours, while over-ordering leads to hydration lump wastage. This comprehensive guide covers the technical and practical math governing cement quantities across concrete, plaster, masonry, and flooring per IS 456 and CPWD guidelines.",
+  sections: [
+    {
+      title: "1. The Fundamental Cement Bag Formula",
+      paragraphs: [
+        "In civil engineering estimation, cement quantity is derived from compacted wet volume converted into dry bulk volume.",
+        "Dry Volume = Wet Volume × Dry Volume Factor (1.54 for Concrete, 1.33 for Mortar).",
+        "Cement Volume (m³) = Dry Volume × (Cement Part / Sum of Ratio Parts).",
+        "Cement Mass (kg) = Cement Volume × 1,440 kg/m³ (standard IS 456 cement bulk density).",
+        "Whole Bags to Order = ⌈Cement Mass (kg) / 50 kg × (1 + Wastage %)⌉.",
+      ],
+      callout: {
+        type: "expertInsight",
+        title: "Standard Cement Bulk Density",
+        text: "Per IS 456:2000, the bulk density of ordinary Portland cement (OPC) and Portland Pozzolana Cement (PPC) is 1,440 kg/m³ (90 lbs/cu ft). One standard 50 kg bag has a volume of ~0.0347 m³ (1.226 cu ft).",
+      },
+      formulaBox: {
+        title: "Master Cement Bag Formula",
+        formula: "Dry Volume (m³) = Wet Volume × Factor\nCement Mass (kg) = Dry Vol × (Cement Ratio / Total Mix Parts) × 1,440\nPurchase Bags = ⌈Cement Mass / 50 kg × (1 + Wastage %)⌉",
+        variables: [
+          { name: "Factor", desc: "1.54 for concrete; 1.33 for plaster and masonry mortar." },
+          { name: "1,440", desc: "Standard bulk density of cement in kg/m³." },
+          { name: "50 kg", desc: "Weight of one standard Indian cement bag." },
+        ],
+      },
+    },
+    {
+      title: "2. Why Dry Volume Multipliers (1.54 vs 1.33) are Essential",
+      paragraphs: [
+        "When dry cement, sand, and coarse aggregates are mixed with water, the fine sand slips into the microscopic voids between coarse aggregate stones, and cement paste coats every particle.",
+        "In concrete, the combined voids in dry stone aggregate and sand total approximately 54%. Therefore, 1.54 m³ of dry materials are required to yield 1.0 m³ of wet compacted concrete.",
+        "In mortar and plaster, where coarse stone aggregate is absent, the dry void factor is 1.33 (33% volume shrinkage), as established by CPWD Analysis of Rates.",
+      ],
+      callout: {
+        type: "commonMistake",
+        title: "Never Multiply Ratios by Wet Volume",
+        text: "Calculating cement directly from wet volume without applying the dry volume multiplier (1.54 for concrete or 1.33 for mortar) will result in a 30% to 50% material shortage on site.",
+      },
+    },
+    {
+      title: "3. Case Study: 1,000 sq ft Roof Slab Cement Calculation",
+      paragraphs: [
+        "Consider a standard residential roof slab measuring 1,000 sq ft with 5 inches (125 mm) thickness using M20 concrete (1:1.5:3):",
+        "Step 1: Wet Volume = 1,000 sq ft × (5 / 12) ft = 416.7 cu ft = 11.799 m³.",
+        "Step 2: Dry Volume = 11.799 m³ × 1.54 = 18.17 m³.",
+        "Step 3: Cement Volume = 18.17 × (1 / 5.5) = 3.304 m³.",
+        "Step 4: Cement Mass = 3.304 m³ × 1,440 kg/m³ = 4,757.3 kg.",
+        "Step 5: Net Bags = 4,757.3 / 50 = 95.15 bags.",
+        "Step 6: Adding 5% on-site handling wastage = 95.15 × 1.05 = 99.9 bags ≈ 100 whole bags.",
+      ],
+      exampleBox: {
+        title: "1,000 sq ft Roof Slab Takeoff",
+        inputs: [
+          { name: "Area", val: "1,000 sq ft" },
+          { name: "Thickness", val: "5 inches (125 mm)" },
+          { name: "Mix", val: "M20 (1 : 1.5 : 3)" },
+        ],
+        steps: [
+          "Wet Volume = 11.8 m³ (417 cu ft)",
+          "Dry Volume = 18.17 m³ (1.54×)",
+          "Cement Mass = 4,757 kg",
+        ],
+        result: "100 Bags (50kg each) + 175 cu ft Sand + 350 cu ft Coarse Aggregate",
+      },
+    },
+    {
+      title: "4. Wall & Ceiling Plastering Cement Takeoff",
+      paragraphs: [
+        "Plaster thickness varies depending on whether it is applied to ceilings or interior/exterior walls:",
+        "- Ceiling Plaster (6mm, 1:4 mix): ~0.35 bags of cement per 100 sq ft.",
+        "- Internal Wall Plaster (12mm, 1:6 mix): ~0.47 bags of cement per 100 sq ft.",
+        "- Internal Wall Plaster (15mm, 1:6 mix): ~0.59 bags of cement per 100 sq ft.",
+        "- External Sand-Faced Plaster (20mm double coat, 1:4 base + 1:3 finish): ~1.15 to 1.25 bags per 100 sq ft.",
+        "Always allow for 5% to 10% rebound wastage during plaster application.",
+      ],
+      callout: {
+        type: "proTip",
+        title: "Rebound Allowance",
+        text: "Ceiling and vertical wall plastering incur significant mortar drop (rebound). While clean dropped mortar can be re-tempered within 30 minutes, dirty floor drops must be discarded.",
+      },
+    },
+    {
+      title: "5. Brickwork Mortar Consumption Rules",
+      paragraphs: [
+        "In standard brick masonry, mortar joints account for 25% to 30% of total wall volume.",
+        "For a 9-inch thick brick wall measuring 10 × 10 ft (100 sq ft surface, 75 cu ft volume):",
+        "- Estimated Bricks Required: ~1,150 to 1,200 bricks (including breakage).",
+        "- Wet Mortar Volume: ~19 to 22 cu ft.",
+        "- Cement Bags (1:6 mix): ~3.5 to 4 bags (50kg each).",
+        "- Sand Required: ~20 to 22 cu ft.",
+      ],
+    },
+  ],
+  faqs: [
+    {
+      q: "How many cement bags are needed for a 1,000 sq ft roof slab?",
+      a: "For a standard 1,000 sq ft residential roof slab of 5 inches (125 mm) thickness using M20 concrete (1:1.5:3 nominal proportion), the wet volume is approximately 11.8 m³ (417 cu ft). Applying the IS 456 standard dry volume factor of 1.54, you require approximately 95 to 100 cement bags of 50 kg each (including 5% handling wastage).",
+    },
+    {
+      q: "Why is dry volume multiplied by 1.54 for concrete and 1.33 for mortar?",
+      a: "Dry ingredients contain substantial air voids between stones and sand particles. When water is added, sand fills the voids between coarse aggregate, and cement paste fills the voids between sand grains. Compacted wet concrete shrinks, so 1.54 m³ of dry materials are needed for 1.0 m³ of wet concrete. In mortar (no coarse stone), voids are lower, so a 1.33 dry factor is standard per CPWD.",
+    },
+    {
+      q: "What is the standard bulk density of cement in India?",
+      a: "Per IS 456:2000, standard cement bulk density is 1,440 kg/m³ (90 lbs/cu ft). One standard 50 kg cement bag occupies a volume of approximately 0.0347 m³ (1.226 cu ft).",
+    },
+    {
+      q: "How much cement is required for 100 sq ft of 12mm wall plaster?",
+      a: "For 100 sq ft (9.29 m²) of 12mm internal wall plaster using standard 1:6 cement-sand mortar, you require approximately 0.47 to 0.50 bags of cement and 3.5 to 4 cu ft of plastering sand (including rebound wastage).",
+    },
+    {
+      q: "How many cement bags are required for 100 cu ft of 9-inch brickwork?",
+      a: "In 9-inch brick masonry, mortar occupies approximately 25% to 30% of total wall volume. For 100 cu ft of brickwork using 1:6 mortar, you need approximately 4.5 to 5 cement bags and 27 to 30 cu ft of sand, along with roughly 1,350 to 1,400 modular bricks.",
+    },
+    {
+      q: "Why should I always purchase whole bags with a wastage allowance?",
+      a: "Cement cannot be bought in fractions at retail supply stores. Additionally, 3% to 5% loss occurs naturally on site from paper bag tearing, transport, residue in mixer hoppers, and mortar dropping. Ordering whole bags prevents catastrophic pouring pauses midway through slab casting.",
+    },
+  ],
+};
+
 export function CementBagCalculator() {
   const calc = getCalculator("cement-bag-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -1521,128 +1646,3 @@ export function CementBagCalculator() {
 // -------------------------------------------------------------
 // SEO BLOG & COMPREHENSIVE GUIDE CONTENT
 // -------------------------------------------------------------
-
-const CEMENT_BAG_BLOG_CONTENT: BlogContent = {
-  primaryKeyword: "Cement Bag Calculator",
-  category: "Home Construction",
-  introText:
-    "Accurately estimating cement bag requirements is one of the most critical steps in Indian home construction, renovation, and structural casting. Buying too few bags risks disastrous cold joints during slab pours, while over-ordering leads to hydration lump wastage. This comprehensive guide covers the technical and practical math governing cement quantities across concrete, plaster, masonry, and flooring per IS 456 and CPWD guidelines.",
-  sections: [
-    {
-      title: "1. The Fundamental Cement Bag Formula",
-      paragraphs: [
-        "In civil engineering estimation, cement quantity is derived from compacted wet volume converted into dry bulk volume.",
-        "Dry Volume = Wet Volume × Dry Volume Factor (1.54 for Concrete, 1.33 for Mortar).",
-        "Cement Volume (m³) = Dry Volume × (Cement Part / Sum of Ratio Parts).",
-        "Cement Mass (kg) = Cement Volume × 1,440 kg/m³ (standard IS 456 cement bulk density).",
-        "Whole Bags to Order = ⌈Cement Mass (kg) / 50 kg × (1 + Wastage %)⌉.",
-      ],
-      callout: {
-        type: "expertInsight",
-        title: "Standard Cement Bulk Density",
-        text: "Per IS 456:2000, the bulk density of ordinary Portland cement (OPC) and Portland Pozzolana Cement (PPC) is 1,440 kg/m³ (90 lbs/cu ft). One standard 50 kg bag has a volume of ~0.0347 m³ (1.226 cu ft).",
-      },
-      formulaBox: {
-        title: "Master Cement Bag Formula",
-        formula: "Dry Volume (m³) = Wet Volume × Factor\nCement Mass (kg) = Dry Vol × (Cement Ratio / Total Mix Parts) × 1,440\nPurchase Bags = ⌈Cement Mass / 50 kg × (1 + Wastage %)⌉",
-        variables: [
-          { name: "Factor", desc: "1.54 for concrete; 1.33 for plaster and masonry mortar." },
-          { name: "1,440", desc: "Standard bulk density of cement in kg/m³." },
-          { name: "50 kg", desc: "Weight of one standard Indian cement bag." },
-        ],
-      },
-    },
-    {
-      title: "2. Why Dry Volume Multipliers (1.54 vs 1.33) are Essential",
-      paragraphs: [
-        "When dry cement, sand, and coarse aggregates are mixed with water, the fine sand slips into the microscopic voids between coarse aggregate stones, and cement paste coats every particle.",
-        "In concrete, the combined voids in dry stone aggregate and sand total approximately 54%. Therefore, 1.54 m³ of dry materials are required to yield 1.0 m³ of wet compacted concrete.",
-        "In mortar and plaster, where coarse stone aggregate is absent, the dry void factor is 1.33 (33% volume shrinkage), as established by CPWD Analysis of Rates.",
-      ],
-      callout: {
-        type: "commonMistake",
-        title: "Never Multiply Ratios by Wet Volume",
-        text: "Calculating cement directly from wet volume without applying the dry volume multiplier (1.54 for concrete or 1.33 for mortar) will result in a 30% to 50% material shortage on site.",
-      },
-    },
-    {
-      title: "3. Case Study: 1,000 sq ft Roof Slab Cement Calculation",
-      paragraphs: [
-        "Consider a standard residential roof slab measuring 1,000 sq ft with 5 inches (125 mm) thickness using M20 concrete (1:1.5:3):",
-        "Step 1: Wet Volume = 1,000 sq ft × (5 / 12) ft = 416.7 cu ft = 11.799 m³.",
-        "Step 2: Dry Volume = 11.799 m³ × 1.54 = 18.17 m³.",
-        "Step 3: Cement Volume = 18.17 × (1 / 5.5) = 3.304 m³.",
-        "Step 4: Cement Mass = 3.304 m³ × 1,440 kg/m³ = 4,757.3 kg.",
-        "Step 5: Net Bags = 4,757.3 / 50 = 95.15 bags.",
-        "Step 6: Adding 5% on-site handling wastage = 95.15 × 1.05 = 99.9 bags ≈ 100 whole bags.",
-      ],
-      exampleBox: {
-        title: "1,000 sq ft Roof Slab Takeoff",
-        inputs: [
-          { name: "Area", val: "1,000 sq ft" },
-          { name: "Thickness", val: "5 inches (125 mm)" },
-          { name: "Mix", val: "M20 (1 : 1.5 : 3)" },
-        ],
-        steps: [
-          "Wet Volume = 11.8 m³ (417 cu ft)",
-          "Dry Volume = 18.17 m³ (1.54×)",
-          "Cement Mass = 4,757 kg",
-        ],
-        result: "100 Bags (50kg each) + 175 cu ft Sand + 350 cu ft Coarse Aggregate",
-      },
-    },
-    {
-      title: "4. Wall & Ceiling Plastering Cement Takeoff",
-      paragraphs: [
-        "Plaster thickness varies depending on whether it is applied to ceilings or interior/exterior walls:",
-        "- Ceiling Plaster (6mm, 1:4 mix): ~0.35 bags of cement per 100 sq ft.",
-        "- Internal Wall Plaster (12mm, 1:6 mix): ~0.47 bags of cement per 100 sq ft.",
-        "- Internal Wall Plaster (15mm, 1:6 mix): ~0.59 bags of cement per 100 sq ft.",
-        "- External Sand-Faced Plaster (20mm double coat, 1:4 base + 1:3 finish): ~1.15 to 1.25 bags per 100 sq ft.",
-        "Always allow for 5% to 10% rebound wastage during plaster application.",
-      ],
-      callout: {
-        type: "proTip",
-        title: "Rebound Allowance",
-        text: "Ceiling and vertical wall plastering incur significant mortar drop (rebound). While clean dropped mortar can be re-tempered within 30 minutes, dirty floor drops must be discarded.",
-      },
-    },
-    {
-      title: "5. Brickwork Mortar Consumption Rules",
-      paragraphs: [
-        "In standard brick masonry, mortar joints account for 25% to 30% of total wall volume.",
-        "For a 9-inch thick brick wall measuring 10 × 10 ft (100 sq ft surface, 75 cu ft volume):",
-        "- Estimated Bricks Required: ~1,150 to 1,200 bricks (including breakage).",
-        "- Wet Mortar Volume: ~19 to 22 cu ft.",
-        "- Cement Bags (1:6 mix): ~3.5 to 4 bags (50kg each).",
-        "- Sand Required: ~20 to 22 cu ft.",
-      ],
-    },
-  ],
-  faqs: [
-    {
-      q: "How many cement bags are needed for a 1,000 sq ft roof slab?",
-      a: "For a standard 1,000 sq ft residential roof slab of 5 inches (125 mm) thickness using M20 concrete (1:1.5:3 nominal proportion), the wet volume is approximately 11.8 m³ (417 cu ft). Applying the IS 456 standard dry volume factor of 1.54, you require approximately 95 to 100 cement bags of 50 kg each (including 5% handling wastage).",
-    },
-    {
-      q: "Why is dry volume multiplied by 1.54 for concrete and 1.33 for mortar?",
-      a: "Dry ingredients contain substantial air voids between stones and sand particles. When water is added, sand fills the voids between coarse aggregate, and cement paste fills the voids between sand grains. Compacted wet concrete shrinks, so 1.54 m³ of dry materials are needed for 1.0 m³ of wet concrete. In mortar (no coarse stone), voids are lower, so a 1.33 dry factor is standard per CPWD.",
-    },
-    {
-      q: "What is the standard bulk density of cement in India?",
-      a: "Per IS 456:2000, standard cement bulk density is 1,440 kg/m³ (90 lbs/cu ft). One standard 50 kg cement bag occupies a volume of approximately 0.0347 m³ (1.226 cu ft).",
-    },
-    {
-      q: "How much cement is required for 100 sq ft of 12mm wall plaster?",
-      a: "For 100 sq ft (9.29 m²) of 12mm internal wall plaster using standard 1:6 cement-sand mortar, you require approximately 0.47 to 0.50 bags of cement and 3.5 to 4 cu ft of plastering sand (including rebound wastage).",
-    },
-    {
-      q: "How many cement bags are required for 100 cu ft of 9-inch brickwork?",
-      a: "In 9-inch brick masonry, mortar occupies approximately 25% to 30% of total wall volume. For 100 cu ft of brickwork using 1:6 mortar, you need approximately 4.5 to 5 cement bags and 27 to 30 cu ft of sand, along with roughly 1,350 to 1,400 modular bricks.",
-    },
-    {
-      q: "Why should I always purchase whole bags with a wastage allowance?",
-      a: "Cement cannot be bought in fractions at retail supply stores. Additionally, 3% to 5% loss occurs naturally on site from paper bag tearing, transport, residue in mixer hoppers, and mortar dropping. Ordering whole bags prevents catastrophic pouring pauses midway through slab casting.",
-    },
-  ],
-};

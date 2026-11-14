@@ -52,6 +52,130 @@ import {
   type InvoiceMetaDetails,
 } from "@/utils/gstInvoiceUtils";
 
+const GST_INVOICE_BLOG_CONTENT: BlogContent = {
+  primaryKeyword: "GST Invoice Calculator",
+  category: "Business",
+  introText:
+    "Calculating GST on invoices accurately is essential for Indian shopkeepers, freelancers, suppliers, manufacturers, and registered taxpayers. Discover how GST inclusive and exclusive pricing works, how to split CGST and SGST for local sales versus IGST for inter-state transactions, and how to correctly account for trade discounts and mixed GST rates.",
+  sections: [
+    {
+      title: "1. GST Inclusive vs. GST Exclusive: The Fundamental Rule",
+      paragraphs: [
+        "In Indian commerce, prices are either quoted as 'GST Exclusive' (where tax is added on top of the taxable amount) or 'GST Inclusive' (where the quoted price already contains the GST component).",
+        "Many small business owners make the critical error of calculating inclusive GST by simply applying the tax percentage directly to the total price (e.g. taking 18% of ₹1,180). This overstates your tax liability and is mathematically incorrect.",
+      ],
+      callout: {
+        type: "expertInsight",
+        title: "The Reverse GST Extraction Formula",
+        text: "When a price includes 18% GST, the taxable base is: Total ÷ 1.18. For ₹1,180, the taxable value is exactly ₹1,000, and the GST is ₹180. Multiplying 18% by ₹1,180 gives ₹212.40, which is incorrect!",
+      },
+      formulaBox: {
+        title: "Core GST Formulas",
+        formula:
+          "Exclusive GST = Amount × GST Rate ÷ 100\nTotal (Exclusive) = Amount + GST\n\nTaxable Value (Inclusive) = Amount ÷ (1 + GST Rate ÷ 100)\nGST Amount (Inclusive) = Amount − Taxable Value",
+        variables: [
+          { name: "Taxable Value", desc: "Base price of goods/services before taxes" },
+          { name: "GST Rate", desc: "Applicable tariff slab (0%, 0.25%, 3%, 5%, 12%, 18%, 28%)" },
+        ],
+      },
+    },
+    {
+      title: "2. Intra-State (CGST + SGST) vs. Inter-State (IGST) Supply",
+      paragraphs: [
+        "Under the Indian Goods and Services Tax framework, tax components are allocated based on whether the supply is within the same state or across state borders:",
+        "1. Intra-State Supply (Within Same State): When the supplier's location and place of supply are in the same state or union territory, tax is split equally between Central GST (CGST) and State GST (SGST or UTGST). For an 18% GST rate, 9% is CGST and 9% is SGST.",
+        "2. Inter-State Supply (Different State): When the supplier and place of supply are in different states, Integrated GST (IGST) applies at the full rate (18%). IGST is not split on the invoice.",
+      ],
+      table: {
+        headers: ["GST Rate", "Intra-State CGST", "Intra-State SGST", "Inter-State IGST"],
+        rows: [
+          ["0% (Exempt)", "0%", "0%", "0%"],
+          ["3% (Gold)", "1.5%", "1.5%", "3%"],
+          ["5% (Essentials)", "2.5%", "2.5%", "5%"],
+          ["12% (Apparel/Food)", "6%", "6%", "12%"],
+          ["18% (Standard Rate)", "9%", "9%", "18%"],
+          ["28% (Luxury Goods)", "14%", "14%", "28%"],
+        ],
+      },
+    },
+    {
+      title: "3. Trade Discounts and Taxable Value (Section 15 CGST Act)",
+      paragraphs: [
+        "Section 15 of the CGST Act regulates how discounts are treated when computing taxable value. Discounts offered before or at the time of supply that are clearly recorded on the invoice are legally deducted from the price before calculating GST.",
+        "For example, if an item costs ₹1,000 and you offer a 10% trade discount (₹100), GST at 18% is calculated on the net taxable amount of ₹900 (GST = ₹162). The customer pays ₹1,062.",
+      ],
+      callout: {
+        type: "commonMistake",
+        title: "Post-Supply Discounts Require Credit Notes",
+        text: "Discounts granted after supply (such as annual turnover bonuses or volume rebates) cannot simply be deducted from subsequent bills. They require formal GST Credit Notes under Section 34 of the CGST Act.",
+      },
+    },
+    {
+      title: "4. Multi-Product Invoices with Mixed GST Rates",
+      paragraphs: [
+        "Modern retailers and distributors frequently sell items with different GST rates on the same bill (for example, grocery items at 5% and packaged consumer goods at 18%).",
+        "GST must always be calculated line by line for each individual product using its specific statutory rate. You should never apply an 'average' GST rate to the entire invoice total, as this violates GST billing regulations.",
+      ],
+    },
+  ],
+  faqs: [
+    {
+      q: "How do I calculate GST on an amount?",
+      a: "For GST exclusive prices, multiply the taxable amount by the GST rate percentage and divide by 100 (e.g. ₹1,000 × 18 ÷ 100 = ₹180 GST; total = ₹1,180). For GST inclusive prices, divide the total amount by (1 + GST Rate / 100) to find the taxable value, then subtract it from the total to find the GST amount.",
+    },
+    {
+      q: "What is the difference between GST inclusive and exclusive?",
+      a: "GST Exclusive means the price quoted does not include tax, so GST will be added on top. GST Inclusive means the quoted price already includes the GST component (common in consumer retail MRP).",
+    },
+    {
+      q: "How do I calculate CGST and SGST?",
+      a: "For sales within the same state (intra-state supply), total GST is divided equally into Central GST (CGST) and State GST (SGST). For example, on an 18% GST rate, CGST is 9% and SGST is 9%.",
+    },
+    {
+      q: "When is IGST applicable?",
+      a: "Integrated Goods and Services Tax (IGST) is applicable when goods or services are supplied across state boundaries (inter-state supply) or imported into India. IGST is charged at the full rate without splitting into central and state shares.",
+    },
+    {
+      q: "How do I calculate GST after a discount?",
+      a: "Under Section 15 of the CGST Act, trade discounts shown on the invoice before or at the time of supply must be subtracted from the original amount first. GST is then calculated on the discounted taxable value.",
+    },
+    {
+      q: "How do I calculate GST on multiple products with different rates?",
+      a: "Calculate the GST for each item independently using its specific rate (e.g. 5% on books, 18% on stationery). Then sum the taxable values and tax amounts grouped by rate slab in the invoice summary.",
+    },
+    {
+      q: "What is taxable value?",
+      a: "Taxable value is the base transaction amount on which GST is levied, after deducting eligible trade discounts and before adding CGST, SGST, or IGST.",
+    },
+    {
+      q: "How do I extract GST from an inclusive price?",
+      a: "Divide the total price by (1 + GST rate / 100). For example, if an item is ₹1,050 inclusive of 5% GST: Taxable value = ₹1,050 / 1.05 = ₹1,000. GST extracted is ₹1,050 - ₹1,000 = ₹50.",
+    },
+    {
+      q: "Does this calculator generate a legal tax invoice?",
+      a: "This calculator provides mathematical estimations and structured invoice previews. A legally valid tax invoice issued under Rule 46 of the CGST Rules requires verified GSTINs, sequential numbering, HSN/SAC codes where mandatory, and statutory compliance.",
+    },
+    {
+      q: "How do I know which GST rate applies to my product?",
+      a: "GST rates are determined by the Harmonized System of Nomenclature (HSN) code for goods or Services Accounting Code (SAC) for services as notified by the CBIC and GST Council. Always verify against official CBIC tariff schedules.",
+    },
+  ],
+  internalLinks: [
+    {
+      text: "Calculate Product Profits & Profit Margins",
+      calculatorName: "Product Profit Calculator",
+      href: "/calculator/product-profit-calculator",
+    },
+    {
+      text: "Calculate Take-Home Pay & CTC Deductions",
+      calculatorName: "CTC to In-Hand Salary Calculator",
+      href: "/calculator/ctc-to-in-hand-salary-calculator",
+    },
+  ],
+};
+
+export default GstInvoiceCalculator;
+
 export function GstInvoiceCalculator() {
   const calc = getCalculator("gst-invoice-calculator")!;
   const { markCalculated, resetCalculated } = useHasCalculated();
@@ -1443,128 +1567,3 @@ export function GstInvoiceCalculator() {
 // -------------------------------------------------------------
 // SEO BLOG & COMPREHENSIVE GUIDE CONTENT
 // -------------------------------------------------------------
-
-const GST_INVOICE_BLOG_CONTENT: BlogContent = {
-  primaryKeyword: "GST Invoice Calculator",
-  category: "Business",
-  introText:
-    "Calculating GST on invoices accurately is essential for Indian shopkeepers, freelancers, suppliers, manufacturers, and registered taxpayers. Discover how GST inclusive and exclusive pricing works, how to split CGST and SGST for local sales versus IGST for inter-state transactions, and how to correctly account for trade discounts and mixed GST rates.",
-  sections: [
-    {
-      title: "1. GST Inclusive vs. GST Exclusive: The Fundamental Rule",
-      paragraphs: [
-        "In Indian commerce, prices are either quoted as 'GST Exclusive' (where tax is added on top of the taxable amount) or 'GST Inclusive' (where the quoted price already contains the GST component).",
-        "Many small business owners make the critical error of calculating inclusive GST by simply applying the tax percentage directly to the total price (e.g. taking 18% of ₹1,180). This overstates your tax liability and is mathematically incorrect.",
-      ],
-      callout: {
-        type: "expertInsight",
-        title: "The Reverse GST Extraction Formula",
-        text: "When a price includes 18% GST, the taxable base is: Total ÷ 1.18. For ₹1,180, the taxable value is exactly ₹1,000, and the GST is ₹180. Multiplying 18% by ₹1,180 gives ₹212.40, which is incorrect!",
-      },
-      formulaBox: {
-        title: "Core GST Formulas",
-        formula:
-          "Exclusive GST = Amount × GST Rate ÷ 100\nTotal (Exclusive) = Amount + GST\n\nTaxable Value (Inclusive) = Amount ÷ (1 + GST Rate ÷ 100)\nGST Amount (Inclusive) = Amount − Taxable Value",
-        variables: [
-          { name: "Taxable Value", desc: "Base price of goods/services before taxes" },
-          { name: "GST Rate", desc: "Applicable tariff slab (0%, 0.25%, 3%, 5%, 12%, 18%, 28%)" },
-        ],
-      },
-    },
-    {
-      title: "2. Intra-State (CGST + SGST) vs. Inter-State (IGST) Supply",
-      paragraphs: [
-        "Under the Indian Goods and Services Tax framework, tax components are allocated based on whether the supply is within the same state or across state borders:",
-        "1. Intra-State Supply (Within Same State): When the supplier's location and place of supply are in the same state or union territory, tax is split equally between Central GST (CGST) and State GST (SGST or UTGST). For an 18% GST rate, 9% is CGST and 9% is SGST.",
-        "2. Inter-State Supply (Different State): When the supplier and place of supply are in different states, Integrated GST (IGST) applies at the full rate (18%). IGST is not split on the invoice.",
-      ],
-      table: {
-        headers: ["GST Rate", "Intra-State CGST", "Intra-State SGST", "Inter-State IGST"],
-        rows: [
-          ["0% (Exempt)", "0%", "0%", "0%"],
-          ["3% (Gold)", "1.5%", "1.5%", "3%"],
-          ["5% (Essentials)", "2.5%", "2.5%", "5%"],
-          ["12% (Apparel/Food)", "6%", "6%", "12%"],
-          ["18% (Standard Rate)", "9%", "9%", "18%"],
-          ["28% (Luxury Goods)", "14%", "14%", "28%"],
-        ],
-      },
-    },
-    {
-      title: "3. Trade Discounts and Taxable Value (Section 15 CGST Act)",
-      paragraphs: [
-        "Section 15 of the CGST Act regulates how discounts are treated when computing taxable value. Discounts offered before or at the time of supply that are clearly recorded on the invoice are legally deducted from the price before calculating GST.",
-        "For example, if an item costs ₹1,000 and you offer a 10% trade discount (₹100), GST at 18% is calculated on the net taxable amount of ₹900 (GST = ₹162). The customer pays ₹1,062.",
-      ],
-      callout: {
-        type: "commonMistake",
-        title: "Post-Supply Discounts Require Credit Notes",
-        text: "Discounts granted after supply (such as annual turnover bonuses or volume rebates) cannot simply be deducted from subsequent bills. They require formal GST Credit Notes under Section 34 of the CGST Act.",
-      },
-    },
-    {
-      title: "4. Multi-Product Invoices with Mixed GST Rates",
-      paragraphs: [
-        "Modern retailers and distributors frequently sell items with different GST rates on the same bill (for example, grocery items at 5% and packaged consumer goods at 18%).",
-        "GST must always be calculated line by line for each individual product using its specific statutory rate. You should never apply an 'average' GST rate to the entire invoice total, as this violates GST billing regulations.",
-      ],
-    },
-  ],
-  faqs: [
-    {
-      q: "How do I calculate GST on an amount?",
-      a: "For GST exclusive prices, multiply the taxable amount by the GST rate percentage and divide by 100 (e.g. ₹1,000 × 18 ÷ 100 = ₹180 GST; total = ₹1,180). For GST inclusive prices, divide the total amount by (1 + GST Rate / 100) to find the taxable value, then subtract it from the total to find the GST amount.",
-    },
-    {
-      q: "What is the difference between GST inclusive and exclusive?",
-      a: "GST Exclusive means the price quoted does not include tax, so GST will be added on top. GST Inclusive means the quoted price already includes the GST component (common in consumer retail MRP).",
-    },
-    {
-      q: "How do I calculate CGST and SGST?",
-      a: "For sales within the same state (intra-state supply), total GST is divided equally into Central GST (CGST) and State GST (SGST). For example, on an 18% GST rate, CGST is 9% and SGST is 9%.",
-    },
-    {
-      q: "When is IGST applicable?",
-      a: "Integrated Goods and Services Tax (IGST) is applicable when goods or services are supplied across state boundaries (inter-state supply) or imported into India. IGST is charged at the full rate without splitting into central and state shares.",
-    },
-    {
-      q: "How do I calculate GST after a discount?",
-      a: "Under Section 15 of the CGST Act, trade discounts shown on the invoice before or at the time of supply must be subtracted from the original amount first. GST is then calculated on the discounted taxable value.",
-    },
-    {
-      q: "How do I calculate GST on multiple products with different rates?",
-      a: "Calculate the GST for each item independently using its specific rate (e.g. 5% on books, 18% on stationery). Then sum the taxable values and tax amounts grouped by rate slab in the invoice summary.",
-    },
-    {
-      q: "What is taxable value?",
-      a: "Taxable value is the base transaction amount on which GST is levied, after deducting eligible trade discounts and before adding CGST, SGST, or IGST.",
-    },
-    {
-      q: "How do I extract GST from an inclusive price?",
-      a: "Divide the total price by (1 + GST rate / 100). For example, if an item is ₹1,050 inclusive of 5% GST: Taxable value = ₹1,050 / 1.05 = ₹1,000. GST extracted is ₹1,050 - ₹1,000 = ₹50.",
-    },
-    {
-      q: "Does this calculator generate a legal tax invoice?",
-      a: "This calculator provides mathematical estimations and structured invoice previews. A legally valid tax invoice issued under Rule 46 of the CGST Rules requires verified GSTINs, sequential numbering, HSN/SAC codes where mandatory, and statutory compliance.",
-    },
-    {
-      q: "How do I know which GST rate applies to my product?",
-      a: "GST rates are determined by the Harmonized System of Nomenclature (HSN) code for goods or Services Accounting Code (SAC) for services as notified by the CBIC and GST Council. Always verify against official CBIC tariff schedules.",
-    },
-  ],
-  internalLinks: [
-    {
-      text: "Calculate Product Profits & Profit Margins",
-      calculatorName: "Product Profit Calculator",
-      href: "/calculator/product-profit-calculator",
-    },
-    {
-      text: "Calculate Take-Home Pay & CTC Deductions",
-      calculatorName: "CTC to In-Hand Salary Calculator",
-      href: "/calculator/ctc-to-in-hand-salary-calculator",
-    },
-  ],
-};
-
-export default GstInvoiceCalculator;
-

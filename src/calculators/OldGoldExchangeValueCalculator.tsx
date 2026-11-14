@@ -53,6 +53,118 @@ const QUICK_DEDUCTION_CHIPS = [
   { label: "5% (Cash Resale)", value: 5 },
 ];
 
+// SEO BLOG & EDUCATIONAL CONTENT
+export const OLD_GOLD_BLOG_CONTENT: any = {
+  title: "Old Gold Exchange Value Calculator (India): Complete Valuation Guide",
+  description:
+    "Learn how Indian jewellers calculate the exchange and resale value of old gold jewellery. Understand BIS hallmark fineness, pure gold extraction, melting loss, and how to avoid unfair deductions.",
+  author: "CalcZen Financial Engineering Team",
+  publishDate: "November 2026",
+  readTime: "7 min read",
+  sections: [
+    {
+      title: "1. How Indian Jewellers Calculate Old Gold Exchange Value",
+      paragraphs: [
+        "When you exchange or sell old gold jewellery in India, jewellers evaluate your ornaments based on pure gold content rather than the original purchase price or decorative making charges.",
+        "The standard industry formula used by reputed jewellers is:",
+        "**Base Gold Value = Net Gold Weight (grams) × Applied Gold Rate per Gram**",
+        "If you provide the 24K gold rate, the effective rate for your gold's specific karat is calculated as: **24K Rate × (Fineness ÷ 1,000)**. For standard 22K (916 hallmark) gold, 91.6% of the 24K rate is applied.",
+      ],
+    },
+    {
+      title: "2. Bureau of Indian Standards (BIS) Hallmarks & Fineness Slabs",
+      paragraphs: [
+        "Under mandatory BIS hallmarking regulations, genuine gold jewellery features three distinct marks: the BIS logo, the purity mark in karat and fineness, and a unique 6-digit alphanumeric HUID (Hallmark Unique Identification) code.",
+        "The standard BIS fineness categories recognized across India are:",
+        "• **22K (916 Fineness)**: 91.6% pure gold. The most popular choice for Indian bridal, wedding, and traditional jewellery.",
+        "• **18K (750 Fineness)**: 75.0% pure gold. The standard for diamond jewellery, engagement rings, and studded ornaments requiring greater structural rigidity.",
+        "• **14K (585 Fineness)**: 58.5% pure gold. Used in modern lightweight, minimalist, and affordable daily wear.",
+        "• **24K (999 or 995 Fineness)**: 99.9% or 99.5% pure gold. Found strictly in minted gold coins, minted bars, and investment bullion.",
+      ],
+    },
+    {
+      title: "3. Net Weight vs. Gross Weight: The Stone Weight Trap",
+      paragraphs: [
+        "One of the most common mistakes consumers make is letting jewellers weigh studded jewellery together without deducting non-gold elements. Cubic zirconia (CZ), synthetic stones, enamel (meena work), lac filling, pearls, and thread tassels carry zero gold value.",
+        "Always ensure your jewellery's stones are either carefully unmounted or deducted using original purchase certificates or hydrostatic specific gravity testing before calculating your exchange payout.",
+      ],
+      callout: {
+        type: "tip",
+        title: "Insist on Non-Destructive XRF Karatometer Testing",
+        text: "Never let jewellers scratch or melt your jewellery in a back room. Reputed showrooms provide state-of-the-art X-Ray Fluorescence (XRF) testing in front of you within two minutes, preserving ornament integrity and accurately measuring elemental purity.",
+      },
+    },
+    {
+      title: "4. Exchange Value vs. Cash Buyback: The Resale Spread",
+      paragraphs: [
+        "Major national retail chains (including Tanishq, Malabar Gold, Kalyan Jewellers, and Joyalukkas) offer 100% exchange value for BIS-hallmarked gold when you use the proceeds to purchase new jewellery from their store.",
+        "However, if you want direct cash into your bank account, jewellers typically deduct between 2% and 4% as a melting, refining, and assaying margin. In addition, transactions exceeding ₹2,00,000 in cash require PAN verification and statutory tax compliance under Indian income tax laws.",
+      ],
+    },
+  ],
+  faqs: [
+    {
+      q: "How is old gold exchange value calculated in India?",
+      a: "Old gold exchange value is calculated by multiplying the net pure gold weight (in grams) by the current gold rate for that specific purity (e.g. 22K or 18K), minus any agreed jeweller melting or exchange deductions.",
+    },
+    {
+      q: "Do jewellers give 100% value for hallmarked gold in exchange?",
+      a: "Yes. Most reputed Indian jewellery brands offer 100% gold value on BIS-hallmarked 916 jewellery when exchanged for new gold or diamond jewellery. However, they do not reimburse past making charges, wastage, or GST paid on the old piece.",
+    },
+    {
+      q: "What is the difference between 22K (916) and 24K (999) gold?",
+      a: "24K gold is 99.9% pure gold, which is very soft and suitable only for coins and bars. 22K gold contains 91.6% pure gold alloyed with 8.4% metals like copper and silver to give it strength for intricate jewellery.",
+    },
+    {
+      q: "Why do jewellers deduct melting charges on old gold?",
+      a: "Non-hallmarked or vintage gold often contains soldering alloys (kadam) or minor impurities that reduce purity during refining. For BIS-hallmarked gold with a valid HUID, melting deductions should be 0% when exchanging at top jewellers.",
+    },
+    {
+      q: "How do I know the net gold weight of studded jewellery?",
+      a: "Check your original purchase invoice, which specifies the gross weight and stone weight separately. Reputed jewellers use digital specific gravity balances and XRF spectrometers to determine net gold weight without damaging gemstones.",
+    },
+    {
+      q: "Can I sell old gold for cash instead of exchanging it?",
+      a: "Yes, you can sell old gold for cash or immediate bank transfer. However, jewellers usually charge a 2% to 4% discount margin for cash buybacks compared to in-store exchanges, and payments exceeding ₹2 Lakh must be processed via RTGS/NEFT with PAN submission.",
+    },
+    {
+      q: "What is a BIS HUID and why is it important?",
+      a: "HUID (Hallmark Unique Identification) is a 6-digit alphanumeric code laser-engraved on hallmarked gold jewellery in India. It links the ornament to the BIS database, certifying exact purity and protecting you from unfair valuation cuts.",
+    },
+    {
+      q: "Is GST charged when exchanging old gold?",
+      a: "Under Indian GST regulations, when you exchange old gold for new jewellery, GST at 3% is charged only on the net bill amount (the new jewellery value minus your old gold exchange credit) or on the gross transaction depending on billing structure.",
+    },
+    {
+      q: "What documents do I need to sell or exchange old gold?",
+      a: "To exchange or sell old gold in India, carry a government-issued photo ID (Aadhaar Card or PAN Card) and your original purchase invoice if available. Invoices are helpful but not mandatory for hallmarked items.",
+    },
+    {
+      q: "What is 1 tola in grams for gold in India?",
+      a: "In traditional Indian gold trade, 1 tola is standardized as 11.6638 grams (often rounded to 11.66g). In South India, gold is also commonly measured in pavan (sovereign), where 1 pavan equals exactly 8 grams.",
+    },
+  ],
+  internalLinks: [
+    {
+      text: "Calculate Complete Gold Jewellery Bill with GST & Making Charges",
+      calculatorName: "Gold Jewellery Bill Calculator",
+      href: "/calculator/gold-jewellery-bill-calculator",
+    },
+    {
+      text: "Compare and Negotiate Jeweller Making Charges & Wastage",
+      calculatorName: "Gold Making Charges Calculator",
+      href: "/calculator/gold-making-charges-calculator",
+    },
+    {
+      text: "Calculate GST and Tax Split for Business & Purchases",
+      calculatorName: "GST Invoice Calculator",
+      href: "/calculator/gst-invoice-calculator",
+    },
+  ],
+};
+
+export default OldGoldExchangeValueCalculator;
+
 export function OldGoldExchangeValueCalculator() {
   const calc = getCalculator("old-gold-exchange-value-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -954,116 +1066,3 @@ Generated at: https://www.calczen.in/calculator/old-gold-exchange-value-calculat
     </CalculatorPageLayout>
   );
 }
-
-// SEO BLOG & EDUCATIONAL CONTENT
-export const OLD_GOLD_BLOG_CONTENT: any = {
-  title: "Old Gold Exchange Value Calculator (India): Complete Valuation Guide",
-  description:
-    "Learn how Indian jewellers calculate the exchange and resale value of old gold jewellery. Understand BIS hallmark fineness, pure gold extraction, melting loss, and how to avoid unfair deductions.",
-  author: "CalcZen Financial Engineering Team",
-  publishDate: "November 2026",
-  readTime: "7 min read",
-  sections: [
-    {
-      title: "1. How Indian Jewellers Calculate Old Gold Exchange Value",
-      paragraphs: [
-        "When you exchange or sell old gold jewellery in India, jewellers evaluate your ornaments based on pure gold content rather than the original purchase price or decorative making charges.",
-        "The standard industry formula used by reputed jewellers is:",
-        "**Base Gold Value = Net Gold Weight (grams) × Applied Gold Rate per Gram**",
-        "If you provide the 24K gold rate, the effective rate for your gold's specific karat is calculated as: **24K Rate × (Fineness ÷ 1,000)**. For standard 22K (916 hallmark) gold, 91.6% of the 24K rate is applied.",
-      ],
-    },
-    {
-      title: "2. Bureau of Indian Standards (BIS) Hallmarks & Fineness Slabs",
-      paragraphs: [
-        "Under mandatory BIS hallmarking regulations, genuine gold jewellery features three distinct marks: the BIS logo, the purity mark in karat and fineness, and a unique 6-digit alphanumeric HUID (Hallmark Unique Identification) code.",
-        "The standard BIS fineness categories recognized across India are:",
-        "• **22K (916 Fineness)**: 91.6% pure gold. The most popular choice for Indian bridal, wedding, and traditional jewellery.",
-        "• **18K (750 Fineness)**: 75.0% pure gold. The standard for diamond jewellery, engagement rings, and studded ornaments requiring greater structural rigidity.",
-        "• **14K (585 Fineness)**: 58.5% pure gold. Used in modern lightweight, minimalist, and affordable daily wear.",
-        "• **24K (999 or 995 Fineness)**: 99.9% or 99.5% pure gold. Found strictly in minted gold coins, minted bars, and investment bullion.",
-      ],
-    },
-    {
-      title: "3. Net Weight vs. Gross Weight: The Stone Weight Trap",
-      paragraphs: [
-        "One of the most common mistakes consumers make is letting jewellers weigh studded jewellery together without deducting non-gold elements. Cubic zirconia (CZ), synthetic stones, enamel (meena work), lac filling, pearls, and thread tassels carry zero gold value.",
-        "Always ensure your jewellery's stones are either carefully unmounted or deducted using original purchase certificates or hydrostatic specific gravity testing before calculating your exchange payout.",
-      ],
-      callout: {
-        type: "tip",
-        title: "Insist on Non-Destructive XRF Karatometer Testing",
-        text: "Never let jewellers scratch or melt your jewellery in a back room. Reputed showrooms provide state-of-the-art X-Ray Fluorescence (XRF) testing in front of you within two minutes, preserving ornament integrity and accurately measuring elemental purity.",
-      },
-    },
-    {
-      title: "4. Exchange Value vs. Cash Buyback: The Resale Spread",
-      paragraphs: [
-        "Major national retail chains (including Tanishq, Malabar Gold, Kalyan Jewellers, and Joyalukkas) offer 100% exchange value for BIS-hallmarked gold when you use the proceeds to purchase new jewellery from their store.",
-        "However, if you want direct cash into your bank account, jewellers typically deduct between 2% and 4% as a melting, refining, and assaying margin. In addition, transactions exceeding ₹2,00,000 in cash require PAN verification and statutory tax compliance under Indian income tax laws.",
-      ],
-    },
-  ],
-  faqs: [
-    {
-      q: "How is old gold exchange value calculated in India?",
-      a: "Old gold exchange value is calculated by multiplying the net pure gold weight (in grams) by the current gold rate for that specific purity (e.g. 22K or 18K), minus any agreed jeweller melting or exchange deductions.",
-    },
-    {
-      q: "Do jewellers give 100% value for hallmarked gold in exchange?",
-      a: "Yes. Most reputed Indian jewellery brands offer 100% gold value on BIS-hallmarked 916 jewellery when exchanged for new gold or diamond jewellery. However, they do not reimburse past making charges, wastage, or GST paid on the old piece.",
-    },
-    {
-      q: "What is the difference between 22K (916) and 24K (999) gold?",
-      a: "24K gold is 99.9% pure gold, which is very soft and suitable only for coins and bars. 22K gold contains 91.6% pure gold alloyed with 8.4% metals like copper and silver to give it strength for intricate jewellery.",
-    },
-    {
-      q: "Why do jewellers deduct melting charges on old gold?",
-      a: "Non-hallmarked or vintage gold often contains soldering alloys (kadam) or minor impurities that reduce purity during refining. For BIS-hallmarked gold with a valid HUID, melting deductions should be 0% when exchanging at top jewellers.",
-    },
-    {
-      q: "How do I know the net gold weight of studded jewellery?",
-      a: "Check your original purchase invoice, which specifies the gross weight and stone weight separately. Reputed jewellers use digital specific gravity balances and XRF spectrometers to determine net gold weight without damaging gemstones.",
-    },
-    {
-      q: "Can I sell old gold for cash instead of exchanging it?",
-      a: "Yes, you can sell old gold for cash or immediate bank transfer. However, jewellers usually charge a 2% to 4% discount margin for cash buybacks compared to in-store exchanges, and payments exceeding ₹2 Lakh must be processed via RTGS/NEFT with PAN submission.",
-    },
-    {
-      q: "What is a BIS HUID and why is it important?",
-      a: "HUID (Hallmark Unique Identification) is a 6-digit alphanumeric code laser-engraved on hallmarked gold jewellery in India. It links the ornament to the BIS database, certifying exact purity and protecting you from unfair valuation cuts.",
-    },
-    {
-      q: "Is GST charged when exchanging old gold?",
-      a: "Under Indian GST regulations, when you exchange old gold for new jewellery, GST at 3% is charged only on the net bill amount (the new jewellery value minus your old gold exchange credit) or on the gross transaction depending on billing structure.",
-    },
-    {
-      q: "What documents do I need to sell or exchange old gold?",
-      a: "To exchange or sell old gold in India, carry a government-issued photo ID (Aadhaar Card or PAN Card) and your original purchase invoice if available. Invoices are helpful but not mandatory for hallmarked items.",
-    },
-    {
-      q: "What is 1 tola in grams for gold in India?",
-      a: "In traditional Indian gold trade, 1 tola is standardized as 11.6638 grams (often rounded to 11.66g). In South India, gold is also commonly measured in pavan (sovereign), where 1 pavan equals exactly 8 grams.",
-    },
-  ],
-  internalLinks: [
-    {
-      text: "Calculate Complete Gold Jewellery Bill with GST & Making Charges",
-      calculatorName: "Gold Jewellery Bill Calculator",
-      href: "/calculator/gold-jewellery-bill-calculator",
-    },
-    {
-      text: "Compare and Negotiate Jeweller Making Charges & Wastage",
-      calculatorName: "Gold Making Charges Calculator",
-      href: "/calculator/gold-making-charges-calculator",
-    },
-    {
-      text: "Calculate GST and Tax Split for Business & Purchases",
-      calculatorName: "GST Invoice Calculator",
-      href: "/calculator/gst-invoice-calculator",
-    },
-  ],
-};
-
-export default OldGoldExchangeValueCalculator;
-

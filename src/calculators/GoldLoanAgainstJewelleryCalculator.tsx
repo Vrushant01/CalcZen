@@ -45,6 +45,135 @@ import {
   type GoldLoanCalculationResult,
 } from "@/utils/goldLoanCalculatorUtils";
 
+export const GOLD_LOAN_FAQS: { q: string; a: string }[] = [
+  {
+    q: "How much loan can I get for 10 grams of 22K gold?",
+    a: "If 22K gold is valued at ₹7,200 per gram, 10 grams of net gold is worth ₹72,000. Under RBI's 85% LTV limit for loans up to ₹2.5 Lakh, the maximum indicative loan you can receive is approximately ₹61,200 (₹72,000 × 0.85), subject to lender appraisal and deductions.",
+  },
+  {
+    q: "Why did the bank value my jewellery lower than my purchase bill?",
+    a: "Retail jewellery bills include making charges (10% to 25%), wastage margins, 3% GST, and gemstone costs. Gold loans are sanctioned purely on the intrinsic value of the net pure gold weight. Making charges and taxes have zero collateral value.",
+  },
+  {
+    q: "Are diamonds and precious stones valued in a gold loan?",
+    a: "No. Under RBI collateral lending directions, lenders deduct the weight of all embedded diamonds, gemstones, pearls, and wax before calculating the loan amount. Only the net gold weight is valued.",
+  },
+  {
+    q: "What is the difference between 22K and 24K gold valuation?",
+    a: "24K gold is 99.9% pure bullion, while 22K gold contains 91.6% pure gold (916 fineness) alloyed with other metals for strength. When lenders quote a 24K benchmark rate, they multiply it by 0.916 to determine the eligible value of 22K jewellery.",
+  },
+  {
+    q: "Can I get a 90% or 100% gold loan in India?",
+    a: "No. The Reserve Bank of India strictly regulates gold loan LTV limits. For eligible consumption loans, the regulatory ceiling is capped at 85% for loans up to ₹2.5 Lakh, 80% up to ₹5 Lakh, and 75% for larger loans. Any lender advertising 90% or 100% LTV is violating RBI norms.",
+  },
+  {
+    q: "What interest rate do banks charge on gold loans?",
+    a: "Gold loan interest rates typically range from 8.85% to 14.5% p.a. at public sector banks (like SBI, Canara Bank, and Bank of Baroda), 10% to 16% at private banks (HDFC, ICICI), and 12% to 24% p.a. at gold-loan NBFCs (Muthoot, Manappuram) depending on tenure and repayment type.",
+  },
+  {
+    q: "What is a bullet repayment gold loan?",
+    a: "In a bullet repayment scheme, you do not pay monthly EMIs. Instead, you repay the entire principal amount plus all accumulated interest together in a single payment at the end of the loan tenure (usually 6 to 12 months).",
+  },
+  {
+    q: "Can I pledge hallmarked and non-hallmarked jewellery?",
+    a: "Yes, most banks accept both hallmarked and non-hallmarked ornaments. However, lenders employ certified in-house gold appraisers who perform acid assays or XRF spectrometer testing to verify the actual karat purity before sanctioning the loan.",
+  },
+  {
+    q: "What fees do lenders deduct upfront from my gold loan?",
+    a: "Lenders typically charge a processing fee (0.25% to 1% of the loan amount), an appraiser fee (₹200 to ₹500 for testing gold purity), and applicable GST on service charges. These are either paid upfront or deducted from your disbursed loan amount.",
+  },
+  {
+    q: "What happens if I cannot repay my gold loan?",
+    a: "If you default on interest or principal repayments, the lender will send statutory demand notices giving you grace periods. If dues remain unpaid, the lender has the legal right under RBI regulations to auction your pledged gold ornaments to recover outstanding dues.",
+  },
+];
+
+// -------------------------------------------------------------
+// COMPREHENSIVE EDUCATIONAL BLOG & FAQ CONTENT
+// -------------------------------------------------------------
+const goldLoanBlogContent: any = {
+  title: "Gold Loan Against Jewellery Calculator: How Much Loan Can You Get?",
+  description:
+    "Complete consumer guide to gold loan collateral valuation in India. Understand RBI 2025 Master Directions, maximum LTV limits, purity deductions, interest repayment schemes, and lender policies.",
+  author: "CalcZen Financial Research Team",
+  publishDate: "November 2026",
+  readTime: "7 min read",
+  sections: [
+    {
+      title: "How Do Banks and NBFCs Value Your Gold Jewellery?",
+      content:
+        "When you pledge gold jewellery at a bank or NBFC in India (such as SBI, HDFC Bank, Muthoot Finance, or Manappuram), the valuation follows strict Reserve Bank of India (RBI) guidelines. Lenders do not value your jewellery based on the retail bill you paid or the gemstones embedded in the ornament. Instead, the valuation is calculated purely on the **net intrinsic gold content**.\n\nHere is how every component is handled:\n- **Gross Weight vs Net Weight:** Your ornaments are weighed on a certified scale. Any embedded precious stones, diamonds, pearls, wax fillings (lakh), or non-gold threads are strictly deducted to arrive at the net pure gold weight.\n- **Purity Karat & Fineness:** The gold content is assessed using standard Bureau of Indian Standards (BIS) hallmark fineness (e.g., 22K = 916 fineness or 91.6% pure gold, 18K = 750 fineness or 75.0% pure gold).\n- **Reference Valuation Rate:** Under RBI Master Directions, lenders calculate the collateral value using the lower of the average closing price of gold for the relevant purity over the preceding 30 days, or the closing price on the preceding day published by recognized trade bodies (such as IBJA).",
+    },
+    {
+      title: "Understanding RBI 2025 Tiered LTV Rules for Consumption Loans",
+      content:
+        "The Loan-to-Value (LTV) ratio determines the maximum percentage of your gold's value that a lender is legally permitted to disburse as a loan. Under the **Reserve Bank of India (Lending Against Gold and Silver Collateral) Directions, 2025**, the maximum permissible LTV for eligible personal/consumption loans is tiered across loan amount bands:\n\n- **Up to ₹2.5 Lakh:** Maximum LTV of **85%**\n- **Above ₹2.5 Lakh and up to ₹5 Lakh:** Maximum LTV of **80%**\n- **Above ₹5 Lakh:** Maximum LTV of **75%**\n\n**Band Boundary Mechanics:** To prevent distortion at band thresholds, RBI directions prescribe a continuous candidate rule. For example, if you pledge gold worth ₹3,00,000, 80% LTV equals ₹2,40,000, which does not exceed the ₹2.5 Lakh threshold; therefore, you remain eligible for up to ₹2,50,000 under Band 1. Lenders can always choose to offer a lower LTV based on their internal risk assessment.",
+    },
+    {
+      title: "Repayment Schemes: Monthly EMI vs Bullet Repayment vs Overdraft",
+      content:
+        "Indian gold loans offer flexible repayment structures tailored to different cash-flow needs:\n\n1. **Monthly Reducing Balance EMI:** Similar to a home or personal loan, you pay a fixed equated monthly instalment comprising both principal and interest each month. This systematically reduces your debt and carries the lowest total interest cost.\n2. **Bullet Repayment Scheme:** Popular with agricultural borrowers and seasonal traders, you pay neither principal nor monthly interest during the tenure. The entire principal along with accumulated interest is paid in one lump-sum at loan maturity (typically 3, 6, or 12 months).\n3. **Overdraft / Gold Credit Line:** The bank sanctions a credit limit against your gold. You can withdraw and deposit funds at will, and interest is charged strictly on the amount actually used on a daily balance basis.",
+    },
+    {
+      title: "What Happens to Making Charges and Stone Value?",
+      content:
+        "When purchasing jewellery, buyers pay 8% to 25% making charges, wastage fees, and 3% GST. Furthermore, studded ornaments carry expensive diamonds or gemstones. **None of these charges are included in a gold loan.**\n\nBanks and NBFCs finance only the physical, meltable gold content. If you default on a loan, the lender's only recourse is auctioning the collateral for its raw bullion value under RBI guidelines. Consequently, plain 22K gold bangles, chains, and coins yield a substantially higher loan amount per gram compared to stone-studded jewellery.",
+    },
+  ],
+  faqs: [
+    {
+      question: "How much loan can I get for 10 grams of 22K gold?",
+      answer:
+        "If 22K gold is valued at ₹7,200 per gram, 10 grams of net gold is worth ₹72,000. Under RBI's 85% LTV limit for loans up to ₹2.5 Lakh, the maximum indicative loan you can receive is approximately ₹61,200 (₹72,000 × 0.85), subject to lender appraisal and deductions.",
+    },
+    {
+      question: "Why did the bank value my jewellery lower than my purchase bill?",
+      answer:
+        "Retail jewellery bills include making charges (10% to 25%), wastage margins, 3% GST, and gemstone costs. Gold loans are sanctioned purely on the intrinsic value of the net pure gold weight. Making charges and taxes have zero collateral value.",
+    },
+    {
+      question: "Are diamonds and precious stones valued in a gold loan?",
+      answer:
+        "No. Under RBI collateral lending directions, lenders deduct the weight of all embedded diamonds, gemstones, pearls, and wax before calculating the loan amount. Only the net gold weight is valued.",
+    },
+    {
+      question: "What is the difference between 22K and 24K gold valuation?",
+      answer:
+        "24K gold is 99.9% pure bullion, while 22K gold contains 91.6% pure gold (916 fineness) alloyed with other metals for strength. When lenders quote a 24K benchmark rate, they multiply it by 0.916 to determine the eligible value of 22K jewellery.",
+    },
+    {
+      question: "Can I get a 90% or 100% gold loan in India?",
+      answer:
+        "No. The Reserve Bank of India strictly regulates gold loan LTV limits. For eligible consumption loans, the regulatory ceiling is capped at 85% for loans up to ₹2.5 Lakh, 80% up to ₹5 Lakh, and 75% for larger loans. Any lender advertising 90% or 100% LTV is violating RBI norms.",
+    },
+    {
+      question: "What interest rate do banks charge on gold loans?",
+      answer:
+        "Gold loan interest rates typically range from 8.85% to 14.5% p.a. at public sector banks (like SBI, Canara Bank, and Bank of Baroda), 10% to 16% at private banks (HDFC, ICICI), and 12% to 24% p.a. at gold-loan NBFCs (Muthoot, Manappuram) depending on tenure and repayment type.",
+    },
+    {
+      question: "What is a bullet repayment gold loan?",
+      answer:
+        "In a bullet repayment scheme, you do not pay monthly EMIs. Instead, you repay the entire principal amount plus all accumulated interest together in a single payment at the end of the loan tenure (usually 6 to 12 months).",
+    },
+    {
+      question: "Can I pledge hallmarked and non-hallmarked jewellery?",
+      answer:
+        "Yes, most banks accept both hallmarked and non-hallmarked ornaments. However, lenders employ certified in-house gold appraisers who perform acid assays or XRF spectrometer testing to verify the actual karat purity before sanctioning the loan.",
+    },
+    {
+      question: "What fees do lenders deduct upfront from my gold loan?",
+      answer:
+        "Lenders typically charge a processing fee (0.25% to 1% of the loan amount), an appraiser fee (₹200 to ₹500 for testing gold purity), and applicable GST on service charges. These are either paid upfront or deducted from your disbursed loan amount.",
+    },
+    {
+      question: "What happens if I cannot repay my gold loan?",
+      answer:
+        "If you default on interest or principal repayments, the lender will send statutory demand notices giving you grace periods. If dues remain unpaid, the lender has the legal right under RBI regulations to auction your pledged gold ornaments to recover outstanding dues.",
+    },
+  ],
+};
+
 export function GoldLoanAgainstJewelleryCalculator() {
   const calc = getCalculator("gold-loan-against-jewellery-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -1222,132 +1351,3 @@ export function GoldLoanAgainstJewelleryCalculator() {
 // -------------------------------------------------------------
 // FREQUENTLY ASKED QUESTIONS FOR ACCORDION
 // -------------------------------------------------------------
-export const GOLD_LOAN_FAQS: { q: string; a: string }[] = [
-  {
-    q: "How much loan can I get for 10 grams of 22K gold?",
-    a: "If 22K gold is valued at ₹7,200 per gram, 10 grams of net gold is worth ₹72,000. Under RBI's 85% LTV limit for loans up to ₹2.5 Lakh, the maximum indicative loan you can receive is approximately ₹61,200 (₹72,000 × 0.85), subject to lender appraisal and deductions.",
-  },
-  {
-    q: "Why did the bank value my jewellery lower than my purchase bill?",
-    a: "Retail jewellery bills include making charges (10% to 25%), wastage margins, 3% GST, and gemstone costs. Gold loans are sanctioned purely on the intrinsic value of the net pure gold weight. Making charges and taxes have zero collateral value.",
-  },
-  {
-    q: "Are diamonds and precious stones valued in a gold loan?",
-    a: "No. Under RBI collateral lending directions, lenders deduct the weight of all embedded diamonds, gemstones, pearls, and wax before calculating the loan amount. Only the net gold weight is valued.",
-  },
-  {
-    q: "What is the difference between 22K and 24K gold valuation?",
-    a: "24K gold is 99.9% pure bullion, while 22K gold contains 91.6% pure gold (916 fineness) alloyed with other metals for strength. When lenders quote a 24K benchmark rate, they multiply it by 0.916 to determine the eligible value of 22K jewellery.",
-  },
-  {
-    q: "Can I get a 90% or 100% gold loan in India?",
-    a: "No. The Reserve Bank of India strictly regulates gold loan LTV limits. For eligible consumption loans, the regulatory ceiling is capped at 85% for loans up to ₹2.5 Lakh, 80% up to ₹5 Lakh, and 75% for larger loans. Any lender advertising 90% or 100% LTV is violating RBI norms.",
-  },
-  {
-    q: "What interest rate do banks charge on gold loans?",
-    a: "Gold loan interest rates typically range from 8.85% to 14.5% p.a. at public sector banks (like SBI, Canara Bank, and Bank of Baroda), 10% to 16% at private banks (HDFC, ICICI), and 12% to 24% p.a. at gold-loan NBFCs (Muthoot, Manappuram) depending on tenure and repayment type.",
-  },
-  {
-    q: "What is a bullet repayment gold loan?",
-    a: "In a bullet repayment scheme, you do not pay monthly EMIs. Instead, you repay the entire principal amount plus all accumulated interest together in a single payment at the end of the loan tenure (usually 6 to 12 months).",
-  },
-  {
-    q: "Can I pledge hallmarked and non-hallmarked jewellery?",
-    a: "Yes, most banks accept both hallmarked and non-hallmarked ornaments. However, lenders employ certified in-house gold appraisers who perform acid assays or XRF spectrometer testing to verify the actual karat purity before sanctioning the loan.",
-  },
-  {
-    q: "What fees do lenders deduct upfront from my gold loan?",
-    a: "Lenders typically charge a processing fee (0.25% to 1% of the loan amount), an appraiser fee (₹200 to ₹500 for testing gold purity), and applicable GST on service charges. These are either paid upfront or deducted from your disbursed loan amount.",
-  },
-  {
-    q: "What happens if I cannot repay my gold loan?",
-    a: "If you default on interest or principal repayments, the lender will send statutory demand notices giving you grace periods. If dues remain unpaid, the lender has the legal right under RBI regulations to auction your pledged gold ornaments to recover outstanding dues.",
-  },
-];
-
-// -------------------------------------------------------------
-// COMPREHENSIVE EDUCATIONAL BLOG & FAQ CONTENT
-// -------------------------------------------------------------
-const goldLoanBlogContent: any = {
-  title: "Gold Loan Against Jewellery Calculator: How Much Loan Can You Get?",
-  description:
-    "Complete consumer guide to gold loan collateral valuation in India. Understand RBI 2025 Master Directions, maximum LTV limits, purity deductions, interest repayment schemes, and lender policies.",
-  author: "CalcZen Financial Research Team",
-  publishDate: "November 2026",
-  readTime: "7 min read",
-  sections: [
-    {
-      title: "How Do Banks and NBFCs Value Your Gold Jewellery?",
-      content:
-        "When you pledge gold jewellery at a bank or NBFC in India (such as SBI, HDFC Bank, Muthoot Finance, or Manappuram), the valuation follows strict Reserve Bank of India (RBI) guidelines. Lenders do not value your jewellery based on the retail bill you paid or the gemstones embedded in the ornament. Instead, the valuation is calculated purely on the **net intrinsic gold content**.\n\nHere is how every component is handled:\n- **Gross Weight vs Net Weight:** Your ornaments are weighed on a certified scale. Any embedded precious stones, diamonds, pearls, wax fillings (lakh), or non-gold threads are strictly deducted to arrive at the net pure gold weight.\n- **Purity Karat & Fineness:** The gold content is assessed using standard Bureau of Indian Standards (BIS) hallmark fineness (e.g., 22K = 916 fineness or 91.6% pure gold, 18K = 750 fineness or 75.0% pure gold).\n- **Reference Valuation Rate:** Under RBI Master Directions, lenders calculate the collateral value using the lower of the average closing price of gold for the relevant purity over the preceding 30 days, or the closing price on the preceding day published by recognized trade bodies (such as IBJA).",
-    },
-    {
-      title: "Understanding RBI 2025 Tiered LTV Rules for Consumption Loans",
-      content:
-        "The Loan-to-Value (LTV) ratio determines the maximum percentage of your gold's value that a lender is legally permitted to disburse as a loan. Under the **Reserve Bank of India (Lending Against Gold and Silver Collateral) Directions, 2025**, the maximum permissible LTV for eligible personal/consumption loans is tiered across loan amount bands:\n\n- **Up to ₹2.5 Lakh:** Maximum LTV of **85%**\n- **Above ₹2.5 Lakh and up to ₹5 Lakh:** Maximum LTV of **80%**\n- **Above ₹5 Lakh:** Maximum LTV of **75%**\n\n**Band Boundary Mechanics:** To prevent distortion at band thresholds, RBI directions prescribe a continuous candidate rule. For example, if you pledge gold worth ₹3,00,000, 80% LTV equals ₹2,40,000, which does not exceed the ₹2.5 Lakh threshold; therefore, you remain eligible for up to ₹2,50,000 under Band 1. Lenders can always choose to offer a lower LTV based on their internal risk assessment.",
-    },
-    {
-      title: "Repayment Schemes: Monthly EMI vs Bullet Repayment vs Overdraft",
-      content:
-        "Indian gold loans offer flexible repayment structures tailored to different cash-flow needs:\n\n1. **Monthly Reducing Balance EMI:** Similar to a home or personal loan, you pay a fixed equated monthly instalment comprising both principal and interest each month. This systematically reduces your debt and carries the lowest total interest cost.\n2. **Bullet Repayment Scheme:** Popular with agricultural borrowers and seasonal traders, you pay neither principal nor monthly interest during the tenure. The entire principal along with accumulated interest is paid in one lump-sum at loan maturity (typically 3, 6, or 12 months).\n3. **Overdraft / Gold Credit Line:** The bank sanctions a credit limit against your gold. You can withdraw and deposit funds at will, and interest is charged strictly on the amount actually used on a daily balance basis.",
-    },
-    {
-      title: "What Happens to Making Charges and Stone Value?",
-      content:
-        "When purchasing jewellery, buyers pay 8% to 25% making charges, wastage fees, and 3% GST. Furthermore, studded ornaments carry expensive diamonds or gemstones. **None of these charges are included in a gold loan.**\n\nBanks and NBFCs finance only the physical, meltable gold content. If you default on a loan, the lender's only recourse is auctioning the collateral for its raw bullion value under RBI guidelines. Consequently, plain 22K gold bangles, chains, and coins yield a substantially higher loan amount per gram compared to stone-studded jewellery.",
-    },
-  ],
-  faqs: [
-    {
-      question: "How much loan can I get for 10 grams of 22K gold?",
-      answer:
-        "If 22K gold is valued at ₹7,200 per gram, 10 grams of net gold is worth ₹72,000. Under RBI's 85% LTV limit for loans up to ₹2.5 Lakh, the maximum indicative loan you can receive is approximately ₹61,200 (₹72,000 × 0.85), subject to lender appraisal and deductions.",
-    },
-    {
-      question: "Why did the bank value my jewellery lower than my purchase bill?",
-      answer:
-        "Retail jewellery bills include making charges (10% to 25%), wastage margins, 3% GST, and gemstone costs. Gold loans are sanctioned purely on the intrinsic value of the net pure gold weight. Making charges and taxes have zero collateral value.",
-    },
-    {
-      question: "Are diamonds and precious stones valued in a gold loan?",
-      answer:
-        "No. Under RBI collateral lending directions, lenders deduct the weight of all embedded diamonds, gemstones, pearls, and wax before calculating the loan amount. Only the net gold weight is valued.",
-    },
-    {
-      question: "What is the difference between 22K and 24K gold valuation?",
-      answer:
-        "24K gold is 99.9% pure bullion, while 22K gold contains 91.6% pure gold (916 fineness) alloyed with other metals for strength. When lenders quote a 24K benchmark rate, they multiply it by 0.916 to determine the eligible value of 22K jewellery.",
-    },
-    {
-      question: "Can I get a 90% or 100% gold loan in India?",
-      answer:
-        "No. The Reserve Bank of India strictly regulates gold loan LTV limits. For eligible consumption loans, the regulatory ceiling is capped at 85% for loans up to ₹2.5 Lakh, 80% up to ₹5 Lakh, and 75% for larger loans. Any lender advertising 90% or 100% LTV is violating RBI norms.",
-    },
-    {
-      question: "What interest rate do banks charge on gold loans?",
-      answer:
-        "Gold loan interest rates typically range from 8.85% to 14.5% p.a. at public sector banks (like SBI, Canara Bank, and Bank of Baroda), 10% to 16% at private banks (HDFC, ICICI), and 12% to 24% p.a. at gold-loan NBFCs (Muthoot, Manappuram) depending on tenure and repayment type.",
-    },
-    {
-      question: "What is a bullet repayment gold loan?",
-      answer:
-        "In a bullet repayment scheme, you do not pay monthly EMIs. Instead, you repay the entire principal amount plus all accumulated interest together in a single payment at the end of the loan tenure (usually 6 to 12 months).",
-    },
-    {
-      question: "Can I pledge hallmarked and non-hallmarked jewellery?",
-      answer:
-        "Yes, most banks accept both hallmarked and non-hallmarked ornaments. However, lenders employ certified in-house gold appraisers who perform acid assays or XRF spectrometer testing to verify the actual karat purity before sanctioning the loan.",
-    },
-    {
-      question: "What fees do lenders deduct upfront from my gold loan?",
-      answer:
-        "Lenders typically charge a processing fee (0.25% to 1% of the loan amount), an appraiser fee (₹200 to ₹500 for testing gold purity), and applicable GST on service charges. These are either paid upfront or deducted from your disbursed loan amount.",
-    },
-    {
-      question: "What happens if I cannot repay my gold loan?",
-      answer:
-        "If you default on interest or principal repayments, the lender will send statutory demand notices giving you grace periods. If dues remain unpaid, the lender has the legal right under RBI regulations to auction your pledged gold ornaments to recover outstanding dues.",
-    },
-  ],
-};
-

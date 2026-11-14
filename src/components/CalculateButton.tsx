@@ -123,78 +123,6 @@ export function CalculateButton({
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (disabled) return;
-
-    // Trigger button scale compress & expands soft colored ring
-    setIsBursting(true);
-    setShowRing(true);
-    setTimeout(() => setIsBursting(false), 300);
-    setTimeout(() => setShowRing(false), 500);
-
-    if (!prefersReducedMotion) {
-      const newParticles = generateParticles(category);
-      setParticles(newParticles);
-      // Clean up after the animation completes (900ms)
-      setTimeout(() => {
-        setParticles([]);
-      }, 1000);
-    }
-
-    if (onClick) {
-      onClick(e);
-    }
-  };
-
-  const generateParticles = (cat: typeof category): Particle[] => {
-    const count = 8 + Math.floor(Math.random() * 5); // Clean count: 8-12 particles
-    const list: Particle[] = [];
-    const safeCat = cat && cat in CATEGORY_COLORS ? (cat as keyof typeof CATEGORY_COLORS) : "finance";
-    const colors = CATEGORY_COLORS[safeCat].particles;
-
-    for (let i = 0; i < count; i++) {
-      // Perfect radial distribution for even spread
-      const angle = (i / count) * Math.PI * 2 + (Math.random() * 0.1 - 0.05);
-
-      // Strict travel distance: 75px to 105px (stays strictly within 120px radius)
-      const travelDistance = 75 + Math.random() * 30;
-      const targetX = Math.cos(angle) * travelDistance;
-      const targetY = Math.sin(angle) * travelDistance;
-
-      // Short elegant arc Peak
-      const arcY = targetY * 0.6 - 8;
-
-      // Clean, small particle sizes: 14px–24px, maximum hero at 28px
-      let size = 14;
-      const roll = Math.random();
-      if (roll < 0.85) {
-        size = 14 + Math.floor(Math.random() * 9); // 14px–22px
-      } else {
-        size = 25 + Math.floor(Math.random() * 4); // 25px–28px max
-      }
-
-      // Elegant short fade duration: 700ms–900ms
-      const duration = 0.7 + Math.random() * 0.2;
-
-      const color = colors[i % colors.length];
-      const rotate = Math.random() * 80 - 40; // modest rotation
-
-      list.push({
-        id: Math.random(),
-        targetX,
-        targetY,
-        arcY,
-        rotate,
-        size,
-        duration,
-        color,
-        glowColor: color,
-        icon: getCategoryIcon(cat, i),
-      });
-    }
-    return list;
-  };
-
   const getCategoryIcon = (cat: typeof category, index: number): React.ReactNode => {
     if (cat === "health") {
       const items = [
@@ -252,6 +180,78 @@ export function CalculateButton({
         <Calendar className="w-full h-full text-teal-400" key="ca" />,
       ];
       return items[index % items.length];
+    }
+  };
+
+  const generateParticles = (cat: typeof category): Particle[] => {
+    const count = 8 + Math.floor(Math.random() * 5); // Clean count: 8-12 particles
+    const list: Particle[] = [];
+    const safeCat = cat && cat in CATEGORY_COLORS ? (cat as keyof typeof CATEGORY_COLORS) : "finance";
+    const colors = CATEGORY_COLORS[safeCat].particles;
+
+    for (let i = 0; i < count; i++) {
+      // Perfect radial distribution for even spread
+      const angle = (i / count) * Math.PI * 2 + (Math.random() * 0.1 - 0.05);
+
+      // Strict travel distance: 75px to 105px (stays strictly within 120px radius)
+      const travelDistance = 75 + Math.random() * 30;
+      const targetX = Math.cos(angle) * travelDistance;
+      const targetY = Math.sin(angle) * travelDistance;
+
+      // Short elegant arc Peak
+      const arcY = targetY * 0.6 - 8;
+
+      // Clean, small particle sizes: 14px–24px, maximum hero at 28px
+      let size = 14;
+      const roll = Math.random();
+      if (roll < 0.85) {
+        size = 14 + Math.floor(Math.random() * 9); // 14px–22px
+      } else {
+        size = 25 + Math.floor(Math.random() * 4); // 25px–28px max
+      }
+
+      // Elegant short fade duration: 700ms–900ms
+      const duration = 0.7 + Math.random() * 0.2;
+
+      const color = colors[i % colors.length];
+      const rotate = Math.random() * 80 - 40; // modest rotation
+
+      list.push({
+        id: Math.random(),
+        targetX,
+        targetY,
+        arcY,
+        rotate,
+        size,
+        duration,
+        color,
+        glowColor: color,
+        icon: getCategoryIcon(cat, i),
+      });
+    }
+    return list;
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) return;
+
+    // Trigger button scale compress & expands soft colored ring
+    setIsBursting(true);
+    setShowRing(true);
+    setTimeout(() => setIsBursting(false), 300);
+    setTimeout(() => setShowRing(false), 500);
+
+    if (!prefersReducedMotion) {
+      const newParticles = generateParticles(category);
+      setParticles(newParticles);
+      // Clean up after the animation completes (900ms)
+      setTimeout(() => {
+        setParticles([]);
+      }, 1000);
+    }
+
+    if (onClick) {
+      onClick(e);
     }
   };
 

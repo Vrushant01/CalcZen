@@ -50,6 +50,108 @@ import {
   AppliancePreset,
 } from "@/utils/homeElectricityBillUtils";
 
+// Educational FAQs
+const HOME_BILL_FAQS = [
+  {
+    q: "How do I calculate my home electricity bill?",
+    a: "Your home electricity bill is calculated by multiplying your total monthly units (kWh) by your electricity rate per unit, then adding monthly fixed meter charges and government electricity duties/taxes. If your provider uses slab tariffs, each block of units is billed at its respective slab rate.",
+  },
+  {
+    q: "What is one unit of electricity?",
+    a: "In India, 1 unit of electricity equals 1 Kilowatt-hour (1 kWh). This represents drawing 1,000 Watts of electrical power continuously for 1 hour. For example, running a 1,000W iron for 1 hour uses exactly 1 electricity unit.",
+  },
+  {
+    q: "How many units does a normal home use per month?",
+    a: "In India, an average 1BHK or 2BHK apartment with basic appliances (fans, LED lights, TV, and refrigerator) consumes about 120 to 220 units per month. Adding a 1.5-ton AC running 8 hours a day adds approximately 240 to 360 units per month.",
+  },
+  {
+    q: "How do I calculate electricity charges from units?",
+    a: "For flat-rate billing: Energy Charges = Units × Rate per Unit. For example, 250 units at ₹5/unit equals ₹1,250. For telescopic slab billing: units are broken into tiers (e.g. first 100 units at ₹3, next 100 units at ₹5, remaining 50 units at ₹8 = ₹300 + ₹500 + ₹400 = ₹1,200).",
+  },
+  {
+    q: "Why is my electricity bill higher than expected?",
+    a: "Common reasons include: (1) Heavy summer AC usage pushing your consumption into higher, non-subsidized tariff slabs; (2) Inefficient appliances such as old induction fans or direct-cool fridges with worn gaskets; (3) Standby vampire power from set-top boxes and microwave clocks; (4) Seasonal fuel price adjustments (FPPPA/FPPAS) and electricity duty.",
+  },
+  {
+    q: "What are fixed charges in an electricity bill?",
+    a: "Fixed charges (or standing charges) are fees billed every month regardless of how much electricity you consume. They cover the DISCOM's costs of maintaining the grid infrastructure, poles, transformers, and meter testing.",
+  },
+  {
+    q: "What is a slab-based electricity tariff?",
+    a: "A slab tariff divides your consumption into tiers. Lower units (e.g. 0–100) are billed at lower, subsidized rates to help lower-income households. As your consumption rises into higher tiers (e.g. >200 units), the per-unit rate increases progressively.",
+  },
+  {
+    q: "Does the electricity bill include taxes and surcharges?",
+    a: "Yes. In addition to base energy charges and fixed charges, state electricity bills include Electricity Duty (typically 5% to 16% depending on your state) and fuel price adjustments (FPPPA or PPAC) to reflect fuel generation costs.",
+  },
+  {
+    q: "How can I calculate electricity consumption using appliances?",
+    a: "Multiply each appliance's rated wattage by the hours it runs each day, divide by 1,000 to find daily kWh, multiply by 30 days, and add all appliances together. Our 'Calculate using my appliances' tab automates this entire process with preloaded Indian presets.",
+  },
+  {
+    q: "Is the calculator's estimated bill exactly the same as my DISCOM bill?",
+    a: "Our calculator gives a transparent, technically accurate estimate of your energy charges and standard fixed fees. Actual DISCOM bills may have minor variations based on exact billing cycle meter-reading dates (28 to 32 days), arrears, delayed payment surcharges, or power factor penalties.",
+  },
+];
+
+// Educational Blog Content
+const HOME_BILL_BLOG: BlogContent = {
+  primaryKeyword: "home electricity bill calculator",
+  category: "Electricity",
+  introText:
+    "Understand how your residential electricity bill is calculated in India, how telescopic slab tariffs work, and how to identify high-consumption appliances to reduce your monthly expenses.",
+  sections: [
+    {
+      title: "1. Understanding the Components of an Indian Electricity Bill",
+      paragraphs: [
+        "A residential electricity bill in India consists of multiple components beyond simple unit multiplication:",
+        "1. Energy Charges: The cost of the actual electrical energy consumed in Kilowatt-hours (kWh). In many states, this is billed across progressive slabs.",
+        "2. Fixed / Demand Charges: A monthly standing charge based on your sanctioned load (kW) to cover grid infrastructure maintenance.",
+        "3. Fuel & Power Purchase Price Adjustment (FPPPA / FPPAS): A periodic surcharge reflecting fluctuating coal and natural gas prices incurred by power stations.",
+        "4. Electricity Duty: A state government tax (typically 5% to 16%) levied on your energy charges.",
+      ],
+      callout: {
+        type: "quickFact",
+        title: "Bill Calculation Formula",
+        text: "Total Bill = Energy Charges (Slabs) + Fixed Charges + FPPPA Surcharge + Electricity Duty.",
+      },
+    },
+    {
+      title: "2. How Progressive Telescopic Tariff Slabs Work",
+      paragraphs: [
+        "Most state electricity regulatory commissions (such as GERC in Gujarat, MERC in Maharashtra, and DERC in Delhi) employ telescopic progressive slabs to promote energy conservation.",
+        "For example, under a 3-tier tariff (0–100 units @ ₹3, 101–200 units @ ₹5, and >200 units @ ₹8), consuming 250 units does NOT mean all 250 units are charged at ₹8. Instead:",
+        "• First 100 units are charged at ₹3 = ₹300",
+        "• Next 100 units are charged at ₹5 = ₹500",
+        "• Remaining 50 units are charged at ₹8 = ₹400",
+        "Total Energy Charge = ₹300 + ₹500 + ₹400 = ₹1,200.",
+      ],
+    },
+    {
+      title: "3. Top 5 Contributors to High Household Electricity Bills",
+      paragraphs: [
+        "1. Room Air Conditioners: A 1.5-ton AC draws 1,000W to 1,500W of electrical power. Running it for 8 hours daily adds 240 to 360 units per month, often pushing the household into the highest tariff slab.",
+        "2. Electric Storage Geysers: A 2,000W geyser consumes 2 full electricity units for every single hour of heating.",
+        "3. Old Induction Ceiling Fans: A house with 4 standard induction fans running 12 hours a day consumes ~108 units each month. Upgrading to 5-Star BLDC fans saves over 60 units monthly.",
+        "4. Frost-Free Refrigerators with Damaged Gaskets: Air leakage forces compressors to run continuously.",
+        "5. Vampire Standby Draw: DTH boxes, TVs, and microwave clocks draw 10W to 25W of phantom power 24 hours a day.",
+      ],
+    },
+  ],
+  internalLinks: [
+    {
+      text: "Calculate running costs for specific appliances with our",
+      calculatorName: "Appliance Electricity Cost Calculator",
+      href: "/calculator/appliance-electricity-cost-calculator",
+    },
+    {
+      text: "Evaluate AC tonnage, inverter savings, and room cooling with our",
+      calculatorName: "AC Electricity Cost Calculator",
+      href: "/calculator/ac-electricity-cost-calculator",
+    },
+  ],
+};
+
 export function HomeElectricityBillCalculator() {
   const calc = getCalculator("home-electricity-bill-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -1012,106 +1114,3 @@ export function HomeElectricityBillCalculator() {
     </CalculatorPageLayout>
   );
 }
-
-// Educational FAQs
-const HOME_BILL_FAQS = [
-  {
-    q: "How do I calculate my home electricity bill?",
-    a: "Your home electricity bill is calculated by multiplying your total monthly units (kWh) by your electricity rate per unit, then adding monthly fixed meter charges and government electricity duties/taxes. If your provider uses slab tariffs, each block of units is billed at its respective slab rate.",
-  },
-  {
-    q: "What is one unit of electricity?",
-    a: "In India, 1 unit of electricity equals 1 Kilowatt-hour (1 kWh). This represents drawing 1,000 Watts of electrical power continuously for 1 hour. For example, running a 1,000W iron for 1 hour uses exactly 1 electricity unit.",
-  },
-  {
-    q: "How many units does a normal home use per month?",
-    a: "In India, an average 1BHK or 2BHK apartment with basic appliances (fans, LED lights, TV, and refrigerator) consumes about 120 to 220 units per month. Adding a 1.5-ton AC running 8 hours a day adds approximately 240 to 360 units per month.",
-  },
-  {
-    q: "How do I calculate electricity charges from units?",
-    a: "For flat-rate billing: Energy Charges = Units × Rate per Unit. For example, 250 units at ₹5/unit equals ₹1,250. For telescopic slab billing: units are broken into tiers (e.g. first 100 units at ₹3, next 100 units at ₹5, remaining 50 units at ₹8 = ₹300 + ₹500 + ₹400 = ₹1,200).",
-  },
-  {
-    q: "Why is my electricity bill higher than expected?",
-    a: "Common reasons include: (1) Heavy summer AC usage pushing your consumption into higher, non-subsidized tariff slabs; (2) Inefficient appliances such as old induction fans or direct-cool fridges with worn gaskets; (3) Standby vampire power from set-top boxes and microwave clocks; (4) Seasonal fuel price adjustments (FPPPA/FPPAS) and electricity duty.",
-  },
-  {
-    q: "What are fixed charges in an electricity bill?",
-    a: "Fixed charges (or standing charges) are fees billed every month regardless of how much electricity you consume. They cover the DISCOM's costs of maintaining the grid infrastructure, poles, transformers, and meter testing.",
-  },
-  {
-    q: "What is a slab-based electricity tariff?",
-    a: "A slab tariff divides your consumption into tiers. Lower units (e.g. 0–100) are billed at lower, subsidized rates to help lower-income households. As your consumption rises into higher tiers (e.g. >200 units), the per-unit rate increases progressively.",
-  },
-  {
-    q: "Does the electricity bill include taxes and surcharges?",
-    a: "Yes. In addition to base energy charges and fixed charges, state electricity bills include Electricity Duty (typically 5% to 16% depending on your state) and fuel price adjustments (FPPPA or PPAC) to reflect fuel generation costs.",
-  },
-  {
-    q: "How can I calculate electricity consumption using appliances?",
-    a: "Multiply each appliance's rated wattage by the hours it runs each day, divide by 1,000 to find daily kWh, multiply by 30 days, and add all appliances together. Our 'Calculate using my appliances' tab automates this entire process with preloaded Indian presets.",
-  },
-  {
-    q: "Is the calculator's estimated bill exactly the same as my DISCOM bill?",
-    a: "Our calculator gives a transparent, technically accurate estimate of your energy charges and standard fixed fees. Actual DISCOM bills may have minor variations based on exact billing cycle meter-reading dates (28 to 32 days), arrears, delayed payment surcharges, or power factor penalties.",
-  },
-];
-
-// Educational Blog Content
-const HOME_BILL_BLOG: BlogContent = {
-  primaryKeyword: "home electricity bill calculator",
-  category: "Electricity",
-  introText:
-    "Understand how your residential electricity bill is calculated in India, how telescopic slab tariffs work, and how to identify high-consumption appliances to reduce your monthly expenses.",
-  sections: [
-    {
-      title: "1. Understanding the Components of an Indian Electricity Bill",
-      paragraphs: [
-        "A residential electricity bill in India consists of multiple components beyond simple unit multiplication:",
-        "1. Energy Charges: The cost of the actual electrical energy consumed in Kilowatt-hours (kWh). In many states, this is billed across progressive slabs.",
-        "2. Fixed / Demand Charges: A monthly standing charge based on your sanctioned load (kW) to cover grid infrastructure maintenance.",
-        "3. Fuel & Power Purchase Price Adjustment (FPPPA / FPPAS): A periodic surcharge reflecting fluctuating coal and natural gas prices incurred by power stations.",
-        "4. Electricity Duty: A state government tax (typically 5% to 16%) levied on your energy charges.",
-      ],
-      callout: {
-        type: "quickFact",
-        title: "Bill Calculation Formula",
-        text: "Total Bill = Energy Charges (Slabs) + Fixed Charges + FPPPA Surcharge + Electricity Duty.",
-      },
-    },
-    {
-      title: "2. How Progressive Telescopic Tariff Slabs Work",
-      paragraphs: [
-        "Most state electricity regulatory commissions (such as GERC in Gujarat, MERC in Maharashtra, and DERC in Delhi) employ telescopic progressive slabs to promote energy conservation.",
-        "For example, under a 3-tier tariff (0–100 units @ ₹3, 101–200 units @ ₹5, and >200 units @ ₹8), consuming 250 units does NOT mean all 250 units are charged at ₹8. Instead:",
-        "• First 100 units are charged at ₹3 = ₹300",
-        "• Next 100 units are charged at ₹5 = ₹500",
-        "• Remaining 50 units are charged at ₹8 = ₹400",
-        "Total Energy Charge = ₹300 + ₹500 + ₹400 = ₹1,200.",
-      ],
-    },
-    {
-      title: "3. Top 5 Contributors to High Household Electricity Bills",
-      paragraphs: [
-        "1. Room Air Conditioners: A 1.5-ton AC draws 1,000W to 1,500W of electrical power. Running it for 8 hours daily adds 240 to 360 units per month, often pushing the household into the highest tariff slab.",
-        "2. Electric Storage Geysers: A 2,000W geyser consumes 2 full electricity units for every single hour of heating.",
-        "3. Old Induction Ceiling Fans: A house with 4 standard induction fans running 12 hours a day consumes ~108 units each month. Upgrading to 5-Star BLDC fans saves over 60 units monthly.",
-        "4. Frost-Free Refrigerators with Damaged Gaskets: Air leakage forces compressors to run continuously.",
-        "5. Vampire Standby Draw: DTH boxes, TVs, and microwave clocks draw 10W to 25W of phantom power 24 hours a day.",
-      ],
-    },
-  ],
-  internalLinks: [
-    {
-      text: "Calculate running costs for specific appliances with our",
-      calculatorName: "Appliance Electricity Cost Calculator",
-      href: "/calculator/appliance-electricity-cost-calculator",
-    },
-    {
-      text: "Evaluate AC tonnage, inverter savings, and room cooling with our",
-      calculatorName: "AC Electricity Cost Calculator",
-      href: "/calculator/ac-electricity-cost-calculator",
-    },
-  ],
-};
-

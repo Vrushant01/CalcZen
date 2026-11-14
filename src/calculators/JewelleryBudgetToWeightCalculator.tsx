@@ -46,6 +46,49 @@ import {
   type BudgetToWeightResult,
 } from "@/utils/jewelleryBudgetUtils";
 
+export const JEWELLERY_BUDGET_FAQS: { q: string; a: string }[] = [
+  {
+    q: "How many grams of gold jewellery can I buy for ₹50,000?",
+    a: "If 22K gold is ₹10,000 per gram, with 10% making charges and 3% GST, the total cost per gram is ₹11,330. With a ₹50,000 budget, you can purchase approximately 4.41 grams of gold jewellery.",
+  },
+  {
+    q: "Why can't I just divide my budget by the gold rate?",
+    a: "Dividing budget by the gold rate ignores making charges (typically 8% to 25%) and mandatory 3% GST. If gold is ₹10,000/g and you have ₹50,000, simple division suggests 5.0 grams, but after making charges and tax, a 5g ornament would cost over ₹56,600.",
+  },
+  {
+    q: "What is the difference between 22K and 18K gold for budget purchases?",
+    a: "22K gold contains 91.6% pure gold and is the standard for bridal and traditional jewellery. 18K contains 75% pure gold, making it approximately 18% less expensive per gram. With the same budget, you can purchase a heavier, sturdier piece in 18K gold, which is also commonly used for diamond settings.",
+  },
+  {
+    q: "How do making charges affect the amount of jewellery I can buy?",
+    a: "Making charges are craftsmanship fees added to the raw metal value. Machine-made plain gold chains typically have lower making charges (8% to 12%), allowing you to buy more gold by weight. Intricate handmade or temple jewellery can carry making charges of 18% to 25%, which reduces the affordable gold weight for the same budget.",
+  },
+  {
+    q: "Is GST charged on making charges as well?",
+    a: "Yes. When purchasing finished retail jewellery in India under CBIC HSN 7113, GST is charged at 3% on the composite taxable subtotal (metal value + making charges + wastage charges).",
+  },
+  {
+    q: "How many grams of silver jewellery can I buy for ₹10,000?",
+    a: "If 925 sterling silver is ₹100 per gram, with 10% making charges and 3% GST, the effective cost is ₹113.30 per gram. For ₹10,000, you can buy approximately 88.2 grams of silver jewellery.",
+  },
+  {
+    q: "Does this calculator guarantee that my final bill won't exceed my budget?",
+    a: "Yes. CalcZen's reverse calculation engine applies a strict Budget Safety Guarantee. It rounds the affordable weight downward so that the final bill (including all charges and taxes) never exceeds your entered budget.",
+  },
+  {
+    q: "What is the reverse budget feature?",
+    a: "Below the main result, the reverse budget feature allows you to enter a specific target weight (such as a 5-gram ring or 15-gram bangle) to instantly see the exact total budget you need at current rates.",
+  },
+  {
+    q: "What is wastage (value addition) in jewellery pricing?",
+    a: "Wastage is an additional percentage (often 2% to 10%) charged by some traditional jewellers for gold lost during cutting, soldering, and polishing. Modern hallmark jewellers often combine wastage into a transparent making charge percentage.",
+  },
+  {
+    q: "Can I reserve part of my budget for stones or other expenses?",
+    a: "Yes. Expand 'More options' and enter a reserved amount. The calculator will deduct the reserve before computing your affordable metal weight, ensuring you have cash left for gemstone charges, gift boxes, or other expenses.",
+  },
+];
+
 export function JewelleryBudgetToWeightCalculator() {
   const calc = getCalculator("jewellery-budget-to-weight-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -1024,46 +1067,3 @@ export function JewelleryBudgetToWeightCalculator() {
 // -------------------------------------------------------------
 // FAQS FOR ACCORDION
 // -------------------------------------------------------------
-export const JEWELLERY_BUDGET_FAQS: { q: string; a: string }[] = [
-  {
-    q: "How many grams of gold jewellery can I buy for ₹50,000?",
-    a: "If 22K gold is ₹10,000 per gram, with 10% making charges and 3% GST, the total cost per gram is ₹11,330. With a ₹50,000 budget, you can purchase approximately 4.41 grams of gold jewellery.",
-  },
-  {
-    q: "Why can't I just divide my budget by the gold rate?",
-    a: "Dividing budget by the gold rate ignores making charges (typically 8% to 25%) and mandatory 3% GST. If gold is ₹10,000/g and you have ₹50,000, simple division suggests 5.0 grams, but after making charges and tax, a 5g ornament would cost over ₹56,600.",
-  },
-  {
-    q: "What is the difference between 22K and 18K gold for budget purchases?",
-    a: "22K gold contains 91.6% pure gold and is the standard for bridal and traditional jewellery. 18K contains 75% pure gold, making it approximately 18% less expensive per gram. With the same budget, you can purchase a heavier, sturdier piece in 18K gold, which is also commonly used for diamond settings.",
-  },
-  {
-    q: "How do making charges affect the amount of jewellery I can buy?",
-    a: "Making charges are craftsmanship fees added to the raw metal value. Machine-made plain gold chains typically have lower making charges (8% to 12%), allowing you to buy more gold by weight. Intricate handmade or temple jewellery can carry making charges of 18% to 25%, which reduces the affordable gold weight for the same budget.",
-  },
-  {
-    q: "Is GST charged on making charges as well?",
-    a: "Yes. When purchasing finished retail jewellery in India under CBIC HSN 7113, GST is charged at 3% on the composite taxable subtotal (metal value + making charges + wastage charges).",
-  },
-  {
-    q: "How many grams of silver jewellery can I buy for ₹10,000?",
-    a: "If 925 sterling silver is ₹100 per gram, with 10% making charges and 3% GST, the effective cost is ₹113.30 per gram. For ₹10,000, you can buy approximately 88.2 grams of silver jewellery.",
-  },
-  {
-    q: "Does this calculator guarantee that my final bill won't exceed my budget?",
-    a: "Yes. CalcZen's reverse calculation engine applies a strict Budget Safety Guarantee. It rounds the affordable weight downward so that the final bill (including all charges and taxes) never exceeds your entered budget.",
-  },
-  {
-    q: "What is the reverse budget feature?",
-    a: "Below the main result, the reverse budget feature allows you to enter a specific target weight (such as a 5-gram ring or 15-gram bangle) to instantly see the exact total budget you need at current rates.",
-  },
-  {
-    q: "What is wastage (value addition) in jewellery pricing?",
-    a: "Wastage is an additional percentage (often 2% to 10%) charged by some traditional jewellers for gold lost during cutting, soldering, and polishing. Modern hallmark jewellers often combine wastage into a transparent making charge percentage.",
-  },
-  {
-    q: "Can I reserve part of my budget for stones or other expenses?",
-    a: "Yes. Expand 'More options' and enter a reserved amount. The calculator will deduct the reserve before computing your affordable metal weight, ensuring you have cash left for gemstone charges, gift boxes, or other expenses.",
-  },
-];
-

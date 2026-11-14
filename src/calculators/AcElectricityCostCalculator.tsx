@@ -70,6 +70,127 @@ const DEFAULT_INPUTS: AcCalculationInputs = {
   customFuelSurchargePerUnitINR: 2.35,
 };
 
+// -------------------------------------------------------------
+// SEO BLOG & EDUCATIONAL CONTENT
+// -------------------------------------------------------------
+
+const blogContent: any = {
+  title: "Complete AC Electricity Cost & Power Consumption Guide (India)",
+  primaryKeyword: "AC Electricity Cost Calculator",
+  category: "Electricity",
+  introText:
+    "Air conditioners are the single largest contributors to household summer electricity bills in India. Whether you are running a 1-ton bedroom split AC or multiple 1.5-ton inverter units, understanding your air conditioner's wattage, daily units consumed, BEE star ratings, and state electricity tariff slabs helps you take control of your energy costs.",
+  sections: [
+    {
+      title: "How Much Electricity Does an Air Conditioner Consume in India?",
+      paragraphs: [
+        "In Indian residential buildings, an air conditioner's power consumption depends primarily on its tonnage (cooling capacity), BEE star rating, compressor technology (inverter vs. non-inverter), set temperature, and daily operating hours.",
+        "A typical 1.5-ton 3-star or 5-star inverter AC has a rated electrical input power between 1,150 W and 1,500 W. When running for 8 hours a day, it typically consumes between 6.5 and 10 electricity units (kWh) per day, resulting in a monthly bill impact of approximately ₹1,600 to ₹2,800 depending on local electricity rates.",
+      ],
+      callout: {
+        type: "quickFact",
+        title: "BEE Recommended 24°C Standard",
+        text: "The Bureau of Energy Efficiency (BEE) and the Ministry of Power mandate a default temperature setting of 24°C on all room air conditioners in India. Increasing your AC temperature from 20°C to 24°C saves up to 24% of power.",
+      },
+    },
+    {
+      title: "Difference Between Cooling Capacity (Tonnage) and Electrical Power (Wattage)",
+      paragraphs: [
+        "A common misconception among homeowners is equating AC tonnage with electrical wattage. A '1.5-ton' AC does not consume 1.5 kilowatts (kW) of electricity automatically.",
+        "One ton of refrigeration represents a cooling rate of 12,000 BTU/hr (approximately 3,517 thermal Watts of heat removal from the room). The electrical input power required by the compressor to remove this heat is significantly lower due to the refrigeration cycle efficiency.",
+        "For example, a modern 5-star 1.5-ton inverter AC produces ~5,000 Watts of cooling while consuming only ~1,100 Watts of electrical power.",
+      ],
+      formulaBox: {
+        title: "Basic Electricity Unit Formula",
+        formula:
+          "Power (kW) = Input Power (Watts) / 1,000\nDaily Units (kWh) = Power (kW) × Daily Operating Hours\nMonthly Cost (₹) = Daily Units × Operating Days × Electricity Rate (₹/unit)",
+        variables: [
+          { name: "1 kWh", desc: "1 unit of electricity registered on your electricity meter." },
+          { name: "Power (kW)", desc: "Electrical power drawn by the AC compressor and fans." },
+          { name: "Electricity Rate", desc: "Cost per unit charged by your state DISCOM." },
+        ],
+      },
+    },
+    {
+      title: "Inverter vs Non-Inverter AC: Which Consumes Less Power?",
+      paragraphs: [
+        "- **Non-Inverter ACs (Fixed Speed):** The compressor runs at full 100% capacity until the room reaches the thermostat set point, turns off completely, and turns on again when the room warms up. This constant cycling creates power spikes and consumes more electricity.",
+        "- **Inverter ACs (Variable Speed):** The compressor uses a Brushless DC (BLDC) motor that varies its motor speed continuously. Once your room reaches 24°C, the compressor slows down, consuming only 30% to 50% of its rated power to maintain the temperature steadily. This saves 30% to 40% on monthly electricity bills.",
+      ],
+    },
+    {
+      title: "What Does the BEE Star Label and ISEER Mean?",
+      paragraphs: [
+        "In India, the Bureau of Energy Efficiency (BEE) rates room air conditioners using the Indian Seasonal Energy Efficiency Ratio (ISEER).",
+        "ISEER measures the total annual amount of heat removed from indoor air divided by the total annual amount of electrical energy consumed under standard temperature bins ranging from 24°C to 43°C.",
+        "The label displays **'Electricity Consumption: XYZ Units per Year'**. This number is benchmarked for **1,600 operating hours** per year. If your household runs the AC for more than 4.5 hours a day on average, your actual annual consumption will be higher than the label figure.",
+      ],
+      formulaBox: {
+        title: "ISEER Formula (BEE Schedule)",
+        formula: "ISEER = Total Annual Cooling Load (CSEC) / Total Annual Energy Consumption (CSTLE)",
+        variables: [
+          { name: "5-Star Inverter", desc: "ISEER greater than 5.0 (Highest efficiency)." },
+          { name: "3-Star Inverter", desc: "ISEER between 3.8 and 4.39." },
+        ],
+      },
+    },
+    {
+      title: "How Electricity Tariff Slabs Impact Your AC Bill",
+      paragraphs: [
+        "Indian electricity distribution companies (DISCOMs like UGVCL, MSEDCL, BSES, BESCOM, TANGEDCO) charge residential consumers on progressive, telescopic tariff slabs.",
+        "Because essential household appliances (refrigerator, lights, television, ceiling fans) already consume 100 to 150 units, those units fill your lower, subsidized tariff slabs (e.g. ₹3 to ₹4/unit).",
+        "When you switch on an AC and add 300 units of consumption, all those 300 units are billed at your highest marginal tariff slab (often ₹7 to ₹11+ per unit). This is why running an AC appears to double or triple your electricity bill.",
+      ],
+    },
+    {
+      title: "7 Practical Tips to Reduce AC Electricity Bills",
+      paragraphs: [
+        "1. **Set Thermostat to 24°C–26°C:** Every 1°C increase saves ~6% on compressor electricity.",
+        "2. **Use Ceiling Fans Simultaneously:** A ceiling fan produces wind-chill airflow, making 25°C feel as cool as 22°C while using only ~30 Watts.",
+        "3. **Clean Filters Every 2 Weeks:** Clogged air filters restrict airflow, forcing the compressor to work harder and increasing power draw by up to 15%.",
+        "4. **Seal Window & Door Gaps:** Prevent cool air leakage and hot ambient air infiltration with weatherstripping.",
+        "5. **Use Timer / Sleep Mode at Night:** Sleep mode gradually raises the set temperature by 1°C every hour as ambient temperature drops, reducing midnight energy consumption.",
+        "6. **Service Your Outdoor Unit (Condenser):** Ensure the outdoor condenser fins are free from dust, foliage, and direct afternoon sunlight.",
+        "7. **Close Curtains During Peak Sun:** Heavy curtains block radiant solar heat gain, reducing the thermal load on your air conditioner.",
+      ],
+    },
+  ],
+  faqs: [
+    {
+      q: "How many electricity units does a 1.5-ton AC consume in 1 hour?",
+      a: "A 1.5-ton 3-star or 5-star inverter AC typically consumes 0.7 to 1.1 units (kWh) per hour during continuous operation once the room reaches the set temperature. In initial cooldown mode, it may draw 1.3 to 1.5 units per hour. A non-inverter 1.5-ton AC averages 1.4 to 1.6 units per operating hour.",
+    },
+    {
+      q: "How much electricity does a 1.5-ton AC use in 8 hours?",
+      a: "In 8 hours of daily operation, a 1.5-ton inverter AC set at 24°C typically consumes between 6.5 and 9.5 electricity units (kWh). At an average tariff rate of ₹8 per unit, this costs approximately ₹52 to ₹76 per day, or ₹1,560 to ₹2,280 per month.",
+    },
+    {
+      q: "What is the monthly electricity bill for a 1-ton AC in India?",
+      a: "A 1-ton inverter AC running 8 hours daily for 30 days consumes approximately 160 to 220 units per month. At ₹8 per unit, the monthly electricity cost is approximately ₹1,280 to ₹1,760.",
+    },
+    {
+      q: "Does an inverter AC really save 30% to 50% electricity?",
+      a: "Yes. Inverter ACs save substantial electricity because their BLDC compressors modulate motor speed rather than turning completely on and off. Independent testing by BEE demonstrates that a 5-star inverter AC consumes 30% to 40% less energy than a 3-star fixed-speed non-inverter model under typical Indian room conditions.",
+    },
+    {
+      q: "Why is setting the AC to 24°C recommended?",
+      a: "Setting your AC to 24°C provides the ideal balance between thermal comfort and energy conservation. According to the Bureau of Energy Efficiency (BEE), every 1°C increase in AC temperature setting saves approximately 6% of electrical energy. Setting the temperature to 24°C instead of 18°C can reduce your AC electricity consumption by nearly 36%.",
+    },
+    {
+      q: "Where can I find the rated wattage of my air conditioner?",
+      a: "Rated electrical input power is printed on the silver specification sticker located on the side or underside of the indoor unit (IDU) and on the outdoor condenser unit (ODU). It is also listed under 'Power Input (Cooling)' in your AC's user manual or product specifications sheet.",
+    },
+    {
+      q: "How does the BEE star label annual consumption figure work?",
+      a: "The BEE star label displays annual electricity consumption in kWh benchmarked for 1,600 operating hours per year under standardized test conditions (IS 1391). If you run your AC for 8 hours a day for 6 months (approx. 1,440 hours), your consumption will be close to the label. If you run it 12 hours a day year-round, your consumption will be higher.",
+    },
+    {
+      q: "What is the average cost of 1 electricity unit in India?",
+      a: "Residential electricity tariffs in India vary by state and consumption slab, typically ranging from ₹3.50 to ₹10.50 per unit. States like Maharashtra and West Bengal have higher upper-slab tariffs (up to ₹12–₹17/unit), while states like Delhi and Tamil Nadu offer subsidies for lower consumption tiers.",
+    },
+  ],
+};
+
 export function AcElectricityCostCalculator() {
   const calc = getCalculator("ac-electricity-cost-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -1275,124 +1396,3 @@ export function AcElectricityCostCalculator() {
     </CalculatorPageLayout>
   );
 }
-
-// -------------------------------------------------------------
-// SEO BLOG & EDUCATIONAL CONTENT
-// -------------------------------------------------------------
-
-const blogContent: any = {
-  title: "Complete AC Electricity Cost & Power Consumption Guide (India)",
-  primaryKeyword: "AC Electricity Cost Calculator",
-  category: "Electricity",
-  introText:
-    "Air conditioners are the single largest contributors to household summer electricity bills in India. Whether you are running a 1-ton bedroom split AC or multiple 1.5-ton inverter units, understanding your air conditioner's wattage, daily units consumed, BEE star ratings, and state electricity tariff slabs helps you take control of your energy costs.",
-  sections: [
-    {
-      title: "How Much Electricity Does an Air Conditioner Consume in India?",
-      paragraphs: [
-        "In Indian residential buildings, an air conditioner's power consumption depends primarily on its tonnage (cooling capacity), BEE star rating, compressor technology (inverter vs. non-inverter), set temperature, and daily operating hours.",
-        "A typical 1.5-ton 3-star or 5-star inverter AC has a rated electrical input power between 1,150 W and 1,500 W. When running for 8 hours a day, it typically consumes between 6.5 and 10 electricity units (kWh) per day, resulting in a monthly bill impact of approximately ₹1,600 to ₹2,800 depending on local electricity rates.",
-      ],
-      callout: {
-        type: "quickFact",
-        title: "BEE Recommended 24°C Standard",
-        text: "The Bureau of Energy Efficiency (BEE) and the Ministry of Power mandate a default temperature setting of 24°C on all room air conditioners in India. Increasing your AC temperature from 20°C to 24°C saves up to 24% of power.",
-      },
-    },
-    {
-      title: "Difference Between Cooling Capacity (Tonnage) and Electrical Power (Wattage)",
-      paragraphs: [
-        "A common misconception among homeowners is equating AC tonnage with electrical wattage. A '1.5-ton' AC does not consume 1.5 kilowatts (kW) of electricity automatically.",
-        "One ton of refrigeration represents a cooling rate of 12,000 BTU/hr (approximately 3,517 thermal Watts of heat removal from the room). The electrical input power required by the compressor to remove this heat is significantly lower due to the refrigeration cycle efficiency.",
-        "For example, a modern 5-star 1.5-ton inverter AC produces ~5,000 Watts of cooling while consuming only ~1,100 Watts of electrical power.",
-      ],
-      formulaBox: {
-        title: "Basic Electricity Unit Formula",
-        formula:
-          "Power (kW) = Input Power (Watts) / 1,000\nDaily Units (kWh) = Power (kW) × Daily Operating Hours\nMonthly Cost (₹) = Daily Units × Operating Days × Electricity Rate (₹/unit)",
-        variables: [
-          { name: "1 kWh", desc: "1 unit of electricity registered on your electricity meter." },
-          { name: "Power (kW)", desc: "Electrical power drawn by the AC compressor and fans." },
-          { name: "Electricity Rate", desc: "Cost per unit charged by your state DISCOM." },
-        ],
-      },
-    },
-    {
-      title: "Inverter vs Non-Inverter AC: Which Consumes Less Power?",
-      paragraphs: [
-        "- **Non-Inverter ACs (Fixed Speed):** The compressor runs at full 100% capacity until the room reaches the thermostat set point, turns off completely, and turns on again when the room warms up. This constant cycling creates power spikes and consumes more electricity.",
-        "- **Inverter ACs (Variable Speed):** The compressor uses a Brushless DC (BLDC) motor that varies its motor speed continuously. Once your room reaches 24°C, the compressor slows down, consuming only 30% to 50% of its rated power to maintain the temperature steadily. This saves 30% to 40% on monthly electricity bills.",
-      ],
-    },
-    {
-      title: "What Does the BEE Star Label and ISEER Mean?",
-      paragraphs: [
-        "In India, the Bureau of Energy Efficiency (BEE) rates room air conditioners using the Indian Seasonal Energy Efficiency Ratio (ISEER).",
-        "ISEER measures the total annual amount of heat removed from indoor air divided by the total annual amount of electrical energy consumed under standard temperature bins ranging from 24°C to 43°C.",
-        "The label displays **'Electricity Consumption: XYZ Units per Year'**. This number is benchmarked for **1,600 operating hours** per year. If your household runs the AC for more than 4.5 hours a day on average, your actual annual consumption will be higher than the label figure.",
-      ],
-      formulaBox: {
-        title: "ISEER Formula (BEE Schedule)",
-        formula: "ISEER = Total Annual Cooling Load (CSEC) / Total Annual Energy Consumption (CSTLE)",
-        variables: [
-          { name: "5-Star Inverter", desc: "ISEER greater than 5.0 (Highest efficiency)." },
-          { name: "3-Star Inverter", desc: "ISEER between 3.8 and 4.39." },
-        ],
-      },
-    },
-    {
-      title: "How Electricity Tariff Slabs Impact Your AC Bill",
-      paragraphs: [
-        "Indian electricity distribution companies (DISCOMs like UGVCL, MSEDCL, BSES, BESCOM, TANGEDCO) charge residential consumers on progressive, telescopic tariff slabs.",
-        "Because essential household appliances (refrigerator, lights, television, ceiling fans) already consume 100 to 150 units, those units fill your lower, subsidized tariff slabs (e.g. ₹3 to ₹4/unit).",
-        "When you switch on an AC and add 300 units of consumption, all those 300 units are billed at your highest marginal tariff slab (often ₹7 to ₹11+ per unit). This is why running an AC appears to double or triple your electricity bill.",
-      ],
-    },
-    {
-      title: "7 Practical Tips to Reduce AC Electricity Bills",
-      paragraphs: [
-        "1. **Set Thermostat to 24°C–26°C:** Every 1°C increase saves ~6% on compressor electricity.",
-        "2. **Use Ceiling Fans Simultaneously:** A ceiling fan produces wind-chill airflow, making 25°C feel as cool as 22°C while using only ~30 Watts.",
-        "3. **Clean Filters Every 2 Weeks:** Clogged air filters restrict airflow, forcing the compressor to work harder and increasing power draw by up to 15%.",
-        "4. **Seal Window & Door Gaps:** Prevent cool air leakage and hot ambient air infiltration with weatherstripping.",
-        "5. **Use Timer / Sleep Mode at Night:** Sleep mode gradually raises the set temperature by 1°C every hour as ambient temperature drops, reducing midnight energy consumption.",
-        "6. **Service Your Outdoor Unit (Condenser):** Ensure the outdoor condenser fins are free from dust, foliage, and direct afternoon sunlight.",
-        "7. **Close Curtains During Peak Sun:** Heavy curtains block radiant solar heat gain, reducing the thermal load on your air conditioner.",
-      ],
-    },
-  ],
-  faqs: [
-    {
-      q: "How many electricity units does a 1.5-ton AC consume in 1 hour?",
-      a: "A 1.5-ton 3-star or 5-star inverter AC typically consumes 0.7 to 1.1 units (kWh) per hour during continuous operation once the room reaches the set temperature. In initial cooldown mode, it may draw 1.3 to 1.5 units per hour. A non-inverter 1.5-ton AC averages 1.4 to 1.6 units per operating hour.",
-    },
-    {
-      q: "How much electricity does a 1.5-ton AC use in 8 hours?",
-      a: "In 8 hours of daily operation, a 1.5-ton inverter AC set at 24°C typically consumes between 6.5 and 9.5 electricity units (kWh). At an average tariff rate of ₹8 per unit, this costs approximately ₹52 to ₹76 per day, or ₹1,560 to ₹2,280 per month.",
-    },
-    {
-      q: "What is the monthly electricity bill for a 1-ton AC in India?",
-      a: "A 1-ton inverter AC running 8 hours daily for 30 days consumes approximately 160 to 220 units per month. At ₹8 per unit, the monthly electricity cost is approximately ₹1,280 to ₹1,760.",
-    },
-    {
-      q: "Does an inverter AC really save 30% to 50% electricity?",
-      a: "Yes. Inverter ACs save substantial electricity because their BLDC compressors modulate motor speed rather than turning completely on and off. Independent testing by BEE demonstrates that a 5-star inverter AC consumes 30% to 40% less energy than a 3-star fixed-speed non-inverter model under typical Indian room conditions.",
-    },
-    {
-      q: "Why is setting the AC to 24°C recommended?",
-      a: "Setting your AC to 24°C provides the ideal balance between thermal comfort and energy conservation. According to the Bureau of Energy Efficiency (BEE), every 1°C increase in AC temperature setting saves approximately 6% of electrical energy. Setting the temperature to 24°C instead of 18°C can reduce your AC electricity consumption by nearly 36%.",
-    },
-    {
-      q: "Where can I find the rated wattage of my air conditioner?",
-      a: "Rated electrical input power is printed on the silver specification sticker located on the side or underside of the indoor unit (IDU) and on the outdoor condenser unit (ODU). It is also listed under 'Power Input (Cooling)' in your AC's user manual or product specifications sheet.",
-    },
-    {
-      q: "How does the BEE star label annual consumption figure work?",
-      a: "The BEE star label displays annual electricity consumption in kWh benchmarked for 1,600 operating hours per year under standardized test conditions (IS 1391). If you run your AC for 8 hours a day for 6 months (approx. 1,440 hours), your consumption will be close to the label. If you run it 12 hours a day year-round, your consumption will be higher.",
-    },
-    {
-      q: "What is the average cost of 1 electricity unit in India?",
-      a: "Residential electricity tariffs in India vary by state and consumption slab, typically ranging from ₹3.50 to ₹10.50 per unit. States like Maharashtra and West Bengal have higher upper-slab tariffs (up to ₹12–₹17/unit), while states like Delhi and Tamil Nadu offer subsidies for lower consumption tiers.",
-    },
-  ],
-};

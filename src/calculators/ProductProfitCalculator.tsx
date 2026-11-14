@@ -48,6 +48,144 @@ import {
   type ProfitCalculationResult,
 } from "@/utils/productProfitUtils";
 
+const PRODUCT_PROFIT_BLOG_CONTENT: BlogContent = {
+  primaryKeyword: "Product Profit Calculator",
+  category: "Business",
+  introText:
+    "Calculating exact product profit is the foundation of every successful business, retail shop, e-commerce brand, and manufacturing enterprise. Learn the differences between profit margin and markup, how to factor in packaging, shipping, and marketplace commissions, and how to price your products for long-term sustainable profit.",
+  sections: [
+    {
+      title: "1. The Fundamental Difference: Profit Margin vs. Markup",
+      paragraphs: [
+        "One of the most frequent accounting mistakes made by shopkeepers, online sellers, and new entrepreneurs is confusing Profit Margin with Markup. While both metrics measure profitability, they use completely different reference points.",
+        "Profit Margin measures profit as a percentage of your selling price (revenue). In contrast, Markup measures profit as a percentage of your cost price. Because selling price is always higher than cost price in a profitable sale, Markup percentage will always be higher than Profit Margin percentage.",
+      ],
+      callout: {
+        type: "expertInsight",
+        title: "Golden Rule of Retail Pricing",
+        text: "Profit Margin can never exceed 100% because you cannot earn more than 100% of your revenue. However, Markup can easily be 200%, 500%, or even 1,000% when selling high-margin luxury or digital products.",
+      },
+      formulaBox: {
+        title: "Key Formulas",
+        formula:
+          "Profit Margin (%) = (Net Profit / Selling Price) × 100\nMarkup (%) = (Net Profit / Product Cost Price) × 100",
+        variables: [
+          { name: "Net Profit", desc: "Selling Price − Total Costs & Platform Fees" },
+          { name: "Selling Price", desc: "Final amount charged to buyer (excl. GST)" },
+          { name: "Cost Price", desc: "Direct manufacturing or wholesale buying price" },
+        ],
+      },
+    },
+    {
+      title: "2. The Margin vs. Markup Comparison Table",
+      paragraphs: [
+        "To quickly convert between target margins and the markup percentage you need to quote on your product, refer to this standard pricing benchmark table:",
+      ],
+      table: {
+        headers: ["Desired Margin (%)", "Required Markup (%)", "Cost ₹100 Selling Price"],
+        rows: [
+          ["10%", "11.1%", "₹111.11"],
+          ["20%", "25.0%", "₹125.00"],
+          ["25%", "33.3%", "₹133.33"],
+          ["30%", "42.9%", "₹142.86"],
+          ["33.3% (1/3rd)", "50.0%", "₹150.00"],
+          ["40%", "66.7%", "₹166.67"],
+          ["50% (Double)", "100.0%", "₹200.00"],
+          ["60%", "150.0%", "₹250.00"],
+          ["75%", "300.0%", "₹400.00"],
+        ],
+      },
+    },
+    {
+      title: "3. Hidden Expenses Every Online Seller Must Account For",
+      paragraphs: [
+        "Many first-time sellers on platforms like Amazon India, Flipkart, Meesho, or Shopify calculate gross profit (Selling Price − Buying Cost) and wonder why their bank account does not reflect those numbers. In practice, per-order selling involves several layers of deductions:",
+        "1. Packaging Costs: Corrugated cardboard boxes, bubble wrap, poly mailers, branded stickers, and security sealing tape typically add ₹15 to ₹40 per unit.",
+        "2. Shipping & Courier Charges: Courier aggregator services (e.g., Shiprocket, Delhivery) or marketplace logistics (Amazon Easy Ship) charge by volumetric weight. Weight slab discrepancies can quickly erode thin margins.",
+        "3. Marketplace Referral & Closing Fees: Amazon and Flipkart charge category referral commissions (typically 5% to 18%) plus a fixed closing fee per item based on the price tier.",
+        "4. Payment Gateway Fees: Direct-to-consumer websites charge 2% + 18% GST on each transaction via Razorpay, PayU, or Cashfree.",
+        "5. Customer Returns & RTO (Return to Origin): In Indian e-commerce, Cash on Delivery (COD) orders frequently have a 15% to 25% RTO rate. The seller must bear forward and reverse shipping costs even when no sale is completed.",
+      ],
+      callout: {
+        type: "commonMistake",
+        title: "The Dangerous Trap of Ignoring RTO",
+        text: "If your forward courier cost is ₹60 and reverse courier is ₹50, every returned order costs you ₹110 in dead loss. High-volume sellers build a 5% to 8% return-allowance reserve directly into their product cost price.",
+      },
+    },
+    {
+      title: "4. Understanding GST: Why GST Collected is NOT Profit",
+      paragraphs: [
+        "In India, consumer retail prices are normally quoted inclusive of Goods and Services Tax (GST). For example, if you sell an item for ₹1,180 at an 18% GST slab, your actual business revenue is only ₹1,000.",
+        "The remaining ₹180 is Output GST collected from the customer on behalf of the government. This ₹180 must be remitted via monthly GSTR-3B filings after adjusting for Input Tax Credit (ITC) on your raw materials and purchases. It should never be treated as business profit or operating cash flow.",
+      ],
+      formulaBox: {
+        title: "GST Inclusive Revenue Formula",
+        formula:
+          "Revenue (Excl. GST) = Selling Price / (1 + GST Rate / 100)\nOutput GST = Selling Price − Revenue (Excl. GST)",
+        variables: [
+          { name: "Selling Price", desc: "Total amount collected from consumer (e.g. ₹1,180)" },
+          { name: "GST Rate", desc: "Applicable tax slab (5%, 12%, 18%, or 28%)" },
+        ],
+      },
+    },
+  ],
+  faqs: [
+    {
+      q: "What is the key difference between profit margin and markup?",
+      a: "Profit margin is your net profit divided by your selling price (revenue), showing how much of every rupee collected you keep. Markup is your profit divided by your cost price, showing how much you added on top of what you paid. Markup is always numerically higher than margin for the same transaction.",
+    },
+    {
+      q: "Why is profit margin always less than 100%?",
+      a: "Profit margin represents the fraction of total revenue that remains as profit. Since total costs cannot be less than zero in normal trading, profit cannot exceed total revenue, making 100% the mathematical upper limit (only achievable when product cost is zero). Markup, however, can be 200%, 500%, or more.",
+    },
+    {
+      q: "How do I calculate break-even selling price?",
+      a: "Break-even selling price is the minimum price you must charge so that total revenue exactly equals total costs (profit = ₹0). It is calculated as: Break-Even Price = Total Fixed Costs Per Unit / (1 − Total Percentage Fee Rate). For example, if fixed costs are ₹450 and marketplace commission is 10%, break-even price is ₹450 / 0.90 = ₹500.",
+    },
+    {
+      q: "Should shipping cost be calculated per unit or per order?",
+      a: "If a customer orders 5 shirts in a single parcel, you pay the courier company once for that package (per order). However, if items are shipped individually, shipping applies per unit. In bulk orders, fixed per-order expenses like shipping and invoice fees are divided across all units, significantly boosting per-unit profit.",
+    },
+    {
+      q: "What is considered a healthy profit margin for a small business?",
+      a: "Profit margins vary by industry. For grocery and FMCG retail, 5% to 12% net margin is standard due to rapid inventory turnover. For apparel and lifestyle goods, 20% to 35% is healthy. For proprietary manufacturing, specialized electronics, or digital products, net margins often exceed 40% to 60%.",
+    },
+    {
+      q: "How does offering a 20% discount impact my net profit?",
+      a: "Discounts erode net profit much faster than revenue. If a product costs ₹400 and sells for ₹500, profit is ₹100 (20% margin). If you offer a 10% discount, the price drops to ₹450, but your profit drops by 50% to ₹50! Never offer discounts without calculating their direct hit on bottom-line profit.",
+    },
+    {
+      q: "How do marketplace commissions work on Amazon and Flipkart?",
+      a: "Marketplaces charge: 1) Referral Commission (% of product price, usually 5% to 18%), 2) Closing Fee (fixed ₹5 to ₹35 based on price tier), 3) Weight handling / shipping fees, and 4) 18% GST on all marketplace service charges. Always use a dedicated calculator like CalcZen to verify net payout before pricing.",
+    },
+    {
+      q: "Why does selling price include GST reduce my actual profit?",
+      a: "GST collected from customers is a tax liability owed to the Government of India, not business income. If your selling price includes 18% GST, you only retain ₹100 for every ₹118 collected. Failing to subtract GST before calculating profit leads to an artificial overestimation of earnings.",
+    },
+    {
+      q: "What is customer acquisition cost (CAC) and how should I include it?",
+      a: "Customer Acquisition Cost is the total advertising and marketing spend required to generate one sale. If you spend ₹5,000 on Meta or Google Ads and generate 50 orders, your CAC is ₹100 per unit. This should be entered in the Advertising Cost field to find true net profit.",
+    },
+    {
+      q: "How do I find what price to charge to make ₹200 profit on every item?",
+      a: "Use the built-in 'Find My Selling Price' target pricing tool. Enter your target profit of ₹200. The calculator sums your product cost, packaging, shipping, and adjusts for marketplace percentage fees to give you the exact required selling price.",
+    },
+  ],
+  internalLinks: [
+    {
+      text: "Compare Job Offers & In-Hand Pay",
+      calculatorName: "CTC to In-Hand Salary Calculator",
+      href: "/calculator/ctc-to-in-hand-salary-calculator",
+    },
+    {
+      text: "Calculate Gold Jewellery & Making Charges",
+      calculatorName: "Gold Jewellery Bill Calculator",
+      href: "/calculator/gold-jewellery-bill-calculator",
+    },
+  ],
+};
+export default ProductProfitCalculator;
+
 export function ProductProfitCalculator() {
   const calc = getCalculator("product-profit-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -1321,142 +1459,3 @@ export function ProductProfitCalculator() {
 // -------------------------------------------------------------
 // SEO BLOG & COMPREHENSIVE GUIDE CONTENT
 // -------------------------------------------------------------
-
-const PRODUCT_PROFIT_BLOG_CONTENT: BlogContent = {
-  primaryKeyword: "Product Profit Calculator",
-  category: "Business",
-  introText:
-    "Calculating exact product profit is the foundation of every successful business, retail shop, e-commerce brand, and manufacturing enterprise. Learn the differences between profit margin and markup, how to factor in packaging, shipping, and marketplace commissions, and how to price your products for long-term sustainable profit.",
-  sections: [
-    {
-      title: "1. The Fundamental Difference: Profit Margin vs. Markup",
-      paragraphs: [
-        "One of the most frequent accounting mistakes made by shopkeepers, online sellers, and new entrepreneurs is confusing Profit Margin with Markup. While both metrics measure profitability, they use completely different reference points.",
-        "Profit Margin measures profit as a percentage of your selling price (revenue). In contrast, Markup measures profit as a percentage of your cost price. Because selling price is always higher than cost price in a profitable sale, Markup percentage will always be higher than Profit Margin percentage.",
-      ],
-      callout: {
-        type: "expertInsight",
-        title: "Golden Rule of Retail Pricing",
-        text: "Profit Margin can never exceed 100% because you cannot earn more than 100% of your revenue. However, Markup can easily be 200%, 500%, or even 1,000% when selling high-margin luxury or digital products.",
-      },
-      formulaBox: {
-        title: "Key Formulas",
-        formula:
-          "Profit Margin (%) = (Net Profit / Selling Price) × 100\nMarkup (%) = (Net Profit / Product Cost Price) × 100",
-        variables: [
-          { name: "Net Profit", desc: "Selling Price − Total Costs & Platform Fees" },
-          { name: "Selling Price", desc: "Final amount charged to buyer (excl. GST)" },
-          { name: "Cost Price", desc: "Direct manufacturing or wholesale buying price" },
-        ],
-      },
-    },
-    {
-      title: "2. The Margin vs. Markup Comparison Table",
-      paragraphs: [
-        "To quickly convert between target margins and the markup percentage you need to quote on your product, refer to this standard pricing benchmark table:",
-      ],
-      table: {
-        headers: ["Desired Margin (%)", "Required Markup (%)", "Cost ₹100 Selling Price"],
-        rows: [
-          ["10%", "11.1%", "₹111.11"],
-          ["20%", "25.0%", "₹125.00"],
-          ["25%", "33.3%", "₹133.33"],
-          ["30%", "42.9%", "₹142.86"],
-          ["33.3% (1/3rd)", "50.0%", "₹150.00"],
-          ["40%", "66.7%", "₹166.67"],
-          ["50% (Double)", "100.0%", "₹200.00"],
-          ["60%", "150.0%", "₹250.00"],
-          ["75%", "300.0%", "₹400.00"],
-        ],
-      },
-    },
-    {
-      title: "3. Hidden Expenses Every Online Seller Must Account For",
-      paragraphs: [
-        "Many first-time sellers on platforms like Amazon India, Flipkart, Meesho, or Shopify calculate gross profit (Selling Price − Buying Cost) and wonder why their bank account does not reflect those numbers. In practice, per-order selling involves several layers of deductions:",
-        "1. Packaging Costs: Corrugated cardboard boxes, bubble wrap, poly mailers, branded stickers, and security sealing tape typically add ₹15 to ₹40 per unit.",
-        "2. Shipping & Courier Charges: Courier aggregator services (e.g., Shiprocket, Delhivery) or marketplace logistics (Amazon Easy Ship) charge by volumetric weight. Weight slab discrepancies can quickly erode thin margins.",
-        "3. Marketplace Referral & Closing Fees: Amazon and Flipkart charge category referral commissions (typically 5% to 18%) plus a fixed closing fee per item based on the price tier.",
-        "4. Payment Gateway Fees: Direct-to-consumer websites charge 2% + 18% GST on each transaction via Razorpay, PayU, or Cashfree.",
-        "5. Customer Returns & RTO (Return to Origin): In Indian e-commerce, Cash on Delivery (COD) orders frequently have a 15% to 25% RTO rate. The seller must bear forward and reverse shipping costs even when no sale is completed.",
-      ],
-      callout: {
-        type: "commonMistake",
-        title: "The Dangerous Trap of Ignoring RTO",
-        text: "If your forward courier cost is ₹60 and reverse courier is ₹50, every returned order costs you ₹110 in dead loss. High-volume sellers build a 5% to 8% return-allowance reserve directly into their product cost price.",
-      },
-    },
-    {
-      title: "4. Understanding GST: Why GST Collected is NOT Profit",
-      paragraphs: [
-        "In India, consumer retail prices are normally quoted inclusive of Goods and Services Tax (GST). For example, if you sell an item for ₹1,180 at an 18% GST slab, your actual business revenue is only ₹1,000.",
-        "The remaining ₹180 is Output GST collected from the customer on behalf of the government. This ₹180 must be remitted via monthly GSTR-3B filings after adjusting for Input Tax Credit (ITC) on your raw materials and purchases. It should never be treated as business profit or operating cash flow.",
-      ],
-      formulaBox: {
-        title: "GST Inclusive Revenue Formula",
-        formula:
-          "Revenue (Excl. GST) = Selling Price / (1 + GST Rate / 100)\nOutput GST = Selling Price − Revenue (Excl. GST)",
-        variables: [
-          { name: "Selling Price", desc: "Total amount collected from consumer (e.g. ₹1,180)" },
-          { name: "GST Rate", desc: "Applicable tax slab (5%, 12%, 18%, or 28%)" },
-        ],
-      },
-    },
-  ],
-  faqs: [
-    {
-      q: "What is the key difference between profit margin and markup?",
-      a: "Profit margin is your net profit divided by your selling price (revenue), showing how much of every rupee collected you keep. Markup is your profit divided by your cost price, showing how much you added on top of what you paid. Markup is always numerically higher than margin for the same transaction.",
-    },
-    {
-      q: "Why is profit margin always less than 100%?",
-      a: "Profit margin represents the fraction of total revenue that remains as profit. Since total costs cannot be less than zero in normal trading, profit cannot exceed total revenue, making 100% the mathematical upper limit (only achievable when product cost is zero). Markup, however, can be 200%, 500%, or more.",
-    },
-    {
-      q: "How do I calculate break-even selling price?",
-      a: "Break-even selling price is the minimum price you must charge so that total revenue exactly equals total costs (profit = ₹0). It is calculated as: Break-Even Price = Total Fixed Costs Per Unit / (1 − Total Percentage Fee Rate). For example, if fixed costs are ₹450 and marketplace commission is 10%, break-even price is ₹450 / 0.90 = ₹500.",
-    },
-    {
-      q: "Should shipping cost be calculated per unit or per order?",
-      a: "If a customer orders 5 shirts in a single parcel, you pay the courier company once for that package (per order). However, if items are shipped individually, shipping applies per unit. In bulk orders, fixed per-order expenses like shipping and invoice fees are divided across all units, significantly boosting per-unit profit.",
-    },
-    {
-      q: "What is considered a healthy profit margin for a small business?",
-      a: "Profit margins vary by industry. For grocery and FMCG retail, 5% to 12% net margin is standard due to rapid inventory turnover. For apparel and lifestyle goods, 20% to 35% is healthy. For proprietary manufacturing, specialized electronics, or digital products, net margins often exceed 40% to 60%.",
-    },
-    {
-      q: "How does offering a 20% discount impact my net profit?",
-      a: "Discounts erode net profit much faster than revenue. If a product costs ₹400 and sells for ₹500, profit is ₹100 (20% margin). If you offer a 10% discount, the price drops to ₹450, but your profit drops by 50% to ₹50! Never offer discounts without calculating their direct hit on bottom-line profit.",
-    },
-    {
-      q: "How do marketplace commissions work on Amazon and Flipkart?",
-      a: "Marketplaces charge: 1) Referral Commission (% of product price, usually 5% to 18%), 2) Closing Fee (fixed ₹5 to ₹35 based on price tier), 3) Weight handling / shipping fees, and 4) 18% GST on all marketplace service charges. Always use a dedicated calculator like CalcZen to verify net payout before pricing.",
-    },
-    {
-      q: "Why does selling price include GST reduce my actual profit?",
-      a: "GST collected from customers is a tax liability owed to the Government of India, not business income. If your selling price includes 18% GST, you only retain ₹100 for every ₹118 collected. Failing to subtract GST before calculating profit leads to an artificial overestimation of earnings.",
-    },
-    {
-      q: "What is customer acquisition cost (CAC) and how should I include it?",
-      a: "Customer Acquisition Cost is the total advertising and marketing spend required to generate one sale. If you spend ₹5,000 on Meta or Google Ads and generate 50 orders, your CAC is ₹100 per unit. This should be entered in the Advertising Cost field to find true net profit.",
-    },
-    {
-      q: "How do I find what price to charge to make ₹200 profit on every item?",
-      a: "Use the built-in 'Find My Selling Price' target pricing tool. Enter your target profit of ₹200. The calculator sums your product cost, packaging, shipping, and adjusts for marketplace percentage fees to give you the exact required selling price.",
-    },
-  ],
-  internalLinks: [
-    {
-      text: "Compare Job Offers & In-Hand Pay",
-      calculatorName: "CTC to In-Hand Salary Calculator",
-      href: "/calculator/ctc-to-in-hand-salary-calculator",
-    },
-    {
-      text: "Calculate Gold Jewellery & Making Charges",
-      calculatorName: "Gold Jewellery Bill Calculator",
-      href: "/calculator/gold-jewellery-bill-calculator",
-    },
-  ],
-};
-export default ProductProfitCalculator;
-

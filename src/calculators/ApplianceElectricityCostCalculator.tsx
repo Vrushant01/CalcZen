@@ -45,6 +45,130 @@ import {
   validateApplianceItem,
 } from "@/utils/applianceElectricityUtils";
 
+// Educational FAQs
+const APPLIANCE_FAQS = [
+  {
+    q: "How do I calculate electricity consumption of an appliance?",
+    a: "To calculate an appliance's electricity consumption, multiply its power rating in Watts by the hours it runs each day, then divide by 1,000 to get electricity units (kWh). For example, a 75W fan running for 8 hours uses (75 × 8) ÷ 1,000 = 0.6 units per day. Multiply by your local electricity rate per unit to find the running cost.",
+  },
+  {
+    q: "What is one unit of electricity?",
+    a: "In India and worldwide, 1 unit of electricity equals 1 Kilowatt-hour (1 kWh). It is the amount of electrical energy consumed by a 1,000-Watt appliance running continuously for 1 hour.",
+  },
+  {
+    q: "How do I calculate the monthly electricity cost of a fan?",
+    a: "A standard ceiling fan uses 75 Watts. If you run it for 8 hours daily, it uses (75 × 8) ÷ 1,000 = 0.6 units/day. For a 30-day month, that is 18 units. At ₹8 per unit, the monthly electricity cost is 18 × 8 = ₹144. Upgrading to a 30W 5-Star BLDC fan reduces this to just ₹57.60 per month.",
+  },
+  {
+    q: "How much electricity does a refrigerator use?",
+    a: "A standard 250-litre frost-free refrigerator in India consumes between 200 and 300 units (kWh) per year, which is about 17 to 25 units per month (~₹136 to ₹200/month at ₹8/unit). A smaller direct-cool single-door model typically uses only 130 to 180 units per year.",
+  },
+  {
+    q: "How do I calculate electricity cost using watts?",
+    a: "Convert watts to kilowatts by dividing by 1,000, then multiply by daily operating hours, monthly days, and your tariff rate: Cost (₹) = (Watts ÷ 1,000) × Hours/Day × Days/Month × Rate per kWh.",
+  },
+  {
+    q: "Does standby mode consume electricity?",
+    a: "Yes. Devices like smart televisions, set-top boxes, Wi-Fi routers, game consoles, and microwave clocks draw 'phantom' or 'vampire' standby power even when turned off by remote. In an average Indian home, standby power can quietly add ₹80 to ₹250 to each monthly bill.",
+  },
+  {
+    q: "Is appliance power consumption the same as electricity units?",
+    a: "No. Power consumption is the instantaneous rate of electricity draw measured in Watts (W) or Kilowatts (kW). Electricity units represent energy consumed over time, measured in Kilowatt-hours (kWh). A 1,000W appliance running for 1 hour consumes 1 unit.",
+  },
+  {
+    q: "Where can I find my electricity price per unit?",
+    a: "Check your most recent physical or digital DISCOM electricity bill. Look for 'Energy Charges' or 'Tariff Rate (₹/kWh)'. In most Indian states, residential domestic rates range between ₹6.50 and ₹9.50 per unit depending on consumption slabs.",
+  },
+  {
+    q: "Can I calculate the cost of multiple appliances together?",
+    a: "Yes! Switch to the 'Combined Bill' tab in our calculator to add fans, lights, refrigerator, television, and water geyser together. The calculator automatically combines their energy usage and gives you an item-by-item breakdown of your estimated total household bill.",
+  },
+  {
+    q: "Are the calculator results exact?",
+    a: "The calculations provide realistic, technically transparent estimates based on the wattage and usage you enter. Actual DISCOM bills also include fixed meter charges, municipal electricity duty, and fuel surcharges, which can vary by state and DISCOM.",
+  },
+];
+
+// Educational Blog Content
+const APPLIANCE_CALCULATOR_BLOG: BlogContent = {
+  primaryKeyword: "appliance electricity cost calculator",
+  category: "Electricity",
+  introText:
+    "Learn how household appliances consume electricity in India, how to calculate power draw in units (kWh) and rupees, and how to identify phantom standby power to cut your monthly DISCOM bill.",
+  sections: [
+    {
+      title: "1. The Fundamental Rule: 1 kWh = 1 Electricity Unit",
+      paragraphs: [
+        "When your electricity distribution company (such as Tata Power, Adani Electricity, BESCOM, MSEDCL, or BSES) bills you for monthly consumption, they charge you per 'Unit'.",
+        "In electrical engineering and Indian utility billing, 1 electricity unit is exactly equal to 1 Kilowatt-hour (1 kWh). One kilowatt equals 1,000 Watts, which means drawing 1,000 Watts of electrical power continuously for 1 hour consumes exactly 1 unit.",
+        "For example, if you run a 1,000W electric iron or microwave for 1 hour, it consumes exactly 1.0 unit. At an average domestic tariff of ₹8 per unit, that single hour costs ₹8.00.",
+      ],
+      callout: {
+        type: "quickFact",
+        title: "Key Formula",
+        text: "Units (kWh) = (Watts × Operating Hours) ÷ 1,000. Running Cost (₹) = Units × Rate per kWh.",
+      },
+    },
+    {
+      title: "2. Why Different Appliances Require Different Calculation Methods",
+      paragraphs: [
+        "A common mistake made by generic calculators is assuming every appliance draws rated power continuously. In real life, appliances function under very different electrical dynamics:",
+        "• Continuous Fixed-Power Loads (Fans, Bulbs, Heaters, Pumps): These draw steady electrical wattage while switched on. A 75W ceiling fan running for 8 hours consumes (75 × 8) ÷ 1,000 = 0.6 units per day.",
+        "• Cycle-Based Appliances (Washing Machines, Dishwashers): A washing machine motor agitates intermittently, and water heating only occurs during specific wash phases. Therefore, energy is accurately measured per complete wash cycle (typically 0.5 to 1.1 kWh/cycle).",
+        "• Thermostat-Cycled Compressors (Refrigerators): Refrigerators run 24 hours a day, but the compressor cycles on and off. Multiplying compressor wattage by 24 hours produces three times the actual consumption. The certified annual kWh on the Bureau of Energy Efficiency (BEE) star label gives the standardized, lab-tested yearly consumption.",
+        "• Active vs. Standby Devices (Smart TVs, Set-Top Boxes, Computers): Modern electronics stay plugged in and consume electricity even in sleep mode (listening for remote controls or Wi-Fi wakeups). Accounting for standby power is essential for accurate budgeting.",
+      ],
+      table: {
+        headers: ["Appliance Type", "Typical Power / Energy", "Best Calculation Method"],
+        rows: [
+          ["Ceiling Fan (Induction)", "70W – 80W", "Method A: Power (Watts) & Operating Hours"],
+          ["BLDC Ceiling Fan", "28W – 32W (Saves 60%)", "Method A: Power (Watts) & Operating Hours"],
+          ["LED Bulb", "7W – 12W", "Method A: Power (Watts) & Operating Hours"],
+          ["Refrigerator (Frost Free 250L)", "200 – 280 kWh / year", "Method C: Certified Annual kWh (BEE Label)"],
+          ["Washing Machine", "0.5 – 1.1 kWh / cycle", "Method B: Energy per Complete Cycle"],
+          ["Smart TV & Set-Top Box", "80W active, 1W–12W standby", "Method D: Active + Standby Running"],
+          ["Storage Geyser (25L)", "2,000W – 3,000W", "Method A: Power (Watts) & Operating Hours"],
+        ],
+      },
+    },
+    {
+      title: "3. Standby 'Vampire' Power: The Hidden Drain in Indian Homes",
+      paragraphs: [
+        "Many electronic devices in modern homes never truly turn off when switched off by remote control. They enter an idle standby mode known as phantom load or vampire power.",
+        "Notable examples: older set-top boxes (DTH) often draw 12W to 18W in standby mode—nearly identical to when you are actively watching television. Running 18 hours in standby draws ~0.25 units daily (~₹60/month just for sitting idle).",
+        "Simple habit: Turn off the physical wall switch for set-top boxes, entertainment consoles, and computer power strips before going to sleep.",
+      ],
+      callout: {
+        type: "proTip",
+        title: "Phantom Power Reduction",
+        text: "Switching off televisions, DTH boxes, and microwave ovens at the main wall switch can save ₹100 to ₹250 every month without sacrificing convenience.",
+      },
+    },
+    {
+      title: "4. Practical Tips to Lower Your Household Electricity Bill",
+      paragraphs: [
+        "1. Upgrade to 5-Star BLDC ceiling fans: Replacing standard 75W induction fans with 30W BLDC models saves ~55 units per month across 3 fans (~₹440/month savings).",
+        "2. Replace incandescent and CFL bulbs with 9W LEDs: LEDs consume 85% less electricity than incandescent bulbs and last 5 times longer.",
+        "3. Set your AC thermostat to 24°C: Every 1°C increase saves ~6% on compressor electricity.",
+        "4. Use cold or normal wash cycles in washing machines: Over 80% of a washing machine's electrical consumption goes toward heating water.",
+        "5. Clean refrigerator condenser coils and air cooler pads: Dust buildup forces motors and compressors to work significantly harder, increasing power draw.",
+      ],
+    },
+  ],
+  internalLinks: [
+    {
+      text: "Calculate dedicated AC running costs and inverter savings with our",
+      calculatorName: "AC Electricity Cost Calculator",
+      href: "/calculator/ac-electricity-cost-calculator",
+    },
+    {
+      text: "Perform quick ratio shifts and percentage calculations with our",
+      calculatorName: "Percentage Calculator",
+      href: "/calculator/percentage-calculator",
+    },
+  ],
+};
+
 export function ApplianceElectricityCostCalculator() {
   const calc = getCalculator("appliance-electricity-cost-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -1391,127 +1515,3 @@ export function ApplianceElectricityCostCalculator() {
     </CalculatorPageLayout>
   );
 }
-
-// Educational FAQs
-const APPLIANCE_FAQS = [
-  {
-    q: "How do I calculate electricity consumption of an appliance?",
-    a: "To calculate an appliance's electricity consumption, multiply its power rating in Watts by the hours it runs each day, then divide by 1,000 to get electricity units (kWh). For example, a 75W fan running for 8 hours uses (75 × 8) ÷ 1,000 = 0.6 units per day. Multiply by your local electricity rate per unit to find the running cost.",
-  },
-  {
-    q: "What is one unit of electricity?",
-    a: "In India and worldwide, 1 unit of electricity equals 1 Kilowatt-hour (1 kWh). It is the amount of electrical energy consumed by a 1,000-Watt appliance running continuously for 1 hour.",
-  },
-  {
-    q: "How do I calculate the monthly electricity cost of a fan?",
-    a: "A standard ceiling fan uses 75 Watts. If you run it for 8 hours daily, it uses (75 × 8) ÷ 1,000 = 0.6 units/day. For a 30-day month, that is 18 units. At ₹8 per unit, the monthly electricity cost is 18 × 8 = ₹144. Upgrading to a 30W 5-Star BLDC fan reduces this to just ₹57.60 per month.",
-  },
-  {
-    q: "How much electricity does a refrigerator use?",
-    a: "A standard 250-litre frost-free refrigerator in India consumes between 200 and 300 units (kWh) per year, which is about 17 to 25 units per month (~₹136 to ₹200/month at ₹8/unit). A smaller direct-cool single-door model typically uses only 130 to 180 units per year.",
-  },
-  {
-    q: "How do I calculate electricity cost using watts?",
-    a: "Convert watts to kilowatts by dividing by 1,000, then multiply by daily operating hours, monthly days, and your tariff rate: Cost (₹) = (Watts ÷ 1,000) × Hours/Day × Days/Month × Rate per kWh.",
-  },
-  {
-    q: "Does standby mode consume electricity?",
-    a: "Yes. Devices like smart televisions, set-top boxes, Wi-Fi routers, game consoles, and microwave clocks draw 'phantom' or 'vampire' standby power even when turned off by remote. In an average Indian home, standby power can quietly add ₹80 to ₹250 to each monthly bill.",
-  },
-  {
-    q: "Is appliance power consumption the same as electricity units?",
-    a: "No. Power consumption is the instantaneous rate of electricity draw measured in Watts (W) or Kilowatts (kW). Electricity units represent energy consumed over time, measured in Kilowatt-hours (kWh). A 1,000W appliance running for 1 hour consumes 1 unit.",
-  },
-  {
-    q: "Where can I find my electricity price per unit?",
-    a: "Check your most recent physical or digital DISCOM electricity bill. Look for 'Energy Charges' or 'Tariff Rate (₹/kWh)'. In most Indian states, residential domestic rates range between ₹6.50 and ₹9.50 per unit depending on consumption slabs.",
-  },
-  {
-    q: "Can I calculate the cost of multiple appliances together?",
-    a: "Yes! Switch to the 'Combined Bill' tab in our calculator to add fans, lights, refrigerator, television, and water geyser together. The calculator automatically combines their energy usage and gives you an item-by-item breakdown of your estimated total household bill.",
-  },
-  {
-    q: "Are the calculator results exact?",
-    a: "The calculations provide realistic, technically transparent estimates based on the wattage and usage you enter. Actual DISCOM bills also include fixed meter charges, municipal electricity duty, and fuel surcharges, which can vary by state and DISCOM.",
-  },
-];
-
-// Educational Blog Content
-const APPLIANCE_CALCULATOR_BLOG: BlogContent = {
-  primaryKeyword: "appliance electricity cost calculator",
-  category: "Electricity",
-  introText:
-    "Learn how household appliances consume electricity in India, how to calculate power draw in units (kWh) and rupees, and how to identify phantom standby power to cut your monthly DISCOM bill.",
-  sections: [
-    {
-      title: "1. The Fundamental Rule: 1 kWh = 1 Electricity Unit",
-      paragraphs: [
-        "When your electricity distribution company (such as Tata Power, Adani Electricity, BESCOM, MSEDCL, or BSES) bills you for monthly consumption, they charge you per 'Unit'.",
-        "In electrical engineering and Indian utility billing, 1 electricity unit is exactly equal to 1 Kilowatt-hour (1 kWh). One kilowatt equals 1,000 Watts, which means drawing 1,000 Watts of electrical power continuously for 1 hour consumes exactly 1 unit.",
-        "For example, if you run a 1,000W electric iron or microwave for 1 hour, it consumes exactly 1.0 unit. At an average domestic tariff of ₹8 per unit, that single hour costs ₹8.00.",
-      ],
-      callout: {
-        type: "quickFact",
-        title: "Key Formula",
-        text: "Units (kWh) = (Watts × Operating Hours) ÷ 1,000. Running Cost (₹) = Units × Rate per kWh.",
-      },
-    },
-    {
-      title: "2. Why Different Appliances Require Different Calculation Methods",
-      paragraphs: [
-        "A common mistake made by generic calculators is assuming every appliance draws rated power continuously. In real life, appliances function under very different electrical dynamics:",
-        "• Continuous Fixed-Power Loads (Fans, Bulbs, Heaters, Pumps): These draw steady electrical wattage while switched on. A 75W ceiling fan running for 8 hours consumes (75 × 8) ÷ 1,000 = 0.6 units per day.",
-        "• Cycle-Based Appliances (Washing Machines, Dishwashers): A washing machine motor agitates intermittently, and water heating only occurs during specific wash phases. Therefore, energy is accurately measured per complete wash cycle (typically 0.5 to 1.1 kWh/cycle).",
-        "• Thermostat-Cycled Compressors (Refrigerators): Refrigerators run 24 hours a day, but the compressor cycles on and off. Multiplying compressor wattage by 24 hours produces three times the actual consumption. The certified annual kWh on the Bureau of Energy Efficiency (BEE) star label gives the standardized, lab-tested yearly consumption.",
-        "• Active vs. Standby Devices (Smart TVs, Set-Top Boxes, Computers): Modern electronics stay plugged in and consume electricity even in sleep mode (listening for remote controls or Wi-Fi wakeups). Accounting for standby power is essential for accurate budgeting.",
-      ],
-      table: {
-        headers: ["Appliance Type", "Typical Power / Energy", "Best Calculation Method"],
-        rows: [
-          ["Ceiling Fan (Induction)", "70W – 80W", "Method A: Power (Watts) & Operating Hours"],
-          ["BLDC Ceiling Fan", "28W – 32W (Saves 60%)", "Method A: Power (Watts) & Operating Hours"],
-          ["LED Bulb", "7W – 12W", "Method A: Power (Watts) & Operating Hours"],
-          ["Refrigerator (Frost Free 250L)", "200 – 280 kWh / year", "Method C: Certified Annual kWh (BEE Label)"],
-          ["Washing Machine", "0.5 – 1.1 kWh / cycle", "Method B: Energy per Complete Cycle"],
-          ["Smart TV & Set-Top Box", "80W active, 1W–12W standby", "Method D: Active + Standby Running"],
-          ["Storage Geyser (25L)", "2,000W – 3,000W", "Method A: Power (Watts) & Operating Hours"],
-        ],
-      },
-    },
-    {
-      title: "3. Standby 'Vampire' Power: The Hidden Drain in Indian Homes",
-      paragraphs: [
-        "Many electronic devices in modern homes never truly turn off when switched off by remote control. They enter an idle standby mode known as phantom load or vampire power.",
-        "Notable examples: older set-top boxes (DTH) often draw 12W to 18W in standby mode—nearly identical to when you are actively watching television. Running 18 hours in standby draws ~0.25 units daily (~₹60/month just for sitting idle).",
-        "Simple habit: Turn off the physical wall switch for set-top boxes, entertainment consoles, and computer power strips before going to sleep.",
-      ],
-      callout: {
-        type: "proTip",
-        title: "Phantom Power Reduction",
-        text: "Switching off televisions, DTH boxes, and microwave ovens at the main wall switch can save ₹100 to ₹250 every month without sacrificing convenience.",
-      },
-    },
-    {
-      title: "4. Practical Tips to Lower Your Household Electricity Bill",
-      paragraphs: [
-        "1. Upgrade to 5-Star BLDC ceiling fans: Replacing standard 75W induction fans with 30W BLDC models saves ~55 units per month across 3 fans (~₹440/month savings).",
-        "2. Replace incandescent and CFL bulbs with 9W LEDs: LEDs consume 85% less electricity than incandescent bulbs and last 5 times longer.",
-        "3. Set your AC thermostat to 24°C: Every 1°C increase saves ~6% on compressor electricity.",
-        "4. Use cold or normal wash cycles in washing machines: Over 80% of a washing machine's electrical consumption goes toward heating water.",
-        "5. Clean refrigerator condenser coils and air cooler pads: Dust buildup forces motors and compressors to work significantly harder, increasing power draw.",
-      ],
-    },
-  ],
-  internalLinks: [
-    {
-      text: "Calculate dedicated AC running costs and inverter savings with our",
-      calculatorName: "AC Electricity Cost Calculator",
-      href: "/calculator/ac-electricity-cost-calculator",
-    },
-    {
-      text: "Perform quick ratio shifts and percentage calculations with our",
-      calculatorName: "Percentage Calculator",
-      href: "/calculator/percentage-calculator",
-    },
-  ],
-};

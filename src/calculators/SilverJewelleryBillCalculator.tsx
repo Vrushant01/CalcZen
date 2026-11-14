@@ -39,6 +39,120 @@ import {
   type SilverBillInputs,
 } from "@/utils/silverJewelleryUtils";
 
+// RICH EDUCATIONAL BLOG CONTENT & FAQS
+export const SILVER_JEWELLERY_BLOG_CONTENT: any = {
+  title: "Silver Jewellery Bill Calculator India: Complete Price Breakdown Guide",
+  description:
+    "Learn how Indian jewellers calculate silver jewellery prices, making charges, purity fineness, and 3% GST. Calculate transparent silver bills before buying.",
+  author: "CalcZen Jewellery Domain Specialists",
+  publishDate: "November 2026",
+  readTime: "6 min read",
+  sections: [
+    {
+      title: "1. How Silver Jewellery Prices Are Calculated in India",
+      paragraphs: [
+        "Buying silver jewellery in India involves three primary cost components: the silver metal value, the craftsman's making charges, and statutory GST.",
+        "The standard retail billing formula followed across Indian showrooms is:",
+        "**Final Bill Amount = (Net Silver Weight × Silver Rate per Gram) + Making Charges + Other Charges − Discounts + GST (3%)**",
+        "Unlike gold, where bullion rates are widely quoted in 10-gram units, silver is predominantly priced per gram or per kilogram. Always ensure that the rate quoted reflects your ornament's specific purity grade.",
+      ],
+    },
+    {
+      title: "2. Bureau of Indian Standards (BIS) IS 2112:2025 Silver Hallmarking",
+      paragraphs: [
+        "Under Bureau of Indian Standards (BIS) standard IS 2112:2025, genuine silver jewellery and articles in India carry standardized hallmarking marks certifying elemental purity.",
+        "The primary recognized fineness grades include:",
+        "• **925 (Sterling Silver)**: 92.5% pure silver alloyed with 7.5% copper or zinc for mechanical strength. This is the universal standard for fine jewellery, earrings, rings, chains, and studded pendants.",
+        "• **999 (Fine Silver)**: 99.9% pure silver, used strictly in minted silver coins, bullion bars, and devotional pooja idols.",
+        "• **990 & 970**: High-purity grades popular in handcrafted pooja vessels, filigree (Cuttack tarakasi) art, and traditional articles.",
+        "• **900 & 800**: Traditional coin silver and utensil silver, frequently used for heavy traditional anklets (payal), silverware, and household utensils.",
+      ],
+    },
+    {
+      title: "3. Understanding Making Charges on Silver Jewellery",
+      paragraphs: [
+        "Making charges compensate artisans and manufacturers for casting, soldering, stone-setting, and polishing. Jewellers in India calculate making charges using three different methods:",
+        "• **Percentage Basis (%)**: Common in branded designer showrooms (typically 8% to 20% of the silver metal value).",
+        "• **Per Gram Basis (₹/g)**: Highly popular for traditional silverware, heavy chains, and payal (typically ₹10 to ₹35 per gram).",
+        "• **Fixed Lump Sum (₹)**: Common for lightweight, machine-made minimalist silver rings, studs, and nose pins.",
+      ],
+      callout: {
+        type: "tip",
+        title: "Deduct Stone Weight Before Silver Valuation",
+        text: "Always check whether studded silver jewellery is weighed net or gross. Cubic zirconia, gemstones, enamel work, and threads carry zero silver value and must be excluded from metal weight calculations.",
+      },
+    },
+    {
+      title: "4. GST on Silver Jewellery: Finished Goods vs. Job Work",
+      paragraphs: [
+        "Under CBIC GST regulations (HSN 7113), the retail sale of finished silver jewellery to an end customer attracts **3% GST** on the entire transaction value, even when making charges are billed on a separate line.",
+        "The 5% GST rate applies only to standalone B2B job-work services rendered by artisans to registered manufacturers, not to retail customer purchases in jewellery showrooms.",
+      ],
+    },
+  ],
+  faqs: [
+    {
+      q: "How do jewellers calculate silver jewellery prices in India?",
+      a: "Jewellers calculate the final bill by multiplying the net silver weight by the silver rate per gram for that purity, adding making charges and other fees, subtracting any discounts, and adding 3% GST.",
+    },
+    {
+      q: "What is 925 silver?",
+      a: "925 silver (Sterling Silver) contains 92.5% pure silver and 7.5% other metals (usually copper). Pure silver (99.9%) is too soft for everyday wear, so 925 alloy provides the durability needed for intricate jewellery.",
+    },
+    {
+      q: "What is the GST rate on silver jewellery in India?",
+      a: "Under CBIC rules, the retail sale of finished silver jewellery carries a statutory GST rate of 3% on the total invoice amount (metal value plus making charges).",
+    },
+    {
+      q: "How are silver making charges calculated?",
+      a: "Making charges are calculated as either a percentage of the silver value (e.g. 10%), a fixed rate per gram (e.g. ₹15/g), or a fixed flat fee per article.",
+    },
+    {
+      q: "Can I convert the 999 silver rate to 925 silver?",
+      a: "Yes. Multiply the 999 silver rate by (925 / 999). For example, if pure 999 silver is ₹120/g, the equivalent 925 silver rate is ₹120 × (925 / 999) = ₹111.11 per gram.",
+    },
+    {
+      q: "Are stones weighed along with silver?",
+      a: "No. Reputed jewellers weigh silver jewellery net of stones, beads, and enamel. You should never pay silver metal rates for non-silver materials.",
+    },
+    {
+      q: "Is silver hallmarking mandatory in India?",
+      a: "Silver hallmarking under BIS IS 2112 is voluntary but widely practiced by reputed jewellers to assure consumers of genuine elemental purity and hallmark verification.",
+    },
+    {
+      q: "What is the difference between 925 silver and 800 silver?",
+      a: "925 silver has 92.5% purity and is used for fine jewellery. 800 silver has 80% purity and is typically used for heavy traditional utensils, decorative artifacts, and payal.",
+    },
+    {
+      q: "Does silver jewellery tarnish over time?",
+      a: "Yes. Sterling silver naturally tarnishes when exposed to sulfur and moisture in the air. Regular wear, anti-tarnish storage, and rhodium plating help maintain its shine.",
+    },
+    {
+      q: "Does this calculator generate an official commercial invoice?",
+      a: "No. This tool provides retail cost estimations and pricing breakdowns for consumers. A legally valid commercial tax invoice is issued directly by the licensed jeweller upon purchase.",
+    },
+  ],
+  internalLinks: [
+    {
+      text: "Calculate Gold Jewellery Bills with Making Charges & GST",
+      calculatorName: "Gold Jewellery Bill Calculator",
+      href: "/calculator/gold-jewellery-bill-calculator",
+    },
+    {
+      text: "Estimate Old Gold Jewellery Resale & Exchange Value",
+      calculatorName: "Old Gold Exchange Value Calculator",
+      href: "/calculator/old-gold-exchange-value-calculator",
+    },
+    {
+      text: "Compare and Negotiate Making Charges on Precious Jewellery",
+      calculatorName: "Gold Making Charges Calculator",
+      href: "/calculator/gold-making-charges-calculator",
+    },
+  ],
+};
+
+export default SilverJewelleryBillCalculator;
+
 export function SilverJewelleryBillCalculator() {
   const calc = getCalculator("silver-jewellery-bill-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -1070,117 +1184,3 @@ Generated at: https://www.calczen.in/calculator/silver-jewellery-bill-calculator
     </CalculatorPageLayout>
   );
 }
-
-// RICH EDUCATIONAL BLOG CONTENT & FAQS
-export const SILVER_JEWELLERY_BLOG_CONTENT: any = {
-  title: "Silver Jewellery Bill Calculator India: Complete Price Breakdown Guide",
-  description:
-    "Learn how Indian jewellers calculate silver jewellery prices, making charges, purity fineness, and 3% GST. Calculate transparent silver bills before buying.",
-  author: "CalcZen Jewellery Domain Specialists",
-  publishDate: "November 2026",
-  readTime: "6 min read",
-  sections: [
-    {
-      title: "1. How Silver Jewellery Prices Are Calculated in India",
-      paragraphs: [
-        "Buying silver jewellery in India involves three primary cost components: the silver metal value, the craftsman's making charges, and statutory GST.",
-        "The standard retail billing formula followed across Indian showrooms is:",
-        "**Final Bill Amount = (Net Silver Weight × Silver Rate per Gram) + Making Charges + Other Charges − Discounts + GST (3%)**",
-        "Unlike gold, where bullion rates are widely quoted in 10-gram units, silver is predominantly priced per gram or per kilogram. Always ensure that the rate quoted reflects your ornament's specific purity grade.",
-      ],
-    },
-    {
-      title: "2. Bureau of Indian Standards (BIS) IS 2112:2025 Silver Hallmarking",
-      paragraphs: [
-        "Under Bureau of Indian Standards (BIS) standard IS 2112:2025, genuine silver jewellery and articles in India carry standardized hallmarking marks certifying elemental purity.",
-        "The primary recognized fineness grades include:",
-        "• **925 (Sterling Silver)**: 92.5% pure silver alloyed with 7.5% copper or zinc for mechanical strength. This is the universal standard for fine jewellery, earrings, rings, chains, and studded pendants.",
-        "• **999 (Fine Silver)**: 99.9% pure silver, used strictly in minted silver coins, bullion bars, and devotional pooja idols.",
-        "• **990 & 970**: High-purity grades popular in handcrafted pooja vessels, filigree (Cuttack tarakasi) art, and traditional articles.",
-        "• **900 & 800**: Traditional coin silver and utensil silver, frequently used for heavy traditional anklets (payal), silverware, and household utensils.",
-      ],
-    },
-    {
-      title: "3. Understanding Making Charges on Silver Jewellery",
-      paragraphs: [
-        "Making charges compensate artisans and manufacturers for casting, soldering, stone-setting, and polishing. Jewellers in India calculate making charges using three different methods:",
-        "• **Percentage Basis (%)**: Common in branded designer showrooms (typically 8% to 20% of the silver metal value).",
-        "• **Per Gram Basis (₹/g)**: Highly popular for traditional silverware, heavy chains, and payal (typically ₹10 to ₹35 per gram).",
-        "• **Fixed Lump Sum (₹)**: Common for lightweight, machine-made minimalist silver rings, studs, and nose pins.",
-      ],
-      callout: {
-        type: "tip",
-        title: "Deduct Stone Weight Before Silver Valuation",
-        text: "Always check whether studded silver jewellery is weighed net or gross. Cubic zirconia, gemstones, enamel work, and threads carry zero silver value and must be excluded from metal weight calculations.",
-      },
-    },
-    {
-      title: "4. GST on Silver Jewellery: Finished Goods vs. Job Work",
-      paragraphs: [
-        "Under CBIC GST regulations (HSN 7113), the retail sale of finished silver jewellery to an end customer attracts **3% GST** on the entire transaction value, even when making charges are billed on a separate line.",
-        "The 5% GST rate applies only to standalone B2B job-work services rendered by artisans to registered manufacturers, not to retail customer purchases in jewellery showrooms.",
-      ],
-    },
-  ],
-  faqs: [
-    {
-      q: "How do jewellers calculate silver jewellery prices in India?",
-      a: "Jewellers calculate the final bill by multiplying the net silver weight by the silver rate per gram for that purity, adding making charges and other fees, subtracting any discounts, and adding 3% GST.",
-    },
-    {
-      q: "What is 925 silver?",
-      a: "925 silver (Sterling Silver) contains 92.5% pure silver and 7.5% other metals (usually copper). Pure silver (99.9%) is too soft for everyday wear, so 925 alloy provides the durability needed for intricate jewellery.",
-    },
-    {
-      q: "What is the GST rate on silver jewellery in India?",
-      a: "Under CBIC rules, the retail sale of finished silver jewellery carries a statutory GST rate of 3% on the total invoice amount (metal value plus making charges).",
-    },
-    {
-      q: "How are silver making charges calculated?",
-      a: "Making charges are calculated as either a percentage of the silver value (e.g. 10%), a fixed rate per gram (e.g. ₹15/g), or a fixed flat fee per article.",
-    },
-    {
-      q: "Can I convert the 999 silver rate to 925 silver?",
-      a: "Yes. Multiply the 999 silver rate by (925 / 999). For example, if pure 999 silver is ₹120/g, the equivalent 925 silver rate is ₹120 × (925 / 999) = ₹111.11 per gram.",
-    },
-    {
-      q: "Are stones weighed along with silver?",
-      a: "No. Reputed jewellers weigh silver jewellery net of stones, beads, and enamel. You should never pay silver metal rates for non-silver materials.",
-    },
-    {
-      q: "Is silver hallmarking mandatory in India?",
-      a: "Silver hallmarking under BIS IS 2112 is voluntary but widely practiced by reputed jewellers to assure consumers of genuine elemental purity and hallmark verification.",
-    },
-    {
-      q: "What is the difference between 925 silver and 800 silver?",
-      a: "925 silver has 92.5% purity and is used for fine jewellery. 800 silver has 80% purity and is typically used for heavy traditional utensils, decorative artifacts, and payal.",
-    },
-    {
-      q: "Does silver jewellery tarnish over time?",
-      a: "Yes. Sterling silver naturally tarnishes when exposed to sulfur and moisture in the air. Regular wear, anti-tarnish storage, and rhodium plating help maintain its shine.",
-    },
-    {
-      q: "Does this calculator generate an official commercial invoice?",
-      a: "No. This tool provides retail cost estimations and pricing breakdowns for consumers. A legally valid commercial tax invoice is issued directly by the licensed jeweller upon purchase.",
-    },
-  ],
-  internalLinks: [
-    {
-      text: "Calculate Gold Jewellery Bills with Making Charges & GST",
-      calculatorName: "Gold Jewellery Bill Calculator",
-      href: "/calculator/gold-jewellery-bill-calculator",
-    },
-    {
-      text: "Estimate Old Gold Jewellery Resale & Exchange Value",
-      calculatorName: "Old Gold Exchange Value Calculator",
-      href: "/calculator/old-gold-exchange-value-calculator",
-    },
-    {
-      text: "Compare and Negotiate Making Charges on Precious Jewellery",
-      calculatorName: "Gold Making Charges Calculator",
-      href: "/calculator/gold-making-charges-calculator",
-    },
-  ],
-};
-
-export default SilverJewelleryBillCalculator;

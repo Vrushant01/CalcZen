@@ -81,6 +81,124 @@ function convertUnitValue(val: number, fromUnit: DimensionUnit, toUnit: Dimensio
   return Math.round(converted * 100) / 100;
 }
 
+// -------------------------------------------------------------
+// SEO BLOG & EDUCATIONAL CONTENT
+// -------------------------------------------------------------
+
+const blogContent: any = {
+  title: "Complete RCC Price & Concrete Quantity Calculation Guide (India)",
+  primaryKeyword: "RCC Price Calculator",
+  category: "Home Construction",
+  introText:
+    "Reinforced Cement Concrete (RCC) is the backbone of Indian civil construction. Whether you are casting a 1,000 sq ft residential roof slab, building plinth beams, or pouring foundation footings, accurately estimating concrete volume, cement bags, sand, coarse aggregate, and TMT rebar is essential to control costs and prevent site shortages.",
+  sections: [
+    {
+      title: "What is Reinforced Cement Concrete (RCC)?",
+      paragraphs: [
+        "Reinforced Cement Concrete (RCC) is a composite civil engineering material combining plain cement concrete with high-tensile steel reinforcement bars (TMT rebar).",
+        "Plain concrete possesses immense compressive strength but very low tensile strength (only about 10% of its compressive capacity). Steel reinforcement absorbs all tensile, flexural, and shear stresses, enabling modern structural frames, cantilevers, and floor slabs to span large distances safely without brittle cracking.",
+      ],
+      callout: {
+        type: "quickFact",
+        title: "IS 456:2000 Minimum Grade Rule",
+        text: "Per Clause 6.1.2 of IS 456:2000, concrete of grade lower than M20 shall not be used in reinforced concrete work under standard exposure conditions.",
+      },
+    },
+    {
+      title: "Why is the Dry Volume Factor 1.54 Used in Concrete Estimation?",
+      paragraphs: [
+        "When dry cement, dry sand, and coarse aggregates are mixed with water, the fine sand particles fill the microscopic voids between coarse aggregates, and cement paste fills the voids between sand particles. Furthermore, entrained air escapes during compaction and mechanical vibration.",
+        "Civil engineers standardly apply a dry volume factor of 1.52 to 1.57 (with 1.54 being the gold standard adopted by the Central Public Works Department / CPWD). This means 1 cubic metre of compacted wet concrete requires approximately 1.54 cubic metres of dry raw ingredients.",
+      ],
+      formulaBox: {
+        title: "Standard Dry Volume Formula",
+        formula: "Dry Volume (m³) = Wet Compacted Volume (m³) × 1.54\nCement Volume = Dry Volume × (Cement Ratio / Total Mix Parts)\nCement Bags = Cement Volume / 0.0347 m³",
+        variables: [
+          { name: "1.54", desc: "CPWD standard dry-void compaction factor for concrete." },
+          { name: "0.0347 m³", desc: "Standard volume of one 50kg cement bag (density 1,440 kg/m³)." },
+        ],
+      },
+    },
+    {
+      title: "Understanding Concrete Grades: M15, M20, M25, and Beyond",
+      paragraphs: [
+        "In the Indian Standards designation (e.g., M20), 'M' stands for Mix and the number denotes the characteristic compressive strength in N/mm² (MPa) after 28 days of curing on a standard 150mm test cube:",
+        "- **M10 (1:3:6):** Suitable for plain cement concrete (PCC) leveling courses and bedding beneath footings.",
+        "- **M15 (1:2:4):** Used for non-structural pathways, boundary wall foundations, and light floors.",
+        "- **M20 (1:1.5:3):** The standard benchmark for residential slabs, beams, lintels, and columns.",
+        "- **M25 (1:1:2):** Mandated for heavily loaded multi-storey columns, water-retaining structures, and coastal zones.",
+        "- **M30 and Above:** High-strength concrete prepared via laboratory design mix (IS 10262) for high-rise frames and bridges.",
+      ],
+    },
+    {
+      title: "How to Estimate Reinforcement Steel (TMT Bars)",
+      paragraphs: [
+        "Reinforcement steel can be estimated through two distinct civil engineering methodologies:",
+        "1. **Preliminary Empirical Estimation:** Based on volume of concrete (Slabs: 70–90 kg/m³, Beams: 100–140 kg/m³, Columns: 130–180 kg/m³, Footings: 60–90 kg/m³).",
+        "2. **Detailed Bar Bending Schedule (BBS):** Calculated bar-by-bar using structural drawings and the theoretical rebar weight formula.",
+      ],
+      formulaBox: {
+        title: "Rebar Unit Weight Formula (IS 1786)",
+        formula: "Weight per Metre (kg/m) = d² / 162\nTotal Steel Weight (kg) = Total Bar Length (m) × (d² / 162)",
+        variables: [
+          { name: "d", desc: "Nominal bar diameter in millimetres (8mm, 10mm, 12mm, 16mm, etc.)." },
+          { name: "162", desc: "Constant derived from steel density (7,850 kg/m³) × π/4 × 10^-6." },
+        ],
+      },
+    },
+    {
+      title: "Site-Mix Concrete vs Ready-Mix Concrete (RMC)",
+      paragraphs: [
+        "For small residential projects with narrow road access, site-mix concrete prepared with a 10/7 mechanical mixer remains common and cost-effective for pours under 15 m³.",
+        "For larger slabs (above 1,500 sq ft) or urban multi-storey structures, Ready-Mix Concrete (RMC) batched under computer-controlled conditions in dedicated batching plants offers superior quality consistency, eliminating on-site raw material congestion and dramatically speeding up casting times.",
+      ],
+      callout: {
+        type: "proTip",
+        title: "Curing Practice",
+        text: "Begin water curing as soon as the concrete surface hardens (within 24 hours). Ponding or wet hessian curing must continue uninterrupted for a minimum of 7 to 10 days (14 days for mineral admixtures) to attain full 28-day design strength.",
+      },
+    },
+  ],
+  faqs: [
+    {
+      q: "How many cement bags are required for 1 m³ of M20 concrete?",
+      a: "For 1 cubic metre of M20 concrete (nominal mix 1:1.5:3) with a standard dry volume factor of 1.54, the cement volume required is 1.54 / (1 + 1.5 + 3) = 0.28 m³. Since one 50kg bag of cement has a volume of approximately 0.0347 m³ (density 1,440 kg/m³), you require approximately 8.07 bags (rounded to 8.2 – 8.5 bags including handling wastage).",
+    },
+    {
+      q: "What is the standard formula to calculate steel bar weight per metre in India?",
+      a: "The standard theoretical unit weight of steel rebar is given by the formula: Weight (kg/m) = d² / 162, where 'd' is the nominal diameter of the TMT bar in millimetres. For example: 8mm = 0.395 kg/m; 10mm = 0.617 kg/m; 12mm = 0.889 kg/m; 16mm = 1.580 kg/m; 20mm = 2.469 kg/m.",
+    },
+    {
+      q: "What is the typical cost of RCC roof slab casting per square foot in India?",
+      a: "In India, the all-inclusive cost of RCC roof slab casting (including cement, sand, coarse aggregate, TMT steel, shuttering/centering, and concreting labour) typically ranges between ₹180 and ₹260 per square foot for a standard 5-inch thick slab, depending on local steel and sand rates.",
+    },
+    {
+      q: "How much binding wire is needed for 1 ton (1,000 kg) of steel?",
+      a: "As a standard civil engineering rule of thumb, binding wire requirement is approximately 1% of the total reinforcement steel weight. For 1 ton (1,000 kg) of TMT steel, you will need approximately 8 kg to 12 kg of 18-gauge annealed GI binding wire.",
+    },
+    {
+      q: "What is the minimum grade of concrete for RCC work per IS 456:2000?",
+      a: "Per Clause 6.1.2 of IS 456:2000, concrete of grade lower than M20 shall not be used in reinforced concrete work under standard exposure conditions. Plain concrete (PCC) may use M10 or M15.",
+    },
+    {
+      q: "Why do civil engineers avoid double-counting beam and slab overlaps?",
+      a: "In a beam-and-slab floor system, the top portion of the beam is monolithic with the floor slab. If the slab volume is calculated across the full footprint area, and beam depths are measured from the top of the slab rather than the underside of the slab, the concrete volume at the junction will be double-counted. Quantity surveyors measure beams below the slab soffit to avoid over-ordering concrete.",
+    },
+    {
+      q: "What is the difference between Nominal Mix and Design Mix concrete?",
+      a: "Nominal mix concrete relies on standardized volumetric proportions (such as 1:1.5:3 for M20) suitable for non-critical or low-rise residential works up to M20. Design mix concrete (mandated for M25 and above per IS 10262) calculates precise weight proportions based on actual laboratory testing of cement strength, aggregate grading, moisture content, and chemical admixtures.",
+    },
+    {
+      q: "How much shuttering area is required for an RCC slab?",
+      a: "For a simple rectangular roof slab, the formwork area equals the bottom soffit area (Length × Width) plus the 4 perimeter edge side faces (2 × (Length + Width) × Thickness). For a 1,000 sq ft slab (40' × 25' × 5\"), the bottom area is 1,000 sq ft and the edge formwork is approximately 54 sq ft, giving a total of ~1,054 sq ft.",
+    },
+    {
+      q: "How long should RCC shuttering remain in place before stripping?",
+      a: "Per IS 456:2000 Clause 11.3: Column and vertical beam sides can be stripped after 16–24 hours; slab soffit formwork (props left under) after 3 days; slab props under 4.5m span after 7 days; and beam soffit props after 14 to 21 days depending on span and cement type.",
+    },
+  ],
+};
+
 export function RccPriceCalculator() {
   const calc = getCalculator("rcc-price-calculator")!;
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -1660,121 +1778,3 @@ export function RccPriceCalculator() {
     </CalculatorPageLayout>
   );
 }
-
-// -------------------------------------------------------------
-// SEO BLOG & EDUCATIONAL CONTENT
-// -------------------------------------------------------------
-
-const blogContent: any = {
-  title: "Complete RCC Price & Concrete Quantity Calculation Guide (India)",
-  primaryKeyword: "RCC Price Calculator",
-  category: "Home Construction",
-  introText:
-    "Reinforced Cement Concrete (RCC) is the backbone of Indian civil construction. Whether you are casting a 1,000 sq ft residential roof slab, building plinth beams, or pouring foundation footings, accurately estimating concrete volume, cement bags, sand, coarse aggregate, and TMT rebar is essential to control costs and prevent site shortages.",
-  sections: [
-    {
-      title: "What is Reinforced Cement Concrete (RCC)?",
-      paragraphs: [
-        "Reinforced Cement Concrete (RCC) is a composite civil engineering material combining plain cement concrete with high-tensile steel reinforcement bars (TMT rebar).",
-        "Plain concrete possesses immense compressive strength but very low tensile strength (only about 10% of its compressive capacity). Steel reinforcement absorbs all tensile, flexural, and shear stresses, enabling modern structural frames, cantilevers, and floor slabs to span large distances safely without brittle cracking.",
-      ],
-      callout: {
-        type: "quickFact",
-        title: "IS 456:2000 Minimum Grade Rule",
-        text: "Per Clause 6.1.2 of IS 456:2000, concrete of grade lower than M20 shall not be used in reinforced concrete work under standard exposure conditions.",
-      },
-    },
-    {
-      title: "Why is the Dry Volume Factor 1.54 Used in Concrete Estimation?",
-      paragraphs: [
-        "When dry cement, dry sand, and coarse aggregates are mixed with water, the fine sand particles fill the microscopic voids between coarse aggregates, and cement paste fills the voids between sand particles. Furthermore, entrained air escapes during compaction and mechanical vibration.",
-        "Civil engineers standardly apply a dry volume factor of 1.52 to 1.57 (with 1.54 being the gold standard adopted by the Central Public Works Department / CPWD). This means 1 cubic metre of compacted wet concrete requires approximately 1.54 cubic metres of dry raw ingredients.",
-      ],
-      formulaBox: {
-        title: "Standard Dry Volume Formula",
-        formula: "Dry Volume (m³) = Wet Compacted Volume (m³) × 1.54\nCement Volume = Dry Volume × (Cement Ratio / Total Mix Parts)\nCement Bags = Cement Volume / 0.0347 m³",
-        variables: [
-          { name: "1.54", desc: "CPWD standard dry-void compaction factor for concrete." },
-          { name: "0.0347 m³", desc: "Standard volume of one 50kg cement bag (density 1,440 kg/m³)." },
-        ],
-      },
-    },
-    {
-      title: "Understanding Concrete Grades: M15, M20, M25, and Beyond",
-      paragraphs: [
-        "In the Indian Standards designation (e.g., M20), 'M' stands for Mix and the number denotes the characteristic compressive strength in N/mm² (MPa) after 28 days of curing on a standard 150mm test cube:",
-        "- **M10 (1:3:6):** Suitable for plain cement concrete (PCC) leveling courses and bedding beneath footings.",
-        "- **M15 (1:2:4):** Used for non-structural pathways, boundary wall foundations, and light floors.",
-        "- **M20 (1:1.5:3):** The standard benchmark for residential slabs, beams, lintels, and columns.",
-        "- **M25 (1:1:2):** Mandated for heavily loaded multi-storey columns, water-retaining structures, and coastal zones.",
-        "- **M30 and Above:** High-strength concrete prepared via laboratory design mix (IS 10262) for high-rise frames and bridges.",
-      ],
-    },
-    {
-      title: "How to Estimate Reinforcement Steel (TMT Bars)",
-      paragraphs: [
-        "Reinforcement steel can be estimated through two distinct civil engineering methodologies:",
-        "1. **Preliminary Empirical Estimation:** Based on volume of concrete (Slabs: 70–90 kg/m³, Beams: 100–140 kg/m³, Columns: 130–180 kg/m³, Footings: 60–90 kg/m³).",
-        "2. **Detailed Bar Bending Schedule (BBS):** Calculated bar-by-bar using structural drawings and the theoretical rebar weight formula.",
-      ],
-      formulaBox: {
-        title: "Rebar Unit Weight Formula (IS 1786)",
-        formula: "Weight per Metre (kg/m) = d² / 162\nTotal Steel Weight (kg) = Total Bar Length (m) × (d² / 162)",
-        variables: [
-          { name: "d", desc: "Nominal bar diameter in millimetres (8mm, 10mm, 12mm, 16mm, etc.)." },
-          { name: "162", desc: "Constant derived from steel density (7,850 kg/m³) × π/4 × 10^-6." },
-        ],
-      },
-    },
-    {
-      title: "Site-Mix Concrete vs Ready-Mix Concrete (RMC)",
-      paragraphs: [
-        "For small residential projects with narrow road access, site-mix concrete prepared with a 10/7 mechanical mixer remains common and cost-effective for pours under 15 m³.",
-        "For larger slabs (above 1,500 sq ft) or urban multi-storey structures, Ready-Mix Concrete (RMC) batched under computer-controlled conditions in dedicated batching plants offers superior quality consistency, eliminating on-site raw material congestion and dramatically speeding up casting times.",
-      ],
-      callout: {
-        type: "proTip",
-        title: "Curing Practice",
-        text: "Begin water curing as soon as the concrete surface hardens (within 24 hours). Ponding or wet hessian curing must continue uninterrupted for a minimum of 7 to 10 days (14 days for mineral admixtures) to attain full 28-day design strength.",
-      },
-    },
-  ],
-  faqs: [
-    {
-      q: "How many cement bags are required for 1 m³ of M20 concrete?",
-      a: "For 1 cubic metre of M20 concrete (nominal mix 1:1.5:3) with a standard dry volume factor of 1.54, the cement volume required is 1.54 / (1 + 1.5 + 3) = 0.28 m³. Since one 50kg bag of cement has a volume of approximately 0.0347 m³ (density 1,440 kg/m³), you require approximately 8.07 bags (rounded to 8.2 – 8.5 bags including handling wastage).",
-    },
-    {
-      q: "What is the standard formula to calculate steel bar weight per metre in India?",
-      a: "The standard theoretical unit weight of steel rebar is given by the formula: Weight (kg/m) = d² / 162, where 'd' is the nominal diameter of the TMT bar in millimetres. For example: 8mm = 0.395 kg/m; 10mm = 0.617 kg/m; 12mm = 0.889 kg/m; 16mm = 1.580 kg/m; 20mm = 2.469 kg/m.",
-    },
-    {
-      q: "What is the typical cost of RCC roof slab casting per square foot in India?",
-      a: "In India, the all-inclusive cost of RCC roof slab casting (including cement, sand, coarse aggregate, TMT steel, shuttering/centering, and concreting labour) typically ranges between ₹180 and ₹260 per square foot for a standard 5-inch thick slab, depending on local steel and sand rates.",
-    },
-    {
-      q: "How much binding wire is needed for 1 ton (1,000 kg) of steel?",
-      a: "As a standard civil engineering rule of thumb, binding wire requirement is approximately 1% of the total reinforcement steel weight. For 1 ton (1,000 kg) of TMT steel, you will need approximately 8 kg to 12 kg of 18-gauge annealed GI binding wire.",
-    },
-    {
-      q: "What is the minimum grade of concrete for RCC work per IS 456:2000?",
-      a: "Per Clause 6.1.2 of IS 456:2000, concrete of grade lower than M20 shall not be used in reinforced concrete work under standard exposure conditions. Plain concrete (PCC) may use M10 or M15.",
-    },
-    {
-      q: "Why do civil engineers avoid double-counting beam and slab overlaps?",
-      a: "In a beam-and-slab floor system, the top portion of the beam is monolithic with the floor slab. If the slab volume is calculated across the full footprint area, and beam depths are measured from the top of the slab rather than the underside of the slab, the concrete volume at the junction will be double-counted. Quantity surveyors measure beams below the slab soffit to avoid over-ordering concrete.",
-    },
-    {
-      q: "What is the difference between Nominal Mix and Design Mix concrete?",
-      a: "Nominal mix concrete relies on standardized volumetric proportions (such as 1:1.5:3 for M20) suitable for non-critical or low-rise residential works up to M20. Design mix concrete (mandated for M25 and above per IS 10262) calculates precise weight proportions based on actual laboratory testing of cement strength, aggregate grading, moisture content, and chemical admixtures.",
-    },
-    {
-      q: "How much shuttering area is required for an RCC slab?",
-      a: "For a simple rectangular roof slab, the formwork area equals the bottom soffit area (Length × Width) plus the 4 perimeter edge side faces (2 × (Length + Width) × Thickness). For a 1,000 sq ft slab (40' × 25' × 5\"), the bottom area is 1,000 sq ft and the edge formwork is approximately 54 sq ft, giving a total of ~1,054 sq ft.",
-    },
-    {
-      q: "How long should RCC shuttering remain in place before stripping?",
-      a: "Per IS 456:2000 Clause 11.3: Column and vertical beam sides can be stripped after 16–24 hours; slab soffit formwork (props left under) after 3 days; slab props under 4.5m span after 7 days; and beam soffit props after 14 to 21 days depending on span and cement type.",
-    },
-  ],
-};

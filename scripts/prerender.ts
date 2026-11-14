@@ -28,6 +28,24 @@ function getRelatedCalculators(currentSlug: string, categorySlug: string, count 
     .slice(0, count);
 }
 
+const OG_IMAGE_SLUGS = new Set([
+  "401k-calculator",
+  "age-calculator",
+  "bmi-calculator",
+  "bmr-calculator",
+  "calorie-calculator",
+  "compound-interest-calculator",
+  "loan-emi-calculator",
+  "mortgage-calculator",
+  "percentage-calculator",
+  "pregnancy-due-date-calculator",
+  "retirement-calculator",
+  "scientific-calculator",
+  "standard-calculator",
+  "tip-calculator",
+  "water-intake-calculator",
+]);
+
 function injectMetadata(
   templateHtml: string,
   params: {
@@ -36,6 +54,7 @@ function injectMetadata(
     canonical: string;
     keywords?: string[];
     jsonLd?: object[];
+    image?: string;
     bodyHtml: string;
   },
 ): string {
@@ -51,6 +70,7 @@ function injectMetadata(
   const safeTitle = escapeHtml(params.title);
   const safeDesc = escapeHtml(params.description);
   const safeCanonical = escapeHtml(params.canonical);
+  const ogImage = params.image || `${siteUrl}/icons/android-chrome-512x512.png`;
   const keywordsTag = params.keywords?.length
     ? `<meta name="keywords" content="${escapeHtml(params.keywords.join(", "))}" />`
     : "";
@@ -68,11 +88,11 @@ function injectMetadata(
     <meta property="og:url" content="${safeCanonical}" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CalcZen" />
-    <meta property="og:image" content="${siteUrl}/icons/android-chrome-512x512.png" />
+    <meta property="og:image" content="${ogImage}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${safeTitle}" />
     <meta name="twitter:description" content="${safeDesc}" />
-    <meta name="twitter:image" content="${siteUrl}/icons/android-chrome-512x512.png" />
+    <meta name="twitter:image" content="${ogImage}" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     ${keywordsTag}
     ${jsonLdScripts}
@@ -529,10 +549,15 @@ async function prerender() {
       ${renderFooterHtml()}
     `;
 
+    const ogImage = OG_IMAGE_SLUGS.has(calc.slug)
+      ? `${siteUrl}/og/${calc.slug}.png`
+      : `${siteUrl}/og/default-og.png`;
+
     const finalHtml = injectMetadata(templateHtml, {
       title,
       description,
       canonical,
+      image: ogImage,
       keywords: calc.keywords,
       jsonLd,
       bodyHtml,

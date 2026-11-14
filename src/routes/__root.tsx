@@ -160,6 +160,7 @@ function RootComponent() {
   useEffect(() => {
     let title = "CalcZen — Smart Online Calculators";
     let description = "Free online calculators for finance, health, math and everyday life.";
+    let image = "";
 
     // Iterate from root to leaf so that specific child routes override parent/root default tags
     for (let i = 0; i < state.matches.length; i++) {
@@ -188,6 +189,14 @@ function RootComponent() {
             if (descObj && typeof descObj.content === "string") {
               description = descObj.content;
             }
+
+            // Find image
+            const imgObj = headResult.meta.find(
+              (m: any) => m && (m.property === "og:image" || m.name === "twitter:image"),
+            );
+            if (imgObj && typeof imgObj.content === "string") {
+              image = imgObj.content;
+            }
           }
         } catch (err) {
           console.error("Error evaluating route head:", err);
@@ -214,6 +223,11 @@ function RootComponent() {
 
     setMetaTag("og:title", "property", title);
     setMetaTag("twitter:title", "name", title);
+
+    if (image) {
+      setMetaTag("og:image", "property", image);
+      setMetaTag("twitter:image", "name", image);
+    }
 
     // Update or create canonical link tag
     // Remove any extra/duplicate canonical tags first

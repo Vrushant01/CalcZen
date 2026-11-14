@@ -4,6 +4,24 @@ import { PageShell } from "@/components/layout/PageShell";
 import { getCalculator } from "@/data/calculators";
 import { calculatorComponents } from "@/calculators/registry";
 
+const OG_IMAGE_SLUGS = new Set([
+  "401k-calculator",
+  "age-calculator",
+  "bmi-calculator",
+  "bmr-calculator",
+  "calorie-calculator",
+  "compound-interest-calculator",
+  "loan-emi-calculator",
+  "mortgage-calculator",
+  "percentage-calculator",
+  "pregnancy-due-date-calculator",
+  "retirement-calculator",
+  "scientific-calculator",
+  "standard-calculator",
+  "tip-calculator",
+  "water-intake-calculator",
+]);
+
 export const Route = createFileRoute("/calculator/$slug")({
   loader: ({ params }) => {
     const calc = getCalculator(params.slug);
@@ -17,6 +35,9 @@ export const Route = createFileRoute("/calculator/$slug")({
     const title = calc.metaTitle || `${calc.name} - Free Online Calculator | CalcZen`;
     const desc = calc.metaDescription || calc.description;
     const url = `https://www.calczen.in/calculator/${calc.slug}`;
+    const ogImage = OG_IMAGE_SLUGS.has(calc.slug)
+      ? `https://www.calczen.in/og/${calc.slug}.png`
+      : "https://www.calczen.in/og/default-og.png";
 
     return {
       meta: [
@@ -27,9 +48,11 @@ export const Route = createFileRoute("/calculator/$slug")({
         { property: "og:description", content: desc },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
+        { property: "og:image", content: ogImage },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: desc },
+        { name: "twitter:image", content: ogImage },
         { name: "keywords", content: calc.keywords.join(", ") },
       ],
       links: [{ rel: "canonical", href: url }],

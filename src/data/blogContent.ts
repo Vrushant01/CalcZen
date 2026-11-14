@@ -827,6 +827,14 @@ export const blogContent: Record<string, BlogContent> = {
     ],
     faqs: [
       {
+        q: "How can I calculate my age on a particular date in the future or past?",
+        a: "To calculate your age on a particular date, simply select any target date in the calendar selector. The tool computes your exact age in years, months, and days on that date, which is essential for checking age criteria on official government examination forms, job applications, or insurance policies.",
+      },
+      {
+        q: "How do I calculate the age difference between two people or partners?",
+        a: 'You can compare birthdates directly, or use our dedicated <a href="/calculator/couple-age-difference-calculator" class="text-primary hover:underline">Couple Age Difference Calculator</a> to view the exact calendar gap in years, months, and days between partners.',
+      },
+      {
         q: "How does a leap year affect my age in days?",
         a: "A leap year occurs every four years, adding an extra day (February 29) to the calendar. Our age calculator automatically accounts for these leap days by scanning your exact lifespan for leap years, ensuring your age in days is 100% accurate.",
       },
@@ -836,7 +844,7 @@ export const blogContent: Record<string, BlogContent> = {
       },
       {
         q: "How is chronological age different from biological age?",
-        a: "Chronological age is simply the amount of time that has passed since your birth. Biological age (or epigenetic age) refers to how old your cells and tissues are based on physiological health, lifestyle, diet, and genetics. A healthy 50-year-old might have a biological age of 40.",
+        a: 'Chronological age is simply the amount of time that has passed since your birth. Biological age refers to how old your cells and tissues are based on physiological health, lifestyle, diet, and genetics. To track gestational milestones for pregnancy, explore our <a href="/calculator/pregnancy-due-date-calculator" class="text-primary hover:underline">Pregnancy Due Date Calculator</a>.',
       },
       {
         q: "How do different cultures calculate age?",
@@ -933,6 +941,18 @@ export const blogContent: Record<string, BlogContent> = {
       },
     ],
     faqs: [
+      {
+        q: "How do I calculate my daily calorie needs for weight loss?",
+        a: 'To lose weight safely, subtract 300 to 500 calories from your Total Daily Energy Expenditure (TDEE). A daily 500 kcal deficit creates a weekly reduction of 3,500 kcal, translating to approximately 0.5 kg of sustainable fat loss each week while safeguarding muscle mass. Determine your baseline burn using our <a href="/calculator/bmr-calculator" class="text-primary hover:underline">BMR Calculator</a>.',
+      },
+      {
+        q: "What is the difference between BMR and TDEE in calorie calculations?",
+        a: 'Basal Metabolic Rate (BMR) measures the minimum energy your organs consume at total rest to keep you alive. Total Daily Energy Expenditure (TDEE) factors in your BMR plus physical activities, workouts, and digestion. Check how your weight corresponds to height ranges using our <a href="/calculator/bmi-calculator" class="text-primary hover:underline">BMI Calculator</a>.',
+      },
+      {
+        q: "How many calories should I eat each day to maintain my weight?",
+        a: "To maintain your current weight, consume calories equal to your TDEE. When energy intake matches daily expenditure, body mass stays stable. Adjust your intake if your weight changes by more than 2 to 3 kg over time.",
+      },
       {
         q: "What is metabolic adaptation?",
         a: "Metabolic adaptation is the body's natural defense mechanism during prolonged calorie restriction. It slightly slows your resting metabolic rate and decreases unconscious movements (NEAT) to conserve energy, which is why weight loss often plateaus after a few months on a diet.",
@@ -1048,8 +1068,20 @@ export const blogContent: Record<string, BlogContent> = {
     ],
     faqs: [
       {
+        q: "How much water should I drink a day by weight?",
+        a: 'A standard clinical guideline is to drink 30 to 35 ml of water per kilogram of body weight daily. For example, a person weighing 60 kg needs roughly 1.8 to 2.1 litres of water, while someone weighing 80 kg requires 2.4 to 2.8 litres. In tropical Indian climates or during workouts, add 500 to 1,000 ml to compensate for sweat loss. You can check your body mass index with our <a href="/calculator/bmi-calculator" class="text-primary hover:underline">BMI Calculator</a> to assess overall health metrics.',
+      },
+      {
+        q: "How does hot climate or intense exercise increase water needs?",
+        a: 'High ambient temperatures and humidity in Indian summers significantly accelerate fluid loss through perspiration, raising daily hydration needs by 15% to 25%. Similarly, every 30 minutes of vigorous workout requires an extra 350 to 500 ml of fluid. Balancing your daily water intake with restful recovery is also vital, which you can plan with our <a href="/calculator/sleep-calculator" class="text-primary hover:underline">Sleep Calculator</a>.',
+      },
+      {
+        q: "What is the best way to distribute water intake throughout the day?",
+        a: "Rather than drinking large volumes at once, sip 200 to 300 ml of water every 60 to 90 minutes throughout waking hours. Start your morning with a glass of water to rehydrate after sleep, drink before meals to aid digestion, and taper off fluid intake 1 to 2 hours before bedtime to avoid disrupted sleep.",
+      },
+      {
         q: "Does coffee or tea count toward my daily hydration target?",
-        a: "Yes, caffeinated drinks like coffee and tea absolutely contribute to your total daily fluid intake. Although high doses of caffeine have a mild diuretic effect, numerous clinical studies show that habitual consumption of coffee does not lead to dehydration. The water in the beverage vastly outweighs the diuretic effect.",
+        a: 'Yes, caffeinated drinks like coffee and tea contribute to your total daily fluid intake. Although high doses of caffeine have a mild diuretic effect, clinical studies show that moderate tea and coffee consumption does not cause dehydration. The water in the beverage vastly outweighs the diuretic effect. You can evaluate your total daily energy balance and diet with our <a href="/calculator/calorie-calculator" class="text-primary hover:underline">Calorie Calculator</a>.',
       },
       {
         q: "What are the early signs of mild dehydration?",

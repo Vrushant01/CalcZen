@@ -2,54 +2,65 @@ import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
-    "The water intake calculator is a comprehensive and highly accurate tool designed to help users solve complex problems quickly and efficiently. By processing key variables and parameters, this calculator provides instant, reliable results that are crucial for making informed decisions. Whether you are a professional needing precise calculations for your daily work or an everyday user looking to estimate important metrics, this tool removes the guesswork and mathematical complexity. It is built to handle various edge cases and provides a robust, user-friendly interface that ensures anyone can understand and utilize the output effectively.",
+    "The Water Intake Calculator estimates your optimal daily hydration target based on your body weight, daily exercise duration, and climate. Proper hydration supports metabolic health, kidney function, cognitive focus, physical stamina, and joint lubrication. This tool converts clinical fluid intake recommendations into simple, actionable daily guidelines in litres and millilitres, accounting for increased sweat loss in hot climates or during intense physical training.",
 
   howItWorks:
-    "Using the water intake calculator is incredibly straightforward and requires no prior technical expertise. First, you begin by entering your primary data points into the clearly labeled input fields. The system instantly validates your inputs to ensure accuracy and prevent calculation errors. Once the necessary data is provided, the underlying algorithmic engine processes the numbers in real-time. It applies industry-standard formulas and best practices to derive the final output. The results are then displayed in an easy-to-read format, often accompanied by visual charts or step-by-step breakdowns, allowing you to fully understand the context and implications of the calculated values.",
+    "Enter your body weight in kilograms, your daily exercise or physical workout time in minutes, and your typical climate condition (temperate, hot, or humid). The calculator uses evidence-based baseline fluid calculations (approximately 30 to 35 ml of water per kilogram of body weight) and adds hydration buffers (typically 350 to 500 ml for every 30 minutes of moderate to high-intensity exercise, plus climate multipliers) to determine your complete daily water target.",
 
   formula:
-    "The mathematical foundation of the water intake calculator relies on established, peer-reviewed formulas tailored to this specific domain. While the exact computational models can vary based on your specific inputs, the core logic follows this general structure:\n\nOutput = (Primary Input × Variable Factor) / Constant Divider + Adjustments\n\nWhere:\n- Primary Input represents the baseline value you provide.\n- Variable Factor accounts for individual user parameters.\n- Constant Divider standardizes the result into a recognizable metric.\n- Adjustments are secondary modifications based on optional inputs.\n\nBy combining these elements, the calculator ensures a mathematically sound and highly precise result every single time.",
+    "Baseline and Adjusted Daily Hydration Equations:\n\nBaseline Fluid Need (L) = Body Weight (kg) × 0.033 L/kg\n\nExercise Adjustment (L) = (Workout Duration in Minutes ÷ 30) × 0.35 L\n\nClimate Multiplier:\n- Temperate: 1.0\n- Hot / Dry: 1.15 (+15% fluid intake)\n- Tropical / Humid: 1.20 (+20% fluid intake)\n\nTotal Daily Water Target (L) = (Baseline + Exercise Adjustment) × Climate Multiplier",
 
   example:
-    "Let's look at a practical, real-world example of how the water intake calculator can be applied. Suppose a typical user needs to determine their baseline metric. They start by inputting a standard baseline value—for instance, 100 units. Next, they add a secondary variable, such as a 5% rate or a modifier of 1.2, depending on the context of the calculation.\n\nWhen these values are processed through the calculator's engine, the system first multiplies the baseline by the modifier (100 × 1.2 = 120). It then factors in any standard constants to produce the final result. In this scenario, the output clearly demonstrates how a small change in the initial inputs can significantly impact the final outcome. This step-by-step transparency helps users grasp the mechanics behind the numbers.",
+    "Consider an individual weighing 70 kg living in a warm Indian climate who exercises for 45 minutes daily:\n\n1. Baseline Water Need: 70 kg × 0.033 L = 2.31 Litres\n2. Exercise Surcharge: (45 min ÷ 30) × 0.35 L = 0.525 Litres\n3. Pre-climate Subtotal: 2.31 + 0.525 = 2.835 Litres\n4. Climate Adjustment (Hot +15%): 2.835 × 1.15 ≈ 3.26 Litres\n\nTakeaway Result:\n- Recommended Daily Hydration: ~3.3 Litres (approx. 13 to 14 standard 250ml glasses)\n- Regular interval target: ~250 ml every 60 to 90 minutes throughout active daylight hours.",
 
   mistakes:
-    "When calculating these metrics manually or using inferior tools, users often fall victim to several common, yet critical, mistakes. The most frequent error is inconsistent units of measurement—for example, mixing months with years or pounds with kilograms. This inevitably leads to wildly inaccurate results. Another common pitfall is ignoring secondary variables. Many people only calculate the baseline while forgetting to account for fees, taxes, or physiological outliers, which drastically skews the real-world application of the data. Finally, a lack of regular recalculation is a major issue; as your underlying variables change over time, relying on old calculations can lead to poor long-term planning and decision-making.",
+    "A frequent hydration error is relying purely on thirst as an indicator; by the time you feel thirsty, your body is already 1% to 2% dehydrated. Another mistake is drinking excessive quantities in a single sitting rather than pacing fluid consumption across the day. Additionally, many people fail to increase water intake during summer months or dry air-conditioned office environments, or mistake dehydration headaches for hunger. Check your general energy expenditure alongside water needs with our Calorie Calculator.",
 
   faqs: [
     {
-      question: "How accurate is the water intake calculator?",
+      question: "How much water should I drink a day by weight?",
       answer:
-        "The calculator uses industry-standard formulas and provides highly accurate estimates based on the exact data you input. However, for critical medical or financial decisions, it should be used as a baseline guide alongside professional advice.",
+        'A standard clinical guideline is to drink 30 to 35 ml of water per kilogram of body weight daily. For example, a person weighing 60 kg needs roughly 1.8 to 2.1 litres of water, while someone weighing 80 kg requires 2.4 to 2.8 litres. In tropical Indian climates or during workouts, add 500 to 1,000 ml to compensate for sweat loss. You can check your body mass index with our <a href="/calculator/bmi-calculator" class="text-primary hover:underline">BMI Calculator</a> to assess overall health metrics.',
     },
     {
-      question: "Can I use this calculator on my mobile device?",
+      question: "Do tea, coffee, and fruits count toward daily water intake?",
       answer:
-        "Yes, the calculator is fully responsive and optimized for all devices, including smartphones, tablets, and desktop computers.",
+        'Yes, about 20% to 30% of your daily water intake comes from solid food, especially hydrating fruits and vegetables like watermelon, oranges, and cucumbers. Mildly caffeinated beverages like tea and coffee do contribute to net hydration despite mild diuretic effects, though pure water remains best. You can track your overall nutritional targets using our <a href="/calculator/calorie-calculator" class="text-primary hover:underline">Calorie Calculator</a>.',
     },
     {
-      question: "Do I need to create an account to use the tool?",
+      question: "How does climate and physical activity affect daily hydration needs?",
       answer:
-        "No, all of our calculators are completely free to use and do not require any registration or account creation.",
+        'High ambient temperatures and humidity in Indian summers significantly accelerate fluid loss through perspiration, raising daily hydration needs by 15% to 25%. Similarly, every 30 minutes of vigorous workout requires an extra 350 to 500 ml of fluid. Balancing your daily water intake with restful recovery is also vital, which you can plan with our <a href="/calculator/sleep-calculator" class="text-primary hover:underline">Sleep Calculator</a>.',
     },
     {
-      question: "How often should I recalculate my numbers?",
+      question: "What are the common signs of dehydration?",
       answer:
-        "It is recommended to recalculate whenever your primary variables—such as income, weight, interest rates, or age—change significantly.",
+        "The most reliable indicator of hydration is urine colour: pale or light straw-coloured urine signals healthy hydration, whereas dark amber or brown urine indicates dehydration. Other common symptoms include dry mouth, persistent thirst, fatigue, headaches, dizziness, and reduced urination frequency.",
     },
     {
-      question: "Is my inputted data saved or shared?",
+      question: "Can drinking too much water be harmful?",
       answer:
-        "Your privacy is our priority. All calculations are performed locally in your browser, and no personal input data is saved or transmitted to our servers.",
+        "Yes, drinking extreme volumes of water in a very short timeframe can dilute sodium levels in your bloodstream, a potentially dangerous condition known as hyponatremia. Healthy kidneys can filter about 0.8 to 1.0 litre of water per hour, so it is best to sip fluids evenly throughout the day rather than chugging multiple litres at once.",
     },
   ],
 
   authorityLinks: [
-    { text: "World Health Organization (WHO)", url: "https://www.who.int/" },
-    { text: "Centers for Disease Control and Prevention (CDC)", url: "https://www.cdc.gov/" },
+    {
+      text: "National Academies of Sciences, Engineering, and Medicine (NASEM) Dietary Reference Intakes for Water",
+      url: "https://www.nationalacademies.org/",
+    },
+    {
+      text: "World Health Organization (WHO) Guidelines on Drinking-water Quality",
+      url: "https://www.who.int/publications/i/item/9789240045064",
+    },
   ],
 
-  relatedCalculators: ["age-calculator", "tip-calculator", "pregnancy-due-date-calculator"],
+  relatedCalculators: [
+    "calorie-calculator",
+    "bmi-calculator",
+    "bmr-calculator",
+    "sleep-calculator",
+  ],
 };
 
 export default content;

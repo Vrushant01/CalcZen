@@ -2,54 +2,65 @@ import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
-    "The age calculator is a comprehensive and highly accurate tool designed to help users solve complex problems quickly and efficiently. By processing key variables and parameters, this calculator provides instant, reliable results that are crucial for making informed decisions. Whether you are a professional needing precise calculations for your daily work or an everyday user looking to estimate important metrics, this tool removes the guesswork and mathematical complexity. It is built to handle various edge cases and provides a robust, user-friendly interface that ensures anyone can understand and utilize the output effectively.",
+    "The Age Calculator calculates your exact chronological age in years, months, and days, as well as total elapsed days, hours, and minutes from your date of birth. It also enables you to calculate your age on any past or future target date, check eligibility for government exams, academic admissions, or insurance policies, and discover the exact countdown to your next birthday.",
 
   howItWorks:
-    "Using the age calculator is incredibly straightforward and requires no prior technical expertise. First, you begin by entering your primary data points into the clearly labeled input fields. The system instantly validates your inputs to ensure accuracy and prevent calculation errors. Once the necessary data is provided, the underlying algorithmic engine processes the numbers in real-time. It applies industry-standard formulas and best practices to derive the final output. The results are then displayed in an easy-to-read format, often accompanied by visual charts or step-by-step breakdowns, allowing you to fully understand the context and implications of the calculated values.",
+    "Enter your date of birth and the target date (which defaults to today's date). The calculator compares the calendar dates and applies precise calendar borrowing mathematics. It accounts for leap years (with 366 days), the differing lengths of Gregorian calendar months (28, 29, 30, or 31 days), and daylight boundaries to produce an exact chronological duration breakdown.",
 
   formula:
-    "The mathematical foundation of the age calculator relies on established, peer-reviewed formulas tailored to this specific domain. While the exact computational models can vary based on your specific inputs, the core logic follows this general structure:\n\nOutput = (Primary Input × Variable Factor) / Constant Divider + Adjustments\n\nWhere:\n- Primary Input represents the baseline value you provide.\n- Variable Factor accounts for individual user parameters.\n- Constant Divider standardizes the result into a recognizable metric.\n- Adjustments are secondary modifications based on optional inputs.\n\nBy combining these elements, the calculator ensures a mathematically sound and highly precise result every single time.",
+    "Calendar Borrowing Age Mathematics:\n\nIf targetDay < birthDay:\n- Borrow days from the previous month (28 to 31 days depending on the specific month).\n- Decrement targetMonth by 1.\n\nIf targetMonth < birthMonth:\n- Borrow 12 months from the target year.\n- Decrement targetYear by 1.\n\nFinal Elapsed Duration:\n- Elapsed Years = targetYear − birthYear\n- Elapsed Months = targetMonth − birthMonth\n- Elapsed Days = targetDay − birthDay\n- Total Days Elapsed = Exact Julian day count between birth date and target date, including all leap years.",
 
   example:
-    "Let's look at a practical, real-world example of how the age calculator can be applied. Suppose a typical user needs to determine their baseline metric. They start by inputting a standard baseline value—for instance, 100 units. Next, they add a secondary variable, such as a 5% rate or a modifier of 1.2, depending on the context of the calculation.\n\nWhen these values are processed through the calculator's engine, the system first multiplies the baseline by the modifier (100 × 1.2 = 120). It then factors in any standard constants to produce the final result. In this scenario, the output clearly demonstrates how a small change in the initial inputs can significantly impact the final outcome. This step-by-step transparency helps users grasp the mechanics behind the numbers.",
+    "Suppose a person was born on June 15, 1995, and wishes to calculate their exact age on January 10, 2025:\n\n1. Target Day (10) < Birth Day (15): Borrow days from December (31 days). 10 + 31 − 15 = 26 days.\n2. Target Month (0 after borrowing) < Birth Month (6): Borrow 12 months from 2025. 12 − 6 = 6 months.\n3. Target Year (2024 after borrowing) − Birth Year (1995) = 29 years.\n\nTakeaway Result:\n- Exact Age: 29 years, 6 months, and 26 days\n- Total Days Alive: 10,802 days\n- Next Birthday: June 15, 2025 (in 5 months and 5 days)",
 
   mistakes:
-    "When calculating these metrics manually or using inferior tools, users often fall victim to several common, yet critical, mistakes. The most frequent error is inconsistent units of measurement—for example, mixing months with years or pounds with kilograms. This inevitably leads to wildly inaccurate results. Another common pitfall is ignoring secondary variables. Many people only calculate the baseline while forgetting to account for fees, taxes, or physiological outliers, which drastically skews the real-world application of the data. Finally, a lack of regular recalculation is a major issue; as your underlying variables change over time, relying on old calculations can lead to poor long-term planning and decision-making.",
+    "A frequent mistake in manual age calculation is assuming every month has 30 days or every year has 365 days. Over several decades, ignoring leap years and varying month lengths can lead to an error of 5 to 10 days. Another common pitfall is entering birthdates in US format (MM/DD/YYYY) instead of Indian standard (DD/MM/YYYY) on official forms. Always confirm the cut-off date specified by competitive examinations or official government notices.",
 
   faqs: [
     {
-      question: "How accurate is the age calculator?",
+      question: "How can I calculate my age on a particular date in the future or past?",
       answer:
-        "The calculator uses industry-standard formulas and provides highly accurate estimates based on the exact data you input. However, for critical medical or financial decisions, it should be used as a baseline guide alongside professional advice.",
+        'To calculate your age on a particular date, simply change the "Calculate Age As Of" field to any target date. The tool instantly computes your exact age in years, months, and days on that specific date. This is especially useful for verifying eligibility criteria for competitive government exams, driving licences, passport renewals, or insurance applications.',
     },
     {
-      question: "Can I use this calculator on my mobile device?",
+      question: "Why do some months have different days and how does the calculator handle leap years?",
       answer:
-        "Yes, the calculator is fully responsive and optimized for all devices, including smartphones, tablets, and desktop computers.",
+        "The Gregorian calendar features months with 28, 29, 30, and 31 days, and adds a leap day on February 29 every 4 years. Our calculator tracks the exact calendar days for each specific month in your lifespan, preventing drift errors and guaranteeing that total elapsed days and minutes are completely accurate.",
     },
     {
-      question: "Do I need to create an account to use the tool?",
+      question: "How is chronological age different from biological or gestational age?",
       answer:
-        "No, all of our calculators are completely free to use and do not require any registration or account creation.",
+        'Chronological age is the exact calendar time elapsed since birth. Biological age reflects cellular and physical health, which can be influenced by diet, exercise, and lifestyle. Gestational age, on the other hand, measures fetal development starting from the first day of the mother\'s last menstrual period. To track pregnancy milestones, use our <a href="/calculator/pregnancy-due-date-calculator" class="text-primary hover:underline">Pregnancy Due Date Calculator</a>.',
     },
     {
-      question: "How often should I recalculate my numbers?",
+      question: "How do I calculate the age gap between two people?",
       answer:
-        "It is recommended to recalculate whenever your primary variables—such as income, weight, interest rates, or age—change significantly.",
+        'You can calculate the chronological age between two birth dates, or explore our dedicated <a href="/calculator/couple-age-difference-calculator" class="text-primary hover:underline">Couple Age Difference Calculator</a> to view the exact calendar gap in years, months, and days between partners.',
     },
     {
-      question: "Is my inputted data saved or shared?",
+      question: "How does the birthday countdown work?",
       answer:
-        "Your privacy is our priority. All calculations are performed locally in your browser, and no personal input data is saved or transmitted to our servers.",
+        "The birthday countdown identifies your next birthday in the current or upcoming calendar year and computes the exact remaining days, hours, and minutes. It helps you plan celebrations, milestone birthdays, or retirement timelines with absolute precision.",
     },
   ],
 
   authorityLinks: [
-    { text: "World Health Organization (WHO)", url: "https://www.who.int/" },
-    { text: "Centers for Disease Control and Prevention (CDC)", url: "https://www.cdc.gov/" },
+    {
+      text: "National Institute on Aging (NIH) Biological vs Chronological Age",
+      url: "https://www.nia.nih.gov/",
+    },
+    {
+      text: "World Health Organization (WHO) Ageing and Health Guidelines",
+      url: "https://www.who.int/news-room/fact-sheets/detail/ageing-and-health",
+    },
   ],
 
-  relatedCalculators: ["calorie-calculator", "standard-calculator", "401k-calculator"],
+  relatedCalculators: [
+    "couple-age-difference-calculator",
+    "percentage-calculator",
+    "pregnancy-due-date-calculator",
+    "tip-calculator",
+  ],
 };
 
 export default content;

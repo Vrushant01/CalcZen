@@ -2,54 +2,65 @@ import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
-    "The calorie calculator is a comprehensive and highly accurate tool designed to help users solve complex problems quickly and efficiently. By processing key variables and parameters, this calculator provides instant, reliable results that are crucial for making informed decisions. Whether you are a professional needing precise calculations for your daily work or an everyday user looking to estimate important metrics, this tool removes the guesswork and mathematical complexity. It is built to handle various edge cases and provides a robust, user-friendly interface that ensures anyone can understand and utilize the output effectively.",
+    "The Calorie Calculator estimates your Total Daily Energy Expenditure (TDEE) and determines your daily caloric needs for weight loss, weight maintenance, or muscle gain. By combining your age, biological sex, height, weight, and weekly physical activity frequency with clinical metabolic formulas, this tool provides precise caloric benchmarks and macronutrient guidance to help you reach your body composition goals sustainably.",
 
   howItWorks:
-    "Using the calorie calculator is incredibly straightforward and requires no prior technical expertise. First, you begin by entering your primary data points into the clearly labeled input fields. The system instantly validates your inputs to ensure accuracy and prevent calculation errors. Once the necessary data is provided, the underlying algorithmic engine processes the numbers in real-time. It applies industry-standard formulas and best practices to derive the final output. The results are then displayed in an easy-to-read format, often accompanied by visual charts or step-by-step breakdowns, allowing you to fully understand the context and implications of the calculated values.",
+    "Enter your gender, age, height, current body weight, and weekly physical activity routine (ranging from sedentary desk work to intense daily training). The calculator first calculates your Basal Metabolic Rate (BMR) using the clinically validated Mifflin-St Jeor formula. It then applies the appropriate physical activity multiplier to determine your TDEE (maintenance calories) and provides tailored caloric targets for gentle fat loss (−300 to −500 kcal/day), aggressive cutting, or lean bulking (+250 to +500 kcal/day).",
 
   formula:
-    "The mathematical foundation of the calorie calculator relies on established, peer-reviewed formulas tailored to this specific domain. While the exact computational models can vary based on your specific inputs, the core logic follows this general structure:\n\nOutput = (Primary Input × Variable Factor) / Constant Divider + Adjustments\n\nWhere:\n- Primary Input represents the baseline value you provide.\n- Variable Factor accounts for individual user parameters.\n- Constant Divider standardizes the result into a recognizable metric.\n- Adjustments are secondary modifications based on optional inputs.\n\nBy combining these elements, the calculator ensures a mathematically sound and highly precise result every single time.",
+    "Clinically Validated Mifflin-St Jeor Energy Equations:\n\nFor Men:\nBMR (kcal/day) = 10 × weight (kg) + 6.25 × height (cm) − 5 × age (years) + 5\n\nFor Women:\nBMR (kcal/day) = 10 × weight (kg) + 6.25 × height (cm) − 5 × age (years) − 161\n\nTotal Daily Energy Expenditure (TDEE):\nTDEE = BMR × Activity Factor\n- Sedentary (desk job, minimal exercise): 1.2\n- Light Exercise (1 to 3 days/week): 1.375\n- Moderate Exercise (3 to 5 days/week): 1.55\n- Heavy Exercise (6 to 7 days/week): 1.725\n- Very Heavy / Athlete (twice daily training): 1.9",
 
   example:
-    "Let's look at a practical, real-world example of how the calorie calculator can be applied. Suppose a typical user needs to determine their baseline metric. They start by inputting a standard baseline value—for instance, 100 units. Next, they add a secondary variable, such as a 5% rate or a modifier of 1.2, depending on the context of the calculation.\n\nWhen these values are processed through the calculator's engine, the system first multiplies the baseline by the modifier (100 × 1.2 = 120). It then factors in any standard constants to produce the final result. In this scenario, the output clearly demonstrates how a small change in the initial inputs can significantly impact the final outcome. This step-by-step transparency helps users grasp the mechanics behind the numbers.",
+    "Consider a 30-year-old male weighing 75 kg with a height of 175 cm who exercises moderately 3 days per week:\n\n1. Calculate BMR: (10 × 75) + (6.25 × 175) − (5 × 30) + 5 = 750 + 1,093.75 − 150 + 5 = 1,698.75 kcal\n2. Moderate Activity Multiplier: 1.55\n3. Calculate TDEE: 1,698.75 × 1.55 ≈ 2,633 kcal/day\n\nTakeaway Goals:\n- Weight Maintenance: ~2,630 kcal/day\n- Healthy Weight Loss (0.5 kg/week deficit): ~2,130 kcal/day (−500 kcal)\n- Mild Fat Loss (0.25 kg/week deficit): ~2,380 kcal/day (−250 kcal)\n- Muscle Gain / Bulking: ~2,880 kcal/day (+250 kcal)",
 
   mistakes:
-    "When calculating these metrics manually or using inferior tools, users often fall victim to several common, yet critical, mistakes. The most frequent error is inconsistent units of measurement—for example, mixing months with years or pounds with kilograms. This inevitably leads to wildly inaccurate results. Another common pitfall is ignoring secondary variables. Many people only calculate the baseline while forgetting to account for fees, taxes, or physiological outliers, which drastically skews the real-world application of the data. Finally, a lack of regular recalculation is a major issue; as your underlying variables change over time, relying on old calculations can lead to poor long-term planning and decision-making.",
+    "The most widespread dieting error is adopting an extreme, unsustainable calorie deficit (such as eating under 1,000 calories per day), which triggers adaptive thermogenesis, muscle catabolism, and severe fatigue. Another common mistake is overestimating workout calories while underestimating calorie-dense cooking oils and snacks. Additionally, many individuals fail to adjust their calorie targets downward as they lose weight. Pair your nutrition plan with our Water Intake Calculator to ensure adequate cellular hydration.",
 
   faqs: [
     {
-      question: "How accurate is the calorie calculator?",
+      question: "How do I calculate my daily calorie needs for weight loss?",
       answer:
-        "The calculator uses industry-standard formulas and provides highly accurate estimates based on the exact data you input. However, for critical medical or financial decisions, it should be used as a baseline guide alongside professional advice.",
+        'To lose weight in a healthy, sustainable manner, subtract 300 to 500 calories from your Total Daily Energy Expenditure (TDEE). A daily deficit of 500 kcal creates a cumulative weekly deficit of 3,500 kcal, which equates to roughly 0.5 kg (1 lb) of fat loss per week without sacrificing lean muscle. You can assess your baseline metabolic burn with our <a href="/calculator/bmr-calculator" class="text-primary hover:underline">BMR Calculator</a>.',
     },
     {
-      question: "Can I use this calculator on my mobile device?",
+      question: "What is the difference between BMR and TDEE in calorie calculations?",
       answer:
-        "Yes, the calculator is fully responsive and optimized for all devices, including smartphones, tablets, and desktop computers.",
+        'Basal Metabolic Rate (BMR) represents the bare minimum calories your body burns at complete rest just to sustain vital life functions like breathing and heartbeat. Total Daily Energy Expenditure (TDEE) accounts for your BMR plus the thermic effect of food and all physical activity performed throughout the day. To measure your general body proportions relative to height, explore our <a href="/calculator/bmi-calculator" class="text-primary hover:underline">BMI Calculator</a>.',
     },
     {
-      question: "Do I need to create an account to use the tool?",
+      question: "How many calories should I eat each day to maintain my weight?",
       answer:
-        "No, all of our calculators are completely free to use and do not require any registration or account creation.",
+        "To maintain your current body weight, your daily caloric intake should match your TDEE. At this maintenance level, the energy supplied by food equals the total energy your body expends on metabolic upkeep and daily physical activity, keeping your scale weight stable.",
     },
     {
-      question: "How often should I recalculate my numbers?",
+      question: "How should I divide my daily calories into macronutrients?",
       answer:
-        "It is recommended to recalculate whenever your primary variables—such as income, weight, interest rates, or age—change significantly.",
+        "A balanced split is 40% carbohydrates, 30% protein, and 30% healthy fats. For active individuals or those in a calorie deficit, prioritize 1.6 to 2.2 grams of protein per kilogram of body weight to preserve muscle mass and stay satiated.",
     },
     {
-      question: "Is my inputted data saved or shared?",
+      question: "Why does weight loss plateau after a few months on a diet?",
       answer:
-        "Your privacy is our priority. All calculations are performed locally in your browser, and no personal input data is saved or transmitted to our servers.",
+        "As you lose body weight, your body burns fewer calories simply because it takes less energy to move a lighter body, reducing your BMR. Additionally, non-exercise movement often drops subconsciously. Periodically recalculate your numbers as your weight decreases to keep progressing.",
     },
   ],
 
   authorityLinks: [
-    { text: "World Health Organization (WHO)", url: "https://www.who.int/" },
-    { text: "Centers for Disease Control and Prevention (CDC)", url: "https://www.cdc.gov/" },
+    {
+      text: "National Institutes of Health (NIH) Body Weight Planner",
+      url: "https://www.niddk.nih.gov/bwp",
+    },
+    {
+      text: "World Health Organization (WHO) Healthy Diet Recommendations",
+      url: "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+    },
   ],
 
-  relatedCalculators: ["age-calculator", "tip-calculator", "percentage-calculator"],
+  relatedCalculators: [
+    "bmr-calculator",
+    "bmi-calculator",
+    "water-intake-calculator",
+    "sleep-calculator",
+  ],
 };
 
 export default content;

@@ -401,7 +401,7 @@ export const calculators: CalculatorMeta[] = [
     icon: Sparkles,
     popular: true,
     trending: true,
-    metaTitle: "Gold Making Charges Calculator – 916 Hallmark | CalcZen",
+    metaTitle: "Gold Making Charges Calculator India – 22K & 916 | CalcZen",
     metaDescription:
       "Calculate 916 hallmark gold making charges, wastage, and 3% GST on jewellery in India. Compare per-gram and percentage rates to save instantly on gold.",
     calculatorType: "financial",
@@ -974,7 +974,7 @@ export const calculators: CalculatorMeta[] = [
     icon: Droplet,
     metaTitle: "Water Intake Calculator – Daily Hydration Target | CalcZen",
     metaDescription:
-      "Find out how much water should I drink a day. Calculate your personalized daily hydration target based on weight and activity with our free, instant tool.",
+      "Find out how much water you should drink a day. Calculate your personalized hydration target based on weight and activity with our free, instant tool.",
     calculatorType: "hydration",
     useCases: [
       "daily water intake tracking",
@@ -1111,7 +1111,7 @@ export const calculators: CalculatorMeta[] = [
     ],
     icon: Cake,
     popular: true,
-    metaTitle: "Age Calculator – Calculate Age on Any Date | CalcZen",
+    metaTitle: "Age Calculator by Date of Birth – Years & Days | CalcZen",
     metaDescription:
       "Calculate age in exact years, months, and days from date of birth or check age on a date. Free, instant age calculator for official forms and milestones.",
     calculatorType: "chronological",

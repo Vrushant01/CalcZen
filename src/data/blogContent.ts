@@ -247,23 +247,23 @@ export const blogContent: Record<string, BlogContent> = {
       {
         title: "A Practical Loan EMI Example",
         paragraphs: [
-          "Suppose you borrow $15,000 on a personal loan with a 10% annual interest rate and a repayment term of 3 years (36 months) to finance a home renovation project.",
+          "Suppose you borrow ₹15,000 on a personal loan with a 10% annual interest rate and a repayment term of 3 years (36 months) to finance a home renovation project.",
         ],
         exampleBox: {
           title: "3-Year Personal Loan Calculation",
           inputs: [
-            { name: "Principal Amount", val: "$15,000" },
+            { name: "Principal Amount", val: "₹15,000" },
             { name: "Annual Interest Rate", val: "10%" },
             { name: "Repayment Term", val: "36 Months" },
           ],
           steps: [
             "Calculate monthly interest rate: r = 10 / 12 / 100 = 0.008333.",
             "Calculate (1 + r)^n: (1.008333)^36 = 1.34818.",
-            "Apply the EMI formula: E = $15,00,0 * 0.008333 * 1.34818 / [1.34818 - 1].",
-            "Solve: E = $15,000 * 0.011235 / 0.34818 = $484.01.",
+            "Apply the EMI formula: E = ₹15,000 * 0.008333 * 1.34818 / [1.34818 - 1].",
+            "Solve: E = ₹15,000 * 0.011235 / 0.34818 = ₹484.01.",
           ],
           result:
-            "Your monthly loan EMI is <strong>$484.01</strong>. Over the course of 36 months, you will repay a total of <strong>$17,424.36</strong>, of which <strong>$2,424.36</strong> is pure interest paid to the lender.",
+            "Your monthly loan EMI is <strong>₹484.01</strong>. Over the course of 36 months, you will repay a total of <strong>₹17,424.36</strong>, of which <strong>₹2,424.36</strong> is pure interest paid to the lender.",
         },
       },
       {

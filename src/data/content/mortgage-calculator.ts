@@ -2,57 +2,50 @@ import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
-    "The mortgage calculator is a comprehensive and highly accurate tool designed to help users solve complex problems quickly and efficiently. By processing key variables and parameters, this calculator provides instant, reliable results that are crucial for making informed decisions. Whether you are a professional needing precise calculations for your daily work or an everyday user looking to estimate important metrics, this tool removes the guesswork and mathematical complexity. It is built to handle various edge cases and provides a robust, user-friendly interface that ensures anyone can understand and utilize the output effectively.",
+    "The Mortgage Calculator estimates your monthly home loan payment, total interest charges, and comprehensive amortization schedule. By inputting your target property purchase price, down payment percentage, loan tenure, and interest rate, you can assess monthly cash flow commitments and evaluate refinancing opportunities before committing to a home purchase.",
 
   howItWorks:
-    "Using the mortgage calculator is incredibly straightforward and requires no prior technical expertise. First, you begin by entering your primary data points into the clearly labeled input fields. The system instantly validates your inputs to ensure accuracy and prevent calculation errors. Once the necessary data is provided, the underlying algorithmic engine processes the numbers in real-time. It applies industry-standard formulas and best practices to derive the final output. The results are then displayed in an easy-to-read format, often accompanied by visual charts or step-by-step breakdowns, allowing you to fully understand the context and implications of the calculated values.",
+    "Enter your home price, down payment, loan term, and interest rate. The calculator deduces your net borrowing principal, applies standard monthly amortization algorithms, and provides an itemized breakdown of principal repayment, interest costs, and total payments across your mortgage term.",
 
   formula:
-    "The mathematical foundation of the mortgage calculator relies on established, peer-reviewed formulas tailored to this specific domain. While the exact computational models can vary based on your specific inputs, the core logic follows this general structure:\n\nOutput = (Primary Input × Variable Factor) / Constant Divider + Adjustments\n\nWhere:\n- Primary Input represents the baseline value you provide.\n- Variable Factor accounts for individual user parameters.\n- Constant Divider standardizes the result into a recognizable metric.\n- Adjustments are secondary modifications based on optional inputs.\n\nBy combining these elements, the calculator ensures a mathematically sound and highly precise result every single time.",
+    "Standard Mortgage Amortization Formula:\n\nM = P × [ r(1 + r)^n ] / [ (1 + r)^n − 1 ]\n\nWhere:\n- M = Total monthly mortgage payment\n- P = Principal loan amount (Home purchase price − Down payment)\n- r = Monthly interest rate (Annual interest rate ÷ 12 ÷ 100)\n- n = Number of monthly payments (Loan term in years × 12)",
 
   example:
-    "Let's look at a practical, real-world example of how the mortgage calculator can be applied. Suppose a typical user needs to determine their baseline metric. They start by inputting a standard baseline value—for instance, 100 units. Next, they add a secondary variable, such as a 5% rate or a modifier of 1.2, depending on the context of the calculation.\n\nWhen these values are processed through the calculator's engine, the system first multiplies the baseline by the modifier (100 × 1.2 = 120). It then factors in any standard constants to produce the final result. In this scenario, the output clearly demonstrates how a small change in the initial inputs can significantly impact the final outcome. This step-by-step transparency helps users grasp the mechanics behind the numbers.",
+    "For a ₹50,00,000 property with a 20% down payment (₹10,00,000), borrowing ₹40,00,000 at 8.5% annual interest for 20 years (240 months):\n- Monthly Mortgage Payment: ≈ ₹34,713\n- Total Loan Repayment: ₹83,31,093\n- Total Interest Payable: ₹43,31,093",
 
   mistakes:
-    "When calculating these metrics manually or using inferior tools, users often fall victim to several common, yet critical, mistakes. The most frequent error is inconsistent units of measurement—for example, mixing months with years or pounds with kilograms. This inevitably leads to wildly inaccurate results. Another common pitfall is ignoring secondary variables. Many people only calculate the baseline while forgetting to account for fees, taxes, or physiological outliers, which drastically skews the real-world application of the data. Finally, a lack of regular recalculation is a major issue; as your underlying variables change over time, relying on old calculations can lead to poor long-term planning and decision-making.",
+    "A frequent home buying mistake is focusing solely on principal and interest while overlooking property taxes, registration charges, and insurance costs. Another common error is choosing maximum loan terms that dramatically inflate lifetime interest expenses. Plan personal or vehicle borrowing alongside property loans with our Loan EMI Calculator.",
 
   faqs: [
     {
-      question: "How accurate is the mortgage calculator?",
+      question: "How does a mortgage compare to a standard personal loan?",
       answer:
-        "The calculator uses industry-standard formulas and provides highly accurate estimates based on the exact data you input. However, for critical medical or financial decisions, it should be used as a baseline guide alongside professional advice.",
+        'A mortgage is a secured borrowing facility tied to real estate property, typically offering lower interest rates and longer repayment durations (15 to 30 years). In contrast, personal loans are unsecured, shorter in duration, and carry higher rates. To compare non-housing borrowing scenarios, use our <a href="/calculator/loan-emi-calculator" class="text-primary hover:underline">Loan EMI Calculator</a>.',
     },
     {
-      question: "Can I use this calculator on my mobile device?",
+      question: "How can prepayments reduce my mortgage interest?",
       answer:
-        "Yes, the calculator is fully responsive and optimized for all devices, including smartphones, tablets, and desktop computers.",
+        'Making periodic lump-sum prepayments directly reduces your outstanding loan principal. Because interest is charged on the reducing balance, prepayments significantly shorten your loan duration and save lakhs in cumulative interest. You can evaluate how surplus savings compound over time using our <a href="/calculator/compound-interest-calculator" class="text-primary hover:underline">Compound Interest Calculator</a>.',
     },
     {
-      question: "Do I need to create an account to use the tool?",
+      question: "Should I invest my extra savings in mutual funds or prepay my home loan?",
       answer:
-        "No, all of our calculators are completely free to use and do not require any registration or account creation.",
-    },
-    {
-      question: "How often should I recalculate my numbers?",
-      answer:
-        "It is recommended to recalculate whenever your primary variables—such as income, weight, interest rates, or age—change significantly.",
-    },
-    {
-      question: "Is my inputted data saved or shared?",
-      answer:
-        "Your privacy is our priority. All calculations are performed locally in your browser, and no personal input data is saved or transmitted to our servers.",
+        'This depends on your mortgage interest rate versus your projected investment return. If your expected mutual fund return exceeds your loan interest rate, systematic investing may build more wealth. You can project disciplined monthly investment returns with our <a href="/calculator/sip-calculator" class="text-primary hover:underline">SIP Calculator</a> or compare safe returns with the <a href="/calculator/fd-calculator" class="text-primary hover:underline">FD Calculator</a>.',
     },
   ],
 
   authorityLinks: [
-    { text: "World Health Organization (WHO)", url: "https://www.who.int/" },
-    { text: "Centers for Disease Control and Prevention (CDC)", url: "https://www.cdc.gov/" },
+    {
+      text: "Consumer Financial Protection Bureau (CFPB) Owning a Home Guide",
+      url: "https://www.consumerfinance.gov/owning-a-home/",
+    },
   ],
 
   relatedCalculators: [
+    "loan-emi-calculator",
     "compound-interest-calculator",
-    "calorie-calculator",
-    "pregnancy-due-date-calculator",
+    "sip-calculator",
+    "fd-calculator",
   ],
 };
 

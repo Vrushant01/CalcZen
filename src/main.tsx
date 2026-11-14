@@ -1,9 +1,10 @@
-﻿import { StrictMode, useEffect, useState } from "react";
+﻿import { StrictMode, useEffect, useState, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "@tanstack/react-router";
 import { getRouter } from "./router";
 import "./styles.css";
-import AdminApp from "../admin/src/App";
+
+const AdminApp = lazy(() => import("../admin/src/App"));
 
 const router = getRouter();
 
@@ -54,4 +55,14 @@ function AppBoot() {
   return <RouterProvider router={router} />;
 }
 
-createRoot(rootEl).render(<StrictMode>{isAdminHost ? <AdminApp /> : <AppBoot />}</StrictMode>);
+createRoot(rootEl).render(
+  <StrictMode>
+    {isAdminHost ? (
+      <Suspense fallback={null}>
+        <AdminApp />
+      </Suspense>
+    ) : (
+      <AppBoot />
+    )}
+  </StrictMode>
+);

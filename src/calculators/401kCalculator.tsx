@@ -43,7 +43,6 @@ import { motion } from "framer-motion";
 export function Four01kCalculator() {
   const calc = getCalculator("401k-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(currentAge) !== calcCurrentAge || Number(retirementAge) !== calcRetirementAge || Number(currentSavings) !== calcCurrentSavings || Number(salary) !== calcSalary || Number(employeeContrPct) !== calcEmployeeContrPct || Number(employerMatchPct) !== calcEmployerMatchPct || Number(employerLimitPct) !== calcEmployerLimitPct || Number(salaryGrowthPct) !== calcSalaryGrowthPct || Number(expectedReturn) !== calcExpectedReturn || Number(inflationRate) !== calcInflationRate || inflationScenario !== calcInflationScenario || marketPerformance !== calcMarketPerformance);
 
   // Unified formatting helper
   function formatCurrency(val: number) {
@@ -339,6 +338,7 @@ export function Four01kCalculator() {
     results401k,
   ]);
 
+  const isOutdated = hasResult && (Number(currentAge) !== calcCurrentAge || Number(retirementAge) !== calcRetirementAge || Number(currentSavings) !== calcCurrentSavings || Number(salary) !== calcSalary || Number(employeeContrPct) !== calcEmployeeContrPct || Number(employerMatchPct) !== calcEmployerMatchPct || Number(employerLimitPct) !== calcEmployerLimitPct || Number(salaryGrowthPct) !== calcSalaryGrowthPct || Number(expectedReturn) !== calcExpectedReturn || Number(inflationRate) !== calcInflationRate || inflationScenario !== calcInflationScenario || marketPerformance !== calcMarketPerformance);
   const isButtonDisabled =
     currentAge === "" ||
     retirementAge === "" ||

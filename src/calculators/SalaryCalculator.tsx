@@ -153,7 +153,6 @@ const QUICK_CTC_CHIPS = [
 export function SalaryCalculator() {
   const calc = getCalculator("ctc-to-in-hand-salary-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && Boolean(calcParams && JSON.stringify(params) !== JSON.stringify(calcParams));
 
   // Basic Details State
   const [ctcInput, setCtcInput] = useState<number | "">(1200000);
@@ -234,6 +233,34 @@ export function SalaryCalculator() {
     return calculateSalaryBreakdown(calcParams);
   }, [calcParams]);
 
+  const params: SalaryCalculatorInputs = {
+    annualCTC: Number(ctcInput),
+    financialYear,
+    state,
+    regime,
+    structureType,
+    basicPercentage: basicPct,
+    hraPercentage: hraPct,
+    cityType,
+    monthlyRentPaid: Number(monthlyRent) || 0,
+    annualVariablePay: Number(variablePay) || 0,
+    includeEmployeePF,
+    includeEmployerPFInCTC,
+    pfCappedAtStatutoryCeiling: pfCapped,
+    vpfPercentage: vpfPct,
+    includeGratuityInCTC,
+    gratuityOverride: Number(gratuityOverride) || 0,
+    employerNPSPercentage: employerNPSPct,
+    otherEmployerBenefits: Number(otherEmployerBenefits) || 0,
+    section80C: Number(sec80C) || 0,
+    section80D: Number(sec80D) || 0,
+    section80CCD1B: Number(sec80CCD1B) || 0,
+    homeLoanInterest80EEA: Number(homeLoanInt) || 0,
+    otherTaxDeductions: Number(otherTaxDeductions) || 0,
+    monthlyEmployeeInsurance: Number(monthlyInsurance) || 0,
+    otherMonthlyDeductions: Number(otherMonthlyDeductions) || 0,
+  };
+  const isOutdated = hasResult && Boolean(calcParams && JSON.stringify(params) !== JSON.stringify(calcParams));
   const isButtonDisabled = !ctcInput || Number(ctcInput) <= 0;
 
   const handleCalculate = () => {

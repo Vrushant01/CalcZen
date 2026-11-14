@@ -38,7 +38,6 @@ export function SIPCalculator() {
   const calc = getCalculator("sip-calculator");
   const { format, formatAxis } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(monthly) !== calcMonthly || Number(rate) !== calcRate || Number(years) !== calcYears);
 
   const [monthly, setMonthly] = useState<number | "">(500);
   const [rate, setRate] = useState<number | "">(12);
@@ -127,6 +126,7 @@ export function SIPCalculator() {
       }
     : null;
 
+  const isOutdated = hasResult && (Number(monthly) !== calcMonthly || Number(rate) !== calcRate || Number(years) !== calcYears);
   const isButtonDisabled =
     monthly === "" ||
     rate === "" ||

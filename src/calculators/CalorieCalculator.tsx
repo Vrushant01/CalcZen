@@ -1,6 +1,6 @@
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -48,7 +48,6 @@ const ACTIVITY_LABELS: Record<string, string> = {
 export function CalorieCalculator() {
   const calc = getCalculator("calorie-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (sex !== calcSex || Number(age) !== calcAge || Number(heightCm) !== calcHeightCm || Number(weightKg) !== calcWeightKg || activity !== calcActivity || goal !== calcGoal);
 
   const [sex, setSex] = useState<"male" | "female">("male");
   const [age, setAge] = useState<number | "">(30);
@@ -150,6 +149,7 @@ export function CalorieCalculator() {
       }
     : null;
 
+  const isOutdated = hasResult && (sex !== calcSex || Number(age) !== calcAge || Number(heightCm) !== calcHeightCm || Number(weightKg) !== calcWeightKg || activity !== calcActivity || goal !== calcGoal);
   const isButtonDisabled =
     !age ||
     !heightCm ||

@@ -41,7 +41,6 @@ import { motion } from "framer-motion";
 export function RetirementCalculator() {
   const calc = getCalculator("retirement-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(currentAge) !== calcCurrentAge || Number(retirementAge) !== calcRetirementAge || Number(lifeExpectancy) !== calcLifeExpectancy || Number(currentSavings) !== calcCurrentSavings || Number(monthlyContribution) !== calcMonthlyContribution || Number(expectedReturn) !== calcExpectedReturn || Number(inflationRate) !== calcInflationRate || Number(desiredIncome) !== calcDesiredIncome || Number(pension) !== calcPension || Number(socialSecurity) !== calcSocialSecurity || Number(rentalIncome) !== calcRentalIncome || Number(otherIncome) !== calcOtherIncome || Number(federalTax) !== calcFederalTax || Number(stateTax) !== calcStateTax || inflationScenario !== calcInflationScenario || marketPerformance !== calcMarketPerformance);
 
   // Unified formatting helper
   function formatCurrency(val: number) {
@@ -381,6 +380,7 @@ export function RetirementCalculator() {
     retirementResults,
   ]);
 
+  const isOutdated = hasResult && (Number(currentAge) !== calcCurrentAge || Number(retirementAge) !== calcRetirementAge || Number(lifeExpectancy) !== calcLifeExpectancy || Number(currentSavings) !== calcCurrentSavings || Number(monthlyContribution) !== calcMonthlyContribution || Number(expectedReturn) !== calcExpectedReturn || Number(inflationRate) !== calcInflationRate || Number(desiredIncome) !== calcDesiredIncome || Number(pension) !== calcPension || Number(socialSecurity) !== calcSocialSecurity || Number(rentalIncome) !== calcRentalIncome || Number(otherIncome) !== calcOtherIncome || Number(federalTax) !== calcFederalTax || Number(stateTax) !== calcStateTax || inflationScenario !== calcInflationScenario || marketPerformance !== calcMarketPerformance);
   const isButtonDisabled =
     currentAge === "" ||
     retirementAge === "" ||

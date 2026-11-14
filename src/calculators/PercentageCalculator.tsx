@@ -34,7 +34,6 @@ import {
 export function PercentageCalculator() {
   const calc = getCalculator("percentage-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(a) !== calcA || Number(b) !== calcB || Number(x) !== calcX || Number(y) !== calcY || Number(from) !== calcFrom || Number(to) !== calcTo);
 
   const [a, setA] = useState<number | "">(15);
   const [b, setB] = useState<number | "">(200);
@@ -95,6 +94,7 @@ export function PercentageCalculator() {
       }
     : null;
 
+  const isOutdated = hasResult && (Number(a) !== calcA || Number(b) !== calcB || Number(x) !== calcX || Number(y) !== calcY || Number(from) !== calcFrom || Number(to) !== calcTo);
   const isButtonDisabled = a === "" || b === "" || x === "" || y === "" || from === "" || to === "";
 
   const handleCalculate = () => {

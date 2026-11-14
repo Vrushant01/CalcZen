@@ -32,7 +32,6 @@ export function InflationCalculator() {
   const calc = getCalculator("inflation-calculator")!;
   const { format, formatAxis } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(amount) !== calcAmount || Number(rate) !== calcRate || Number(years) !== calcYears);
 
   const [amount, setAmount] = useState<number | "">(10000);
   const [rate, setRate] = useState<number | "">(3.5);
@@ -80,6 +79,7 @@ export function InflationCalculator() {
     resetCalculated();
   };
 
+  const isOutdated = hasResult && (Number(amount) !== calcAmount || Number(rate) !== calcRate || Number(years) !== calcYears);
   const isButtonDisabled = !amount || !rate || !years || Number(amount) <= 0 || Number(years) <= 0;
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

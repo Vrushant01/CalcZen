@@ -1,6 +1,6 @@
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
@@ -84,7 +84,6 @@ const GOAL_LABELS: Record<GoalType, string> = {
 export function ProteinCalculator() {
   const calc = getCalculator("protein-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (unit !== calcUnit || Number(weightKg) !== calcWeightKg || Number(weightLb) !== calcWeightLb || goal !== calcGoal || activity !== calcActivity);
 
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
   const [weightKg, setWeightKg] = useState<number | "">(70);
@@ -116,6 +115,7 @@ export function ProteinCalculator() {
     };
   }, [calcUnit, calcWeightKg, calcWeightLb, calcGoal, calcActivity]);
 
+  const isOutdated = hasResult && (unit !== calcUnit || Number(weightKg) !== calcWeightKg || Number(weightLb) !== calcWeightLb || goal !== calcGoal || activity !== calcActivity);
   const isButtonDisabled =
     unit === "metric" ? !weightKg || weightKg <= 0 : !weightLb || weightLb <= 0;
 

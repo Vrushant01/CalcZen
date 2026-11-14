@@ -44,7 +44,6 @@ const ACTIVITY_LEVELS = [
 export function BMRCalculator() {
   const calc = getCalculator("bmr-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (sex !== calcSex || Number(age) !== calcAge || Number(heightCm) !== calcHeightCm || Number(weightKg) !== calcWeightKg);
 
   const [sex, setSex] = useState<"male" | "female">("male");
   const [age, setAge] = useState<number | "">(30);
@@ -108,6 +107,7 @@ export function BMRCalculator() {
       }
     : null;
 
+  const isOutdated = hasResult && (sex !== calcSex || Number(age) !== calcAge || Number(heightCm) !== calcHeightCm || Number(weightKg) !== calcWeightKg);
   const isButtonDisabled =
     !age ||
     !heightCm ||

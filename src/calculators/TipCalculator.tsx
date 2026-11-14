@@ -1,6 +1,6 @@
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -55,7 +55,6 @@ export function TipCalculator() {
   const calc = getCalculator("tip-calculator")!;
   const { format } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(bill) !== calcBill || Number(tip) !== calcTip || Number(people) !== calcPeople);
 
   const [bill, setBill] = useState<number | "">(60);
   const [tip, setTip] = useState<number | "">(18);
@@ -119,6 +118,7 @@ export function TipCalculator() {
         }
       : null;
 
+  const isOutdated = hasResult && (Number(bill) !== calcBill || Number(tip) !== calcTip || Number(people) !== calcPeople);
   const isButtonDisabled =
     bill === "" ||
     tip === "" ||

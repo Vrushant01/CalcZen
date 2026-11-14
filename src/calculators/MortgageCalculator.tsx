@@ -44,7 +44,6 @@ export function MortgageCalculator() {
   const calc = getCalculator("mortgage-calculator")!;
   const { format, formatAxis } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(price) !== calcPrice || Number(down) !== calcDown || Number(rate) !== calcRate || Number(years) !== calcYears || Number(tax) !== calcTax || Number(ins) !== calcIns || Number(hoa) !== calcHoa);
 
   const [price, setPrice] = useState<number | "">(400000);
   const [down, setDown] = useState<number | "">(80000);
@@ -173,6 +172,7 @@ export function MortgageCalculator() {
       }
     : null;
 
+  const isOutdated = hasResult && (Number(price) !== calcPrice || Number(down) !== calcDown || Number(rate) !== calcRate || Number(years) !== calcYears || Number(tax) !== calcTax || Number(ins) !== calcIns || Number(hoa) !== calcHoa);
   const isButtonDisabled =
     !price ||
     !down ||

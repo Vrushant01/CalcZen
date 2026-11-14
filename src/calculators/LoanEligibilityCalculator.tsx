@@ -21,7 +21,6 @@ export function LoanEligibilityCalculator() {
   const calc = getCalculator("loan-eligibility-calculator")!;
   const { format } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(income) !== calcIncome || Number(existingEmi) !== calcExistingEmi || Number(rate) !== calcRate || Number(years) !== calcYears);
 
   const [income, setIncome] = useState<number | "">(5000);
   const [existingEmi, setExistingEmi] = useState<number | "">(500);
@@ -94,6 +93,7 @@ export function LoanEligibilityCalculator() {
       }
     : null;
 
+  const isOutdated = hasResult && (Number(income) !== calcIncome || Number(existingEmi) !== calcExistingEmi || Number(rate) !== calcRate || Number(years) !== calcYears);
   const isButtonDisabled =
     income === "" ||
     rate === "" ||

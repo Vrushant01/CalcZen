@@ -1,6 +1,6 @@
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { CalculatorCurrencyBar } from "@/components/CurrencySelector";
@@ -44,7 +44,6 @@ export function FDCalculator() {
   };
   const { format, formatAxis } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(principal) !== calcPrincipal || Number(rate) !== calcRate || Number(years) !== calcYears || Number(months) !== calcMonths || frequency !== calcFrequency);
 
   const [principal, setPrincipal] = useState<number | "">(10000);
   const [rate, setRate] = useState<number | "">(6.5);
@@ -111,6 +110,7 @@ export function FDCalculator() {
     return data;
   }, [calcPrincipal, calcRate, calcFrequency, result.totalYears]);
 
+  const isOutdated = hasResult && (Number(principal) !== calcPrincipal || Number(rate) !== calcRate || Number(years) !== calcYears || Number(months) !== calcMonths || frequency !== calcFrequency);
   const isButtonDisabled =
     !principal ||
     principal <= 0 ||

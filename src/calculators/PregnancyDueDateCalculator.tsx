@@ -17,7 +17,6 @@ import { motion } from "framer-motion";
 export function PregnancyDueDateCalculator() {
   const calc = getCalculator("pregnancy-due-date-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (lmp !== calcLmp);
 
   // Live input states
   const [lmp, setLmp] = useState("2025-01-01");
@@ -63,6 +62,7 @@ export function PregnancyDueDateCalculator() {
         }
       : null;
 
+  const isOutdated = hasResult && (lmp !== calcLmp);
   const isButtonDisabled = !lmp;
 
   const handleCalculate = () => {

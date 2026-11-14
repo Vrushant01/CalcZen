@@ -1,6 +1,6 @@
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -40,7 +40,6 @@ export function CompoundInterestCalculator() {
   const calc = getCalculator("compound-interest-calculator")!;
   const { format, formatAxis } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(principal) !== calcPrincipal || Number(monthly) !== calcMonthly || Number(rate) !== calcRate || Number(years) !== calcYears);
 
   const [principal, setPrincipal] = useState<number | "">(10000);
   const [monthly, setMonthly] = useState<number | "">(500);
@@ -133,6 +132,7 @@ export function CompoundInterestCalculator() {
       }
     : null;
 
+  const isOutdated = hasResult && (Number(principal) !== calcPrincipal || Number(monthly) !== calcMonthly || Number(rate) !== calcRate || Number(years) !== calcYears);
   const isButtonDisabled =
     principal === "" ||
     monthly === "" ||

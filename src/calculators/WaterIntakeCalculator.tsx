@@ -36,7 +36,6 @@ import {
 export function WaterIntakeCalculator() {
   const calc = getCalculator("water-intake-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(weightKg) !== calcWeightKg || Number(activityMin) !== calcActivityMin);
 
   const [weightKg, setWeightKg] = useState<number | "">(70);
   const [activityMin, setActivityMin] = useState<number | "">(30);
@@ -108,6 +107,7 @@ export function WaterIntakeCalculator() {
       }
     : null;
 
+  const isOutdated = hasResult && (Number(weightKg) !== calcWeightKg || Number(activityMin) !== calcActivityMin);
   const isButtonDisabled =
     !weightKg || weightKg <= 0 || activityMin === "" || Number(activityMin) < 0;
 

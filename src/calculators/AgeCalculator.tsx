@@ -17,7 +17,6 @@ import { motion } from "framer-motion";
 export function AgeCalculator() {
   const calc = getCalculator("age-calculator")!;
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (dob !== calcDob || on !== calcOn);
   const today = new Date().toISOString().slice(0, 10);
 
   // Live states
@@ -90,6 +89,7 @@ export function AgeCalculator() {
         }
       : null;
 
+  const isOutdated = hasResult && (dob !== calcDob || on !== calcOn);
   const isButtonDisabled = !dob || !on || new Date(dob) > new Date(on);
 
   const handleCalculate = () => {

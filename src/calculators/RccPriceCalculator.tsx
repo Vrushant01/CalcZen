@@ -83,33 +83,6 @@ function convertUnitValue(val: number, fromUnit: DimensionUnit, toUnit: Dimensio
 
 export function RccPriceCalculator() {
   const calc = getCalculator("rcc-price-calculator")!;
-  const currentInputs = useMemo(() => ({
-    inputs,
-    directVolumeMode,
-    directVolume,
-    directVolumeUnit,
-    estimateMode,
-    includeShuttering,
-    includeLabour,
-    steelEntryMode,
-    customSteelTotalKg,
-    bbsBars,
-  }), [
-    inputs,
-    directVolumeMode,
-    directVolume,
-    directVolumeUnit,
-    estimateMode,
-    includeShuttering,
-    includeLabour,
-    steelEntryMode,
-    customSteelTotalKg,
-    bbsBars,
-  ]);
-
-  const { hasResult, isOutdated, calculatedInputs, markCalculated, resetCalculated } =
-    useCalculatorState(currentInputs);
-  const activeInputs = calculatedInputs || currentInputs;
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Mode: Quick Estimate (default) vs Detailed Estimate
@@ -160,6 +133,34 @@ export function RccPriceCalculator() {
 
   // Master Calculator Inputs State
   const [inputs, setInputs] = useState<RccCalculatorInputs>(PRESET_SAMPLE_ROOF_SLAB);
+
+  const currentInputs = useMemo(() => ({
+    inputs,
+    directVolumeMode,
+    directVolume,
+    directVolumeUnit,
+    estimateMode,
+    includeShuttering,
+    includeLabour,
+    steelEntryMode,
+    customSteelTotalKg,
+    bbsBars,
+  }), [
+    inputs,
+    directVolumeMode,
+    directVolume,
+    directVolumeUnit,
+    estimateMode,
+    includeShuttering,
+    includeLabour,
+    steelEntryMode,
+    customSteelTotalKg,
+    bbsBars,
+  ]);
+
+  const { hasResult, isOutdated, calculatedInputs, markCalculated, resetCalculated } =
+    useCalculatorState(currentInputs);
+  const activeInputs = calculatedInputs || currentInputs;
 
   // Update inputs safely
   const updateInputs = (patch: Partial<RccCalculatorInputs>) => {

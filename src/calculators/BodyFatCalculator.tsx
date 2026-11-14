@@ -1,6 +1,6 @@
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
 import { Input } from "@/components/ui/input";
@@ -56,7 +56,6 @@ export function BodyFatCalculator() {
   };
 
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && Boolean(calcState && JSON.stringify(state) !== JSON.stringify(calcState));
   const [unit, setUnit] = useState<"metric" | "imperial">("imperial");
   const [gender, setGender] = useState<"male" | "female">("male");
 
@@ -135,6 +134,8 @@ export function BodyFatCalculator() {
     };
   }, [calcState]);
 
+  const state = { unit, gender, heightCm, weightKg, neckCm, waistCm, hipCm, heightIn, weightLb, neckIn, waistIn, hipIn };
+  const isOutdated = hasResult && Boolean(calcState && JSON.stringify(state) !== JSON.stringify(calcState));
   const isButtonDisabled =
     unit === "metric"
       ? !heightCm || !weightKg || !neckCm || !waistCm || (gender === "female" && !hipCm)

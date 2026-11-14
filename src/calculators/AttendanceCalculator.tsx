@@ -145,7 +145,6 @@ const attendanceBlogContent: BlogContent = {
 export function AttendanceCalculator() {
   const calc = getCalculator("attendance-calculator");
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(conducted) !== calcConducted || Number(attended) !== calcAttended);
 
   const [conducted, setConducted] = useState<number | "">("");
   const [attended, setAttended] = useState<number | "">("");
@@ -153,6 +152,7 @@ export function AttendanceCalculator() {
   const [calcConducted, setCalcConducted] = useState<number>(0);
   const [calcAttended, setCalcAttended] = useState<number>(0);
 
+  const isOutdated = hasResult && (Number(conducted) !== calcConducted || Number(attended) !== calcAttended);
   const isButtonDisabled =
     conducted === "" ||
     attended === "" ||

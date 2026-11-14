@@ -160,7 +160,6 @@ export function GSTCalculator() {
   const calc = getCalculator("gst-calculator")!;
   const { format } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (mode !== calcMode || Number(amount) !== calcAmount || Number(rate) !== calcRate);
 
   const [mode, setMode] = useState<"add" | "remove">("add");
   const [amount, setAmount] = useState<number | "">(1000);
@@ -193,6 +192,7 @@ export function GSTCalculator() {
     return { baseAmount, gstAmount, finalAmount, cgst, sgst, effectiveRate };
   }, [calcAmount, calcRate, calcMode]);
 
+  const isOutdated = hasResult && (mode !== calcMode || Number(amount) !== calcAmount || Number(rate) !== calcRate);
   const isButtonDisabled = !amount || Number(amount) <= 0;
 
   const handleCalculate = () => {

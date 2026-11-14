@@ -43,7 +43,6 @@ export function LoanEMICalculator() {
   const calc = getCalculator("loan-emi-calculator")!;
   const { format } = useCurrency();
   const { hasResult, markCalculated, resetCalculated } = useHasCalculated();
-  const isOutdated = hasResult && (Number(amount) !== calcAmount || Number(rate) !== calcRate || Number(months) !== calcMonths);
 
   const [amount, setAmount] = useState<number | "">(20000);
   const [rate, setRate] = useState<number | "">(9);
@@ -135,6 +134,7 @@ export function LoanEMICalculator() {
       }
     : null;
 
+  const isOutdated = hasResult && (Number(amount) !== calcAmount || Number(rate) !== calcRate || Number(months) !== calcMonths);
   const isButtonDisabled =
     !amount || !rate || !months || Number(amount) <= 0 || Number(rate) <= 0 || Number(months) <= 0;
 

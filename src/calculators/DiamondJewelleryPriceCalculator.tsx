@@ -9,6 +9,8 @@ import { getCalculator } from "@/data/calculators";
 import { useCalculatorState } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
+import { useLiveRateDefault } from "@/hooks/use-live-rates";
+import { LiveRatePanel } from "@/components/LiveRatePanel";
 import {
   Sparkles,
   RotateCcw,
@@ -285,6 +287,22 @@ export function DiamondJewelleryPriceCalculator() {
     useCalculatorState(inputs);
   const activeInputs = calculatedInputs || inputs;
 
+  const purityFactor = useMemo(() => {
+    if (metalPurityKarat.includes("18K")) return 18 / 24;
+    if (metalPurityKarat.includes("14K")) return 14 / 24;
+    if (metalPurityKarat.includes("22K")) return 22 / 24;
+    return 1.0;
+  }, [metalPurityKarat]);
+
+  const { liveRates, isUserEdited, onUserEdit, resetToLiveRate, onUseLiveRate } = useLiveRateDefault({
+    metal: "gold",
+    basis: "per_gram",
+    purityFactor,
+    currentValue: metalRatePerGram,
+    setValue: setMetalRatePerGram,
+    hasCalculated: hasResult,
+  });
+
   // Validation
   const validation = useMemo(() => validateDiamondJewelleryInputs(inputs), [inputs]);
 
@@ -310,6 +328,10 @@ export function DiamondJewelleryPriceCalculator() {
     setGstEnabled(true);
     setShowAdvancedOptions(false);
     setShowFullBreakdown(false);
+    setMetalCalculationMode("direct");
+    setMetalWeightGrams(8.0);
+    setMetalPurityKarat("18K Gold");
+    resetToLiveRate(6250);
     markCalculated();
   };
 
@@ -395,6 +417,15 @@ export function DiamondJewelleryPriceCalculator() {
           {/* ========================================================= */}
           <div className="lg:col-span-7 space-y-6">
             <div className="p-6 sm:p-7 bg-card border border-border rounded-2xl shadow-xs space-y-6">
+              <LiveRatePanel
+                metal="gold"
+                rateInUse={metalRatePerGram}
+                rateBasis="per_gram"
+                purityLabel={metalPurityKarat}
+                isUserEdited={isUserEdited}
+                onUseLiveRate={onUseLiveRate}
+              />
+
               {/* MODE SELECTOR */}
               <div className="space-y-2">
                 <Label className="text-base font-semibold text-foreground">
@@ -812,6 +843,7 @@ export function DiamondJewelleryPriceCalculator() {
                             min={0}
                             value={metalRatePerGram === 0 ? "" : metalRatePerGram}
                             onChange={(e) => {
+                              onUserEdit();
                               setMetalRatePerGram(e.target.value === "" ? 0 : Number(e.target.value));
                               markCalculated();
                             }}

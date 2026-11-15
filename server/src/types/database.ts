@@ -79,3 +79,19 @@ export type ApiContactMessage = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type RatesMultiplierRow = {
+  id: string;
+  multiplier_gold: number;
+  multiplier_silver: number;
+  authority: string;
+  indian_gold_rate: number;
+  indian_silver_rate: number;
+  spot_gold_rate: number;
+  spot_silver_rate: number;
+  computed_at: string;
+  metals_dev_timestamp: string | null;
+  calls_this_month: number;
+  calls_month: string;
+};
+

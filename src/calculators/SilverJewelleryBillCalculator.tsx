@@ -10,7 +10,7 @@ import { useCalculatorState } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useLiveRateDefault } from "@/hooks/use-live-rates";
-import { LiveRateChip } from "@/components/LiveRateChip";
+import { LiveRatePanel } from "@/components/LiveRatePanel";
 import {
   Coins,
   RotateCcw,
@@ -376,6 +376,15 @@ Generated at: https://www.calczen.in/calculator/silver-jewellery-bill-calculator
           {/* ========================================================= */}
           <div className="lg:col-span-7 space-y-6">
             <div className="p-6 sm:p-7 bg-card border border-border rounded-2xl shadow-xs space-y-6">
+              <LiveRatePanel
+                metal="silver"
+                rateInUse={rate}
+                rateBasis="per_gram"
+                purityLabel={rateBasis === "999" ? "999 Pure Silver" : BIS_SILVER_PURITY_OPTIONS[purity]?.label || "925 Sterling Silver"}
+                isUserEdited={isUserEdited}
+                onUseLiveRate={onUseLiveRate}
+              />
+
               {/* SECTION 1: SILVER WEIGHT */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
@@ -495,11 +504,6 @@ Generated at: https://www.calczen.in/calculator/silver-jewellery-bill-calculator
                   </span>
                 </div>
 
-                <LiveRateChip
-                  liveRates={liveRates}
-                  isUserEdited={isUserEdited}
-                  onUseLiveRate={onUseLiveRate}
-                />
                 <p className="text-xs text-muted-foreground">
                   Enter the silver rate given by your jeweller.
                 </p>

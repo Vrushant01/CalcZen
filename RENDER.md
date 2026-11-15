@@ -48,9 +48,12 @@ Add under **Environment**:
 | `EMAIL_FROM` | Yes | `hello@calczen.in` |
 | `CONTACT_TO` | Optional | `hello@calczen.in` (contact form inbox) |
 | `SITE_URL` | Yes | `https://www.calczen.in` |
+| `METALS_DEV_API_KEY` | Recommended | `NP5...` (Metals.dev Authority API key for IBJA/MCX benchmark) |
+| `RATES_MULTIPLIER_TTL_HOURS` | Optional | `12` (default 12 hours) |
+| `RATES_MONTHLY_CALL_BUDGET` | Optional | `60` (default 60 calls/month; free plan limit is 100) |
 | `RATES_API_URL` | Optional | `https://api.gold-api.com` (default) |
 | `RATES_CACHE_TTL_MINUTES` | Optional | `5` (default) |
-| `RATES_INDIA_PREMIUM_PERCENT` | Optional | `0` (default) |
+| `RATES_INDIA_PREMIUM_PERCENT` | Optional | `0` (default fallback percent) |
 | `CORS_ORIGIN` | Optional | extra exact origins only (see below) |
 | `ADMIN_EMAIL` | For seed only | used locally with `npm run seed:admin` |
 | `ADMIN_PASSWORD` | For seed only | used locally with `npm run seed:admin` |

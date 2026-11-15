@@ -43,6 +43,10 @@ export const env = {
   ratesApiUrl: process.env.RATES_API_URL ?? "https://api.gold-api.com",
   ratesCacheTtlMinutes: Number(process.env.RATES_CACHE_TTL_MINUTES ?? 5),
   ratesIndiaPremiumPercent: Number(process.env.RATES_INDIA_PREMIUM_PERCENT ?? 0),
+  metalsDevApiKey: process.env.METALS_DEV_API_KEY ?? "",
+  metalsDevApiUrl: process.env.METALS_DEV_API_URL ?? "https://api.metals.dev",
+  ratesMultiplierTtlHours: Number(process.env.RATES_MULTIPLIER_TTL_HOURS ?? 12),
+  ratesMonthlyCallBudget: Number(process.env.RATES_MONTHLY_CALL_BUDGET ?? 60),
 };
 
 export function assertProductionEnv(): void {

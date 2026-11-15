@@ -11,7 +11,7 @@ import { useHasCalculated } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useLiveRateDefault } from "@/hooks/use-live-rates";
-import { LiveRateChip } from "@/components/LiveRateChip";
+import { LiveRatePanel } from "@/components/LiveRatePanel";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   HeroMetric,
@@ -734,6 +734,15 @@ export function GoldJewelleryBillCalculator() {
             </h2>
           </div>
 
+          <LiveRatePanel
+            metal="gold"
+            rateInUse={goldRate}
+            rateBasis={goldRateBasis}
+            purityLabel={goldRateType === "direct" ? PURITY_DEFINITIONS[purity]?.label || "22K" : "24K Benchmark"}
+            isUserEdited={isUserEdited}
+            onUseLiveRate={onUseLiveRate}
+          />
+
           <div className="flex flex-col gap-4">
             {/* 1. Item Name & Purity Selection */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -988,13 +997,6 @@ export function GoldJewelleryBillCalculator() {
                   </button>
                 ))}
               </div>
-
-              {/* Live Rate Chip */}
-              <LiveRateChip
-                liveRates={liveRates}
-                isUserEdited={isUserEdited}
-                onUseLiveRate={onUseLiveRate}
-              />
             </div>
 
             {/* 4. Making Charges & Wastage Section */}

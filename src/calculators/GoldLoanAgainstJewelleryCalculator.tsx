@@ -10,7 +10,7 @@ import { useCalculatorState } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useLiveRateDefault } from "@/hooks/use-live-rates";
-import { LiveRateChip } from "@/components/LiveRateChip";
+import { LiveRatePanel } from "@/components/LiveRatePanel";
 import {
   Sparkles,
   RotateCcw,
@@ -458,6 +458,15 @@ export function GoldLoanAgainstJewelleryCalculator() {
               </span>
             </div>
 
+            <LiveRatePanel
+              metal="gold"
+              rateInUse={goldRate}
+              rateBasis="per_gram"
+              purityLabel={rateBasis === "24k_rate" ? "24K Benchmark" : GOLD_PURITY_MAP[purity]?.label || "22K"}
+              isUserEdited={isUserEdited}
+              onUseLiveRate={onUseLiveRate}
+            />
+
             {/* ---------------------------------------------------- */}
             {/* INPUT 1: GOLD WEIGHT                                */}
             {/* ---------------------------------------------------- */}
@@ -584,11 +593,6 @@ export function GoldLoanAgainstJewelleryCalculator() {
                 </span>
               </div>
 
-              <LiveRateChip
-                liveRates={liveRates}
-                isUserEdited={isUserEdited}
-                onUseLiveRate={onUseLiveRate}
-              />
               <p className="text-[11px] text-muted-foreground">
                 {rateBasis === "24k_rate"
                   ? `Your 24K rate will automatically convert to ₹${Math.round(

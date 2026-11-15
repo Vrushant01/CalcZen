@@ -10,7 +10,7 @@ import { useCalculatorState } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useLiveRateDefault } from "@/hooks/use-live-rates";
-import { LiveRateChip } from "@/components/LiveRateChip";
+import { LiveRatePanel } from "@/components/LiveRatePanel";
 import {
   Gem,
   Scale,
@@ -443,6 +443,15 @@ Generated at: https://www.calczen.in/calculator/old-gold-exchange-value-calculat
                 </h2>
               </div>
 
+              <LiveRatePanel
+                metal="gold"
+                rateInUse={rate}
+                rateBasis={rateUnit}
+                purityLabel={rateBasis === "24k" ? "24K Benchmark" : OLD_GOLD_PURITY_OPTIONS[purity]?.label || "22K"}
+                isUserEdited={isUserEdited}
+                onUseLiveRate={onUseLiveRate}
+              />
+
               {/* Input 1: Weight Mode & Gold Weight */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -681,12 +690,6 @@ Generated at: https://www.calczen.in/calculator/old-gold-exchange-value-calculat
                     {rateUnit === "per_gram" ? "/ gram" : "/ 10g"}
                   </span>
                 </div>
-
-                <LiveRateChip
-                  liveRates={liveRates}
-                  isUserEdited={isUserEdited}
-                  onUseLiveRate={onUseLiveRate}
-                />
 
                 {/* Rate Basis Toggle */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">

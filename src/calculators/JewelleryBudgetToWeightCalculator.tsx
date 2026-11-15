@@ -10,7 +10,7 @@ import { useCalculatorState } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useLiveRateDefault } from "@/hooks/use-live-rates";
-import { LiveRateChip } from "@/components/LiveRateChip";
+import { LiveRatePanel } from "@/components/LiveRatePanel";
 import {
   Sparkles,
   RotateCcw,
@@ -341,6 +341,15 @@ export function JewelleryBudgetToWeightCalculator() {
               </div>
             </div>
 
+            <LiveRatePanel
+              metal={metalType}
+              rateInUse={metalRate}
+              rateBasis="per_gram"
+              purityLabel={metalType === "gold" ? GOLD_PURITIES[goldPurity]?.label || "22K" : SILVER_PURITIES[silverPurity]?.label || "925 Silver"}
+              isUserEdited={isUserEdited}
+              onUseLiveRate={onUseLiveRate}
+            />
+
             {/* ---------------------------------------------------- */}
             {/* INPUT 1: YOUR BUDGET                                */}
             {/* ---------------------------------------------------- */}
@@ -548,11 +557,6 @@ export function JewelleryBudgetToWeightCalculator() {
                 </span>
               </div>
 
-              <LiveRateChip
-                liveRates={liveRates}
-                isUserEdited={isUserEdited}
-                onUseLiveRate={onUseLiveRate}
-              />
               <p className="text-[11px] text-muted-foreground">
                 {rateBasis === "24k_or_999"
                   ? `Your entered 24K rate will automatically convert to ₹${Math.round(

@@ -9,6 +9,8 @@ import { getCalculator } from "@/data/calculators";
 import { useCalculatorState } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
+import { useLiveRateDefault } from "@/hooks/use-live-rates";
+import { LiveRateChip } from "@/components/LiveRateChip";
 import {
   Coins,
   RotateCcw,
@@ -170,6 +172,9 @@ export function SilverJewelleryBillCalculator() {
   // Section 3: Silver Rate
   const [rate, setRate] = useState<number>(100);
 
+  // Advanced options declaration hoisted for rate basis purity factor
+  const [rateBasis, setRateBasis] = useState<RateBasis>("selected_purity");
+
   // Section 4: Making Charges
   const [makingChargeMethod, setMakingChargeMethod] = useState<MakingChargeMethod>("percentage");
   const [makingChargePercentage, setMakingChargePercentage] = useState<number>(10);
@@ -181,7 +186,6 @@ export function SilverJewelleryBillCalculator() {
   // 2. ADVANCED / MORE OPTIONS (COLLAPSED BY DEFAULT)
   // ==========================================
   const [showAdvanced, setShowAdvanced] = useState<boolean>(false);
-  const [rateBasis, setRateBasis] = useState<RateBasis>("selected_purity");
   const [weightMode, setWeightMode] = useState<"net" | "gross_stone">("net");
   const [grossWeight, setGrossWeight] = useState<number>(25);
   const [nonSilverWeight, setNonSilverWeight] = useState<number>(5);
@@ -242,6 +246,23 @@ export function SilverJewelleryBillCalculator() {
     useCalculatorState(inputs);
   const activeInputs = calculatedInputs || inputs;
 
+  const purityFactor = useMemo(() => {
+    if (rateBasis === "999") return 1.0;
+    if (purity === "custom") {
+      return (Number(customFineness) || 925) / 999;
+    }
+    return (BIS_SILVER_PURITY_OPTIONS[purity]?.fineness ?? 925) / 999;
+  }, [rateBasis, purity, customFineness]);
+
+  const { liveRates, isUserEdited, onUserEdit, resetToLiveRate, onUseLiveRate } = useLiveRateDefault({
+    metal: "silver",
+    basis: "per_gram",
+    purityFactor,
+    currentValue: rate,
+    setValue: setRate,
+    hasCalculated: hasResult,
+  });
+
   // VALIDATION & CALCULATION ENGINE
   const validation = useMemo(() => validateSilverJewelleryInputs(inputs), [inputs]);
   const result = useMemo(() => calculateSilverJewelleryBill(activeInputs), [activeInputs]);
@@ -251,7 +272,7 @@ export function SilverJewelleryBillCalculator() {
     setNetWeight(20);
     setPurity("925");
     setCustomFineness(925);
-    setRate(100);
+    resetToLiveRate(100);
     setMakingChargeMethod("percentage");
     setMakingChargePercentage(10);
     setMakingChargePerGram(15);
@@ -463,6 +484,7 @@ Generated at: https://www.calczen.in/calculator/silver-jewellery-bill-calculator
                     step="any"
                     value={rate === 0 ? "" : rate}
                     onChange={(e) => {
+                      onUserEdit();
                       setRate(e.target.value === "" ? 0 : Number(e.target.value));
                     }}
                     className="h-12 text-lg font-semibold pl-9 pr-24 rounded-xl border-border focus:ring-2 focus:ring-primary/20"
@@ -472,6 +494,12 @@ Generated at: https://www.calczen.in/calculator/silver-jewellery-bill-calculator
                     per gram
                   </span>
                 </div>
+
+                <LiveRateChip
+                  liveRates={liveRates}
+                  isUserEdited={isUserEdited}
+                  onUseLiveRate={onUseLiveRate}
+                />
                 <p className="text-xs text-muted-foreground">
                   Enter the silver rate given by your jeweller.
                 </p>

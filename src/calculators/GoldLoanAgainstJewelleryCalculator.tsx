@@ -9,6 +9,8 @@ import { getCalculator } from "@/data/calculators";
 import { useCalculatorState } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
+import { useLiveRateDefault } from "@/hooks/use-live-rates";
+import { LiveRateChip } from "@/components/LiveRateChip";
 import {
   Sparkles,
   RotateCcw,
@@ -267,6 +269,21 @@ export function GoldLoanAgainstJewelleryCalculator() {
     useCalculatorState(inputs);
   const activeInputs = calculatedInputs || inputs;
 
+  const purityFactor = useMemo(() => {
+    return rateBasis === "24k_rate"
+      ? 1.0
+      : (GOLD_PURITY_MAP[purity]?.finenessFraction ?? 22 / 24);
+  }, [rateBasis, purity]);
+
+  const { liveRates, isUserEdited, onUserEdit, resetToLiveRate, onUseLiveRate } = useLiveRateDefault({
+    metal: "gold",
+    basis: "per_gram",
+    purityFactor,
+    currentValue: goldRate,
+    setValue: setGoldRate,
+    hasCalculated: hasResult,
+  });
+
   const validation = useMemo(() => validateGoldLoanInputs(inputs), [inputs]);
   const result: GoldLoanCalculationResult = useMemo(
     () => calculateGoldLoan(activeInputs),
@@ -280,7 +297,7 @@ export function GoldLoanAgainstJewelleryCalculator() {
     setGrossWeight(20);
     setPurity("22k-916");
     setRateBasis("selected_purity");
-    setGoldRate(7200);
+    resetToLiveRate(7200);
     setLoanMode("estimate_max");
     setRequestedLoanAmount(100000);
     setNonGoldWeight(0);
@@ -555,7 +572,10 @@ export function GoldLoanAgainstJewelleryCalculator() {
                   max="50000"
                   step="10"
                   value={goldRate === 0 ? "" : goldRate}
-                  onChange={(e) => setGoldRate(e.target.value === "" ? 0 : Number(e.target.value))}
+                  onChange={(e) => {
+                    onUserEdit();
+                    setGoldRate(e.target.value === "" ? 0 : Number(e.target.value));
+                  }}
                   placeholder="e.g. 7200"
                   className="h-12 pl-8 pr-12 text-base font-semibold rounded-xl"
                 />
@@ -563,6 +583,12 @@ export function GoldLoanAgainstJewelleryCalculator() {
                   / gram
                 </span>
               </div>
+
+              <LiveRateChip
+                liveRates={liveRates}
+                isUserEdited={isUserEdited}
+                onUseLiveRate={onUseLiveRate}
+              />
               <p className="text-[11px] text-muted-foreground">
                 {rateBasis === "24k_rate"
                   ? `Your 24K rate will automatically convert to ₹${Math.round(

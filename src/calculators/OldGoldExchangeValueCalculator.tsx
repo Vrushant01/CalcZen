@@ -9,6 +9,8 @@ import { getCalculator } from "@/data/calculators";
 import { useCalculatorState } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
+import { useLiveRateDefault } from "@/hooks/use-live-rates";
+import { LiveRateChip } from "@/components/LiveRateChip";
 import {
   Gem,
   Scale,
@@ -228,12 +230,30 @@ export function OldGoldExchangeValueCalculator() {
     useCalculatorState(inputs);
   const activeInputs = calculatedInputs || inputs;
 
+  const purityFactor = useMemo(() => {
+    if (rateBasis === "24k") return 1.0;
+    if (purity === "custom") {
+      return (Number(customFineness) || 916) / 1000;
+    }
+    return OLD_GOLD_PURITY_OPTIONS[purity]?.finenessFraction ?? 0.916;
+  }, [rateBasis, purity, customFineness]);
+
+  const { liveRates, isUserEdited, onUserEdit, resetToLiveRate, onUseLiveRate } = useLiveRateDefault({
+    metal: "gold",
+    basis: rateUnit,
+    purityFactor,
+    currentValue: rate,
+    setValue: setRate,
+    hasCalculated: hasResult,
+  });
+
   // VALIDATION & RESULT
   const validation = useMemo(() => validateOldGoldInputs(inputs), [inputs]);
   const result = useMemo(() => calculateOldGoldExchangeValue(activeInputs), [activeInputs]);
 
   // HANDLE PRESETS
   const handleApplyPreset = (presetKey: string) => {
+    onUserEdit();
     switch (presetKey) {
       case "std_22k":
         setWeightMode("net");
@@ -296,7 +316,7 @@ export function OldGoldExchangeValueCalculator() {
     setWeightUnit("grams");
     setPurity("22k-916");
     setCustomFineness(916);
-    setRate(9160);
+    resetToLiveRate(9160);
     setRateBasis("selected_purity");
     setRateUnit("per_gram");
     setDeductionPct(0);
@@ -650,6 +670,7 @@ Generated at: https://www.calczen.in/calculator/old-gold-exchange-value-calculat
                     step="any"
                     value={rate === 0 ? "" : rate}
                     onChange={(e) => {
+                      onUserEdit();
                       setRate(e.target.value === "" ? 0 : Number(e.target.value));
                       markCalculated();
                     }}
@@ -660,6 +681,12 @@ Generated at: https://www.calczen.in/calculator/old-gold-exchange-value-calculat
                     {rateUnit === "per_gram" ? "/ gram" : "/ 10g"}
                   </span>
                 </div>
+
+                <LiveRateChip
+                  liveRates={liveRates}
+                  isUserEdited={isUserEdited}
+                  onUseLiveRate={onUseLiveRate}
+                />
 
                 {/* Rate Basis Toggle */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">

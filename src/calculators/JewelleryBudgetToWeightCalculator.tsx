@@ -9,6 +9,8 @@ import { getCalculator } from "@/data/calculators";
 import { useCalculatorState } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
+import { useLiveRateDefault } from "@/hooks/use-live-rates";
+import { LiveRateChip } from "@/components/LiveRateChip";
 import {
   Sparkles,
   RotateCcw,
@@ -172,6 +174,23 @@ export function JewelleryBudgetToWeightCalculator() {
   const { hasResult, isOutdated, calculatedInputs, markCalculated, resetCalculated } =
     useCalculatorState(inputs);
   const activeInputs = calculatedInputs || inputs;
+
+  const purityFactor = useMemo(() => {
+    if (rateBasis === "24k_or_999") return 1.0;
+    if (metalType === "gold") {
+      return GOLD_PURITIES[goldPurity]?.fraction ?? 22 / 24;
+    }
+    return SILVER_PURITIES[silverPurity]?.fraction ?? 925 / 999;
+  }, [rateBasis, metalType, goldPurity, silverPurity]);
+
+  const { liveRates, isUserEdited, onUserEdit, resetToLiveRate, onUseLiveRate } = useLiveRateDefault({
+    metal: metalType,
+    basis: "per_gram",
+    purityFactor,
+    currentValue: metalRate,
+    setValue: setMetalRate,
+    hasCalculated: hasResult,
+  });
   const validation = useMemo(() => validateBudgetInputs(inputs), [inputs]);
   const result: BudgetToWeightResult = useMemo(
     () => calculateBudgetToWeight(activeInputs, 3),
@@ -192,7 +211,7 @@ export function JewelleryBudgetToWeightCalculator() {
     setGoldPurity("22k-916");
     setSilverPurity("925");
     setRateBasis("selected_purity");
-    setMetalRate(10000);
+    resetToLiveRate(10000);
     setMakingMethod("percentage");
     setMakingValue(10);
     setShowMakingTypeSelector(false);
@@ -517,7 +536,10 @@ export function JewelleryBudgetToWeightCalculator() {
                   min="1"
                   step="10"
                   value={metalRate === 0 ? "" : metalRate}
-                  onChange={(e) => setMetalRate(e.target.value === "" ? 0 : Number(e.target.value))}
+                  onChange={(e) => {
+                    onUserEdit();
+                    setMetalRate(e.target.value === "" ? 0 : Number(e.target.value));
+                  }}
                   placeholder={metalType === "gold" ? "e.g. 10000" : "e.g. 100"}
                   className="h-12 pl-8 pr-16 text-base font-semibold rounded-xl bg-background border-border text-foreground focus:ring-2 focus:ring-primary/20"
                 />
@@ -525,6 +547,12 @@ export function JewelleryBudgetToWeightCalculator() {
                   / gram
                 </span>
               </div>
+
+              <LiveRateChip
+                liveRates={liveRates}
+                isUserEdited={isUserEdited}
+                onUseLiveRate={onUseLiveRate}
+              />
               <p className="text-[11px] text-muted-foreground">
                 {rateBasis === "24k_or_999"
                   ? `Your entered 24K rate will automatically convert to ₹${Math.round(

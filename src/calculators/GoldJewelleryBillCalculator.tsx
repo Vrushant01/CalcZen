@@ -10,6 +10,8 @@ import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
+import { useLiveRateDefault } from "@/hooks/use-live-rates";
+import { LiveRateChip } from "@/components/LiveRateChip";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   HeroMetric,
@@ -58,6 +60,7 @@ import {
   generateJewelleryInsights,
   formatINR,
   formatINRWithDecimals,
+  getPurityFineness,
   PURITY_DEFINITIONS,
   WEIGHT_UNIT_CONVERSIONS,
   type GoldPurity,
@@ -218,6 +221,21 @@ export function GoldJewelleryBillCalculator() {
   const [goldRate, setGoldRate] = useState<number | "">(150000);
   const [goldRateBasis, setGoldRateBasis] = useState<RateBasis>("per_10g");
   const [goldRateType, setGoldRateType] = useState<RateType>("derived_from_24k");
+
+  const purityFactor = useMemo(() => {
+    return goldRateType === "direct"
+      ? getPurityFineness(purity, customKarat, customFinenessPct)
+      : 1.0;
+  }, [goldRateType, purity, customKarat, customFinenessPct]);
+
+  const { liveRates, isUserEdited, onUserEdit, resetToLiveRate, onUseLiveRate } = useLiveRateDefault({
+    metal: "gold",
+    basis: goldRateBasis,
+    purityFactor,
+    currentValue: goldRate,
+    setValue: setGoldRate,
+    hasCalculated: hasResult,
+  });
 
   // SECTION B: Making Charges & Wastage
   const [makingChargeType, setMakingChargeType] = useState<MakingChargeType>("percentage");
@@ -433,7 +451,7 @@ export function GoldJewelleryBillCalculator() {
     setNetWeight(10);
     setGrossWeight(12);
     setNonGoldWeight(2);
-    setGoldRate(150000);
+    resetToLiveRate(150000);
     setGoldRateBasis("per_10g");
     setGoldRateType("derived_from_24k");
     setPurity("22k-916");
@@ -451,6 +469,7 @@ export function GoldJewelleryBillCalculator() {
 
   // Handle Load Sample
   const handleLoadSample = () => {
+    onUserEdit();
     setNetWeight(15);
     setPurity("22k-916");
     setGoldRate(150000);
@@ -905,7 +924,10 @@ export function GoldJewelleryBillCalculator() {
                     min="1"
                     step="500"
                     value={goldRate}
-                    onChange={(e) => setGoldRate(e.target.value === "" ? "" : Number(e.target.value))}
+                    onChange={(e) => {
+                      onUserEdit();
+                      setGoldRate(e.target.value === "" ? "" : Number(e.target.value));
+                    }}
                     placeholder="e.g. 1,50,000"
                     className="pl-8 h-11 text-base font-semibold rounded-xl"
                   />
@@ -956,6 +978,7 @@ export function GoldJewelleryBillCalculator() {
                     key={chip.value}
                     type="button"
                     onClick={() => {
+                      onUserEdit();
                       setGoldRate(chip.value);
                       setGoldRateBasis("per_10g");
                     }}
@@ -965,6 +988,13 @@ export function GoldJewelleryBillCalculator() {
                   </button>
                 ))}
               </div>
+
+              {/* Live Rate Chip */}
+              <LiveRateChip
+                liveRates={liveRates}
+                isUserEdited={isUserEdited}
+                onUseLiveRate={onUseLiveRate}
+              />
             </div>
 
             {/* 4. Making Charges & Wastage Section */}

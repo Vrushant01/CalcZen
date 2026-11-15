@@ -10,6 +10,8 @@ import { getCalculator } from "@/data/calculators";
 import { useHasCalculated } from "@/hooks/use-has-calculated";
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
+import { useLiveRateDefault } from "@/hooks/use-live-rates";
+import { LiveRateChip } from "@/components/LiveRateChip";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   HeroMetric,
@@ -52,6 +54,7 @@ import {
   generateMakingChargeInsights,
   formatINR,
   formatINRWithDecimals,
+  getPurityFineness,
   PURITY_DEFINITIONS,
   type GoldPurity,
   type WeightUnit,
@@ -112,6 +115,21 @@ export function GoldMakingChargesCalculator() {
   const [goldRate, setGoldRate] = useState<number | "">(150000);
   const [goldRateBasis, setGoldRateBasis] = useState<RateBasis>("per_10g");
   const [goldRateType, setGoldRateType] = useState<RateType>("derived_from_24k");
+
+  const purityFactor = useMemo(() => {
+    return goldRateType === "direct"
+      ? getPurityFineness(purity, customKarat, customFinenessPct)
+      : 1.0;
+  }, [goldRateType, purity, customKarat, customFinenessPct]);
+
+  const { liveRates, isUserEdited, onUserEdit, resetToLiveRate, onUseLiveRate } = useLiveRateDefault({
+    metal: "gold",
+    basis: goldRateBasis,
+    purityFactor,
+    currentValue: goldRate,
+    setValue: setGoldRate,
+    hasCalculated: hasResult,
+  });
 
   // SECTION B: MAKING CHARGE METHOD (CORE SELECTION)
   const [makingChargeMethod, setMakingChargeMethod] = useState<MakingChargeType>("percentage");
@@ -259,7 +277,7 @@ export function GoldMakingChargesCalculator() {
     setPurity("22k-916");
     setGoldWeight(10);
     setWeightUnit("grams");
-    setGoldRate(150000);
+    resetToLiveRate(150000);
     setGoldRateBasis("per_10g");
     setGoldRateType("derived_from_24k");
     setMakingChargeMethod("percentage");
@@ -277,6 +295,7 @@ export function GoldMakingChargesCalculator() {
   };
 
   const handleLoadSample = () => {
+    onUserEdit();
     setPurity("22k-916");
     setGoldWeight(15);
     setWeightUnit("grams");
@@ -921,7 +940,10 @@ export function GoldMakingChargesCalculator() {
                     type="number"
                     min="1"
                     value={goldRate}
-                    onChange={(e) => setGoldRate(e.target.value === "" ? "" : Number(e.target.value))}
+                    onChange={(e) => {
+                      onUserEdit();
+                      setGoldRate(e.target.value === "" ? "" : Number(e.target.value));
+                    }}
                     placeholder="e.g. 150000"
                     className="h-10 text-sm font-semibold"
                   />
@@ -973,6 +995,7 @@ export function GoldMakingChargesCalculator() {
                     key={chip.value}
                     type="button"
                     onClick={() => {
+                      onUserEdit();
                       setGoldRate(chip.value);
                       setGoldRateBasis("per_10g");
                     }}
@@ -982,6 +1005,13 @@ export function GoldMakingChargesCalculator() {
                   </button>
                 ))}
               </div>
+
+              {/* Live Rate Chip */}
+              <LiveRateChip
+                liveRates={liveRates}
+                isUserEdited={isUserEdited}
+                onUseLiveRate={onUseLiveRate}
+              />
             </div>
 
             {/* 3. CORE MAKING CHARGE PRICING METHOD (PRIMARY CONTROL) */}

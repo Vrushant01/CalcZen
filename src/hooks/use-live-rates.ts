@@ -12,22 +12,66 @@ export interface LiveRatesData {
   stale: boolean;
 }
 
+const DEV_FALLBACK_RATES: LiveRatesData = {
+  gold24kPerGram: 11781.74,
+  silverPerGram: 147.44,
+  currency: "INR",
+  source: "Gold-API.com",
+  sourceUrl: "https://gold-api.com",
+  updatedAt: new Date().toISOString(),
+  stale: false,
+};
+
 export function useLiveRates() {
   return useQuery<LiveRatesData | null>({
     queryKey: ["live-rates"],
     queryFn: async () => {
       try {
-        const res = await apiFetch("/rates");
+        let res: Response;
+        try {
+          res = await apiFetch("/rates");
+        } catch (fetchErr) {
+          // If local Express server (:3001) is not running in dev, fallback to production /api/rates
+          if (import.meta.env.DEV) {
+            try {
+              res = await fetch("https://www.calczen.in/api/rates");
+            } catch {
+              return DEV_FALLBACK_RATES;
+            }
+          } else {
+            throw fetchErr;
+          }
+        }
+
         if (!res.ok) {
+          if (import.meta.env.DEV && !res.url?.includes("calczen.in")) {
+            try {
+              const fallback = await fetch("https://www.calczen.in/api/rates");
+              if (fallback.ok) res = fallback;
+            } catch {
+              return DEV_FALLBACK_RATES;
+            }
+          }
+        }
+
+        if (!res.ok) {
+          if (import.meta.env.DEV) {
+            return DEV_FALLBACK_RATES;
+          }
           return null;
         }
+
         const data = (await res.json()) as LiveRatesData & { available?: boolean };
         if (data.available === false || !data.gold24kPerGram || !data.silverPerGram) {
+          if (import.meta.env.DEV) return DEV_FALLBACK_RATES;
           return null;
         }
         return data;
       } catch (err) {
         console.warn("[LIVE RATES HOOK] Could not fetch live rates:", err);
+        if (import.meta.env.DEV) {
+          return DEV_FALLBACK_RATES;
+        }
         return null;
       }
     },

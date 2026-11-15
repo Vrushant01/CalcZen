@@ -1,0 +1,99 @@
+# Visual Regression Diff Report
+
+Generated: 2026-11-15T13:03:39.926Z
+
+## Gate Summary
+- **Calculator Widgets**: FAIL
+- **Header Regions**: PASS (100% pixel-identical)
+- **Footer Regions**: FAIL
+- **Navigation Regions**: PASS (100% pixel-identical)
+
+## Full Page Differences (Allowed Changes Analysis)
+- **ac-electricity-cost-calculator_desktop_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **ac-electricity-cost-calculator_desktop_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **ac-electricity-cost-calculator_mobile_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **ac-electricity-cost-calculator_mobile_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **bmi-calculator_desktop_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **bmi-calculator_desktop_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **bmi-calculator_mobile_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **bmi-calculator_mobile_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **calculators_desktop_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **calculators_desktop_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **calculators_mobile_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **calculators_mobile_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **category-finance_desktop_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **category-finance_desktop_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **category-finance_mobile_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **category-finance_mobile_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **ctc-to-in-hand-salary-calculator_desktop_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **ctc-to-in-hand-salary-calculator_desktop_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **ctc-to-in-hand-salary-calculator_mobile_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **ctc-to-in-hand-salary-calculator_mobile_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **gst-invoice-calculator_desktop_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **gst-invoice-calculator_desktop_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **gst-invoice-calculator_mobile_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **gst-invoice-calculator_mobile_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **homepage_desktop_dark_full.png**: 74550 diff pixels (0.9217%)
+  - *Reason*: Homepage Popular Calculators list updated (removed 401k-calculator per US tool rule).
+- **homepage_desktop_light_full.png**: 21552 diff pixels (0.2665%)
+  - *Reason*: Homepage Popular Calculators list updated (removed 401k-calculator per US tool rule).
+- **homepage_mobile_dark_full.png**: 198512 diff pixels (6.4358%)
+  - *Reason*: Homepage Popular Calculators list updated (removed 401k-calculator per US tool rule).
+- **homepage_mobile_light_full.png**: 349158 diff pixels (11.3197%)
+  - *Reason*: Homepage Popular Calculators list updated (removed 401k-calculator per US tool rule).
+- **loan-emi-calculator_desktop_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Reason*: Related calculators semantic map updated (removed 401k).
+- **loan-emi-calculator_desktop_light_full.png**: 83 diff pixels (0.0007%)
+  - *Reason*: Related calculators semantic map updated (removed 401k).
+- **loan-emi-calculator_mobile_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Reason*: Related calculators semantic map updated (removed 401k).
+- **loan-emi-calculator_mobile_light_full.png**: 0 diff pixels (0.0000%)
+  - *Reason*: Related calculators semantic map updated (removed 401k).
+- **love-calculator_desktop_dark_full.png**: 1205388 diff pixels (22.7652%)
+  - *Reason*: Sources block replaced with "For entertainment purposes only" disclaimer.
+- **love-calculator_desktop_light_full.png**: 1155116 diff pixels (21.8157%)
+  - *Reason*: Sources block replaced with "For entertainment purposes only" disclaimer.
+- **love-calculator_mobile_dark_full.png**: 228754 diff pixels (12.9882%)
+  - *Reason*: Sources block replaced with "For entertainment purposes only" disclaimer.
+- **love-calculator_mobile_light_full.png**: 224689 diff pixels (12.7574%)
+  - *Reason*: Sources block replaced with "For entertainment purposes only" disclaimer.
+- **scientific-calculator_desktop_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **scientific-calculator_desktop_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **scientific-calculator_mobile_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **scientific-calculator_mobile_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **sip-calculator_desktop_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **sip-calculator_desktop_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **sip-calculator_mobile_dark_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.
+- **sip-calculator_mobile_light_full.png**: 0 diff pixels (0.0000%)
+  - *Status*: Pixel-identical.

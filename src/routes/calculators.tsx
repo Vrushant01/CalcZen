@@ -105,16 +105,16 @@ function AllCalculators() {
               className="pl-10 h-11 w-full"
             />
           </div>
-          <div>
+          <div className="min-w-0">
             <h2 className="text-sm font-semibold text-foreground mb-2">Filter by Category</h2>
-            <div className="scroll-touch-x flex gap-2 pb-1 -mx-1 px-1">
+            <div className="scroll-touch-x flex gap-2 pb-1.5 -mx-3.5 px-3.5 sm:mx-0 sm:px-0 overflow-x-auto scrollbar-none">
               {[{ slug: "all", name: "All" }, ...categories].map((c) => (
                 <button
                   key={c.slug}
                   type="button"
                   onClick={() => setCat(c.slug)}
                   className={cn(
-                    "shrink-0 px-3.5 py-2.5 rounded-lg text-sm font-medium border whitespace-nowrap min-h-[2.75rem] transition-[color,background-color,border-color,box-shadow] duration-300 ease-out",
+                    "shrink-0 px-3 py-1.5 sm:px-3.5 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold border whitespace-nowrap min-h-[2.35rem] sm:min-h-[2.75rem] transition-[color,background-color,border-color,box-shadow] duration-300 ease-out cursor-pointer",
                     cat === c.slug
                       ? "bg-primary text-primary-foreground border-primary shadow-soft"
                       : "border-border/60 bg-card/50 hover:bg-muted/80 hover:border-accent/25",
@@ -127,8 +127,10 @@ function AllCalculators() {
           </div>
         </div>
 
-        <h2 className="text-lg font-bold text-foreground mt-8 mb-4">All Available Calculators</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 min-w-0">
+        <h2 className="text-base sm:text-lg font-bold text-foreground mt-6 sm:mt-8 mb-3 sm:mb-4">
+          All Available Calculators
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 min-w-0">
           {filtered.map((c, i) => (
             <CalculatorCard key={c.slug} calc={c} index={i} />
           ))}

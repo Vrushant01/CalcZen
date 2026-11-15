@@ -299,25 +299,27 @@ export function JewelleryBudgetToWeightCalculator() {
         {/* ========================================================= */}
         {/* LEFT COLUMN: 5 ESSENTIAL INPUTS (Theme-Reactive Mode)     */}
         {/* ========================================================= */}
-        <div className="lg:col-span-7 space-y-6">
-          <div className="p-6 sm:p-7 bg-card border border-border rounded-2xl shadow-xs space-y-6">
-            <div className="flex items-center justify-between pb-3 border-b border-border/60">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-primary/10 text-primary">
-                  <Scale className="h-5 w-5" />
+        <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+          <div className="p-0 sm:p-7 bg-transparent sm:bg-card border-0 sm:border border-border rounded-xl sm:rounded-2xl shadow-none sm:shadow-xs space-y-5 sm:space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 pb-3 border-b border-border/60">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="p-2 rounded-xl bg-primary/10 text-primary shrink-0">
+                  <Scale className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <h2 className="text-lg font-bold text-foreground">
-                    Jewellery Budget Calculator
-                  </h2>
-                  <p className="text-xs text-muted-foreground">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h2 className="text-base sm:text-lg font-bold text-foreground">
+                      Jewellery Budget Calculator
+                    </h2>
+                    <span className="text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md bg-primary/10 text-primary border border-primary/20 shrink-0">
+                      Budget Safe
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
                     Enter your spending budget to calculate affordable gold or silver weight
                   </p>
                 </div>
               </div>
-              <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-primary/10 text-primary border border-primary/20">
-                Budget Safe
-              </span>
             </div>
 
             {/* ---------------------------------------------------- */}
@@ -350,23 +352,27 @@ export function JewelleryBudgetToWeightCalculator() {
                 />
               </div>
 
-              {/* Quick Budget Presets */}
-              <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                <span className="text-[11px] text-muted-foreground font-medium mr-1">Quick select:</span>
-                {budgetPresets.map((amount) => (
-                  <button
-                    key={amount}
-                    type="button"
-                    onClick={() => setTotalBudget(amount)}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all ${
-                      totalBudget === amount
-                        ? "bg-primary text-primary-foreground border-primary shadow-2xs font-bold"
-                        : "bg-background hover:bg-muted text-foreground border-border hover:border-primary/40 font-semibold"
-                    }`}
-                  >
-                    {formatINR(amount)}
-                  </button>
-                ))}
+              {/* Quick Budget Presets: clean 3-col grid on mobile */}
+              <div className="pt-1">
+                <span className="text-[11px] text-muted-foreground font-medium block mb-1.5">
+                  Quick select budget:
+                </span>
+                <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-1.5">
+                  {budgetPresets.map((amount) => (
+                    <button
+                      key={amount}
+                      type="button"
+                      onClick={() => setTotalBudget(amount)}
+                      className={`py-1.5 px-2 rounded-lg text-xs font-semibold border transition-all text-center cursor-pointer ${
+                        totalBudget === amount
+                          ? "bg-primary text-primary-foreground border-primary shadow-2xs font-bold"
+                          : "bg-background hover:bg-muted text-foreground border-border hover:border-primary/40 font-medium"
+                      }`}
+                    >
+                      {formatINR(amount)}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -385,13 +391,13 @@ export function JewelleryBudgetToWeightCalculator() {
                     setMetalType("gold");
                     setMetalRate(10000);
                   }}
-                  className={`py-2 px-3 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                  className={`py-2.5 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     metalType === "gold"
                       ? "bg-card text-foreground font-bold shadow-xs border border-border"
                       : "text-muted-foreground hover:text-foreground font-medium"
                   }`}
                 >
-                  <Coins className="h-4 w-4 text-amber-500" />
+                  <Coins className="h-4 w-4 text-amber-500 shrink-0" />
                   <span>Gold Jewellery</span>
                 </button>
                 <button
@@ -400,13 +406,13 @@ export function JewelleryBudgetToWeightCalculator() {
                     setMetalType("silver");
                     setMetalRate(100);
                   }}
-                  className={`py-2 px-3 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                  className={`py-2.5 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     metalType === "silver"
                       ? "bg-card text-foreground font-bold shadow-xs border border-border"
                       : "text-muted-foreground hover:text-foreground font-medium"
                   }`}
                 >
-                  <Coins className="h-4 w-4 text-slate-400" />
+                  <Coins className="h-4 w-4 text-slate-400 shrink-0" />
                   <span>Silver Jewellery</span>
                 </button>
               </div>
@@ -476,11 +482,11 @@ export function JewelleryBudgetToWeightCalculator() {
               </div>
 
               {/* Rate Basis Toggle */}
-              <div className="grid grid-cols-2 gap-2 p-1 bg-muted/60 rounded-xl border border-border">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 p-1 bg-muted/60 rounded-xl border border-border">
                 <button
                   type="button"
                   onClick={() => setRateBasis("selected_purity")}
-                  className={`py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
+                  className={`py-2 px-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
                     rateBasis === "selected_purity"
                       ? "bg-card text-foreground font-bold shadow-xs border border-border"
                       : "text-muted-foreground hover:text-foreground font-medium"
@@ -491,7 +497,7 @@ export function JewelleryBudgetToWeightCalculator() {
                 <button
                   type="button"
                   onClick={() => setRateBasis("24k_or_999")}
-                  className={`py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
+                  className={`py-2 px-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
                     rateBasis === "24k_or_999"
                       ? "bg-card text-foreground font-bold shadow-xs border border-border"
                       : "text-muted-foreground hover:text-foreground font-medium"
@@ -549,14 +555,14 @@ export function JewelleryBudgetToWeightCalculator() {
 
               {/* Expandable charge type selector */}
               {showMakingTypeSelector && (
-                <div className="grid grid-cols-3 gap-2 p-1 bg-muted/60 rounded-xl border border-border">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5 p-1 bg-muted/60 rounded-xl border border-border">
                   <button
                     type="button"
                     onClick={() => {
                       setMakingMethod("percentage");
                       setMakingValue(10);
                     }}
-                    className={`py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
+                    className={`py-2 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
                       makingMethod === "percentage"
                         ? "bg-card text-foreground font-bold shadow-xs border border-border"
                         : "text-muted-foreground hover:text-foreground font-medium"
@@ -570,7 +576,7 @@ export function JewelleryBudgetToWeightCalculator() {
                       setMakingMethod("per_gram");
                       setMakingValue(500);
                     }}
-                    className={`py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
+                    className={`py-2 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
                       makingMethod === "per_gram"
                         ? "bg-card text-foreground font-bold shadow-xs border border-border"
                         : "text-muted-foreground hover:text-foreground font-medium"
@@ -584,7 +590,7 @@ export function JewelleryBudgetToWeightCalculator() {
                       setMakingMethod("fixed");
                       setMakingValue(2000);
                     }}
-                    className={`py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
+                    className={`py-2 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
                       makingMethod === "fixed"
                         ? "bg-card text-foreground font-bold shadow-xs border border-border"
                         : "text-muted-foreground hover:text-foreground font-medium"
@@ -801,9 +807,9 @@ export function JewelleryBudgetToWeightCalculator() {
           {/* ---------------------------------------------------- */}
           {/* SECONDARY FEATURE: REVERSE BUDGET BY DESIRED WEIGHT  */}
           {/* ---------------------------------------------------- */}
-          <div className="p-5 bg-card border border-border rounded-2xl shadow-xs space-y-4">
+          <div className="p-3.5 sm:p-5 bg-card border border-border rounded-xl sm:rounded-2xl shadow-xs space-y-3 sm:space-y-4">
             <div className="flex items-center gap-2">
-              <Scale className="h-4 w-4 text-primary" />
+              <Scale className="h-4 w-4 text-primary shrink-0" />
               <h3 className="text-sm font-bold text-foreground">
                 How much budget do I need for a specific weight?
               </h3>
@@ -827,12 +833,12 @@ export function JewelleryBudgetToWeightCalculator() {
                   grams
                 </span>
               </div>
-              <div className="sm:col-span-7 p-3.5 sm:p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border-2 border-emerald-600/30 dark:border-emerald-500/40 flex items-center justify-between gap-3 shadow-2xs">
-                <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+              <div className="sm:col-span-7 p-3 sm:p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border-2 border-emerald-600/30 dark:border-emerald-500/40 flex items-center justify-between gap-2.5 shadow-2xs">
+                <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5 min-w-0">
                   <Coins className="h-4 w-4 text-amber-500 shrink-0" />
-                  <span>Estimated Budget Needed:</span>
+                  <span className="truncate">Estimated Budget:</span>
                 </span>
-                <strong className="text-lg sm:text-xl font-black text-emerald-700 dark:text-emerald-400 shrink-0">
+                <strong className="text-base sm:text-xl font-black text-emerald-700 dark:text-emerald-400 shrink-0">
                   {formatINR(reversePrice.finalPrice)}
                 </strong>
               </div>
@@ -843,22 +849,22 @@ export function JewelleryBudgetToWeightCalculator() {
         {/* ========================================================= */}
         {/* RIGHT COLUMN: HEROS RESULTS & BREAKDOWN TABLE             */}
         {/* ========================================================= */}
-        <div ref={resultsRef} className="lg:col-span-5 space-y-6">
-          <div className="p-6 bg-card border border-border rounded-2xl shadow-xs space-y-5 lg:sticky lg:top-24">
+        <div ref={resultsRef} className="lg:col-span-5 space-y-5 sm:space-y-6">
+          <div className="p-3.5 sm:p-6 bg-card border border-border rounded-xl sm:rounded-2xl shadow-xs space-y-4 sm:space-y-5 lg:sticky lg:top-24">
             {/* Hero Result Box: Solid Background (No Gradient) */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border-2 border-emerald-600/30 dark:border-emerald-500/40 space-y-3 shadow-xs">
+            <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-900 border-2 border-emerald-600/30 dark:border-emerald-500/40 space-y-2.5 sm:space-y-3 shadow-xs">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                   <Sparkles className="h-4 w-4 text-amber-500 shrink-0" />
                   <span>You Can Buy Approximately</span>
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/60 shadow-2xs">
+                <span className="px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/60 shadow-2xs">
                   Budget Verified
                 </span>
               </div>
 
               {/* Big Hero Result: Solid High Contrast */}
-              <div className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-950 dark:text-white">
+              <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-950 dark:text-white">
                 {result.formattedWeight}
               </div>
 

@@ -2620,8 +2620,18 @@
 @media (max-width: 767.98px) {
   /* Mobile Spacing & Padding */
   .page-container {
-    padding-left: max(20px, env(safe-area-inset-left, 20px)) !important;
-    padding-right: max(20px, env(safe-area-inset-right, 20px)) !important;
+    padding-left: max(14px, env(safe-area-inset-left, 14px)) !important;
+    padding-right: max(14px, env(safe-area-inset-right, 14px)) !important;
+  }
+
+  /* Eliminate double card nesting and redundant padding on mobile */
+  .calc-container-inner .calc-input-column.bg-card,
+  .calc-container-inner .lg\:col-span-7 > .bg-card.border,
+  .calc-container-inner .calc-card-mobile-clean {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
   }
 
   /* Compact Category Cards Grid (2 columns on mobile) */
@@ -2695,16 +2705,16 @@
 
   /* Mobile-first Typography */
   h1 {
-    font-size: clamp(1.8rem, 7vw, 2.3rem) !important;
-    line-height: 1.2 !important;
-  }
-  h2 {
-    font-size: clamp(1.35rem, 5vw, 1.65rem) !important;
+    font-size: clamp(1.35rem, 5.2vw, 1.75rem) !important;
     line-height: 1.25 !important;
   }
-  h3 {
-    font-size: clamp(1.1rem, 4vw, 1.25rem) !important;
+  h2 {
+    font-size: clamp(1.15rem, 4.2vw, 1.45rem) !important;
     line-height: 1.3 !important;
+  }
+  h3 {
+    font-size: clamp(1rem, 3.6vw, 1.2rem) !important;
+    line-height: 1.35 !important;
   }
   p {
     line-height: 1.55 !important;
@@ -2714,9 +2724,12 @@
   .calc-input-column .flex.flex-row.gap-3.mt-4,
   .calc-input-column .flex.gap-3.mt-4,
   .calc-input-column .flex.gap-3.mt-5,
-  .calc-input-column .flex.flex-row.gap-3.mt-5 {
+  .calc-input-column .flex.flex-row.gap-3.mt-5,
+  .calc-input-column .flex.gap-3.pt-2,
+  .calc-input-column .flex.flex-row.gap-3.pt-2,
+  .calc-input-column .flex.gap-2\.5.pt-2 {
     flex-direction: column !important;
-    gap: 12px !important;
+    gap: 10px !important;
     width: 100% !important;
   }
   
@@ -2725,7 +2738,11 @@
   .calc-input-column .flex.gap-3.mt-4 > button,
   .calc-input-column .flex.gap-3.mt-4 > a,
   .calc-input-column .flex.gap-3.mt-5 > button,
-  .calc-input-column .flex.gap-3.mt-5 > a {
+  .calc-input-column .flex.gap-3.mt-5 > a,
+  .calc-input-column .flex.gap-3.pt-2 > button,
+  .calc-input-column .flex.gap-3.pt-2 > a,
+  .calc-input-column .flex.gap-2\.5.pt-2 > button,
+  .calc-input-column .flex.gap-2\.5.pt-2 > a {
     width: 100% !important;
     flex: none !important;
   }

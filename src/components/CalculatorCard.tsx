@@ -16,16 +16,16 @@ export function CalculatorCard({ calc, index = 0 }: { calc: CalculatorMeta; inde
       <Link
         to="/calculator/$slug"
         params={{ slug: calc.slug }}
-        className="group relative surface-card flex flex-row items-center sm:flex-col sm:justify-between sm:items-stretch rounded-xl sm:rounded-2xl px-4 py-3.5 sm:p-5 hover:-translate-y-1 min-w-0 active:scale-[0.99] transition-transform h-auto min-h-[64px] sm:min-h-0 sm:h-[175px]"
+        className="group relative surface-card flex flex-row items-center sm:flex-col sm:justify-between sm:items-stretch rounded-xl sm:rounded-2xl px-3.5 py-3 sm:p-5 hover:-translate-y-1 min-w-0 active:scale-[0.99] transition-transform h-auto min-h-[58px] sm:min-h-0 sm:h-[175px]"
       >
         <div className="flex flex-row items-center sm:flex-col sm:items-start min-w-0 w-full">
           {/* Icon */}
-          <div className="flex h-8 w-8 sm:h-10 sm:w-10 md:h-11 md:w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-accent text-primary-foreground shadow-glow transition-shadow duration-300 group-hover:shadow-glow-lg mr-3.5 sm:mr-0 sm:mb-3">
+          <div className="flex h-8 w-8 sm:h-10 sm:w-10 md:h-11 md:w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-accent text-primary-foreground shadow-glow transition-shadow duration-300 group-hover:shadow-glow-lg mr-3 sm:mr-0 sm:mb-3">
             <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
           </div>
 
-          {/* Title */}
-          <h3 className="font-semibold text-[15px] sm:text-base mb-0 sm:mb-1.5 group-hover:text-accent transition-colors truncate w-full pr-6">
+          {/* Title - line-clamp-2 on mobile instead of truncate to prevent ... cutoffs */}
+          <h3 className="font-semibold text-sm sm:text-base mb-0 sm:mb-1.5 group-hover:text-accent transition-colors line-clamp-2 leading-snug break-words w-full pr-6 text-foreground">
             {calc.name}
           </h3>
 

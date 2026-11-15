@@ -1028,57 +1028,57 @@ export function CalculatorPageLayout({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="mb-5 sm:mb-6"
+        className="mb-3.5 sm:mb-6"
       >
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-balance leading-tight">
+        <h1 className="text-xl sm:text-3xl md:text-4xl font-bold tracking-tight text-balance leading-snug sm:leading-tight">
           {calc.h1}
         </h1>
-        <p className="mt-2 sm:mt-3 text-sm sm:text-base md:text-lg text-muted-foreground max-w-4xl leading-relaxed">
+        <p className="mt-1.5 sm:mt-3 text-xs sm:text-base md:text-lg text-muted-foreground max-w-4xl leading-relaxed">
           {intro}
         </p>
-        <div className="mt-3 sm:mt-4 flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" onClick={share} className="gap-2 min-h-10 sm:min-h-9">
-            <Share2 className="h-4 w-4" /> Share
+        <div className="mt-2.5 sm:mt-4 flex flex-wrap gap-2">
+          <Button variant="outline" size="sm" onClick={share} className="gap-1.5 min-h-9 sm:min-h-9 text-xs sm:text-sm">
+            <Share2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Share
           </Button>
         </div>
       </motion.header>
 
-      <div className="w-full min-w-0 space-y-5 sm:space-y-8">
-        <section className="surface-card rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 min-w-0 overflow-hidden">
+      <div className="w-full min-w-0 space-y-4 sm:space-y-8">
+        <section className="surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-5 lg:p-6 min-w-0 overflow-hidden">
           <div className="calc-container-inner">{children}</div>
         </section>
 
         {blog && <div className="w-full min-w-0">{blog}</div>}
 
         {formula && (
-          <div className="surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0">
+          <div className="surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0">
             <CalculatorFormula formula={formula} />
           </div>
         )}
 
         {example && (
-          <div className="surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0">
+          <div className="surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0">
             <CalculatorExample example={example} />
           </div>
         )}
 
         <section
           id="faq-section"
-          className="scroll-mt-20 surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 min-w-0 text-left"
+          className="scroll-mt-20 surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0 text-left"
         >
-          <h2 className="text-xl sm:text-2xl font-bold mb-6 border-b border-border/40 pb-3">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 border-b border-border/40 pb-2.5 sm:pb-3">
             Frequently Asked Questions
           </h2>
           <FaqAccordion faqs={faqs} />
         </section>
 
         {related.length > 0 && (
-          <section className="min-w-0 surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 text-left mt-5 sm:mt-8">
-            <h2 className="text-xl sm:text-2xl font-bold mb-4 border-b border-border/40 pb-3">
+          <section className="min-w-0 surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 text-left mt-4 sm:mt-8">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 border-b border-border/40 pb-2.5 sm:pb-3">
               Related Calculators
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4">
               {related.slice(0, 4).map((c, i) => (
                 <CalculatorCard key={c.slug} calc={c} index={i} />
               ))}
@@ -1091,11 +1091,11 @@ export function CalculatorPageLayout({
           const sources = getCategorySources(calc.category);
           if (!sources || sources.length === 0) return null;
           return (
-            <section className="min-w-0 surface-card rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 text-left mt-5 sm:mt-8">
-              <h2 className="text-xl sm:text-2xl font-bold mb-4 border-b border-border/40 pb-3">
+            <section className="min-w-0 surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 text-left mt-4 sm:mt-8">
+              <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 border-b border-border/40 pb-2.5 sm:pb-3">
                 Sources &amp; further reading
               </h2>
-              <ul className="list-disc list-inside space-y-2 text-sm sm:text-base text-muted-foreground/90">
+              <ul className="list-disc list-inside space-y-1.5 sm:space-y-2 text-xs sm:text-base text-muted-foreground/90">
                 {sources.map((s, i) => (
                   <li key={i}>
                     <a

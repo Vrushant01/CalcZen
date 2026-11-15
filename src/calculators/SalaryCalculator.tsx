@@ -389,15 +389,15 @@ export function SalaryCalculator() {
     >
       <div className="flex flex-col gap-6">
         {/* Input Column */}
-        <div className="calc-input-column bg-card border border-border/70 rounded-2xl p-4 sm:p-6 shadow-sm">
-          <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border/50">
-            <Coins className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-            <h2 className="text-base sm:text-lg font-bold text-foreground">
+        <div className="calc-input-column bg-transparent sm:bg-card border-0 sm:border border-border/70 rounded-xl sm:rounded-2xl p-0 sm:p-6 shadow-none sm:shadow-sm">
+          <div className="flex items-center gap-2 mb-3.5 sm:mb-4 pb-2.5 sm:pb-3 border-b border-border/50">
+            <Coins className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <h2 className="text-sm sm:text-lg font-bold text-foreground">
               Salary & Tax Configuration (India FY 2026–27)
             </h2>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3.5 sm:gap-4">
             {/* Annual CTC Input */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
@@ -424,14 +424,14 @@ export function SalaryCalculator() {
                 />
               </div>
 
-              {/* Quick Select CTC Chips */}
-              <div className="flex flex-wrap gap-1.5 mt-2">
+              {/* Quick Select CTC Chips: clean 3-col grid on mobile, flex-wrap on desktop */}
+              <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-1.5 mt-2">
                 {QUICK_CTC_CHIPS.map((chip) => (
                   <button
                     key={chip.value}
                     type="button"
                     onClick={() => setCtcInput(chip.value)}
-                    className="px-2.5 py-1 text-xs font-medium rounded-lg border border-border/60 bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer"
+                    className="px-2 py-1.5 text-xs font-semibold rounded-lg border border-border/60 bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer text-center"
                   >
                     {chip.label}
                   </button>
@@ -473,34 +473,34 @@ export function SalaryCalculator() {
               </div>
             </div>
 
-            {/* Tax Regime Selector */}
+            {/* Tax Regime Selector: single column on mobile to prevent label squishing */}
             <div>
               <Label className="text-xs font-semibold text-muted-foreground mb-1.5 block">
                 Income Tax Regime
               </Label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => setRegime("new")}
-                  className={`h-11 px-3 rounded-xl text-xs sm:text-sm font-semibold border transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`h-11 px-3 rounded-xl text-xs sm:text-sm font-semibold border transition-all flex items-center justify-center gap-2 cursor-pointer ${
                     regime === "new"
                       ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
                       : "border-border/70 bg-background hover:bg-muted text-muted-foreground"
                   }`}
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <Sparkles className="w-3.5 h-3.5 shrink-0" />
                   <span>New Tax Regime (Default)</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setRegime("old")}
-                  className={`h-11 px-3 rounded-xl text-xs sm:text-sm font-semibold border transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`h-11 px-3 rounded-xl text-xs sm:text-sm font-semibold border transition-all flex items-center justify-center gap-2 cursor-pointer ${
                     regime === "old"
                       ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
                       : "border-border/70 bg-background hover:bg-muted text-muted-foreground"
                   }`}
                 >
-                  <Scale className="w-3.5 h-3.5" />
+                  <Scale className="w-3.5 h-3.5 shrink-0" />
                   <span>Old Tax Regime (Exemptions)</span>
                 </button>
               </div>
@@ -855,11 +855,11 @@ export function SalaryCalculator() {
               </div>
             )}
 
-            {/* Action Buttons */}
-            <div className="flex flex-row gap-3 mt-2">
+            {/* Action Buttons: Full-width stacked on mobile for thumb-friendly interaction */}
+            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 mt-3">
               <CalculateButton
                 category="salary-and-employment"
-                className="flex-1 min-h-12 text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-md cursor-pointer"
+                className="w-full sm:flex-1 min-h-12 text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-md cursor-pointer"
                 disabled={isButtonDisabled}
                 onClick={handleCalculate}
               >
@@ -867,7 +867,7 @@ export function SalaryCalculator() {
               </CalculateButton>
               <Button
                 variant="outline"
-                className="min-h-12 px-5 text-sm font-semibold rounded-xl cursor-pointer"
+                className="w-full sm:w-auto min-h-11 sm:min-h-12 px-6 text-sm font-semibold rounded-xl cursor-pointer"
                 onClick={handleReset}
               >
                 Reset

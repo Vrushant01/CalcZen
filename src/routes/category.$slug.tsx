@@ -5,6 +5,7 @@ import { CalculatorCard } from "@/components/CalculatorCard";
 import { calculatorsByCategory, getCategory } from "@/data/calculators";
 import { ChevronRight } from "lucide-react";
 import { FaqAccordion } from "@/components/FaqAccordion";
+import { GoldSilverRateCard } from "@/components/GoldSilverRateCard";
 
 export const Route = createFileRoute("/category/$slug")({
   loader: ({ params }) => {
@@ -330,6 +331,8 @@ function CategoryPage() {
             {data.intro}
           </p>
         </header>
+
+        {cat.slug === "jewellery" && <GoldSilverRateCard />}
 
         {/* Dynamic Calculator Grid */}
         <section className="min-w-0" aria-label={`${cat.name} Tools`}>

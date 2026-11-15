@@ -39,6 +39,10 @@ export const env = {
   adminEmail: process.env.ADMIN_EMAIL ?? "",
   adminPassword: process.env.ADMIN_PASSWORD ?? "",
   emailBatchSize: Number(process.env.EMAIL_BATCH_SIZE ?? 50),
+  /** Live precious metals rates configuration */
+  ratesApiUrl: process.env.RATES_API_URL ?? "https://api.gold-api.com",
+  ratesCacheTtlMinutes: Number(process.env.RATES_CACHE_TTL_MINUTES ?? 5),
+  ratesIndiaPremiumPercent: Number(process.env.RATES_INDIA_PREMIUM_PERCENT ?? 0),
 };
 
 export function assertProductionEnv(): void {

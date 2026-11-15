@@ -19,6 +19,7 @@ import authRoutes from "./routes/authRoutes.js";
 import newsletterRoutes from "./routes/newsletterRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import subscribeRoutes from "./routes/subscribeRoutes.js";
+import ratesRoutes from "./routes/ratesRoutes.js";
 
 import { formatDbError } from "./utils/errors.js";
 
@@ -183,6 +184,7 @@ export async function createApp(): Promise<Express> {
       success: true,
       endpoints: {
         health: "GET /api/health",
+        rates: "GET /api/rates",
         subscribe: "POST /api/subscribe",
         authLogin: "POST /api/auth/login",
         adminStats: "GET /api/admin/stats",
@@ -201,6 +203,7 @@ export async function createApp(): Promise<Express> {
     });
   });
 
+  app.use("/api/rates", ratesRoutes);
   app.use("/api/subscribe", subscribeRoutes);
   app.use("/api/contact", contactRoutes);
   app.use("/api/auth", authRoutes);

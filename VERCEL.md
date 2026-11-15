@@ -28,6 +28,11 @@ RESEND_API_KEY=
 EMAIL_FROM=hello@calczen.in
 SITE_URL=https://www.calczen.in
 CORS_ORIGIN=https://www.calczen.in,https://YOUR_PROJECT.vercel.app
+
+# Optional Live Rates Configuration (defaults shown)
+RATES_API_URL=https://api.gold-api.com
+RATES_CACHE_TTL_MINUTES=5
+RATES_INDIA_PREMIUM_PERCENT=0
 ```
 
 Optional: `SITE_URL` is used when generating `public/sitemap.xml` at build time.

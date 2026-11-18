@@ -1183,15 +1183,17 @@ export function CalculatorPageLayout({
           </div>
         )}
 
-        <section
-          id="faq-section"
-          className="scroll-mt-20 surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0 text-left"
-        >
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 border-b border-border/40 pb-2.5 sm:pb-3">
-            Frequently Asked Questions
-          </h2>
-          <FaqAccordion faqs={faqs} />
-        </section>
+        {faqs && faqs.length > 0 && (
+          <section
+            id="faq-section"
+            className="scroll-mt-20 surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0 text-left"
+          >
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 border-b border-border/40 pb-2.5 sm:pb-3">
+              Frequently Asked Questions
+            </h2>
+            <FaqAccordion faqs={faqs} />
+          </section>
+        )}
 
         {related.length > 0 && (
           <section className="min-w-0 surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 text-left mt-4 sm:mt-8">

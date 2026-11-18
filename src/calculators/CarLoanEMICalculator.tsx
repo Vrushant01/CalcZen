@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
-import CalculatorBlog, { type BlogContent } from "@/components/CalculatorBlog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -96,86 +95,66 @@ export function CarLoanEMICalculator() {
     resetCalculated();
   };
 
-  const blogData: BlogContent = {
-    title: carLoanEmiCalculatorContent.h1,
-    description: carLoanEmiCalculatorContent.intro,
-    articleHtml: `
-      <section class="space-y-4">
-        <h2 class="text-xl font-bold text-foreground">How to Use This Car Loan EMI Calculator</h2>
-        <ol class="list-decimal list-inside space-y-2 text-muted-foreground text-sm sm:text-base">
-          ${carLoanEmiCalculatorContent.howToUseSteps.map((step) => `<li>${step}</li>`).join("")}
-        </ol>
-      </section>
-
-      <section class="space-y-4 mt-8">
-        <h2 class="text-xl font-bold text-foreground">Car Loan EMI Formula &amp; How It Works</h2>
-        <p class="text-muted-foreground text-sm sm:text-base leading-relaxed">${carLoanEmiCalculatorContent.formula}</p>
-        <div class="mt-4 rounded-xl border border-border bg-card p-4 sm:p-6 space-y-3">
-          <h3 class="font-semibold text-foreground text-base">Worked Real-World Example</h3>
-          <p class="text-sm text-muted-foreground">${carLoanEmiCalculatorContent.workedExample.description}</p>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm border-collapse">
-              <thead>
-                <tr class="border-b border-border/60">
-                  <th class="py-2 font-medium text-foreground">Parameter</th>
-                  <th class="py-2 font-medium text-foreground">Value</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-border/40 text-muted-foreground">
-                ${carLoanEmiCalculatorContent.workedExample.table
-                  .map(
-                    (row) => `
-                  <tr>
-                    <td class="py-2">${row.label}</td>
-                    <td class="py-2 font-medium text-foreground">${row.value}</td>
-                  </tr>
-                `,
-                  )
-                  .join("")}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section class="space-y-4 mt-8">
-        <h2 class="text-xl font-bold text-foreground">${carLoanEmiCalculatorContent.quickReferenceTable.title}</h2>
-        <div class="overflow-x-auto rounded-xl border border-border bg-card p-2 sm:p-4">
-          <table class="w-full text-left text-sm border-collapse">
-            <thead>
-              <tr class="border-b border-border/60 text-foreground font-medium">
-                ${carLoanEmiCalculatorContent.quickReferenceTable.headers
-                  .map((h) => `<th class="py-2.5 px-3">${h}</th>`)
-                  .join("")}
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-border/40 text-muted-foreground">
-              ${carLoanEmiCalculatorContent.quickReferenceTable.rows
-                .map(
-                  (r) => `
-                <tr class="hover:bg-muted/40 transition-colors">
-                  ${r.map((c, i) => `<td class="py-2.5 px-3 ${i === 0 ? "font-medium text-foreground" : ""}">${c}</td>`).join("")}
-                </tr>
-              `,
-                )
-                .join("")}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="space-y-4 mt-8">
-        <h2 class="text-xl font-bold text-foreground">Things to Know &amp; Common Car Financing Mistakes</h2>
-        <ul class="list-disc list-inside space-y-2 text-muted-foreground text-sm sm:text-base">
-          ${carLoanEmiCalculatorContent.mistakes.map((m) => `<li>${m}</li>`).join("")}
-        </ul>
-      </section>
-    `,
-    faqs: carLoanEmiCalculatorContent.faqs,
-  };
-
   return (
-    <CalculatorPageLayout calc={calc}>
+    <CalculatorPageLayout
+      calc={calc}
+      intro={carLoanEmiCalculatorContent.intro}
+      formula={carLoanEmiCalculatorContent.formula}
+      example={
+        carLoanEmiCalculatorContent.workedExample
+          ? `${carLoanEmiCalculatorContent.workedExample.description}\n\n` +
+            carLoanEmiCalculatorContent.workedExample.table
+              .map((r) => `${r.label}: ${r.value}`)
+              .join("\n")
+          : undefined
+      }
+      faqs={carLoanEmiCalculatorContent.faqs}
+      blog={
+        <div className="space-y-8">
+          <section className="surface-card rounded-2xl p-6 sm:p-8 space-y-4">
+            <h2 className="text-xl font-bold text-foreground">How to Use This Car Loan EMI Calculator</h2>
+            <ol className="list-decimal list-inside space-y-2 text-muted-foreground text-sm sm:text-base">
+              {carLoanEmiCalculatorContent.howToUseSteps.map((step, idx) => (
+                <li key={idx}>{step}</li>
+              ))}
+            </ol>
+          </section>
+
+          <section className="surface-card rounded-2xl p-6 sm:p-8 space-y-4">
+            <h2 className="text-xl font-bold text-foreground">{carLoanEmiCalculatorContent.quickReferenceTable.title}</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-border/60 text-foreground font-semibold">
+                    {carLoanEmiCalculatorContent.quickReferenceTable.headers.map((h, i) => (
+                      <th key={i} className="py-2.5 px-3">{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/40 text-muted-foreground">
+                  {carLoanEmiCalculatorContent.quickReferenceTable.rows.map((row, ri) => (
+                    <tr key={ri} className="hover:bg-muted/40 transition-colors">
+                      {row.map((cell, ci) => (
+                        <td key={ci} className={`py-2.5 px-3 ${ci === 0 ? "font-medium text-foreground" : ""}`}>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="surface-card rounded-2xl p-6 sm:p-8 space-y-4">
+            <h2 className="text-xl font-bold text-foreground">Things to Know &amp; Common Car Financing Mistakes</h2>
+            <ul className="list-disc list-inside space-y-2 text-muted-foreground text-sm sm:text-base">
+              {carLoanEmiCalculatorContent.mistakes.map((m, idx) => (
+                <li key={idx}>{m}</li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      }
+    >
       <div className="space-y-6">
         {/* Input Form Card */}
         <div className="rounded-2xl border border-border/80 bg-card p-5 sm:p-6 shadow-xs space-y-5">
@@ -281,8 +260,7 @@ export function CarLoanEMICalculator() {
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <CalculateButton
-              isOutdated={isOutdated}
-              isDisabled={isButtonDisabled}
+              disabled={isButtonDisabled}
               onClick={handleCalculate}
             />
             <Button variant="outline" onClick={handleReset} className="gap-1.5 text-xs sm:text-sm">
@@ -293,13 +271,13 @@ export function CarLoanEMICalculator() {
         </div>
 
         {/* Outdated Result Notification */}
-        <OutdatedResultBanner isOutdated={isOutdated} onCalculate={handleCalculate} />
+        {isOutdated && <OutdatedResultBanner onCalculate={handleCalculate} />}
 
         {/* Results Section */}
         {!hasResult ? (
           <EmptyResultPlaceholder
-            title="Calculate Your Auto Loan EMI"
-            description="Enter your vehicle cost, down payment, interest rate and tenure above, then click Calculate to view your monthly instalments, total financing cost, and tenure comparison."
+            message="Calculate Your Auto Loan EMI"
+            subMessage="Enter your vehicle cost, down payment, interest rate and tenure above, then click Calculate to view your monthly instalments, total financing cost, and tenure comparison."
           />
         ) : (
           <div className="space-y-6">
@@ -444,9 +422,6 @@ export function CarLoanEMICalculator() {
             </div>
           </div>
         )}
-
-        {/* Rich SEO Content & FAQs Section */}
-        <CalculatorBlog content={blogData} />
       </div>
     </CalculatorPageLayout>
   );

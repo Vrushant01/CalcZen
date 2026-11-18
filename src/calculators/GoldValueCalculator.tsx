@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
-import CalculatorBlog, { type BlogContent } from "@/components/CalculatorBlog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -109,89 +108,76 @@ export function GoldValueCalculator() {
     resetCalculated();
   };
 
-  const blogData: BlogContent = {
-    title: goldValueCalculatorContent.h1,
-    description: goldValueCalculatorContent.intro,
-    articleHtml: `
-      <section class="space-y-4">
-        <h2 class="text-xl font-bold text-foreground">How to Use This Gold Value Calculator</h2>
-        <ol class="list-decimal list-inside space-y-2 text-muted-foreground text-sm sm:text-base">
-          ${goldValueCalculatorContent.howToUseSteps.map((step) => `<li>${step}</li>`).join("")}
-        </ol>
-      </section>
-
-      <section class="space-y-4 mt-8">
-        <h2 class="text-xl font-bold text-foreground">Gold Valuation Formula &amp; Taxation Steps</h2>
-        <p class="text-muted-foreground text-sm sm:text-base leading-relaxed">${goldValueCalculatorContent.formula}</p>
-        <div class="mt-4 rounded-xl border border-border bg-card p-4 sm:p-6 space-y-3">
-          <h3 class="font-semibold text-foreground text-base">Worked Real-World Example</h3>
-          <p class="text-sm text-muted-foreground">${goldValueCalculatorContent.workedExample.description}</p>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm border-collapse">
-              <thead>
-                <tr class="border-b border-border/60">
-                  <th class="py-2 font-medium text-foreground">Parameter</th>
-                  <th class="py-2 font-medium text-foreground">Value</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-border/40 text-muted-foreground">
-                ${goldValueCalculatorContent.workedExample.table
-                  .map(
-                    (row) => `
-                  <tr>
-                    <td class="py-2">${row.label}</td>
-                    <td class="py-2 font-medium text-foreground">${row.value}</td>
-                  </tr>
-                `,
-                  )
-                  .join("")}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section class="space-y-4 mt-8">
-        <h2 class="text-xl font-bold text-foreground">${goldValueCalculatorContent.quickReferenceTable.title}</h2>
-        <div class="overflow-x-auto rounded-xl border border-border bg-card p-2 sm:p-4">
-          <table class="w-full text-left text-sm border-collapse">
-            <thead>
-              <tr class="border-b border-border/60 text-foreground font-medium">
-                ${goldValueCalculatorContent.quickReferenceTable.headers
-                  .map((h) => `<th class="py-2.5 px-3">${h}</th>`)
-                  .join("")}
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-border/40 text-muted-foreground">
-              ${goldValueCalculatorContent.quickReferenceTable.rows
-                .map(
-                  (r) => `
-                <tr class="hover:bg-muted/40 transition-colors">
-                  ${r.map((c, i) => `<td class="py-2.5 px-3 ${i === 0 ? "font-medium text-foreground" : ""}">${c}</td>`).join("")}
-                </tr>
-              `,
-                )
-                .join("")}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="space-y-4 mt-8">
-        <h2 class="text-xl font-bold text-foreground">Things to Know &amp; Common Bullion Mistakes</h2>
-        <ul class="list-disc list-inside space-y-2 text-muted-foreground text-sm sm:text-base">
-          ${goldValueCalculatorContent.mistakes.map((m) => `<li>${m}</li>`).join("")}
-        </ul>
-      </section>
-    `,
-    faqs: goldValueCalculatorContent.faqs,
-  };
-
   return (
-    <CalculatorPageLayout calc={calc}>
+    <CalculatorPageLayout
+      calc={calc}
+      intro={goldValueCalculatorContent.intro}
+      formula={goldValueCalculatorContent.formula}
+      example={
+        goldValueCalculatorContent.workedExample
+          ? `${goldValueCalculatorContent.workedExample.description}\n\n` +
+            goldValueCalculatorContent.workedExample.table
+              .map((r) => `${r.label}: ${r.value}`)
+              .join("\n")
+          : undefined
+      }
+      faqs={goldValueCalculatorContent.faqs}
+      blog={
+        <div className="space-y-8">
+          <section className="surface-card rounded-2xl p-6 sm:p-8 space-y-4">
+            <h2 className="text-xl font-bold text-foreground">How to Use This Gold Value Calculator</h2>
+            <ol className="list-decimal list-inside space-y-2 text-muted-foreground text-sm sm:text-base">
+              {goldValueCalculatorContent.howToUseSteps.map((step, idx) => (
+                <li key={idx}>{step}</li>
+              ))}
+            </ol>
+          </section>
+
+          <section className="surface-card rounded-2xl p-6 sm:p-8 space-y-4">
+            <h2 className="text-xl font-bold text-foreground">{goldValueCalculatorContent.quickReferenceTable.title}</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-border/60 text-foreground font-semibold">
+                    {goldValueCalculatorContent.quickReferenceTable.headers.map((h, i) => (
+                      <th key={i} className="py-2.5 px-3">{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/40 text-muted-foreground">
+                  {goldValueCalculatorContent.quickReferenceTable.rows.map((row, ri) => (
+                    <tr key={ri} className="hover:bg-muted/40 transition-colors">
+                      {row.map((cell, ci) => (
+                        <td key={ci} className={`py-2.5 px-3 ${ci === 0 ? "font-medium text-foreground" : ""}`}>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="surface-card rounded-2xl p-6 sm:p-8 space-y-4">
+            <h2 className="text-xl font-bold text-foreground">Things to Know &amp; Common Bullion Mistakes</h2>
+            <ul className="list-disc list-inside space-y-2 text-muted-foreground text-sm sm:text-base">
+              {goldValueCalculatorContent.mistakes.map((m, idx) => (
+                <li key={idx}>{m}</li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      }
+    >
       <div className="space-y-6">
         {/* Live Gold Rate Panel */}
-        <LiveRatePanel />
+        <LiveRatePanel
+          metal="gold"
+          rateInUse={rate24k}
+          rateBasis="per_gram"
+          purityLabel="24K Benchmark"
+          isUserEdited={Number(rate24k) !== (liveRates?.gold24kPerGram || 7500)}
+          onUseLiveRate={() => setRate24k(liveRates?.gold24kPerGram || 7500)}
+        />
 
         {/* Input Form Card */}
         <div className="rounded-2xl border border-border/80 bg-card p-5 sm:p-6 shadow-xs space-y-5">
@@ -328,8 +314,7 @@ export function GoldValueCalculator() {
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <CalculateButton
-              isOutdated={isOutdated}
-              isDisabled={isButtonDisabled}
+              disabled={isButtonDisabled}
               onClick={handleCalculate}
             />
             <Button variant="outline" onClick={handleReset} className="gap-1.5 text-xs sm:text-sm">
@@ -340,13 +325,13 @@ export function GoldValueCalculator() {
         </div>
 
         {/* Outdated Result Notification */}
-        <OutdatedResultBanner isOutdated={isOutdated} onCalculate={handleCalculate} />
+        {isOutdated && <OutdatedResultBanner onCalculate={handleCalculate} />}
 
         {/* Results Section */}
         {!hasResult ? (
           <EmptyResultPlaceholder
-            title="Convert Gold Weight to Live Rupees"
-            description="Enter your gold weight, karat purity, and current rate above, then click Calculate to view total bullion worth, making charges, and GST details."
+            message="Convert Gold Weight to Live Rupees"
+            subMessage="Enter your gold weight, karat purity, and current rate above, then click Calculate to view total bullion worth, making charges, and GST details."
           />
         ) : (
           <div className="space-y-6">
@@ -421,9 +406,6 @@ export function GoldValueCalculator() {
             </div>
           </div>
         )}
-
-        {/* Rich SEO Content & FAQs Section */}
-        <CalculatorBlog content={blogData} />
       </div>
     </CalculatorPageLayout>
   );

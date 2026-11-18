@@ -81,13 +81,15 @@ function FaqItem({ q, a, isOpen, onToggle, answerClassName }: FaqItemProps) {
   );
 }
 
-export function FaqAccordion({ faqs, answerClassName }: FaqAccordionProps) {
+export function FaqAccordion({ faqs = [], answerClassName }: FaqAccordionProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const handleToggle = (index: number, e: React.MouseEvent) => {
     e.preventDefault();
     setActiveIndex((prev) => (prev === index ? null : index));
   };
+
+  if (!faqs || faqs.length === 0) return null;
 
   return (
     <div className="divide-y divide-border">

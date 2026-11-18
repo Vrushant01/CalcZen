@@ -363,4 +363,54 @@ export const calculatorComponents: Record<string, ComponentType> = {
       default: m.CoupleAgeDifferenceCalculator,
     })),
   ),
+  "car-loan-emi-calculator": lazy(() =>
+    import("@/calculators/CarLoanEMICalculator").then((m) => ({
+      default: m.CarLoanEMICalculator,
+    })),
+  ),
+  "home-loan-emi-calculator": lazy(() =>
+    import("@/calculators/HomeLoanEMICalculator").then((m) => ({
+      default: m.HomeLoanEMICalculator,
+    })),
+  ),
+  "gold-loan-interest-calculator": lazy(() =>
+    import("@/calculators/GoldLoanInterestCalculator").then((m) => ({
+      default: m.GoldLoanInterestCalculator,
+    })),
+  ),
+  "gold-value-calculator": lazy(() =>
+    import("@/calculators/GoldValueCalculator").then((m) => ({
+      default: m.GoldValueCalculator,
+    })),
+  ),
+  "tmt-steel-weight-calculator": lazy(() =>
+    import("@/calculators/TmtSteelWeightCalculator").then((m) => ({
+      default: m.TmtSteelWeightCalculator,
+    })),
+  ),
+  "brick-calculator": lazy(() =>
+    import("@/calculators/BrickCalculator").then((m) => ({
+      default: m.BrickCalculator,
+    })),
+  ),
+  "tile-calculator": lazy(() =>
+    import("@/calculators/TileCalculator").then((m) => ({
+      default: m.TileCalculator,
+    })),
+  ),
+  "paint-calculator": lazy(() =>
+    import("@/calculators/PaintCalculator").then((m) => ({
+      default: m.PaintCalculator,
+    })),
+  ),
+  "land-area-converter": lazy(() =>
+    import("@/calculators/LandAreaConverter").then((m) => ({
+      default: m.LandAreaConverter,
+    })),
+  ),
+  "rooftop-solar-calculator": lazy(() =>
+    import("@/calculators/RooftopSolarCalculator").then((m) => ({
+      default: m.RooftopSolarCalculator,
+    })),
+  ),
 };

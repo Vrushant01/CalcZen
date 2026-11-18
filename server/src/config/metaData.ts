@@ -183,6 +183,46 @@ export const calculatorMeta: Record<string, { title: string; description: string
   "couple-age-difference-calculator": {
     "title": "Couple Age Difference Calculator - Calculate Relationship Age Gap | CalcZen",
     "description": "Calculate the exact age difference between partners in years, months, and days. Discover who is older, your relationship age gap in total days, and both current ages."
+  },
+  "car-loan-emi-calculator": {
+    "title": "Car Loan EMI Calculator – EMI, Interest & Table | CalcZen",
+    "description": "Free car loan EMI calculator for India. Enter car price, down payment, rate and tenure to see monthly EMI, total interest and a month-wise payment table."
+  },
+  "home-loan-emi-calculator": {
+    "title": "Home Loan EMI Calculator – With Prepayment | CalcZen",
+    "description": "Calculate home loan EMI in India with part-prepayment. See interest saved, months reduced and the full amortization schedule. Free and instant."
+  },
+  "gold-loan-interest-calculator": {
+    "title": "Gold Loan EMI & Interest Calculator India | CalcZen",
+    "description": "Find your gold loan amount, EMI and total interest by weight, purity and rate. Compare bullet, EMI and monthly-interest repayment. Free calculator."
+  },
+  "gold-value-calculator": {
+    "title": "Gold Value Calculator – By Weight & Karat | CalcZen",
+    "description": "Calculate accurate gold value in India for 24K, 22K, 18K and 14K by weight. Includes making charges, GST and live rates. Instant and free."
+  },
+  "tmt-steel-weight-calculator": {
+    "title": "TMT Steel Weight Calculator – Per Meter & Bundle | CalcZen",
+    "description": "Calculate TMT steel bar weight in kg and tonnes by diameter and length using standard d²/162 formula. Free civil engineering estimator for India."
+  },
+  "brick-calculator": {
+    "title": "Brick Calculator – Wall Bricks, Mortar & Cement | CalcZen",
+    "description": "Calculate exact bricks, cement bags and sand for 4.5\" and 9\" walls. Includes mortar ratio and cutting wastage for Indian house construction."
+  },
+  "tile-calculator": {
+    "title": "Tile Calculator – Floor & Wall Tiles with Boxes | CalcZen",
+    "description": "Calculate floor and wall tiles in sq ft, total pieces, and box quantities with wastage for Indian home construction. Free and accurate."
+  },
+  "paint-calculator": {
+    "title": "Paint Calculator – Wall & Ceiling Paint in Liters | CalcZen",
+    "description": "Calculate wall and ceiling paint in liters, commercial bucket breakdown, primer, and material cost for Indian homes. Free estimator."
+  },
+  "land-area-converter": {
+    "title": "Land Area Converter – Acre, Guntha, Cent & Bigha | CalcZen",
+    "description": "Convert land area between Acre, Guntha, Cent, Gaj, Square Feet, Square Meters, and regional Bigha. Free Indian land measurement tool."
+  },
+  "rooftop-solar-calculator": {
+    "title": "Rooftop Solar Calculator – Subsidy & Savings | CalcZen",
+    "description": "Calculate solar system size, PM Surya Ghar central subsidy, net cost, monthly savings, and payback period for Indian homes. Free calculator."
   }
 };
 

@@ -803,18 +803,17 @@ export function CalculatorPageLayout({
     ],
     "cement-bag-calculator": [
       "rcc-price-calculator",
-      "gst-calculator",
-      "loan-emi-calculator",
-      "mortgage-calculator",
-      "percentage-calculator",
+      "brick-calculator",
+      "tmt-steel-weight-calculator",
+      "tile-calculator",
+      "paint-calculator",
     ],
     "rcc-price-calculator": [
       "cement-bag-calculator",
-      "gst-calculator",
-      "loan-emi-calculator",
+      "tmt-steel-weight-calculator",
+      "brick-calculator",
+      "tile-calculator",
       "mortgage-calculator",
-      "percentage-calculator",
-      "standard-calculator",
     ],
     "gold-making-charges-calculator": [
       "gold-jewellery-bill-calculator",
@@ -824,6 +823,8 @@ export function CalculatorPageLayout({
       "sip-calculator",
     ],
     "gold-jewellery-bill-calculator": [
+      "gold-value-calculator",
+      "gold-loan-interest-calculator",
       "jewellery-budget-to-weight-calculator",
       "gold-making-charges-calculator",
       "gold-loan-against-jewellery-calculator",
@@ -854,6 +855,7 @@ export function CalculatorPageLayout({
       "silver-jewellery-bill-calculator",
     ],
     "gold-purity-karat-converter": [
+      "gold-value-calculator",
       "jewellery-budget-to-weight-calculator",
       "gold-jewellery-bill-calculator",
       "old-gold-exchange-value-calculator",
@@ -868,6 +870,8 @@ export function CalculatorPageLayout({
       "gold-loan-against-jewellery-calculator",
     ],
     "gold-loan-against-jewellery-calculator": [
+      "gold-loan-interest-calculator",
+      "gold-value-calculator",
       "jewellery-budget-to-weight-calculator",
       "old-gold-exchange-value-calculator",
       "gold-purity-karat-converter",
@@ -891,6 +895,8 @@ export function CalculatorPageLayout({
       "retirement-calculator",
     ],
     "mortgage-calculator": [
+      "home-loan-emi-calculator",
+      "car-loan-emi-calculator",
       "loan-emi-calculator",
       "loan-eligibility-calculator",
       "compound-interest-calculator",
@@ -904,6 +910,8 @@ export function CalculatorPageLayout({
       "mortgage-calculator",
     ],
     "loan-emi-calculator": [
+      "car-loan-emi-calculator",
+      "home-loan-emi-calculator",
       "mortgage-calculator",
       "loan-eligibility-calculator",
       "credit-card-emi-calculator",
@@ -1014,6 +1022,67 @@ export function CalculatorPageLayout({
       "love-calculator",
       "flames-calculator",
       "percentage-calculator",
+    ],
+    "car-loan-emi-calculator": [
+      "home-loan-emi-calculator",
+      "loan-emi-calculator",
+      "credit-card-emi-calculator",
+      "loan-eligibility-calculator",
+    ],
+    "home-loan-emi-calculator": [
+      "car-loan-emi-calculator",
+      "loan-emi-calculator",
+      "mortgage-calculator",
+      "loan-eligibility-calculator",
+    ],
+    "gold-loan-interest-calculator": [
+      "gold-loan-against-jewellery-calculator",
+      "gold-value-calculator",
+      "gold-jewellery-bill-calculator",
+      "loan-emi-calculator",
+    ],
+    "gold-value-calculator": [
+      "gold-jewellery-bill-calculator",
+      "gold-purity-karat-converter",
+      "gold-making-charges-calculator",
+      "old-gold-exchange-value-calculator",
+      "gold-loan-interest-calculator",
+    ],
+    "tmt-steel-weight-calculator": [
+      "brick-calculator",
+      "cement-bag-calculator",
+      "rcc-price-calculator",
+      "tile-calculator",
+    ],
+    "brick-calculator": [
+      "tmt-steel-weight-calculator",
+      "cement-bag-calculator",
+      "tile-calculator",
+      "paint-calculator",
+    ],
+    "tile-calculator": [
+      "brick-calculator",
+      "paint-calculator",
+      "cement-bag-calculator",
+      "land-area-converter",
+    ],
+    "paint-calculator": [
+      "tile-calculator",
+      "brick-calculator",
+      "cement-bag-calculator",
+      "rooftop-solar-calculator",
+    ],
+    "land-area-converter": [
+      "brick-calculator",
+      "tile-calculator",
+      "cement-bag-calculator",
+      "rooftop-solar-calculator",
+    ],
+    "rooftop-solar-calculator": [
+      "home-electricity-bill-calculator",
+      "appliance-electricity-cost-calculator",
+      "ac-electricity-cost-calculator",
+      "land-area-converter",
     ],
   };
 

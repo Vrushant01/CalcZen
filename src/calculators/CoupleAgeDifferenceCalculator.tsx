@@ -103,27 +103,31 @@ export function CoupleAgeDifferenceCalculator() {
   return (
     <CalculatorPageLayout
       calc={calc}
-      intro="Enter both dates of birth to calculate the exact age difference in years, months, and days. See who is older, the total number of days apart, and both current ages."
+      intro="Enter both dates of birth to calculate the exact age difference between partners in years, months, and days. See who is older, the total number of days apart, and both current ages."
       faqs={[
         {
-          q: "How to calculate exact age gap between husband and wife?",
-          a: "Enter the date of birth for both you and your spouse. The calculator applies proleptic Gregorian calendar logic to find the exact gap in complete years, months, and remaining days.",
+          q: "How to calculate exact age gap between partners or spouses?",
+          a: "Enter the date of birth for both you and your partner. The calculator applies proleptic Gregorian calendar logic to find the exact gap in complete years, months, and remaining days.",
+        },
+        {
+          q: "How does this calculator differ from the individual Age Calculator?",
+          a: 'The individual <a href="/calculator/age-calculator" class="text-primary hover:underline font-medium">Age Calculator</a> determines a single person\'s chronological age and birthday countdown. This Couple Age Difference Calculator compares two distinct birthdates to analyze the relationship age gap and who is older.',
         },
         {
           q: "Does this calculator account for leap years?",
           a: "Yes. Our algorithm accurately accounts for leap years and all varying month lengths (including February 28th and 29th) so you get a perfect calendar-based age gap.",
         },
         {
-          q: "What is the age gap if we are born in the same year?",
-          a: "If you are born in the same year, the calculator will return an age gap of 0 years and display the exact difference in months and days.",
-        },
-        {
-          q: "Can I use this to find the total days we've been alive?",
-          a: "Yes! Along with the age difference, this tool also provides the exact current age for each individual in years, months, and days based on today's date.",
+          q: "What is the half-your-age-plus-seven rule in relationships?",
+          a: "The 'half-your-age-plus-seven' rule is a cultural dating guideline suggesting the minimum socially acceptable dating age is half your age plus seven years.",
         },
         {
           q: "Does the order of the birth dates matter?",
           a: "No. You can enter the dates in either order. The calculator will automatically determine the older person and return a positive age difference.",
+        },
+        {
+          q: "What is the age gap if we are born in the same year?",
+          a: "If you are born in the same year, the calculator will return an age gap of 0 years and display the exact difference in months and days.",
         },
       ]}
     >
@@ -225,6 +229,18 @@ export function CoupleAgeDifferenceCalculator() {
               Reset
             </Button>
           </div>
+
+          <p className="text-xs text-muted-foreground mt-3 text-center">
+            Looking for your personal chronological age or upcoming birthday countdown? Try our{" "}
+            <Link
+              to="/calculator/$slug"
+              params={{ slug: "age-calculator" }}
+              className="text-primary hover:underline font-medium"
+            >
+              Age Calculator
+            </Link>
+            .
+          </p>
         </div>
 
         {/* RESULT STATE */}

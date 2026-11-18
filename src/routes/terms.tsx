@@ -23,9 +23,9 @@ export const Route = createFileRoute("/terms")({
         content:
           "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability.",
       },
-      { property: "og:url", content: "https://calczen.in/terms" },
+      { property: "og:url", content: "https://www.calczen.in/terms" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.in/terms" }],
+    links: [{ rel: "canonical", href: "https://www.calczen.in/terms" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/terms")({
           name: "Terms of Service — Using CalcZen Calculators",
           description:
             "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability.",
-          url: "https://calczen.in/terms",
+          url: "https://www.calczen.in/terms",
         }),
       },
       {
@@ -48,13 +48,13 @@ export const Route = createFileRoute("/terms")({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://calczen.in",
+              item: "https://www.calczen.in",
             },
             {
               "@type": "ListItem",
               position: 2,
               name: "Terms of Service",
-              item: "https://calczen.in/terms",
+              item: "https://www.calczen.in/terms",
             },
           ],
         }),

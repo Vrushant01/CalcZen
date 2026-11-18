@@ -42,6 +42,11 @@
       "permanent": true
     },
     {
+      "source": "/calculator/gst-invoice",
+      "destination": "/calculator/gst-invoice-calculator",
+      "permanent": true
+    },
+    {
       "source": "/calculator/profit-calculator",
       "destination": "/calculator/product-profit-calculator",
       "permanent": true
@@ -58,6 +63,26 @@
     },
     {
       "source": "/calculator/business-profit-calculator",
+      "destination": "/calculator/product-profit-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/margin-calculator",
+      "destination": "/calculator/product-profit-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/markup-calculator",
+      "destination": "/calculator/product-profit-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/product-profit-calc",
+      "destination": "/calculator/product-profit-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/profit",
       "destination": "/calculator/product-profit-calculator",
       "permanent": true
     },
@@ -208,6 +233,17 @@
       "permanent": true
     },
     {
+      "source": "/admin",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?calczen\\.in"
+        }
+      ],
+      "destination": "https://admin.calczen.in/login",
+      "permanent": true
+    },
+    {
       "source": "/admin/:path*",
       "has": [
         {
@@ -259,7 +295,15 @@
       "destination": "/api/index.ts"
     },
     {
-      "source": "/((?!api/|admin/).*)",
+      "source": "/sitemap-blogs.xml",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/sitemap-news.xml",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/((?!api/|admin/|sitemap-blogs\\.xml|sitemap-news\\.xml).*)",
       "destination": "/index.html"
     }
   ],

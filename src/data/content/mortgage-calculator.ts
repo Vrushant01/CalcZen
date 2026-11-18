@@ -32,6 +32,16 @@ const content: CalculatorEducationalContent = {
       answer:
         'This depends on your mortgage interest rate versus your projected investment return. If your expected mutual fund return exceeds your loan interest rate, systematic investing may build more wealth. You can project disciplined monthly investment returns with our <a href="/calculator/sip-calculator" class="text-primary hover:underline">SIP Calculator</a> or compare safe returns with the <a href="/calculator/fd-calculator" class="text-primary hover:underline">FD Calculator</a>.',
     },
+    {
+      question: "What is the difference between a 15-year and 30-year mortgage term?",
+      answer:
+        "A 15-year mortgage comes with higher monthly payments but substantially lowers cumulative interest payments over the life of the loan. A 30-year mortgage offers lower, more manageable monthly cash outflows, but results in considerably higher lifetime interest expense.",
+    },
+    {
+      question: "How does down payment size impact monthly payment and loan terms?",
+      answer:
+        'A larger down payment directly lowers your borrowing principal, which decreases your monthly EMI payment and overall interest burden. In many mortgage markets, putting down 20% or more also eliminates private mortgage insurance (PMI) premiums, further lowering your monthly homeownership cost. Check your borrowing eligibility with our <a href="/calculator/loan-eligibility-calculator" class="text-primary hover:underline">Loan Eligibility Calculator</a>.',
+    },
   ],
 
   authorityLinks: [
@@ -43,6 +53,7 @@ const content: CalculatorEducationalContent = {
 
   relatedCalculators: [
     "loan-emi-calculator",
+    "loan-eligibility-calculator",
     "compound-interest-calculator",
     "sip-calculator",
     "fd-calculator",

@@ -28,9 +28,9 @@ export const Route = createFileRoute("/contact")({
         content:
           "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours.",
       },
-      { property: "og:url", content: "https://calczen.in/contact" },
+      { property: "og:url", content: "https://www.calczen.in/contact" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.in/contact" }],
+    links: [{ rel: "canonical", href: "https://www.calczen.in/contact" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/contact")({
           name: "Contact CalcZen — We'd Love to Hear From You",
           description:
             "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours.",
-          url: "https://calczen.in/contact",
+          url: "https://www.calczen.in/contact",
         }),
       },
       {
@@ -53,13 +53,13 @@ export const Route = createFileRoute("/contact")({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://calczen.in",
+              item: "https://www.calczen.in",
             },
             {
               "@type": "ListItem",
               position: 2,
               name: "Contact Us",
-              item: "https://calczen.in/contact",
+              item: "https://www.calczen.in/contact",
             },
           ],
         }),

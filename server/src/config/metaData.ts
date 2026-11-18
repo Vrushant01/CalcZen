@@ -181,8 +181,8 @@ export const calculatorMeta: Record<string, { title: string; description: string
     "description": "Use the CalcZen FLAMES Calculator to find your fun relationship result. Enter two names, match the letters, and discover your Friends, Love, Affection, Marriage, Enemies, or Siblings result."
   },
   "couple-age-difference-calculator": {
-    "title": "Couple Age Difference Calculator - Calculate Age Gap | CalcZen",
-    "description": "Calculate the exact age difference between two people in years, months, and days. See who is older, total days apart, and both current ages."
+    "title": "Couple Age Difference Calculator - Calculate Relationship Age Gap | CalcZen",
+    "description": "Calculate the exact age difference between partners in years, months, and days. Discover who is older, your relationship age gap in total days, and both current ages."
   }
 };
 

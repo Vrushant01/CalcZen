@@ -2,54 +2,65 @@ import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
-    "The pregnancy due date calculator is a comprehensive and highly accurate tool designed to help users solve complex problems quickly and efficiently. By processing key variables and parameters, this calculator provides instant, reliable results that are crucial for making informed decisions. Whether you are a professional needing precise calculations for your daily work or an everyday user looking to estimate important metrics, this tool removes the guesswork and mathematical complexity. It is built to handle various edge cases and provides a robust, user-friendly interface that ensures anyone can understand and utilize the output effectively.",
+    "The Pregnancy Due Date Calculator estimates your baby's expected date of delivery (EDD), tracks current gestational age in completed weeks and days, and outlines trimester transitions using established obstetrical standards. Based on Naegele's rule and clinical obstetrics protocols endorsed by the American College of Obstetricians and Gynecologists (ACOG), this tool converts the first day of your last menstrual period (LMP) and your unique cycle length into an accurate developmental timeline for prenatal care, ultrasound scheduling, and birth planning.",
 
   howItWorks:
-    "Using the pregnancy due date calculator is incredibly straightforward and requires no prior technical expertise. First, you begin by entering your primary data points into the clearly labeled input fields. The system instantly validates your inputs to ensure accuracy and prevent calculation errors. Once the necessary data is provided, the underlying algorithmic engine processes the numbers in real-time. It applies industry-standard formulas and best practices to derive the final output. The results are then displayed in an easy-to-read format, often accompanied by visual charts or step-by-step breakdowns, allowing you to fully understand the context and implications of the calculated values.",
+    "Enter the first day of your Last Menstrual Period (LMP) and your average menstrual cycle length (defaulting to the standard 28 days). The calculator applies Naegele's rule by adding 280 days (40 weeks) to your LMP, calibrating the date forward or backward if your cycle deviates from 28 days. It determines your current gestational week, days elapsed, days remaining until delivery, and highlights critical milestones such as dating scans, anatomy ultrasounds, and trimester boundaries.",
 
   formula:
-    "The mathematical foundation of the pregnancy due date calculator relies on established, peer-reviewed formulas tailored to this specific domain. While the exact computational models can vary based on your specific inputs, the core logic follows this general structure:\n\nOutput = (Primary Input × Variable Factor) / Constant Divider + Adjustments\n\nWhere:\n- Primary Input represents the baseline value you provide.\n- Variable Factor accounts for individual user parameters.\n- Constant Divider standardizes the result into a recognizable metric.\n- Adjustments are secondary modifications based on optional inputs.\n\nBy combining these elements, the calculator ensures a mathematically sound and highly precise result every single time.",
+    "Naegele's Calculation Rule:\nEstimated Due Date (EDD) = LMP Date + 1 Year − 3 Months + 7 Days + (Menstrual Cycle Length − 28 Days)\n\nGestational Milestones Calculation:\n- Current Gestational Age = Current Date − LMP Date (in completed weeks + days)\n- Conception Estimate ≈ LMP Date + 14 Days (for a standard 28-day cycle)\n- First Trimester: Weeks 1 through 13\n- Second Trimester: Weeks 14 through 27\n- Third Trimester: Weeks 28 through 40+",
 
   example:
-    "Let's look at a practical, real-world example of how the pregnancy due date calculator can be applied. Suppose a typical user needs to determine their baseline metric. They start by inputting a standard baseline value—for instance, 100 units. Next, they add a secondary variable, such as a 5% rate or a modifier of 1.2, depending on the context of the calculation.\n\nWhen these values are processed through the calculator's engine, the system first multiplies the baseline by the modifier (100 × 1.2 = 120). It then factors in any standard constants to produce the final result. In this scenario, the output clearly demonstrates how a small change in the initial inputs can significantly impact the final outcome. This step-by-step transparency helps users grasp the mechanics behind the numbers.",
+    "Suppose an expectant mother's last menstrual period began on May 10, 2025, with an average 30-day menstrual cycle:\n\n1. Baseline Naegele's Rule: May 10 + 1 year (May 10, 2026) − 3 months (Feb 10, 2026) + 7 days = February 17, 2026.\n2. Cycle Adjustment: 30 days − 28 days = +2 days.\n3. Final Estimated Delivery Date: February 19, 2026.\n\nTakeaway Milestones:\n- Full 40 Weeks Due Date: February 19, 2026\n- Estimated Conception Window: May 24 – May 26, 2025\n- End of First Trimester (13 Weeks): August 9, 2025\n- Anatomy Scan Target Window: Weeks 18 to 22 (Mid-September to Mid-October 2025)",
 
   mistakes:
-    "When calculating these metrics manually or using inferior tools, users often fall victim to several common, yet critical, mistakes. The most frequent error is inconsistent units of measurement—for example, mixing months with years or pounds with kilograms. This inevitably leads to wildly inaccurate results. Another common pitfall is ignoring secondary variables. Many people only calculate the baseline while forgetting to account for fees, taxes, or physiological outliers, which drastically skews the real-world application of the data. Finally, a lack of regular recalculation is a major issue; as your underlying variables change over time, relying on old calculations can lead to poor long-term planning and decision-making.",
+    "A frequent misconception is assuming babies are always born exactly on their estimated due date. In clinical reality, only about 4% to 5% of deliveries occur precisely on the predicted EDD, while full-term births routinely occur anywhere between 37 weeks and 42 weeks. Another common error is confusing gestational age (which starts from the mother's LMP) with conceptual age (fetal age, which is roughly two weeks shorter). Always confirm your clinical timeline with an early first-trimester crown-rump length (CRL) ultrasound scan.",
 
   faqs: [
     {
-      question: "How accurate is the pregnancy due date calculator?",
+      question: "How accurate is the estimated due date calculated from the LMP?",
       answer:
-        "The calculator uses industry-standard formulas and provides highly accurate estimates based on the exact data you input. However, for critical medical or financial decisions, it should be used as a baseline guide alongside professional advice.",
+        "The LMP-based calculation provides a reliable clinical estimate assuming a regular 28-day cycle. In modern obstetrics, a first-trimester dating ultrasound (measuring the crown-rump length between 8 and 13 weeks) is considered the most accurate method and can refine the EDD if discrepancies exceed 5 to 7 days.",
     },
     {
-      question: "Can I use this calculator on my mobile device?",
+      question: "What is Naegele's rule and why does cycle length matter?",
       answer:
-        "Yes, the calculator is fully responsive and optimized for all devices, including smartphones, tablets, and desktop computers.",
+        "Naegele's rule is the clinical gold standard that models human pregnancy as 280 days (40 weeks) from the first day of the last menstrual period. Because ovulation typically occurs 14 days prior to the next expected period, longer or shorter menstrual cycles shift ovulation and conception, which our calculator factors into your final delivery date.",
     },
     {
-      question: "Do I need to create an account to use the tool?",
+      question: "What are the three trimesters of pregnancy?",
       answer:
-        "No, all of our calculators are completely free to use and do not require any registration or account creation.",
+        "Human pregnancy spans 40 weeks divided into three trimesters: The First Trimester covers Week 1 to Week 13 (fetal organogenesis); the Second Trimester covers Week 14 to Week 27 (rapid anatomical growth and movement); and the Third Trimester covers Week 28 through delivery (weight gain and lung maturation).",
     },
     {
-      question: "How often should I recalculate my numbers?",
+      question: "What is the difference between gestational age and fetal age?",
       answer:
-        "It is recommended to recalculate whenever your primary variables—such as income, weight, interest rates, or age—change significantly.",
+        "Gestational age is measured from the first day of your last menstrual period and is the standard measure used by OB-GYNs. Fetal (conceptional) age is the actual age of the developing fetus, which begins at fertilization—typically about two weeks after your LMP.",
     },
     {
-      question: "Is my inputted data saved or shared?",
+      question: "How can I support maternal wellness during pregnancy?",
       answer:
-        "Your privacy is our priority. All calculations are performed locally in your browser, and no personal input data is saved or transmitted to our servers.",
+        'Maintaining adequate hydration and healthy maternal nutrition is essential for amniotic fluid volume and placental health. Monitor your daily hydration targets using our <a href="/calculator/water-intake-calculator" class="text-primary hover:underline">Water Intake Calculator</a> or estimate foundational energy expenditure with our <a href="/calculator/bmr-calculator" class="text-primary hover:underline">BMR Calculator</a>.',
     },
   ],
 
   authorityLinks: [
-    { text: "World Health Organization (WHO)", url: "https://www.who.int/" },
-    { text: "Centers for Disease Control and Prevention (CDC)", url: "https://www.cdc.gov/" },
+    {
+      text: "American College of Obstetricians and Gynecologists (ACOG) Methods for Estimating Due Date",
+      url: "https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2017/05/methods-for-estimating-the-due-date",
+    },
+    {
+      text: "NHS UK Due Date and Pregnancy Timeline Guide",
+      url: "https://www.nhs.uk/pregnancy/finding-out/due-date-calculator/",
+    },
   ],
 
-  relatedCalculators: ["bmi-calculator", "401k-calculator", "mortgage-calculator"],
+  relatedCalculators: [
+    "water-intake-calculator",
+    "bmi-calculator",
+    "calorie-calculator",
+    "sleep-calculator",
+  ],
 };
 
 export default content;

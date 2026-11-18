@@ -28,9 +28,9 @@ export const Route = createFileRoute("/calculators")({
         content:
           "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
       },
-      { property: "og:url", content: "https://calczen.in/calculators" },
+      { property: "og:url", content: "https://www.calczen.in/calculators" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.in/calculators" }],
+    links: [{ rel: "canonical", href: "https://www.calczen.in/calculators" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/calculators")({
           name: "All Calculators — Browse Every Tool | CalcZen",
           description:
             "Browse and search every CalcZen calculator. Access free financial, health, mathematical, and everyday tools for instant, accurate results.",
-          url: "https://calczen.in/calculators",
+          url: "https://www.calczen.in/calculators",
         }),
       },
       {
@@ -53,13 +53,13 @@ export const Route = createFileRoute("/calculators")({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://calczen.in",
+              item: "https://www.calczen.in",
             },
             {
               "@type": "ListItem",
               position: 2,
               name: "Calculators",
-              item: "https://calczen.in/calculators",
+              item: "https://www.calczen.in/calculators",
             },
           ],
         }),

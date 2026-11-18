@@ -22,10 +22,212 @@ function getCategoryName(categorySlug: string): string {
   return cat ? cat.name : "Calculators";
 }
 
+const SEMANTIC_RELATION_MAP: Record<string, string[]> = {
+  "gold-jewellery-bill-calculator": [
+    "jewellery-budget-to-weight-calculator",
+    "gold-making-charges-calculator",
+    "gold-loan-against-jewellery-calculator",
+    "old-gold-exchange-value-calculator",
+    "gold-purity-karat-converter",
+    "silver-jewellery-bill-calculator",
+  ],
+  "jewellery-budget-to-weight-calculator": [
+    "gold-jewellery-bill-calculator",
+    "silver-jewellery-bill-calculator",
+    "old-gold-exchange-value-calculator",
+    "gold-purity-karat-converter",
+    "gold-loan-against-jewellery-calculator",
+    "diamond-jewellery-price-calculator",
+  ],
+  "silver-jewellery-bill-calculator": [
+    "jewellery-budget-to-weight-calculator",
+    "gold-jewellery-bill-calculator",
+    "old-gold-exchange-value-calculator",
+    "gold-purity-karat-converter",
+    "diamond-jewellery-price-calculator",
+  ],
+  "old-gold-exchange-value-calculator": [
+    "jewellery-budget-to-weight-calculator",
+    "gold-jewellery-bill-calculator",
+    "gold-purity-karat-converter",
+    "gold-loan-against-jewellery-calculator",
+    "silver-jewellery-bill-calculator",
+  ],
+  "gold-purity-karat-converter": [
+    "jewellery-budget-to-weight-calculator",
+    "gold-jewellery-bill-calculator",
+    "old-gold-exchange-value-calculator",
+    "gold-loan-against-jewellery-calculator",
+    "diamond-jewellery-price-calculator",
+  ],
+  "diamond-jewellery-price-calculator": [
+    "jewellery-budget-to-weight-calculator",
+    "gold-jewellery-bill-calculator",
+    "silver-jewellery-bill-calculator",
+    "gold-purity-karat-converter",
+    "gold-loan-against-jewellery-calculator",
+  ],
+  "gold-loan-against-jewellery-calculator": [
+    "jewellery-budget-to-weight-calculator",
+    "old-gold-exchange-value-calculator",
+    "gold-purity-karat-converter",
+    "gold-jewellery-bill-calculator",
+    "loan-emi-calculator",
+    "gold-making-charges-calculator",
+  ],
+  "job-offer-comparison-calculator": [
+    "ctc-to-in-hand-salary-calculator",
+    "loan-emi-calculator",
+    "sip-calculator",
+    "compound-interest-calculator",
+    "retirement-calculator",
+  ],
+  "ctc-to-in-hand-salary-calculator": [
+    "job-offer-comparison-calculator",
+    "loan-emi-calculator",
+    "sip-calculator",
+    "compound-interest-calculator",
+    "gst-calculator",
+    "retirement-calculator",
+  ],
+  "mortgage-calculator": [
+    "loan-emi-calculator",
+    "loan-eligibility-calculator",
+    "compound-interest-calculator",
+    "percentage-calculator",
+  ],
+  "compound-interest-calculator": [
+    "sip-calculator",
+    "fd-calculator",
+    "inflation-calculator",
+    "loan-emi-calculator",
+    "mortgage-calculator",
+  ],
+  "loan-emi-calculator": [
+    "mortgage-calculator",
+    "loan-eligibility-calculator",
+    "credit-card-emi-calculator",
+    "compound-interest-calculator",
+    "tip-calculator",
+  ],
+  "fd-calculator": [
+    "sip-calculator",
+    "compound-interest-calculator",
+    "inflation-calculator",
+    "retirement-calculator",
+  ],
+  "inflation-calculator": [
+    "retirement-calculator",
+    "compound-interest-calculator",
+    "fd-calculator",
+    "sip-calculator",
+  ],
+  "loan-eligibility-calculator": [
+    "loan-emi-calculator",
+    "mortgage-calculator",
+    "credit-card-emi-calculator",
+    "ctc-to-in-hand-salary-calculator",
+  ],
+  "credit-card-emi-calculator": [
+    "loan-emi-calculator",
+    "loan-eligibility-calculator",
+    "compound-interest-calculator",
+    "product-profit-calculator",
+  ],
+  "bmi-calculator": [
+    "calorie-calculator",
+    "bmr-calculator",
+    "body-fat-calculator",
+    "water-intake-calculator",
+    "sleep-calculator",
+  ],
+  "calorie-calculator": [
+    "bmr-calculator",
+    "protein-calculator",
+    "body-fat-calculator",
+    "bmi-calculator",
+    "water-intake-calculator",
+    "sleep-calculator",
+  ],
+  "water-intake-calculator": [
+    "calorie-calculator",
+    "protein-calculator",
+    "bmi-calculator",
+    "bmr-calculator",
+    "sleep-calculator",
+  ],
+  "bmr-calculator": [
+    "calorie-calculator",
+    "bmi-calculator",
+    "body-fat-calculator",
+    "protein-calculator",
+    "water-intake-calculator",
+    "sleep-calculator",
+  ],
+  "body-fat-calculator": [
+    "bmi-calculator",
+    "bmr-calculator",
+    "calorie-calculator",
+    "protein-calculator",
+  ],
+  "protein-calculator": [
+    "calorie-calculator",
+    "body-fat-calculator",
+    "bmr-calculator",
+    "water-intake-calculator",
+  ],
+  "sleep-calculator": [
+    "water-intake-calculator",
+    "calorie-calculator",
+    "bmr-calculator",
+    "bmi-calculator",
+  ],
+  "pregnancy-due-date-calculator": [
+    "water-intake-calculator",
+    "bmi-calculator",
+    "calorie-calculator",
+    "sleep-calculator",
+  ],
+  "percentage-calculator": ["tip-calculator", "age-calculator", "compound-interest-calculator"],
+  "age-calculator": [
+    "couple-age-difference-calculator",
+    "percentage-calculator",
+    "tip-calculator",
+    "pregnancy-due-date-calculator",
+  ],
+  "tip-calculator": ["percentage-calculator", "loan-emi-calculator", "age-calculator"],
+  "love-calculator": [
+    "couple-age-difference-calculator",
+    "flames-calculator",
+    "age-calculator",
+    "percentage-calculator",
+    "tip-calculator",
+  ],
+  "flames-calculator": [
+    "couple-age-difference-calculator",
+    "love-calculator",
+    "age-calculator",
+    "percentage-calculator",
+  ],
+  "couple-age-difference-calculator": [
+    "age-calculator",
+    "love-calculator",
+    "flames-calculator",
+    "percentage-calculator",
+  ],
+};
+
 function getRelatedCalculators(currentSlug: string, categorySlug: string, count = 4): CalculatorMeta[] {
-  return calculators
-    .filter((c) => c.slug !== currentSlug && c.category === categorySlug)
-    .slice(0, count);
+  const semanticSlugs = SEMANTIC_RELATION_MAP[currentSlug] || [];
+  const semanticItems = semanticSlugs
+    .map((slug) => calculators.find((c) => c.slug === slug))
+    .filter((c): c is CalculatorMeta => !!c);
+
+  const categoryMatches = calculators.filter(
+    (c) => c.category === categorySlug && c.slug !== currentSlug && !semanticSlugs.includes(c.slug),
+  );
+
+  return [...semanticItems, ...categoryMatches].slice(0, count);
 }
 
 const OG_IMAGE_SLUGS = new Set([
@@ -87,16 +289,19 @@ function injectMetadata(
     jsonLd?: object[];
     image?: string;
     bodyHtml: string;
+    robots?: string;
   },
 ): string {
   let html = templateHtml;
 
-  // Remove existing title, description, canonical, og, twitter
+  // Remove existing title, description, canonical, og, twitter, robots, and json-ld
   html = html.replace(/<title[^>]*>.*?<\/title>/gis, "");
   html = html.replace(/<meta\s+[^>]*name=["']description["'][^>]*>/gi, "");
   html = html.replace(/<link\s+[^>]*rel=["']canonical["'][^>]*>/gi, "");
   html = html.replace(/<meta\s+[^>]*property=["']og:[^"']+["'][^>]*>/gi, "");
   html = html.replace(/<meta\s+[^>]*name=["']twitter:[^"']+["'][^>]*>/gi, "");
+  html = html.replace(/<meta\s+[^>]*name=["']robots["'][^>]*>/gi, "");
+  html = html.replace(/<script\s+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi, "");
 
   const safeTitle = escapeHtml(params.title);
   const safeDesc = escapeHtml(params.description);
@@ -109,6 +314,8 @@ function injectMetadata(
   const jsonLdScripts = (params.jsonLd || [])
     .map((ld) => `<script type="application/ld+json">${JSON.stringify(ld)}</script>`)
     .join("\n    ");
+
+  const robotsTag = `<meta name="robots" content="${params.robots || "index, follow, max-image-preview:large"}" />`;
 
   const metaTags = `
     <title>${safeTitle}</title>
@@ -134,7 +341,7 @@ function injectMetadata(
     <meta name="twitter:title" content="${safeTitle}" />
     <meta name="twitter:description" content="${safeDesc}" />
     <meta name="twitter:image" content="${ogImage}" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    ${robotsTag}
     ${keywordsTag}
     ${jsonLdScripts}
   `;
@@ -381,12 +588,16 @@ async function prerender() {
     const sources = getCategorySources(calc.category);
 
     let faqs: { question: string; answer: string }[] = [];
+    let eduContent: any = null;
     const contentFile = join(process.cwd(), "src", "data", "content", `${calc.slug}.ts`);
     if (existsSync(contentFile)) {
       try {
         const mod = await import(`../src/data/content/${calc.slug}.ts`);
-        if (mod.default?.faqs?.length) {
-          faqs = mod.default.faqs;
+        if (mod.default) {
+          eduContent = mod.default;
+          if (mod.default.faqs?.length) {
+            faqs = mod.default.faqs;
+          }
         }
       } catch (e) {
         console.warn(`[PRERENDER] Could not load content for ${calc.slug}:`, e);
@@ -500,16 +711,27 @@ async function prerender() {
             </div>
           </section>
 
-          <!-- Key Features & Instructions -->
-          <section class="prose dark:prose-invert max-w-none mb-12">
-            <h2 class="text-2xl font-bold tracking-tight mb-4">How to Use the ${escapeHtml(calc.name)}</h2>
-            <p class="text-muted-foreground leading-relaxed">
-              Use our verified online ${escapeHtml(calc.name)} for instant results, clear formulas, and actionable step-by-step breakdowns. Enter your numbers into the calculator fields above to receive immediate, transparent calculations without any technical complexity.
+          <!-- Educational Content Sections (WITHOUT JavaScript) -->
+          ${
+            eduContent?.whatItDoes
+              ? `
+          <section class="prose dark:prose-invert max-w-none mb-10 text-left">
+            <h2 class="text-2xl font-bold tracking-tight text-foreground mb-4">About the ${escapeHtml(calc.name)}</h2>
+            <p class="text-muted-foreground leading-relaxed text-base">${escapeHtml(eduContent.whatItDoes)}</p>
+          </section>
+          `
+              : ""
+          }
+
+          <section class="prose dark:prose-invert max-w-none mb-10 text-left">
+            <h2 class="text-2xl font-bold tracking-tight text-foreground mb-4">How to Use the ${escapeHtml(calc.name)}</h2>
+            <p class="text-muted-foreground leading-relaxed text-base">
+              ${escapeHtml(eduContent?.howItWorks || `Use our verified online ${calc.name} for instant results, clear formulas, and actionable step-by-step breakdowns. Enter your numbers into the calculator fields above to receive immediate, transparent calculations without any technical complexity.`)}
             </p>
             ${
               calc.useCases?.length
                 ? `<div class="mt-6 not-prose">
-                    <h3 class="text-lg font-semibold mb-3">Common Use Cases:</h3>
+                    <h3 class="text-lg font-semibold text-foreground mb-3">Common Use Cases:</h3>
                     <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-muted-foreground">
                       ${calc.useCases.map((u) => `<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span><span>${escapeHtml(u)}</span></li>`).join("")}
                     </ul>
@@ -518,19 +740,56 @@ async function prerender() {
             }
           </section>
 
+          ${
+            eduContent?.formula
+              ? `
+          <section class="prose dark:prose-invert max-w-none mb-10 text-left">
+            <h2 class="text-2xl font-bold tracking-tight text-foreground mb-4">Formula &amp; Calculation Logic</h2>
+            <div class="rounded-xl border border-border/80 bg-muted/20 p-5 font-mono text-sm leading-relaxed whitespace-pre-line text-foreground/90">
+              ${escapeHtml(eduContent.formula)}
+            </div>
+          </section>
+          `
+              : ""
+          }
+
+          ${
+            eduContent?.example
+              ? `
+          <section class="prose dark:prose-invert max-w-none mb-10 text-left">
+            <h2 class="text-2xl font-bold tracking-tight text-foreground mb-4">Step-by-Step Practical Example</h2>
+            <div class="rounded-xl border border-border/80 bg-muted/10 p-5 text-sm sm:text-base leading-relaxed whitespace-pre-line text-muted-foreground">
+              ${escapeHtml(eduContent.example)}
+            </div>
+          </section>
+          `
+              : ""
+          }
+
+          ${
+            eduContent?.mistakes
+              ? `
+          <section class="prose dark:prose-invert max-w-none mb-10 text-left">
+            <h2 class="text-2xl font-bold tracking-tight text-foreground mb-4">Common Mistakes to Avoid</h2>
+            <p class="text-muted-foreground leading-relaxed text-base">${escapeHtml(eduContent.mistakes)}</p>
+          </section>
+          `
+              : ""
+          }
+
           <!-- FAQs (when available) -->
           ${
             faqs.length
               ? `
-          <section class="border-t border-border/40 pt-10 mt-12">
-            <h2 class="text-xl font-bold mb-4">Frequently Asked Questions</h2>
-            <div class="space-y-4">
+          <section class="border-t border-border/40 pt-10 mt-12 text-left">
+            <h2 class="text-xl font-bold text-foreground mb-6">Frequently Asked Questions</h2>
+            <div class="space-y-6">
               ${faqs
                 .map(
                   (f) => `
-                <div>
-                  <h3 class="text-base font-semibold text-foreground mb-1">${escapeHtml(f.question)}</h3>
-                  <p class="text-sm text-muted-foreground leading-relaxed">${escapeHtml(f.answer)}</p>
+                <div class="space-y-2">
+                  <h3 class="text-base sm:text-lg font-semibold text-foreground mb-1">${escapeHtml(f.question)}</h3>
+                  <div class="text-sm sm:text-base text-muted-foreground leading-relaxed">${f.answer}</div>
                 </div>
               `,
                 )
@@ -725,33 +984,36 @@ async function prerender() {
           ? "ContactPage"
           : "WebPage";
 
-    const jsonLd: object[] = [
-      {
-        "@context": "https://schema.org",
-        "@type": pageType,
-        name: title,
-        description: description,
-        url: canonical,
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: siteUrl,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: data.h1,
-            item: canonical,
-          },
-        ],
-      },
-    ];
+    const jsonLd: object[] =
+      slug === "tools"
+        ? []
+        : [
+            {
+              "@context": "https://schema.org",
+              "@type": pageType,
+              name: title,
+              description: description,
+              url: canonical,
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Home",
+                  item: siteUrl,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: data.h1,
+                  item: canonical,
+                },
+              ],
+            },
+          ];
 
     let contentHtml = "";
 
@@ -889,13 +1151,19 @@ async function prerender() {
       ${renderFooterHtml()}
     `;
 
-    const finalHtml = injectMetadata(templateHtml, {
+    let finalHtml = injectMetadata(templateHtml, {
       title,
       description,
       canonical,
       jsonLd,
       bodyHtml,
+      robots: slug === "tools" ? "noindex, follow" : undefined,
     });
+
+    if (slug === "tools") {
+      finalHtml = finalHtml.replace(/<script[^>]*pagead2\.googlesyndication\.com[^>]*><\/script>/gi, "");
+      finalHtml = finalHtml.replace(/<meta[^>]*name=["']google-adsense-account["'][^>]*>/gi, "");
+    }
 
     const targetDir = join(distDir, slug);
     if (!existsSync(targetDir)) mkdirSync(targetDir, { recursive: true });

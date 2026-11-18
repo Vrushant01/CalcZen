@@ -5,7 +5,7 @@ const content: CalculatorEducationalContent = {
     "The Jewellery Budget to Weight Calculator reverse-engineers the maximum gold or diamond jewellery weight you can purchase for a fixed rupee budget in India. It factors in spot gold rates, purity karats (24K, 22K, 18K), making charges (percentage, per-gram, or flat), and mandatory 3% GST.",
 
   howItWorks:
-    "Enter your target financial budget (e.g., ₹50,000 or ₹2,00,000), current 24K gold rate, desired karat purity (22K or 18K), and expected making charge structure. The calculator applies reverse algebraic formulas to strip 3% GST and craftsmanship fees, deducing the exact maximum gold weight in grams you can afford.",
+    "Enter your target financial budget (e.g., ₹50,00, ₹50,000, or ₹2,00,000), current 24K gold rate, desired karat purity (22K or 18K), and expected making charge structure. The calculator applies reverse algebraic formulas to strip 3% GST and craftsmanship fees, deducing the exact maximum gold weight in grams you can afford.",
 
   formula:
     "Reverse Budget Calculation:\n\nPre-Tax Budget = Total Rupee Budget ÷ 1.03 (Subtract 3% GST)\n\nFor Percentage Making Charges (M%):\nMax Gold Weight (g) = Pre-Tax Budget ÷ [ Purity Gold Rate per gram × (1 + M/100) ]\n\nFor Per-Gram Making Charges (₹/g):\nMax Gold Weight (g) = Pre-Tax Budget ÷ ( Purity Gold Rate per gram + Making Charge per gram )",
@@ -32,6 +32,16 @@ const content: CalculatorEducationalContent = {
       answer:
         'Because 18K contains 75% gold compared to 22K\'s 91.6%, the gold rate per gram is roughly 18% lower, allowing you to purchase 18% to 22% more metal volume for the same budget. To verify exact price per gram differences, check our <a href="/calculator/gold-purity-karat-converter" class="text-primary hover:underline">Gold Purity & Karat Converter</a>.',
     },
+    {
+      question: "How does 3% GST impact my purchase power when buying jewellery?",
+      answer:
+        'In India, a mandatory 3% Goods and Services Tax (GST) is levied on the entire jewellery transaction value (gold value plus making charges). On a ₹1,00,000 budget, ₹2,912.62 goes to GST, meaning your actual jewellery spending power before tax is ₹97,087.38.',
+    },
+    {
+      question: "Can I use this budget calculator for gold coins or bullion bars?",
+      answer:
+        'Yes! For gold coins or bullion bars, making charges (often referred to as minting or packaging charges) are significantly lower—typically between 1% and 3%, compared to 8% to 25% for intricate ornaments. Setting making charges to 1% to 3% provides an accurate target weight for gold investment purchases.',
+    },
   ],
 
   authorityLinks: [
@@ -46,6 +56,7 @@ const content: CalculatorEducationalContent = {
     "gold-jewellery-bill-calculator",
     "gold-purity-karat-converter",
     "silver-jewellery-bill-calculator",
+    "old-gold-exchange-value-calculator",
   ],
 };
 

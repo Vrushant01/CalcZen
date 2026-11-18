@@ -152,13 +152,23 @@ export function BloodPressureCalculator() {
     },
   ];
 
+  const fallbackCalc = {
+    slug: "blood-pressure-calculator",
+    name: "Blood Pressure Calculator",
+    category: "health",
+    description: "Understand your blood pressure readings according to AHA guidelines.",
+    keywords: ["blood pressure calculator"],
+    icon: Heart,
+    calculatorType: "health",
+    useCases: ["blood pressure tracking"],
+    h1: "Blood Pressure Calculator",
+  } as any;
+
   return (
     <CalculatorPageLayout
-      title="Blood Pressure Calculator"
-      description="Understand your blood pressure readings according to AHA guidelines."
-      icon={<Heart className="h-6 w-6 text-red-500" />}
-      isCalculated={hasResult}
-      calculatorId="blood-pressure"
+      calc={fallbackCalc}
+      intro="Understand your blood pressure readings according to AHA guidelines."
+      faqs={[]}
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
         <div className="lg:col-span-4 space-y-6">
@@ -210,9 +220,8 @@ export function BloodPressureCalculator() {
             </div>
 
             <CalculateButton
+              category="health"
               onClick={handleCalculate}
-              isCalculated={hasResult}
-              onReset={handleReset}
               disabled={isButtonDisabled}
             />
           </div>
@@ -241,30 +250,24 @@ export function BloodPressureCalculator() {
               <HeroMetric
                 label="Your Blood Pressure Category"
                 value={`${calcSystolic}/${calcDiastolic}`}
-                subLabel={category.label}
-                accent={category.accent}
-                icon={<Activity className="h-5 w-5" />}
+                sub={category.label}
               />
 
               <DashboardSection title="Analysis & Guidelines">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <InsightCard
                     title="What this means"
-                    value={category.label}
-                    description={category.description}
-                    accent={category.accent}
+                    text={category.description}
                   />
                   <InsightCard
                     title="Next Steps"
-                    value="Recommendations"
-                    description={
+                    text={
                       category.label === "Hypertensive Crisis"
                         ? "Call 911 or your doctor immediately."
                         : category.label === "Normal"
                           ? "Keep up the good work! Maintain healthy habits."
                           : "Consider discussing these results with a healthcare provider and monitoring regularly."
                     }
-                    accent={category.accent === "red" ? "red" : "blue"}
                   />
                 </div>
               </DashboardSection>
@@ -273,7 +276,6 @@ export function BloodPressureCalculator() {
                 <ComparisonTable
                   headers={["Category", "Systolic (mmHg)", "And/Or", "Diastolic (mmHg)"]}
                   rows={categoryData}
-                  accent="blue"
                 />
               </DashboardSection>
 

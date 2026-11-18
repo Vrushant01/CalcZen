@@ -23,9 +23,9 @@ export const Route = createFileRoute("/about")({
         content:
           "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience.",
       },
-      { property: "og:url", content: "https://calczen.in/about" },
+      { property: "og:url", content: "https://www.calczen.in/about" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.in/about" }],
+    links: [{ rel: "canonical", href: "https://www.calczen.in/about" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/about")({
           name: "About CalcZen — Free Online Calculators for Finance, Health & Math",
           description:
             "Learn about CalcZen and our mission to deliver free, accurate online calculators with transparent formulas, clear methods, and a clean user experience.",
-          url: "https://calczen.in/about",
+          url: "https://www.calczen.in/about",
         }),
       },
       {
@@ -48,13 +48,13 @@ export const Route = createFileRoute("/about")({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://calczen.in",
+              item: "https://www.calczen.in",
             },
             {
               "@type": "ListItem",
               position: 2,
               name: "About Us",
-              item: "https://calczen.in/about",
+              item: "https://www.calczen.in/about",
             },
           ],
         }),

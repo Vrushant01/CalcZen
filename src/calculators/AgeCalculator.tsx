@@ -1,6 +1,7 @@
 import { OutdatedResultBanner } from "@/components/OutdatedResultBanner";
 import { EmptyResultPlaceholder } from "@/components/EmptyResultPlaceholder";
 import { useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { CalculatorPageLayout } from "@/components/CalculatorPageLayout";
 import CalculatorBlog from "@/components/CalculatorBlog";
 import { CalculatorPdfExport } from "@/components/CalculatorPdfExport";
@@ -195,6 +196,18 @@ Age = 29 years, 6 months, 26 days.`}
               Reset
             </Button>
           </div>
+
+          <p className="text-xs text-muted-foreground mt-3 text-center">
+            Comparing birth dates or calculating the age gap between partners? Use our{" "}
+            <Link
+              to="/calculator/$slug"
+              params={{ slug: "couple-age-difference-calculator" }}
+              className="text-primary hover:underline font-medium"
+            >
+              Couple Age Difference Calculator
+            </Link>
+            .
+          </p>
         </div>
 
         {hasResult ? (

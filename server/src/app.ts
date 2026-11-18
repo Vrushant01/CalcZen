@@ -226,6 +226,11 @@ export async function createApp(): Promise<Express> {
     });
   });
 
+  // Return 410 Gone for permanently removed legacy sitemaps
+  app.get(["/sitemap-blogs.xml", "/sitemap-news.xml"], (_req, res) => {
+    res.status(410).type("text/plain").send("410 Gone - This sitemap has been permanently removed.");
+  });
+
   // Serve public frontend static assets (robots.txt, ads.txt, assets/, sitemaps, etc.)
   const publicDist = resolvePublicDist();
   app.use(express.static(publicDist));

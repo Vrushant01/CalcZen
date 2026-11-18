@@ -23,9 +23,9 @@ export const Route = createFileRoute("/privacy")({
         content:
           "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.",
       },
-      { property: "og:url", content: "https://calczen.in/privacy" },
+      { property: "og:url", content: "https://www.calczen.in/privacy" },
     ],
-    links: [{ rel: "canonical", href: "https://calczen.in/privacy" }],
+    links: [{ rel: "canonical", href: "https://www.calczen.in/privacy" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/privacy")({
           name: "Privacy Policy — How CalcZen Handles Your Data",
           description:
             "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.",
-          url: "https://calczen.in/privacy",
+          url: "https://www.calczen.in/privacy",
         }),
       },
       {
@@ -48,13 +48,13 @@ export const Route = createFileRoute("/privacy")({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://calczen.in",
+              item: "https://www.calczen.in",
             },
             {
               "@type": "ListItem",
               position: 2,
               name: "Privacy Policy",
-              item: "https://calczen.in/privacy",
+              item: "https://www.calczen.in/privacy",
             },
           ],
         }),

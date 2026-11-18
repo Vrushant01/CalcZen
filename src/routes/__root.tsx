@@ -131,7 +131,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function getCanonicalUrl(pathname: string, searchStr: string): string {
-  const base = "https://calczen.in";
+  const base = "https://www.calczen.in";
   // Strip trailing slash except for the root path
   const urlPath =
     pathname === "/" || pathname === ""

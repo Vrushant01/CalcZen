@@ -7,7 +7,6 @@ const siteUrl = (process.env.SITE_URL || "https://www.calczen.in").replace(/\/$/
 const STATIC_PATHS = [
   { path: "/", priority: "1.0", changefreq: "daily" },
   { path: "/calculators", priority: "0.9", changefreq: "daily" },
-  { path: "/tools", priority: "0.5", changefreq: "weekly" },
   { path: "/about", priority: "0.5", changefreq: "monthly" },
   { path: "/contact", priority: "0.5", changefreq: "monthly" },
   { path: "/terms", priority: "0.3", changefreq: "yearly" },

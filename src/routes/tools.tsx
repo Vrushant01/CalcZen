@@ -12,7 +12,7 @@ export const Route = createFileRoute("/tools")({
       meta: [
         { title },
         { name: "description", content: description },
-        { name: "robots", content: "index,follow" },
+        { name: "robots", content: "noindex,follow" },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:type", content: "website" },

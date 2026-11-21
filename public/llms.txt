@@ -1,38 +1,47 @@
 # CalcZen
 
-Website: https://calczen.in
+Website: https://www.calczen.in
 
 Description:
-CalcZen is a free online calculator platform offering finance, health, scientific, math, and everyday calculators with formulas, examples, FAQs, and educational explanations.
+CalcZen is a free online calculator platform offering finance, jewellery, construction, electricity, health, scientific, math, and everyday calculators with formulas, worked examples, FAQs, and transparent educational explanations.
 
 Categories:
 
-* Finance Calculators
-* Health Calculators
-* Scientific Calculators
-* Math Calculators
-* Everyday Calculators
+* Finance & Loan Calculators
+* Jewellery & Gold Calculators
+* Construction & Material Calculators
+* Electricity & Solar Calculators
+* Health & Fitness Calculators
+* Math & Everyday Utility Calculators
 
 Popular Calculators:
 
-* Mortgage Calculator
 * Loan EMI Calculator
+* Mortgage Calculator
+* Gold Jewellery Bill Calculator
+* Cement Bag Calculator
+* Brick Calculator
+* Home Electricity Bill Calculator
 * Compound Interest Calculator
+* CTC to In-Hand Salary Calculator
 * Retirement Calculator
 * BMI Calculator
-* Calorie Calculator
 * BMR Calculator
-* Water Intake Calculator
+* Body Fat Calculator
+* Protein Calculator
 * Scientific Calculator
 * Standard Calculator
 * Percentage Calculator
-* Age Calculator
+* GST Calculator
+* Attendance Calculator
+* CGPA Calculator
 
 Important Pages:
 
-https://calczen.in
-https://calczen.in/about
-https://calczen.in/tools
+https://www.calczen.in
+https://www.calczen.in/calculators
+https://www.calczen.in/about
+https://www.calczen.in/contact
 
 Purpose:
 
@@ -40,8 +49,8 @@ Provide accurate, free, mobile-friendly calculators and educational resources fo
 
 Content Types:
 
-* Calculator Tools
+* Verified Calculator Tools
 * Formula Explanations
-* Examples
-* FAQs
-* Educational Articles
+* Practical Worked Examples
+* Frequently Asked Questions
+* Authoritative Educational Resources

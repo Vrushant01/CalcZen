@@ -79,3 +79,22 @@ export const brickCalculatorContent = {
     "tile-calculator",
   ],
 };
+
+import type { CalculatorEducationalContent } from "../content-types";
+
+const educationalContent: CalculatorEducationalContent = {
+  whatItDoes: brickCalculatorContent.intro,
+  howItWorks: Array.isArray(brickCalculatorContent.howToUseSteps) ? brickCalculatorContent.howToUseSteps.join("\n\n") : "",
+  formula: brickCalculatorContent.formula,
+  example: typeof brickCalculatorContent.workedExample === 'object' && brickCalculatorContent.workedExample ? (brickCalculatorContent.workedExample.description + "\n\n" + (brickCalculatorContent.workedExample.table || []).map((t: any) => `${t.label}: ${t.value}`).join("\n")) : "",
+  mistakes: Array.isArray(brickCalculatorContent.mistakes) ? brickCalculatorContent.mistakes.join("\n\n") : String(brickCalculatorContent.mistakes || ""),
+  faqs: Array.isArray(brickCalculatorContent.faqs) ? brickCalculatorContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : [],
+  authorityLinks: [
+    { text: "Bureau of Indian Standards (BIS)", url: "https://www.bis.gov.in/" },
+    { text: "Reserve Bank of India (RBI)", url: "https://www.rbi.org.in/" },
+  ],
+  relatedCalculators: brickCalculatorContent.relatedSlugs || ["cement-bag-calculator","paint-calculator","tile-calculator"],
+  lastReviewed: "2026-11-21",
+};
+
+export default educationalContent;

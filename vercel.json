@@ -8,12 +8,22 @@
   "redirects": [
     {
       "source": "/blog",
-      "destination": "/tools",
+      "destination": "/calculators",
       "permanent": true
     },
     {
       "source": "/blog/:path*",
-      "destination": "/tools",
+      "destination": "/calculators",
+      "permanent": true
+    },
+    {
+      "source": "/tools",
+      "destination": "/calculators",
+      "permanent": true
+    },
+    {
+      "source": "/tools/:path*",
+      "destination": "/calculators",
       "permanent": true
     },
     {
@@ -293,18 +303,6 @@
     {
       "source": "/admin/(.*)",
       "destination": "/api/index.ts"
-    },
-    {
-      "source": "/sitemap-blogs.xml",
-      "destination": "/api/index.ts"
-    },
-    {
-      "source": "/sitemap-news.xml",
-      "destination": "/api/index.ts"
-    },
-    {
-      "source": "/((?!api/|admin/|sitemap-blogs\\.xml|sitemap-news\\.xml).*)",
-      "destination": "/index.html"
     }
   ],
   "functions": {

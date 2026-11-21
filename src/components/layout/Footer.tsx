@@ -101,11 +101,6 @@ export function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/tools" className={linkClass} onClick={() => setOpenSection(null)}>
-                      Tools
-                    </Link>
-                  </li>
-                  <li>
                     <Link to="/contact" className={linkClass} onClick={() => setOpenSection(null)}>
                       Contact
                     </Link>

@@ -7,4 +7,6 @@ export interface CalculatorEducationalContent {
   faqs: { question: string; answer: string }[];
   authorityLinks: { text: string; url: string }[];
   relatedCalculators: string[];
+  lastReviewed?: string;
 }
+

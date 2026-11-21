@@ -23,8 +23,7 @@ if (!rootEl) {
 const hostname = typeof window !== "undefined" ? window.location.hostname : "";
 const isAdminHost =
   hostname === "admin.calczen.in" ||
-  hostname.startsWith("admin.") ||
-  (typeof window !== "undefined" && window.location.search.includes("admin=true"));
+  hostname.startsWith("admin.");
 
 createRoot(rootEl).render(
   <StrictMode>

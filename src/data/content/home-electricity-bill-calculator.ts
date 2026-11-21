@@ -11,7 +11,7 @@ const content: CalculatorEducationalContent = {
     "Telescopic Slab Tariff Billing:\n\nTotal Energy Charges = ∑ (Units in Slab_i × Rate_i)\n\nFinal Bill = Total Energy Charges + Fixed Monthly Meter Charges + Electricity Duty (%) + Regulatory Surcharges",
 
   example:
-    "Consuming 250 units in a state with slabs: 0–100 units @ ₹3.50, 101–200 units @ ₹5.50, 201+ units @ ₹7.50, plus ₹100 fixed charge:\n- First 100 units: 100 × ₹3.50 = ₹350\n- Next 100 units: 100 × ₹5.50 = ₹550\n- Next 50 units: 50 × ₹7.50 = ₹375\n- Energy Charges: ₹1,275\n- Fixed Charges: ₹100\n- Estimated Total Bill: ₹1,375 (plus local duty)",
+    "Consuming 250 units in a state with slabs: 0–100 kWh @ ₹3.50, 101–200 kWh @ ₹5.50, 201+ kWh @ ₹7.50, plus ₹100 fixed charge:\n- First 100 kWh: 100 × ₹3.50 = ₹350\n- Next 100 kWh: 100 × ₹5.50 = ₹550\n- Next 50 kWh: 50 × ₹7.50 = ₹375\n- Energy Charges: ₹1,275\n- Fixed Charges: ₹100\n- Estimated Total Bill: ₹1,375 (plus local duty)",
 
   mistakes:
     "A frequent misconception is assuming that crossing into a higher tariff bracket applies the higher rate to all units consumed. Indian residential tariffs are telescopic, meaning each slab rate applies only to units within that specific band.",

@@ -344,7 +344,6 @@ export function HeroSection() {
     { to: "/category/finance", label: "Finance" },
     { to: "/category/health", label: "Health" },
     { to: "/category/math", label: "Math" },
-    { to: "/tools", label: "Tools" },
     { to: "/about", label: "About" },
   ];
 

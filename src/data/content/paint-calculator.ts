@@ -86,3 +86,22 @@ export const paintCalculatorContent = {
     "rooftop-solar-calculator",
   ],
 };
+
+import type { CalculatorEducationalContent } from "../content-types";
+
+const educationalContent: CalculatorEducationalContent = {
+  whatItDoes: paintCalculatorContent.intro,
+  howItWorks: Array.isArray(paintCalculatorContent.howToUseSteps) ? paintCalculatorContent.howToUseSteps.join("\n\n") : "",
+  formula: paintCalculatorContent.formula,
+  example: typeof paintCalculatorContent.workedExample === 'object' && paintCalculatorContent.workedExample ? (paintCalculatorContent.workedExample.description + "\n\n" + (paintCalculatorContent.workedExample.table || []).map((t: any) => `${t.label}: ${t.value}`).join("\n")) : "",
+  mistakes: Array.isArray(paintCalculatorContent.mistakes) ? paintCalculatorContent.mistakes.join("\n\n") : String(paintCalculatorContent.mistakes || ""),
+  faqs: Array.isArray(paintCalculatorContent.faqs) ? paintCalculatorContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : [],
+  authorityLinks: [
+    { text: "Bureau of Indian Standards (BIS)", url: "https://www.bis.gov.in/" },
+    { text: "Reserve Bank of India (RBI)", url: "https://www.rbi.org.in/" },
+  ],
+  relatedCalculators: paintCalculatorContent.relatedSlugs || ["tile-calculator","brick-calculator","cement-bag-calculator"],
+  lastReviewed: "2026-11-21",
+};
+
+export default educationalContent;

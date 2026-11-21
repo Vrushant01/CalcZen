@@ -16,7 +16,6 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as TermsRouteImport } from './routes/terms'
-import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as CalculatorSlugRouteImport } from './routes/calculator.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 
@@ -55,11 +54,6 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ToolsRoute = ToolsRouteImport.update({
-  id: '/tools',
-  path: '/tools',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CalculatorSlugRoute = CalculatorSlugRouteImport.update({
   id: '/calculator/$slug',
   path: '/calculator/$slug',
@@ -79,7 +73,6 @@ export interface FileRoutesByFullPath {
   '/disclaimer': typeof DisclaimerRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/tools': typeof ToolsRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$slug': typeof CategorySlugRoute
 }
@@ -91,7 +84,6 @@ export interface FileRoutesByTo {
   '/disclaimer': typeof DisclaimerRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/tools': typeof ToolsRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$slug': typeof CategorySlugRoute
 }
@@ -104,7 +96,6 @@ export interface FileRoutesById {
   '/disclaimer': typeof DisclaimerRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/tools': typeof ToolsRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$slug': typeof CategorySlugRoute
 }
@@ -118,7 +109,6 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/privacy'
     | '/terms'
-    | '/tools'
     | '/calculator/$slug'
     | '/category/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -130,7 +120,6 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/privacy'
     | '/terms'
-    | '/tools'
     | '/calculator/$slug'
     | '/category/$slug'
   id:
@@ -142,7 +131,6 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/privacy'
     | '/terms'
-    | '/tools'
     | '/calculator/$slug'
     | '/category/$slug'
   fileRoutesById: FileRoutesById
@@ -155,7 +143,6 @@ export interface RootRouteChildren {
   DisclaimerRoute: typeof DisclaimerRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
-  ToolsRoute: typeof ToolsRoute
   CalculatorSlugRoute: typeof CalculatorSlugRoute
   CategorySlugRoute: typeof CategorySlugRoute
 }
@@ -211,13 +198,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/tools': {
-      id: '/tools'
-      path: '/tools'
-      fullPath: '/tools'
-      preLoaderRoute: typeof ToolsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/calculator/$slug': {
       id: '/calculator/$slug'
       path: '/calculator/$slug'
@@ -243,7 +223,6 @@ const rootRouteChildren: RootRouteChildren = {
   DisclaimerRoute: DisclaimerRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
-  ToolsRoute: ToolsRoute,
   CalculatorSlugRoute: CalculatorSlugRoute,
   CategorySlugRoute: CategorySlugRoute,
 }

@@ -66,7 +66,7 @@ const HOME_BILL_FAQS = [
   },
   {
     q: "How do I calculate electricity charges from units?",
-    a: "For flat-rate billing: Energy Charges = Units × Rate per Unit. For example, 250 units at ₹5/unit equals ₹1,250. For telescopic slab billing: units are broken into tiers (e.g. first 100 units at ₹3, next 100 units at ₹5, remaining 50 units at ₹8 = ₹300 + ₹500 + ₹400 = ₹1,200).",
+    a: "For flat-rate billing: Energy Charges = Units × Rate per Unit. For example, 250 units at ₹5/unit equals ₹1,250. For telescopic slab billing: units are broken into tiers (e.g. first 100 kWh at ₹3, next 100 kWh at ₹5, remaining 50 units at ₹8 = ₹300 + ₹500 + ₹400 = ₹1,200).",
   },
   {
     q: "Why is my electricity bill higher than expected?",
@@ -78,7 +78,7 @@ const HOME_BILL_FAQS = [
   },
   {
     q: "What is a slab-based electricity tariff?",
-    a: "A slab tariff divides your consumption into tiers. Lower units (e.g. 0–100) are billed at lower, subsidized rates to help lower-income households. As your consumption rises into higher tiers (e.g. >200 units), the per-unit rate increases progressively.",
+    a: "A slab tariff divides your consumption into tiers. Lower units (e.g. 0–100 kWh) are billed at lower, subsidized rates to help lower-income households. As your consumption rises into higher tiers (e.g. >200 units), the per-unit rate increases progressively.",
   },
   {
     q: "Does the electricity bill include taxes and surcharges?",
@@ -120,9 +120,9 @@ const HOME_BILL_BLOG: BlogContent = {
       title: "2. How Progressive Telescopic Tariff Slabs Work",
       paragraphs: [
         "Most state electricity regulatory commissions (such as GERC in Gujarat, MERC in Maharashtra, and DERC in Delhi) employ telescopic progressive slabs to promote energy conservation.",
-        "For example, under a 3-tier tariff (0–100 units @ ₹3, 101–200 units @ ₹5, and >200 units @ ₹8), consuming 250 units does NOT mean all 250 units are charged at ₹8. Instead:",
-        "• First 100 units are charged at ₹3 = ₹300",
-        "• Next 100 units are charged at ₹5 = ₹500",
+        "For example, under a 3-tier tariff (0–100 kWh @ ₹3, 101–200 kWh @ ₹5, and >200 units @ ₹8), consuming 250 units does NOT mean all 250 units are charged at ₹8. Instead:",
+        "• First 100 kWh are charged at ₹3 = ₹300",
+        "• Next 100 kWh are charged at ₹5 = ₹500",
         "• Remaining 50 units are charged at ₹8 = ₹400",
         "Total Energy Charge = ₹300 + ₹500 + ₹400 = ₹1,200.",
       ],

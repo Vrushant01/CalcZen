@@ -79,3 +79,22 @@ export const tileCalculatorContent = {
     "tmt-steel-weight-calculator",
   ],
 };
+
+import type { CalculatorEducationalContent } from "../content-types";
+
+const educationalContent: CalculatorEducationalContent = {
+  whatItDoes: tileCalculatorContent.intro,
+  howItWorks: Array.isArray(tileCalculatorContent.howToUseSteps) ? tileCalculatorContent.howToUseSteps.join("\n\n") : "",
+  formula: tileCalculatorContent.formula,
+  example: typeof tileCalculatorContent.workedExample === 'object' && tileCalculatorContent.workedExample ? (tileCalculatorContent.workedExample.description + "\n\n" + (tileCalculatorContent.workedExample.table || []).map((t: any) => `${t.label}: ${t.value}`).join("\n")) : "",
+  mistakes: Array.isArray(tileCalculatorContent.mistakes) ? tileCalculatorContent.mistakes.join("\n\n") : String(tileCalculatorContent.mistakes || ""),
+  faqs: Array.isArray(tileCalculatorContent.faqs) ? tileCalculatorContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : [],
+  authorityLinks: [
+    { text: "Bureau of Indian Standards (BIS)", url: "https://www.bis.gov.in/" },
+    { text: "Reserve Bank of India (RBI)", url: "https://www.rbi.org.in/" },
+  ],
+  relatedCalculators: tileCalculatorContent.relatedSlugs || ["paint-calculator","brick-calculator","cement-bag-calculator"],
+  lastReviewed: "2026-11-21",
+};
+
+export default educationalContent;

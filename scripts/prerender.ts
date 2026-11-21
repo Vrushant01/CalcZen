@@ -473,7 +473,6 @@ function renderHeaderHtml(): string {
           <a href="/category/finance" class="hidden sm:inline hover:text-foreground transition-colors">Finance</a>
           <a href="/category/business" class="hidden sm:inline hover:text-foreground transition-colors">Business</a>
           <a href="/category/electricity" class="hidden sm:inline hover:text-foreground transition-colors">Electricity</a>
-          <a href="/tools" class="hover:text-foreground transition-colors">Tools</a>
           <a href="/about" class="hidden md:inline hover:text-foreground transition-colors">About</a>
         </nav>
       </div>
@@ -684,18 +683,21 @@ async function prerender() {
     let faqs: { question: string; answer: string }[] = [];
     let eduContent: any = null;
     const contentFile = join(process.cwd(), "src", "data", "content", `${calc.slug}.ts`);
-    if (existsSync(contentFile)) {
-      try {
-        const mod = await import(`../src/data/content/${calc.slug}.ts`);
-        if (mod.default) {
-          eduContent = mod.default;
-          if (mod.default.faqs?.length) {
-            faqs = mod.default.faqs;
-          }
-        }
-      } catch (e) {
-        console.warn(`[PRERENDER] Could not load content for ${calc.slug}:`, e);
-      }
+    if (!existsSync(contentFile)) {
+      throw new Error(`[PRERENDER] Missing educational content file for calculator: ${calc.slug}`);
+    }
+    let mod: any;
+    try {
+      mod = await import(`../src/data/content/${calc.slug}.ts`);
+    } catch (e) {
+      throw new Error(`[PRERENDER] Could not load content file for ${calc.slug}: ${e}`);
+    }
+    if (!mod || !mod.default) {
+      throw new Error(`[PRERENDER] Missing default export in content file for calculator: ${calc.slug}`);
+    }
+    eduContent = mod.default;
+    if (eduContent.faqs?.length) {
+      faqs = eduContent.faqs;
     }
 
     const jsonLd: object[] = [
@@ -819,9 +821,9 @@ async function prerender() {
 
           <section class="prose dark:prose-invert max-w-none mb-10 text-left">
             <h2 class="text-2xl font-bold tracking-tight text-foreground mb-4">How to Use the ${escapeHtml(calc.name)}</h2>
-            <p class="text-muted-foreground leading-relaxed text-base">
-              ${escapeHtml(eduContent?.howItWorks || `Use our verified online ${calc.name} for instant results, clear formulas, and actionable step-by-step breakdowns. Enter your numbers into the calculator fields above to receive immediate, transparent calculations without any technical complexity.`)}
-            </p>
+            <div class="text-muted-foreground leading-relaxed text-base whitespace-pre-line space-y-2">
+              ${escapeHtml(eduContent.howItWorks)}
+            </div>
             ${
               calc.useCases?.length
                 ? `<div class="mt-6 not-prose">
@@ -918,13 +920,21 @@ async function prerender() {
           }
 
           <!-- Sources & further reading -->
-          ${
-            sources.length
-              ? `
+          ${(() => {
+            const allSources: { name: string; url: string }[] = [...sources];
+            if (eduContent?.authorityLinks?.length) {
+              for (const al of eduContent.authorityLinks) {
+                if (!allSources.some((s) => s.url === al.url)) {
+                  allSources.push({ name: al.text, url: al.url });
+                }
+              }
+            }
+            if (allSources.length === 0) return "";
+            return `
           <aside class="border-t border-border/40 pt-10 mt-12">
             <h3 class="text-xl font-bold mb-4">Sources &amp; further reading</h3>
             <ul class="list-disc list-inside space-y-2 text-sm sm:text-base text-muted-foreground/90">
-              ${sources
+              ${allSources
                 .map(
                   (s) => `
                 <li>
@@ -934,10 +944,17 @@ async function prerender() {
                 )
                 .join("")}
             </ul>
+            <div class="text-xs text-muted-foreground/80 mt-8 pt-4 border-t border-border/30 flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-1.5">
+                <span>Last reviewed:</span>
+                <time datetime="${escapeHtml(eduContent?.lastReviewed || "2026-11-21")}">${escapeHtml(eduContent?.lastReviewed || "2026-11-21")}</time>
+                <span>• Verified calculation formulas</span>
+              </div>
+              <span class="text-[11px] text-muted-foreground/70">CalcZen Editorial Board</span>
+            </div>
           </aside>
-          `
-              : ""
-          }
+          `;
+          })()}
         </article>
       </main>
       ${renderFooterHtml()}
@@ -1061,8 +1078,8 @@ async function prerender() {
     count++;
   }
 
-  // 4. Prerender Static Pages (/about, /contact, /privacy, /terms, /disclaimer, /tools)
-  const staticSlugs = ["about", "contact", "privacy", "terms", "disclaimer", "tools"] as const;
+  // 4. Prerender Static Pages (/about, /contact, /privacy, /terms, /disclaimer)
+  const staticSlugs = ["about", "contact", "privacy", "terms", "disclaimer"] as const;
   for (const slug of staticSlugs) {
     const data = staticPagesContent[slug];
     if (!data) continue;
@@ -1078,36 +1095,33 @@ async function prerender() {
           ? "ContactPage"
           : "WebPage";
 
-    const jsonLd: object[] =
-      slug === "tools"
-        ? []
-        : [
-            {
-              "@context": "https://schema.org",
-              "@type": pageType,
-              name: title,
-              description: description,
-              url: canonical,
-            },
-            {
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              itemListElement: [
-                {
-                  "@type": "ListItem",
-                  position: 1,
-                  name: "Home",
-                  item: siteUrl,
-                },
-                {
-                  "@type": "ListItem",
-                  position: 2,
-                  name: data.h1,
-                  item: canonical,
-                },
-              ],
-            },
-          ];
+    const jsonLd: object[] = [
+      {
+        "@context": "https://schema.org",
+        "@type": pageType,
+        name: title,
+        description: description,
+        url: canonical,
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: siteUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: data.h1,
+            item: canonical,
+          },
+        ],
+      },
+    ];
 
     let contentHtml = "";
 
@@ -1123,6 +1137,15 @@ async function prerender() {
                 ${escapeHtml(data.intro || "")}
               </p>
             </header>
+            <div class="mt-6 mb-8 rounded-xl border border-border/80 bg-muted/20 p-5 space-y-2 text-left">
+              <h2 class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Direct Email Contact</h2>
+              <p class="text-base text-foreground font-semibold">
+                Email: <a href="mailto:hello@calczen.in" class="text-primary hover:underline font-mono">hello@calczen.in</a>
+              </p>
+              <p class="text-xs text-muted-foreground">
+                Owners &amp; Maintainers: Krish Barvaliya &amp; Vrushant Shiroya &bull; Vadodara, Gujarat, India
+              </p>
+            </div>
             <section class="space-y-4">
               <h2 class="text-lg font-semibold text-foreground">Send Us a Message</h2>
               <form class="space-y-4 mt-4">
@@ -1144,19 +1167,10 @@ async function prerender() {
             <section class="mt-12 border-t border-border/40 pt-8">
               <h2 class="text-lg font-semibold text-foreground mb-3">Response Times &amp; Support</h2>
               <p class="text-sm text-muted-foreground leading-relaxed">
-                We value your feedback and suggestion requests. Our team reviews every submission and typically replies within 24 to 48 business hours. For general inquiries, reporting calculator errors, or suggesting new mathematical or financial simulation tools, please fill out the form above.
+                We value your feedback and suggestion requests. Our team reviews every submission and typically replies within 24 to 48 business hours. For general inquiries, reporting calculator errors, or suggesting new mathematical or financial simulation tools, please fill out the form above or email us directly at hello@calczen.in.
               </p>
             </section>
           </div>
-        </main>
-      `;
-    } else if (slug === "tools") {
-      contentHtml = `
-        <main class="min-h-[70vh] flex flex-col items-center justify-center px-4 text-center select-none bg-background text-foreground">
-          <h1 class="sr-only">Tools</h1>
-          <p class="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-foreground">
-            Coming Soon
-          </p>
         </main>
       `;
     } else {
@@ -1245,25 +1259,48 @@ async function prerender() {
       ${renderFooterHtml()}
     `;
 
-    let finalHtml = injectMetadata(templateHtml, {
+    const finalHtml = injectMetadata(templateHtml, {
       title,
       description,
       canonical,
       jsonLd,
       bodyHtml,
-      robots: slug === "tools" ? "noindex, follow" : undefined,
     });
-
-    if (slug === "tools") {
-      finalHtml = finalHtml.replace(/<script[^>]*pagead2\.googlesyndication\.com[^>]*><\/script>/gi, "");
-      finalHtml = finalHtml.replace(/<meta[^>]*name=["']google-adsense-account["'][^>]*>/gi, "");
-    }
 
     const targetDir = join(distDir, slug);
     if (!existsSync(targetDir)) mkdirSync(targetDir, { recursive: true });
     writeFileSync(join(targetDir, "index.html"), finalHtml, "utf8");
     count++;
   }
+
+  // 5. Emit 404.html for clean Vercel not-found handling (real 404s instead of soft 404 SPA fallback)
+  const notFoundHtml = injectMetadata(templateHtml, {
+    title: "Page Not Found | CalcZen",
+    description: "The page you are looking for does not exist or has been moved.",
+    canonical: `${siteUrl}/404`,
+    robots: "noindex, nofollow",
+    bodyHtml: `
+      ${renderHeaderHtml()}
+      <main class="min-h-[60vh] flex flex-col items-center justify-center px-4 py-16 text-center bg-background text-foreground">
+        <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight text-foreground mb-4">404</h1>
+        <p class="text-lg sm:text-xl font-medium text-foreground mb-2">Page Not Found</p>
+        <p class="text-sm text-muted-foreground max-w-md mb-8">
+          The requested page could not be located. It may have been relocated, renamed, or is temporarily unavailable.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a href="/calculators" class="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors">
+            Browse All Calculators
+          </a>
+          <a href="/" class="inline-flex min-h-11 items-center justify-center rounded-lg border border-border/80 bg-card px-5 py-2.5 text-sm font-medium text-foreground hover:bg-muted/40 transition-colors">
+            Go to Homepage
+          </a>
+        </div>
+      </main>
+      ${renderFooterHtml()}
+    `,
+  });
+  writeFileSync(join(distDir, "404.html"), notFoundHtml, "utf8");
+  count++;
 
   console.log(`[PRERENDER] Successfully pre-rendered ${count} pages into dist/ as static HTML!`);
 }

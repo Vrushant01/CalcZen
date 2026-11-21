@@ -8,6 +8,7 @@ import { CalculatorCard } from "@/components/CalculatorCard";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { calculators, getCategory, type CalculatorMeta } from "@/data/calculators";
 import { getCategorySources } from "@/data/categorySources";
+import { getEducationalContent } from "@/data/educationalContent";
 import { motion } from "framer-motion";
 type FAQ = { q: string; a: string };
 
@@ -762,6 +763,11 @@ export function CalculatorPageLayout({
   blog,
 }: Props) {
   const category = getCategory(calc.category);
+  const eduContent = getEducationalContent(calc.slug);
+  const effectiveFaqs: FAQ[] =
+    eduContent?.faqs && eduContent.faqs.length > 0
+      ? eduContent.faqs.map((f) => ({ q: f.question, a: f.answer }))
+      : faqs || [];
 
   // Dynamic high-relevance semantic internal linking dictionary for programmatic SEO
   const SEMANTIC_RELATION_MAP: Record<string, string[]> = {
@@ -1169,21 +1175,84 @@ export function CalculatorPageLayout({
           <div className="calc-container-inner">{children}</div>
         </section>
 
+        {/* 1. About Section */}
+        {eduContent?.whatItDoes && (
+          <section className="surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0 text-left">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 border-b border-border/40 pb-2.5 sm:pb-3">
+              About the {calc.name}
+            </h2>
+            <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
+              {eduContent.whatItDoes}
+            </p>
+          </section>
+        )}
+
+        {/* 2. How to Use Section */}
+        {eduContent?.howItWorks && (
+          <section className="surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0 text-left">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 border-b border-border/40 pb-2.5 sm:pb-3">
+              How to Use the {calc.name}
+            </h2>
+            <div className="text-muted-foreground leading-relaxed text-sm sm:text-base whitespace-pre-line space-y-2">
+              {eduContent.howItWorks}
+            </div>
+            {calc.useCases && calc.useCases.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-border/40">
+                <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2">Common Use Cases:</h3>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-muted-foreground">
+                  {calc.useCases.map((u, idx) => (
+                    <li key={idx} className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                      <span>{u}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* 3. Formula & Calculation Logic */}
+        {(eduContent?.formula || formula) && (
+          <div className="surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0 text-left">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 border-b border-border/40 pb-2.5 sm:pb-3">
+              Formula &amp; Calculation Logic
+            </h2>
+            <div className="rounded-xl border border-border/80 bg-muted/20 p-4 sm:p-5 font-mono text-xs sm:text-sm leading-relaxed whitespace-pre-line text-foreground/90">
+              {eduContent?.formula || formula}
+            </div>
+          </div>
+        )}
+
+        {/* 4. Practical Worked Example */}
+        {(eduContent?.example || example) && (
+          <div className="surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0 text-left">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 border-b border-border/40 pb-2.5 sm:pb-3">
+              Step-by-Step Practical Example
+            </h2>
+            <div className="rounded-xl border border-border/80 bg-muted/10 p-4 sm:p-5 text-xs sm:text-sm leading-relaxed whitespace-pre-line text-muted-foreground">
+              {eduContent?.example || example}
+            </div>
+          </div>
+        )}
+
+        {/* 5. Common Mistakes to Avoid */}
+        {eduContent?.mistakes && (
+          <section className="surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0 text-left">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 border-b border-border/40 pb-2.5 sm:pb-3">
+              Common Mistakes to Avoid
+            </h2>
+            <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
+              {eduContent.mistakes}
+            </p>
+          </section>
+        )}
+
+        {/* In-depth Article (when provided) */}
         {blog && <div className="w-full min-w-0">{blog}</div>}
 
-        {formula && (
-          <div className="surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0">
-            <CalculatorFormula formula={formula} />
-          </div>
-        )}
-
-        {example && (
-          <div className="surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0">
-            <CalculatorExample example={example} />
-          </div>
-        )}
-
-        {faqs && faqs.length > 0 && (
+        {/* 6. Frequently Asked Questions */}
+        {effectiveFaqs && effectiveFaqs.length > 0 && (
           <section
             id="faq-section"
             className="scroll-mt-20 surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 min-w-0 text-left"
@@ -1191,10 +1260,11 @@ export function CalculatorPageLayout({
             <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 border-b border-border/40 pb-2.5 sm:pb-3">
               Frequently Asked Questions
             </h2>
-            <FaqAccordion faqs={faqs} />
+            <FaqAccordion faqs={effectiveFaqs} />
           </section>
         )}
 
+        {/* 7. Related Calculators */}
         {related.length > 0 && (
           <section className="min-w-0 surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 text-left mt-4 sm:mt-8">
             <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 border-b border-border/40 pb-2.5 sm:pb-3">
@@ -1209,17 +1279,25 @@ export function CalculatorPageLayout({
           </section>
         )}
 
-        {/* Sources & further reading */}
+        {/* 8. Sources & Further Reading */}
         {(() => {
-          const sources = getCategorySources(calc.category);
-          if (!sources || sources.length === 0) return null;
+          const baseSources = getCategorySources(calc.category) || [];
+          const allSources: { name: string; url: string }[] = [...baseSources];
+          if (eduContent?.authorityLinks?.length) {
+            for (const al of eduContent.authorityLinks) {
+              if (!allSources.some((s) => s.url === al.url)) {
+                allSources.push({ name: al.text, url: al.url });
+              }
+            }
+          }
+          if (allSources.length === 0) return null;
           return (
             <section className="min-w-0 surface-card rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-8 text-left mt-4 sm:mt-8">
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 border-b border-border/40 pb-2.5 sm:pb-3">
                 Sources &amp; further reading
               </h2>
               <ul className="list-disc list-inside space-y-1.5 sm:space-y-2 text-xs sm:text-base text-muted-foreground/90">
-                {sources.map((s, i) => (
+                {allSources.map((s, i) => (
                   <li key={i}>
                     <a
                       href={s.url}
@@ -1232,6 +1310,16 @@ export function CalculatorPageLayout({
                   </li>
                 ))}
               </ul>
+              <div className="text-xs text-muted-foreground/80 mt-6 pt-4 border-t border-border/30 flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-1.5">
+                  <span>Last reviewed:</span>
+                  <time dateTime={eduContent?.lastReviewed || "2026-11-21"}>
+                    {eduContent?.lastReviewed || "2026-11-21"}
+                  </time>
+                  <span>• Verified calculation formulas</span>
+                </div>
+                <span className="text-[11px] text-muted-foreground/70">CalcZen Editorial Board</span>
+              </div>
             </section>
           );
         })()}
@@ -1246,15 +1334,15 @@ export function CalculatorPageLayout({
               {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
-                "@id": `https://calczen.in/calculator/${calc.slug}#webpage`,
+                "@id": `https://www.calczen.in/calculator/${calc.slug}#webpage`,
                 name: calc.metaTitle || `${calc.name} - Free Online Calculator | CalcZen`,
                 description: calc.metaDescription || calc.description,
-                url: `https://calczen.in/calculator/${calc.slug}`,
+                url: `https://www.calczen.in/calculator/${calc.slug}`,
               },
               {
                 "@context": "https://schema.org",
                 "@type": "SoftwareApplication",
-                "@id": `https://calczen.in/calculator/${calc.slug}#software`,
+                "@id": `https://www.calczen.in/calculator/${calc.slug}#software`,
                 name: calc.name,
                 applicationCategory: "CalculatorApplication",
                 operatingSystem: "Web",
@@ -1262,8 +1350,8 @@ export function CalculatorPageLayout({
               {
                 "@context": "https://schema.org",
                 "@type": "FAQPage",
-                "@id": `https://calczen.in/calculator/${calc.slug}#faq`,
-                mainEntity: faqs.map((f) => ({
+                "@id": `https://www.calczen.in/calculator/${calc.slug}#faq`,
+                mainEntity: effectiveFaqs.map((f) => ({
                   "@type": "Question",
                   name: f.q,
                   acceptedAnswer: {
@@ -1277,25 +1365,25 @@ export function CalculatorPageLayout({
                     {
                       "@context": "https://schema.org",
                       "@type": "BreadcrumbList",
-                      "@id": `https://calczen.in/calculator/${calc.slug}#breadcrumb`,
+                      "@id": `https://www.calczen.in/calculator/${calc.slug}#breadcrumb`,
                       itemListElement: [
                         {
                           "@type": "ListItem",
                           position: 1,
                           name: "Home",
-                          item: "https://calczen.in",
+                          item: "https://www.calczen.in",
                         },
                         {
                           "@type": "ListItem",
                           position: 2,
                           name: category.name,
-                          item: `https://calczen.in/category/${category.slug}`,
+                          item: `https://www.calczen.in/category/${category.slug}`,
                         },
                         {
                           "@type": "ListItem",
                           position: 3,
                           name: calc.name,
-                          item: `https://calczen.in/calculator/${calc.slug}`,
+                          item: `https://www.calczen.in/calculator/${calc.slug}`,
                         },
                       ],
                     },

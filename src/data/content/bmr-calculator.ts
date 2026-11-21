@@ -2,54 +2,55 @@ import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
-    "The bmr calculator is a comprehensive and highly accurate tool designed to help users solve complex problems quickly and efficiently. By processing key variables and parameters, this calculator provides instant, reliable results that are crucial for making informed decisions. Whether you are a professional needing precise calculations for your daily work or an everyday user looking to estimate important metrics, this tool removes the guesswork and mathematical complexity. It is built to handle various edge cases and provides a robust, user-friendly interface that ensures anyone can understand and utilize the output effectively.",
+    "The Basal Metabolic Rate (BMR) calculator computes the baseline number of calories your body burns every 24 hours simply staying alive at rest—supporting essential physiological functions including respiratory ventilation, cellular turnover, cardiac circulation, renal filtration, and thermoregulation. Serving fitness enthusiasts, dieters, and healthcare professionals, it establishes your resting energy baseline and applies clinical activity multipliers to determine your Total Daily Energy Expenditure (TDEE). This enables you to systematically calibrate caloric deficits for fat loss or caloric surpluses for lean muscle hypertrophy without starvation or metabolic slowdown.",
 
   howItWorks:
-    "Using the bmr calculator is incredibly straightforward and requires no prior technical expertise. First, you begin by entering your primary data points into the clearly labeled input fields. The system instantly validates your inputs to ensure accuracy and prevent calculation errors. Once the necessary data is provided, the underlying algorithmic engine processes the numbers in real-time. It applies industry-standard formulas and best practices to derive the final output. The results are then displayed in an easy-to-read format, often accompanied by visual charts or step-by-step breakdowns, allowing you to fully understand the context and implications of the calculated values.",
+    "To determine your basal metabolism and daily calorie expenditure, complete the physiological fields:\n\n1. Biological Sex: Select Male or Female, which governs the baseline metabolic offset due to anatomical and hormonal differences in lean tissue density.\n2. Age: Enter your current age in years (basal metabolic rate naturally declines by roughly 1% to 2% per decade after age 30 due to progressive sarcopenia).\n3. Height & Weight: Input your height in centimeters (or feet/inches) and weight in kilograms (or pounds).\n4. Activity Level: Select your typical physical lifestyle:\n   - Sedentary: Little or no exercise, desk work (1.2× multiplier)\n   - Light Activity: Light exercise or walking 1 to 3 days per week (1.375× multiplier)\n   - Moderate Activity: Moderate cardio or strength training 3 to 5 days per week (1.55× multiplier)\n   - Very Active: Hard training or sports 6 to 7 days per week (1.725× multiplier)\n   - Extra Active: Demanding physical labor or twice-daily athletic training (1.9× multiplier)\n\nClick Calculate to receive your resting BMR alongside your activity-adjusted maintenance calories, weight loss deficit, and weight gain targets.",
 
   formula:
-    "The mathematical foundation of the bmr calculator relies on established, peer-reviewed formulas tailored to this specific domain. While the exact computational models can vary based on your specific inputs, the core logic follows this general structure:\n\nOutput = (Primary Input × Variable Factor) / Constant Divider + Adjustments\n\nWhere:\n- Primary Input represents the baseline value you provide.\n- Variable Factor accounts for individual user parameters.\n- Constant Divider standardizes the result into a recognizable metric.\n- Adjustments are secondary modifications based on optional inputs.\n\nBy combining these elements, the calculator ensures a mathematically sound and highly precise result every single time.",
+    "The calculator utilizes the clinically validated Mifflin-St Jeor equation, recognized by the Academy of Nutrition and Dietetics as the most reliable predictive formula for non-obese and obese adults:\n\nFor Men:\nBMR (kcal/day) = (10 × Weight in kg) + (6.25 × Height in cm) − (5 × Age in years) + 5\n\nFor Women:\nBMR (kcal/day) = (10 × Weight in kg) + (6.25 × Height in cm) − (5 × Age in years) − 161\n\nTotal Daily Energy Expenditure (TDEE):\nTDEE = BMR × Physical Activity Factor (PAL)\n\nCalorie Target Adjustments:\n- Mild Fat Loss (0.25 kg/week): TDEE − 250 kcal/day\n- Standard Fat Loss (0.5 kg/week): TDEE − 500 kcal/day\n- Lean Bulking (+0.25 kg/week): TDEE + 250 to 300 kcal/day\n\nDisclaimer: BMR formulas provide statistical estimates. Individual metabolic rates vary with lean muscle mass percentage, thyroid hormones, and prior chronic dieting.",
 
   example:
-    "Let's look at a practical, real-world example of how the bmr calculator can be applied. Suppose a typical user needs to determine their baseline metric. They start by inputting a standard baseline value—for instance, 100 units. Next, they add a secondary variable, such as a 5% rate or a modifier of 1.2, depending on the context of the calculation.\n\nWhen these values are processed through the calculator's engine, the system first multiplies the baseline by the modifier (100 × 1.2 = 120). It then factors in any standard constants to produce the final result. In this scenario, the output clearly demonstrates how a small change in the initial inputs can significantly impact the final outcome. This step-by-step transparency helps users grasp the mechanics behind the numbers.",
+    "Example 1 (Adult Male):\nConsider a 30-year-old male with a height of 175 cm and body weight of 72 kg, working a desk job (Sedentary):\n- BMR = (10 × 72) + (6.25 × 175) − (5 × 30) + 5\n- BMR = 720 + 1093.75 − 150 + 5 = 1668.75 kcal/day\n- Sedentary TDEE = 1668.75 × 1.2 = 2002.5 ≈ 2003 kcal/day\n- Target for 0.5 kg/week fat loss = 2003 − 500 = 1503 kcal/day\n\nExample 2 (Adult Female):\nConsider a 28-year-old female with a height of 162 cm and body weight of 58 kg, engaging in moderate gym workouts 4 days per week (Moderate Activity):\n- BMR = (10 × 58) + (6.25 × 162) − (5 × 28) − 161\n- BMR = 580 + 1012.5 − 140 − 161 = 1291.5 kcal/day\n- Moderate Activity TDEE = 1291.5 × 1.55 = 2001.8 ≈ 2002 kcal/day\n- Maintenance calorie intake = 2002 kcal/day.",
 
   mistakes:
-    "When calculating these metrics manually or using inferior tools, users often fall victim to several common, yet critical, mistakes. The most frequent error is inconsistent units of measurement—for example, mixing months with years or pounds with kilograms. This inevitably leads to wildly inaccurate results. Another common pitfall is ignoring secondary variables. Many people only calculate the baseline while forgetting to account for fees, taxes, or physiological outliers, which drastically skews the real-world application of the data. Finally, a lack of regular recalculation is a major issue; as your underlying variables change over time, relying on old calculations can lead to poor long-term planning and decision-making.",
+    "1. Eating below your resting BMR: Restricting calorie intake below your basal metabolic rate deprives vital organs of energy, triggering adaptive thermogenesis, hormonal dysregulation, and lean muscle catabolism.\n2. Overestimating daily physical activity: Selecting 'Very Active' for a 45-minute gym session while sitting at an office desk for 9 hours artificially inflates daily calorie burns by 400 to 600 calories.\n3. Ignoring changes in body weight over time: As you lose weight, your BMR and TDEE drop; failing to recalculate your baseline every 4 to 6 weeks causes weight-loss plateaus.\n4. Forgetting liquid calories and cooking oils: Sauces, dressings, sugary beverages, and edible cooking oils add 300 to 500 untracked calories that can completely negate a planned deficit.\n5. Confusing BMR with TDEE: BMR is purely resting metabolic cost. Consuming your BMR without factoring in walking and exercise will result in continuous unintended weight loss.",
 
   faqs: [
     {
-      question: "How accurate is the bmr calculator?",
+      question: "What is the difference between BMR and RMR?",
       answer:
-        "The calculator uses industry-standard formulas and provides highly accurate estimates based on the exact data you input. However, for critical medical or financial decisions, it should be used as a baseline guide alongside professional advice.",
+        "Basal Metabolic Rate (BMR) is measured under strict laboratory conditions immediately upon waking after 8 hours of sleep and 12 hours of fasting in a dark, thermoneutral room. Resting Metabolic Rate (RMR) measures resting energy expenditure under less stringent conditions without overnight laboratory stays. In clinical practice, RMR is typically 3% to 5% higher than BMR.",
     },
     {
-      question: "Can I use this calculator on my mobile device?",
+      question: "Why do males typically have a higher BMR than females of the same weight?",
       answer:
-        "Yes, the calculator is fully responsive and optimized for all devices, including smartphones, tablets, and desktop computers.",
+        "Men generally possess greater skeletal muscle mass and lower essential body fat percentages compared to women of identical weight. Because skeletal muscle tissue has significantly higher metabolic activity than adipose tissue, male resting energy expenditure is higher.",
     },
     {
-      question: "Do I need to create an account to use the tool?",
+      question: "Can I increase my basal metabolic rate?",
       answer:
-        "No, all of our calculators are completely free to use and do not require any registration or account creation.",
+        "Yes, the most sustainable way to elevate your BMR is through progressive resistance strength training to build lean muscle mass. Increasing dietary protein intake also boosts the thermic effect of food (TEF), and avoiding severe crash diets prevents adaptive metabolic slowing.",
     },
     {
-      question: "How often should I recalculate my numbers?",
+      question: "Is it safe to eat fewer calories than my calculated BMR?",
       answer:
-        "It is recommended to recalculate whenever your primary variables—such as income, weight, interest rates, or age—change significantly.",
+        "Eating below your BMR is generally not recommended unless supervised by a physician or registered dietitian. Sustained sub-BMR caloric intake can cause fatigue, micronutrient deficiencies, hair loss, loss of menstrual cycle in women, and muscle wasting.",
     },
     {
-      question: "Is my inputted data saved or shared?",
+      question: "How does aging impact basal metabolism?",
       answer:
-        "Your privacy is our priority. All calculations are performed locally in your browser, and no personal input data is saved or transmitted to our servers.",
+        "BMR declines by approximately 1% to 2% per decade after young adulthood. This reduction is largely driven by age-related muscle loss (sarcopenia) and decreased cellular mitochondrial density. Regular resistance exercise and adequate dietary protein can substantially offset this age-related metabolic decline.",
     },
   ],
 
   authorityLinks: [
-    { text: "World Health Organization (WHO)", url: "https://www.who.int/" },
-    { text: "Centers for Disease Control and Prevention (CDC)", url: "https://www.cdc.gov/" },
+    { text: "World Health Organization (WHO) - Diet, Nutrition and Physical Activity", url: "https://www.who.int/initiatives/behealthy/healthy-diet" },
+    { text: "ICMR - National Institute of Nutrition (NIN) Dietary Guidelines", url: "https://www.nin.res.in/" },
   ],
 
-  relatedCalculators: ["standard-calculator", "age-calculator", "bmi-calculator"],
+  relatedCalculators: ["calorie-calculator", "body-fat-calculator", "protein-calculator", "bmi-calculator"],
+  lastReviewed: "2026-11-21",
 };
 
 export default content;

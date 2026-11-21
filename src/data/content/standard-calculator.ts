@@ -2,57 +2,55 @@ import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
-    "The standard calculator is a comprehensive and highly accurate tool designed to help users solve complex problems quickly and efficiently. By processing key variables and parameters, this calculator provides instant, reliable results that are crucial for making informed decisions. Whether you are a professional needing precise calculations for your daily work or an everyday user looking to estimate important metrics, this tool removes the guesswork and mathematical complexity. It is built to handle various edge cases and provides a robust, user-friendly interface that ensures anyone can understand and utilize the output effectively.",
+    "The standard calculator delivers a fast, responsive four-function arithmetic interface for daily budgeting, office work, retail transactions, and household calculations. Providing clean decimal precision and support for addition, subtraction, multiplication, division, percentage offsets, square roots, sign inversion (±), and classic memory functions (M+, M−, MR, MC), it replicates the dependable workflow of classic desktop desk calculators directly in your web browser without lag, ads, or clutter.",
 
   howItWorks:
-    "Using the standard calculator is incredibly straightforward and requires no prior technical expertise. First, you begin by entering your primary data points into the clearly labeled input fields. The system instantly validates your inputs to ensure accuracy and prevent calculation errors. Once the necessary data is provided, the underlying algorithmic engine processes the numbers in real-time. It applies industry-standard formulas and best practices to derive the final output. The results are then displayed in an easy-to-read format, often accompanied by visual charts or step-by-step breakdowns, allowing you to fully understand the context and implications of the calculated values.",
+    "Operating the standard calculator is straightforward with either mouse clicks or direct keyboard input:\n\n1. Number Input: Click digits 0 through 9 or press them on your physical keyboard number pad. Use the decimal point '.' for precise currency and fractional inputs.\n2. Basic Arithmetic Operators: Press '+', '−', '×', or '÷' to chain calculations. The running operation is tracked visually in the display header.\n3. Percentage Key (%): Press '%' to instantly apply discounts, markups, or tax additions to the current operand.\n4. Memory Registers: Use 'M+' to add the displayed value to memory, 'M−' to subtract from memory, 'MR' to recall the stored value, and 'MC' to clear the memory register.\n5. Sign Change (±): Press '±' to toggle positive and negative signs for accounting adjustments.\n6. Clear Keys: Press 'C' to clear the current entry, or 'AC' (All Clear) to reset the entire operation history to zero.\n\nPress '=' or the Enter key on your keyboard to finalize the computation and display the result.",
 
   formula:
-    "The mathematical foundation of the standard calculator relies on established, peer-reviewed formulas tailored to this specific domain. While the exact computational models can vary based on your specific inputs, the core logic follows this general structure:\n\nOutput = (Primary Input × Variable Factor) / Constant Divider + Adjustments\n\nWhere:\n- Primary Input represents the baseline value you provide.\n- Variable Factor accounts for individual user parameters.\n- Constant Divider standardizes the result into a recognizable metric.\n- Adjustments are secondary modifications based on optional inputs.\n\nBy combining these elements, the calculator ensures a mathematically sound and highly precise result every single time.",
+    "The standard calculator processes arithmetic according to elementary operational rules:\n\n1. Addition: A + B = Sum\n2. Subtraction: A − B = Difference\n3. Multiplication: A × B = Product\n4. Division: A ÷ B = Quotient (with B ≠ 0)\n5. Percentage Operations:\n   - Tax / Markup Addition: Total = Base × (1 + Rate / 100)\n   - Discount Reduction: Total = Base × (1 − Rate / 100)\n6. Square Root: y = √x such that y² = x (for x ≥ 0)\n7. Memory Accumulation:\n   - M+ Action: M_{new} = M_{old} + Display\n   - M− Action: M_{new} = M_{old} − Display",
 
   example:
-    "Let's look at a practical, real-world example of how the standard calculator can be applied. Suppose a typical user needs to determine their baseline metric. They start by inputting a standard baseline value—for instance, 100 units. Next, they add a secondary variable, such as a 5% rate or a modifier of 1.2, depending on the context of the calculation.\n\nWhen these values are processed through the calculator's engine, the system first multiplies the baseline by the modifier (100 × 1.2 = 120). It then factors in any standard constants to produce the final result. In this scenario, the output clearly demonstrates how a small change in the initial inputs can significantly impact the final outcome. This step-by-step transparency helps users grasp the mechanics behind the numbers.",
+    "Example 1 (Retail Billing with GST):\nA small business tallying store items and applying 18% GST:\n- Items: ₹1,500 + ₹450 − ₹180 promotional credit = ₹1,770 base\n- Applying 18% tax on a ₹1,500 product: 1500 × 1.18 = ₹1,770\n\nExample 2 (Discount Application):\nCalculating a 15% discount on a ₹2,500 purchase:\n- Discount amount: 2500 × 0.15 = ₹375\n- Net payable total: 2500 − 375 = ₹2,125\n\nExample 3 (Expense Splitting):\nDividing a monthly shared utility bill of ₹12,000 evenly among 5 roommates:\n- Per-person share: 12000 ÷ 5 = ₹2,400",
 
   mistakes:
-    "When calculating these metrics manually or using inferior tools, users often fall victim to several common, yet critical, mistakes. The most frequent error is inconsistent units of measurement—for example, mixing months with years or pounds with kilograms. This inevitably leads to wildly inaccurate results. Another common pitfall is ignoring secondary variables. Many people only calculate the baseline while forgetting to account for fees, taxes, or physiological outliers, which drastically skews the real-world application of the data. Finally, a lack of regular recalculation is a major issue; as your underlying variables change over time, relying on old calculations can lead to poor long-term planning and decision-making.",
+    "1. Dividing by zero: Attempting to divide any number by 0 results in an 'Error' or 'Cannot divide by zero' state, as division by zero is mathematically undefined.\n2. Forgetting active memory contents: Leaving old values stored in the 'M' register will corrupt subsequent calculations when pressing M+ or MR. Always press 'MC' before starting a new memory sequence.\n3. Confusing sequential arithmetic with algebraic precedence: Standard desktop calculators evaluate operations immediately upon pressing the next operator rather than waiting to enforce algebraic order of operations. Use parentheses or our Scientific Calculator for multi-step formulas.\n4. Entering multiple decimal points: Double-clicking the decimal key (e.g. 12.3.4) causes input errors; ensure only one decimal point exists per numeric value.\n5. Premature rounding: Rounding off intermediate currency decimals before completing all multiplication and division steps causes cumulative rounding discrepancy.",
 
   faqs: [
     {
-      question: "How accurate is the standard calculator?",
+      question: "How do the memory keys (M+, M-, MR, MC) work?",
       answer:
-        "The calculator uses industry-standard formulas and provides highly accurate estimates based on the exact data you input. However, for critical medical or financial decisions, it should be used as a baseline guide alongside professional advice.",
+        "The memory keys act as a digital scratchpad. 'M+' adds the current screen number to the stored memory total. 'M−' subtracts the screen number from memory. 'MR' (Memory Recall) brings the stored memory total back onto the screen. 'MC' (Memory Clear) resets the stored memory number back to zero.",
     },
     {
-      question: "Can I use this calculator on my mobile device?",
+      question: "Can I use keyboard shortcuts on this calculator?",
       answer:
-        "Yes, the calculator is fully responsive and optimized for all devices, including smartphones, tablets, and desktop computers.",
+        "Yes, the standard calculator is fully keyboard-accessible. You can use your computer's number keys, the numpad (+, −, *, /), Enter for equals, Backspace to delete the last digit, and Escape to clear the display.",
     },
     {
-      question: "Do I need to create an account to use the tool?",
+      question: "What is the difference between C and AC?",
       answer:
-        "No, all of our calculators are completely free to use and do not require any registration or account creation.",
+        "'C' (Clear) erases only the most recently typed number on the screen, preserving the rest of your ongoing arithmetic equation. 'AC' (All Clear) wipes the entire calculation history, active operators, and reset values back to zero.",
     },
     {
-      question: "How often should I recalculate my numbers?",
+      question: "How do I calculate percentage discounts on this calculator?",
       answer:
-        "It is recommended to recalculate whenever your primary variables—such as income, weight, interest rates, or age—change significantly.",
+        "To find a 20% discount on 500, enter '500', press '×', enter '20', press '%', and then press '−' followed by '=' to view the final discounted price of 400.",
     },
     {
-      question: "Is my inputted data saved or shared?",
+      question: "Does the standard calculator save my calculation history?",
       answer:
-        "Your privacy is our priority. All calculations are performed locally in your browser, and no personal input data is saved or transmitted to our servers.",
+        "For maximum privacy, all calculations execute locally in your active browser session. When you reload or close the tab, the screen resets, ensuring no sensitive financial figures remain cached on your device.",
     },
   ],
 
   authorityLinks: [
-    {
-      text: "Consumer Financial Protection Bureau (CFPB)",
-      url: "https://www.consumerfinance.gov/",
-    },
-    { text: "Internal Revenue Service (IRS)", url: "https://www.irs.gov/" },
+    { text: "Department of Financial Services, Ministry of Finance", url: "https://financialservices.gov.in/" },
+    { text: "Reserve Bank of India (RBI)", url: "https://www.rbi.org.in/" },
   ],
 
-  relatedCalculators: ["loan-emi-calculator", "tip-calculator", "compound-interest-calculator"],
+  relatedCalculators: ["percentage-calculator", "gst-calculator", "scientific-calculator", "product-profit-calculator"],
+  lastReviewed: "2026-11-21",
 };
 
 export default content;

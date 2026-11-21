@@ -132,6 +132,15 @@ function Contact() {
         <p className="mt-2 text-sm sm:text-base text-muted-foreground">
           Have a calculator request or feedback? Drop us a line.
         </p>
+        <div className="mt-6 rounded-xl border border-border/80 bg-muted/20 p-5 space-y-2">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Direct Email Contact</h2>
+          <p className="text-base text-foreground font-semibold">
+            Email: <a href="mailto:hello@calczen.in" className="text-primary hover:underline font-mono">hello@calczen.in</a>
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Owners &amp; Maintainers: Krish Barvaliya &amp; Vrushant Shiroya • Vadodara, Gujarat, India
+          </p>
+        </div>
         <h2 className="text-lg font-semibold text-foreground mt-8 mb-4">Send Us a Message</h2>
         {sent ? (
           <div

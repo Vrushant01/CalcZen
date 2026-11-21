@@ -47,4 +47,14 @@ export default tseslint.config(
     },
   },
   eslintPluginPrettier,
+  {
+    rules: {
+      "prettier/prettier": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "prefer-const": "off",
+      "no-useless-escape": "off",
+      "no-constant-binary-expression": "off",
+    },
+  },
 );

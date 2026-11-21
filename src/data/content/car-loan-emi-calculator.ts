@@ -82,3 +82,22 @@ export const carLoanEmiCalculatorContent = {
     "credit-card-emi-calculator",
   ],
 };
+
+import type { CalculatorEducationalContent } from "../content-types";
+
+const educationalContent: CalculatorEducationalContent = {
+  whatItDoes: carLoanEmiCalculatorContent.intro,
+  howItWorks: Array.isArray(carLoanEmiCalculatorContent.howToUseSteps) ? carLoanEmiCalculatorContent.howToUseSteps.join("\n\n") : "",
+  formula: carLoanEmiCalculatorContent.formula,
+  example: typeof carLoanEmiCalculatorContent.workedExample === 'object' && carLoanEmiCalculatorContent.workedExample ? (carLoanEmiCalculatorContent.workedExample.description + "\n\n" + (carLoanEmiCalculatorContent.workedExample.table || []).map((t: any) => `${t.label}: ${t.value}`).join("\n")) : "",
+  mistakes: Array.isArray(carLoanEmiCalculatorContent.mistakes) ? carLoanEmiCalculatorContent.mistakes.join("\n\n") : String(carLoanEmiCalculatorContent.mistakes || ""),
+  faqs: Array.isArray(carLoanEmiCalculatorContent.faqs) ? carLoanEmiCalculatorContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : [],
+  authorityLinks: [
+    { text: "Bureau of Indian Standards (BIS)", url: "https://www.bis.gov.in/" },
+    { text: "Reserve Bank of India (RBI)", url: "https://www.rbi.org.in/" },
+  ],
+  relatedCalculators: carLoanEmiCalculatorContent.relatedSlugs || ["loan-emi-calculator","home-loan-emi-calculator","loan-eligibility-calculator"],
+  lastReviewed: "2026-11-21",
+};
+
+export default educationalContent;

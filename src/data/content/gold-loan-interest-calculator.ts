@@ -76,3 +76,22 @@ export const goldLoanInterestCalculatorContent = {
     "loan-emi-calculator",
   ],
 };
+
+import type { CalculatorEducationalContent } from "../content-types";
+
+const educationalContent: CalculatorEducationalContent = {
+  whatItDoes: goldLoanInterestCalculatorContent.intro,
+  howItWorks: Array.isArray(goldLoanInterestCalculatorContent.howToUseSteps) ? goldLoanInterestCalculatorContent.howToUseSteps.join("\n\n") : "",
+  formula: goldLoanInterestCalculatorContent.formula,
+  example: typeof goldLoanInterestCalculatorContent.workedExample === 'object' && goldLoanInterestCalculatorContent.workedExample ? (goldLoanInterestCalculatorContent.workedExample.description + "\n\n" + (goldLoanInterestCalculatorContent.workedExample.table || []).map((t: any) => `${t.label}: ${t.value}`).join("\n")) : "",
+  mistakes: Array.isArray(goldLoanInterestCalculatorContent.mistakes) ? goldLoanInterestCalculatorContent.mistakes.join("\n\n") : String(goldLoanInterestCalculatorContent.mistakes || ""),
+  faqs: Array.isArray(goldLoanInterestCalculatorContent.faqs) ? goldLoanInterestCalculatorContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : [],
+  authorityLinks: [
+    { text: "Bureau of Indian Standards (BIS)", url: "https://www.bis.gov.in/" },
+    { text: "Reserve Bank of India (RBI)", url: "https://www.rbi.org.in/" },
+  ],
+  relatedCalculators: goldLoanInterestCalculatorContent.relatedSlugs || ["gold-loan-against-jewellery-calculator","gold-value-calculator","loan-emi-calculator"],
+  lastReviewed: "2026-11-21",
+};
+
+export default educationalContent;

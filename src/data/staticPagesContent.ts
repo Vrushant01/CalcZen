@@ -32,54 +32,57 @@ export const staticPagesContent: Record<string, StaticPageData> = {
       {
         title: "Our mission",
         paragraphs: [
-          "Calculator sites are often cluttered or opaque. CalcZen focuses on what matters: a clean interface, standard formulas, and results you can understand—not just copy.",
-          "Whether you estimate a mortgage payment, check calorie needs, or solve a quick percentage, we aim to deliver reliable online calculators that respect your time.",
+          "Calculator websites are often cluttered with invasive popups, slow tracking scripts, or opaque formulas that don't explain how numbers are computed. CalcZen focuses on what matters: an ultra-fast, clean interface, verified mathematical algorithms, and actionable results you can understand and independently verify.",
+          "Whether you are estimating a home loan EMI, planning retirement savings, checking your daily protein needs, or computing GST on a commercial invoice, we deliver reliable online tools that respect your time and privacy.",
+        ],
+      },
+      {
+        title: "Who runs CalcZen",
+        paragraphs: [
+          "CalcZen was founded and is actively maintained by Krish Barvaliya and Vrushant Shiroya, full-stack web developers based in Vadodara, Gujarat, India. With experience in building modern web interfaces and financial calculations, Krish and Vrushant created CalcZen to make quantitative decisions simpler, transparent, and accessible to everyone.",
+          "Frustrated by existing calculator portals that bury formulas behind opaque black boxes and excessive advertisements, Krish and Vrushant built CalcZen as an open, educational utility where every calculation is accompanied by its underlying formula, real worked examples, and practical guidance.",
+          "You can reach Krish and Vrushant directly with suggestions, feedback, or technical questions at hello@calczen.in.",
+        ],
+      },
+      {
+        title: "How we build and check our calculators",
+        paragraphs: [
+          "Accuracy and computational integrity are the foundation of CalcZen. Every calculation tool on our platform follows a rigorous development and verification lifecycle:",
+        ],
+        listItems: [
+          "Official Source Alignment: Calculation formulas and financial logic are modeled strictly on published guidelines from authoritative institutions—including the Reserve Bank of India (RBI), the Income Tax Department of India, the Central Board of Indirect Taxes and Customs (CBIC), the Bureau of Indian Standards (BIS), the Indian Council of Medical Research (ICMR-NIN), and the World Health Organization (WHO).",
+          "Pure TypeScript Engines: All core formulas are implemented in isolated, pure TypeScript modules without UI dependencies, allowing automated testing of mathematical outputs against verified external baselines.",
+          "Comprehensive Edge-Case Testing: Every tool is stress-tested against boundary conditions—such as zero denominators, extreme interest rates, negative inputs, and leap years—to ensure that invalid numbers like NaN, undefined, or Infinity never reach users.",
+          "Regular Regulatory Recalibration: Statutory rules that change over time (such as Union Budget tax slab revisions, EPF statutory wage limits, and state Professional Tax schedules) are systematically updated each financial year with transparent 'as of' dates.",
+        ],
+      },
+      {
+        title: "Editorial and corrections policy",
+        paragraphs: [
+          "We are deeply committed to editorial honesty, clarity, and rapid error correction:",
+          "To report a suspected error or suggest an algorithmic improvement, please email our editorial desk at hello@calczen.in.",
+        ],
+        listItems: [
+          "No Black Boxes: Every calculator page features transparent formula explanations, variable definitions, and step-by-step practical worked examples with real numbers.",
+          "Clear Scope and Disclaimers: We clearly state the boundaries of our tools. Health calculators state they are for informational purposes and not a substitute for clinical medical evaluation. Finance calculators emphasize that results are estimates and not formal financial advice.",
+          "Swift Corrections: If a user or domain expert reports a calculation discrepancy, statutory inaccuracy, or typographic error, our engineering team audits the codebase within 24 to 48 business hours, deploys the required fix, and updates the visible 'Last reviewed' audit date on the calculator.",
         ],
       },
       {
         title: "What we offer",
-        paragraphs: ["Free calculator tools across four areas:"],
+        paragraphs: ["Free calculator tools across five key categories:"],
         listItems: [
-          "Finance — mortgages, loans, EMI, compound interest, and related planning tools",
-          "Health — BMI, calories, BMR, water intake, and wellness estimates",
-          "Math — percentages, ratios, and practical number problems",
-          "Everyday — tips, dates, and other daily helpers",
-        ],
-        subsections: [
-          {
-            title: "Directory",
-            paragraphs: [
-              "See everything on our all calculators page or browse by category from the homepage.",
-            ],
-          },
-        ],
-      },
-      {
-        title: "Accuracy and transparency",
-        paragraphs: [
-          "Each tool uses widely accepted formulas. Where helpful, we show the math, worked examples, and FAQs so you can verify the logic.",
-          "Results are estimates. Taxes, fees, health conditions, and personal circumstances can change real outcomes. Use CalcZen as a starting point—not a substitute for professional advice when stakes are high.",
-        ],
-      },
-      {
-        title: "Built for you",
-        listItems: [
-          "Fast — instant updates as you type, without unnecessary reloads",
-          "Mobile-friendly — works well on phone, tablet, and desktop",
-          "No account — use any calculator immediately; inputs stay in your browser during a session",
-          "Educational — we explain the math, especially for finance and health topics where context matters",
+          "Finance & Loans — Loan EMI, mortgages, compound interest, credit card balance conversions, loan eligibility, and retirement planning",
+          "Jewellery & Precious Metals — Gold jewellery billing, hallmarked gold purity conversion, making charges, and silver bills",
+          "Construction & Materials — Concrete RCC, cement bags, brick masonry, wall plaster, paint, tile estimation, and TMT steel bar weights",
+          "Health & Fitness — BMI, basal metabolic rate (BMR), body fat percentage, calorie burn, water intake, and daily protein targets",
+          "Math & Business Utilities — GST invoicing, product profit margins, attendance recovery, CGPA to percentage, and scientific arithmetic",
         ],
       },
       {
         title: "How we stay free",
         paragraphs: [
-          "CalcZen is supported by advertising and privacy-conscious analytics. We do not sell your personal data. Details on cookies, Google Analytics, and Google AdSense are in our Privacy Policy.",
-        ],
-      },
-      {
-        title: "Get in touch",
-        paragraphs: [
-          "Suggestions, bug reports, and feedback are welcome on our contact page. For use limitations, see our Terms of Service and Disclaimer.",
+          "CalcZen is supported by non-intrusive online advertising through Google AdSense. We do not sell your personal data or charge subscriptions for our tools. Details on advertising cookies, third-party vendor practices, and privacy controls are detailed in our Privacy Policy.",
         ],
       },
     ],
@@ -88,21 +91,25 @@ export const staticPagesContent: Record<string, StaticPageData> = {
   contact: {
     title: "Contact CalcZen — We'd Love to Hear From You",
     description:
-      "Get in touch with the CalcZen team. Suggest a new calculator, report a bug, or send us feedback. We reply to all inquiries within 48 hours.",
+      "Get in touch with the CalcZen team. Suggest a new calculator, report an error, or send us feedback. Email us directly at hello@calczen.in.",
     canonical: "https://www.calczen.in/contact",
     h1: "Contact us",
-    intro: "Have a calculator request or feedback? Drop us a line.",
+    intro:
+      "Have a calculator request, feedback, or a calculation correction? We'd love to hear from you. Reach out via email or use the form below.",
     sections: [
       {
-        title: "Send Us a Message",
+        title: "Direct Contact Information",
         paragraphs: [
-          "Have questions, feedback, or suggestions for new calculators? Reach out to us using the contact form or send us an email. We read every message and look forward to hearing from you.",
+          "For general inquiries, reporting calculator errors, partnerships, or suggesting new mathematical or financial simulation tools, please email us directly:",
+          "Email: hello@calczen.in",
+          "Owners & Maintainers: Krish Barvaliya and Vrushant Shiroya",
+          "Location: Vadodara, Gujarat, India",
         ],
       },
       {
         title: "Response Times & Support",
         paragraphs: [
-          "We value your feedback and suggestion requests. Our team reviews every submission and typically replies within 24 to 48 business hours. For general inquiries, reporting calculator errors, or suggesting new mathematical or financial simulation tools, please fill out the form above.",
+          "We value your feedback and read every message. Our team reviews all incoming inquiries and typically replies within 24 to 48 business hours. If you are reporting a mathematical discrepancy in a calculator, please include the input values used and the expected result so we can review the algorithm promptly.",
         ],
       },
     ],
@@ -111,358 +118,140 @@ export const staticPagesContent: Record<string, StaticPageData> = {
   privacy: {
     title: "Privacy Policy — How CalcZen Handles Your Data",
     description:
-      "Read the CalcZen Privacy Policy to learn how we handle cookies, Google Analytics, Google AdSense, data protection, and your personal privacy rights.",
+      "Read the CalcZen Privacy Policy to learn how we handle cookies, Google AdSense, third-party advertising vendors, and user privacy rights.",
     canonical: "https://www.calczen.in/privacy",
     h1: "Privacy Policy",
-    lastUpdated: "May 2026",
+    lastUpdated: "November 2026",
     intro:
-      "This policy explains how CalcZen collects, uses, and protects information when you use our website and free online calculators. We aim to be transparent and handle data responsibly.",
+      "This policy explains how CalcZen collects, uses, and protects information when you use our website and free online calculators. We are committed to transparency and responsible data handling.",
     sections: [
       {
-        title: "Overview",
+        title: "Overview & Local Browser Processing",
         paragraphs: [
-          "You can use CalcZen without an account. Calculator inputs are processed in your browser; we do not require you to submit personal financial or health data to use our tools.",
-          "Like most websites, we use limited technical data and cookies to operate the site, understand usage, and (where enabled) display advertising that helps keep our calculators free.",
+          "You can use all calculators on CalcZen completely free and without creating an account. All numeric inputs (such as loan amounts, salary figures, body measurements, or commercial prices) are processed locally inside your web browser via client-side JavaScript. We do not transmit or store your personal calculator input values on our backend servers.",
+          "Like most websites, we use limited technical data and cookies to operate the site, monitor system reliability, and serve digital advertisements that keep our service completely free.",
         ],
       },
       {
-        title: "Information we collect",
+        title: "Information We Collect",
         subsections: [
           {
-            title: "What you provide",
+            title: "Information You Voluntarily Provide",
             listItems: [
-              "Name, email, and message when you use our contact form",
-              "Email if you subscribe to a newsletter (unsubscribe anytime)",
+              "Name, email address, and message content when you send us an email or submit a contact inquiry to hello@calczen.in.",
             ],
           },
           {
-            title: "What is collected automatically",
-            paragraphs: ["We or our providers may receive:"],
+            title: "Information Collected Automatically",
+            paragraphs: ["When you browse CalcZen, our web hosting infrastructure and analytics may log:"],
             listItems: [
-              "Browser, device, and operating system type",
-              "Pages viewed, referral source, and general usage patterns",
-              "IP address (often truncated or anonymized by analytics)",
-              "Cookie identifiers, where applicable",
+              "Browser type, device model, screen resolution, and operating system",
+              "Referring website URLs and pages visited on CalcZen",
+              "Standard server access logs and truncated IP addresses for DDoS protection",
+              "Cookie identifiers and basic session metrics",
             ],
           },
         ],
-        paragraphs: [
-          "We do not intentionally collect sensitive personal data through calculator use. Avoid entering information you do not want processed in your browser session.",
-        ],
       },
       {
-        title: "How we use information",
-        listItems: [
-          "Operate and improve CalcZen and our accurate calculator tools",
-          "Respond to contact and newsletter requests",
-          "Understand which calculators are most useful (analytics)",
-          "Display and measure advertising, where applicable",
-          "Protect against abuse, fraud, and technical issues",
-          "Meet legal obligations",
-        ],
+        title: "Cookies and Google AdSense Advertising",
         paragraphs: [
-          "We do not sell your personal information to third parties for their marketing purposes.",
-        ],
-      },
-      {
-        title: "Cookies",
-        paragraphs: [
-          "Cookies are small files stored on your device. CalcZen and partners may use them for preferences, traffic measurement, and advertising.",
-        ],
-        listItems: [
-          "Essential — basic functionality (e.g. theme or security features)",
-          "Analytics — aggregated understanding of how the site is used",
-          "Advertising — deliver and measure ads; may support relevance in some cases",
+          "CalcZen displays digital advertisements served by Google AdSense and its certified third-party vendor networks to finance website operations and hosting infrastructure.",
+          "Google and third-party advertising vendors use cookies to serve ads based on your prior visits to CalcZen and other websites across the internet.",
+          "Google's use of advertising cookies enables it and its partners to serve personalized ads based on your visit to CalcZen and/or other sites on the Internet.",
         ],
         subsections: [
           {
-            title: "Cookie Control",
+            title: "How to Opt Out of Personalized Advertising",
             paragraphs: [
-              "Control or delete cookies in your browser settings. Blocking some cookies may limit certain features.",
+              "You have the right to opt out of personalized advertising at any time. You can customize your ad preferences or opt out of personalized advertising by visiting Google Ads Settings (https://www.google.com/settings/ads).",
+              "Alternatively, you can opt out of third-party vendor cookies for personalized advertising by visiting the Network Advertising Initiative (NAI) opt-out page or AboutAds choices (https://www.aboutads.info/choices/).",
+              "You can also configure your web browser to reject all cookies or notify you when a cookie is placed on your device.",
             ],
           },
         ],
       },
       {
-        title: "Analytics",
+        title: "Third-Party Service Providers",
         paragraphs: [
-          "We may use Google Analytics or similar services for aggregated usage statistics—such as which finance, health, or math calculator pages are visited.",
-          "Data is used in summary form to improve content and performance. Where supported, we use settings intended to reduce individual identification (e.g. IP anonymization).",
+          "We partner with trusted third-party providers for web hosting (Vercel), DNS routing, and analytics. These providers access technical data strictly to deliver contracted infrastructure services in compliance with data privacy regulations.",
+          "CalcZen contains external links to official government and regulatory resources (such as RBI, Income Tax Dept, CBIC, and WHO). We do not control and are not responsible for the privacy practices of external third-party websites.",
         ],
       },
       {
-        title: "Advertising and Google AdSense",
+        title: "Data Retention & Security",
         paragraphs: [
-          "CalcZen may show ads from Google AdSense or other partners to help cover costs. Partners may use cookies to:",
-        ],
-        listItems: [
-          "Serve ads on CalcZen and other sites you visit",
-          "Measure performance and prevent fraud",
-          "Show more relevant ads depending on your settings",
-        ],
-        subsections: [
-          {
-            title: "Ad Settings",
-            paragraphs: [
-              "Google and its partners may use advertising cookies based on your visit here and elsewhere. Learn more via Google’s privacy and ads settings; you may opt out of personalized ads through your Google Account or industry tools where available.",
-              "Ad vendors are responsible for their own practices—review their policies when relevant.",
-            ],
-          },
+          "Communication sent to hello@calczen.in is retained only as long as necessary to resolve your request and maintain editorial audit logs. We implement industry-standard encryption (HTTPS / SSL) to secure all data transmissions.",
         ],
       },
       {
-        title: "Third-party services",
+        title: "Contact Concerning Privacy",
         paragraphs: [
-          "We may use providers for hosting, analytics, email, and advertising. They process data on our behalf under their terms and applicable law.",
-          "External links are not under our control. Review their privacy policies before sharing personal information.",
-        ],
-      },
-      {
-        title: "Retention and security",
-        paragraphs: [
-          "We keep information only as long as needed—for example, contact messages for a reasonable response period, or analytics in aggregated form for trends.",
-          "We apply reasonable measures against unauthorized access or misuse. No internet transmission is completely secure; we cannot guarantee absolute security.",
-        ],
-      },
-      {
-        title: "Your rights",
-        paragraphs: ["Depending on your location, you may have rights to:"],
-        listItems: [
-          "Access, correct, or delete certain personal information",
-          "Object to or restrict some processing",
-          "Withdraw consent (e.g. marketing emails)",
-        ],
-        subsections: [
-          {
-            title: "Exercising Rights",
-            paragraphs: [
-              "Contact us via the contact page. We respond within a reasonable timeframe.",
-            ],
-          },
-        ],
-      },
-      {
-        title: "Children and international visitors",
-        paragraphs: [
-          "CalcZen is for a general audience. We do not knowingly collect personal information from children under 13 (or the applicable age in your region). Contact us if you believe a child has submitted data.",
-          "If you access the site from abroad, data may be processed where our providers operate, subject to this policy.",
-        ],
-      },
-      {
-        title: "Policy updates and contact",
-        paragraphs: [
-          "We may update this policy; the date above will change. Continued use after updates means you accept the revised policy.",
-          "Privacy questions: contact us. Use of the site is also governed by our Terms of Service.",
+          "If you have any questions about this Privacy Policy, your rights, or our advertising practices, please contact Krish Barvaliya and Vrushant Shiroya at hello@calczen.in.",
         ],
       },
     ],
   },
 
   terms: {
-    title: "Terms of Service — Using CalcZen Calculators",
+    title: "Terms of Service — CalcZen Free Online Calculators",
     description:
-      "Read the CalcZen Terms of Service governing your use of our free calculators. Learn about rules, usage limits, intellectual property, and liability.",
+      "Review the Terms of Service governing your use of CalcZen's free calculators, content, and mathematical simulation tools.",
     canonical: "https://www.calczen.in/terms",
     h1: "Terms of Service",
-    lastUpdated: "May 2026",
+    lastUpdated: "November 2026",
     intro:
-      "These Terms govern your use of CalcZen—including all free online calculators and related content. By using the site, you agree to these Terms.",
+      "Please read these Terms of Service carefully before using CalcZen. By accessing our calculators and content, you agree to be bound by these terms.",
     sections: [
       {
-        title: "About CalcZen",
+        title: "Use of Our Services",
         paragraphs: [
-          "CalcZen provides free calculator tools for finance, health, math, and everyday use, for informational and educational purposes. These Terms apply to all visitors.",
+          "CalcZen provides free calculation tools, formulas, and educational guides for personal, academic, and business evaluation. You agree to use these tools responsibly and in compliance with all applicable local, national, and international laws.",
         ],
       },
       {
-        title: "Acceptable use",
-        paragraphs: ["You agree to use CalcZen lawfully. You must not:"],
-        listItems: [
-          "Violate applicable laws or regulations",
-          "Disrupt, overload, scrape, or reverse-engineer the site without permission",
-          "Redistribute substantial content or tools commercially without authorization",
-          "Use automated extraction that harms performance or other users",
-          "Introduce malware or attempt unauthorized access",
+        title: "Intellectual Property",
+        paragraphs: [
+          "The design, branding, original software code, explanatory articles, worked examples, and compilation of calculators on CalcZen are protected by copyright and intellectual property laws. You may not scrape, reproduce, or redistribute our proprietary software without prior written permission.",
         ],
       },
       {
-        title: "Educational purpose",
+        title: "Limitation of Liability",
         paragraphs: [
-          "Calculators produce estimates from your inputs and standard formulas on each page. They help you explore scenarios—not replace professional judgment.",
-          "Nothing on CalcZen is financial, investment, tax, legal, or medical advice. See our Disclaimer.",
-        ],
-      },
-      {
-        title: "Accuracy",
-        paragraphs: [
-          "We work to keep formulas and logic correct, but we do not warrant that any calculator or result is complete, error-free, or right for your situation.",
-          "Verify important results and seek professional advice when decisions have significant financial, legal, or health consequences.",
-        ],
-      },
-      {
-        title: "Your responsibility",
-        paragraphs: [
-          "You are responsible for how you use CalcZen and any decisions based on calculator output. Confirm critical figures independently before acting on them.",
-        ],
-      },
-      {
-        title: "Intellectual property",
-        paragraphs: [
-          "Site content—text, design, branding, layout, and calculator presentation—is protected by applicable intellectual property laws unless otherwise noted.",
-          "Personal, non-commercial use is permitted in line with these Terms. Commercial copying, modification, or distribution requires prior written permission, except as allowed by law.",
-          "Third-party names and trademarks belong to their owners. References to analytics or ad providers do not imply endorsement.",
-        ],
-      },
-      {
-        title: "Third-party links",
-        paragraphs: [
-          "External links and services (analytics, advertising, etc.) are not controlled by CalcZen. Use them at your own risk under their terms and policies.",
-        ],
-      },
-      {
-        title: "Availability",
-        paragraphs: [
-          "We aim for reliable access but do not guarantee uninterrupted service. We may modify, suspend, or remove any calculator or feature without notice. Maintenance or events beyond our control may affect availability.",
-        ],
-      },
-      {
-        title: "Limitation of liability",
-        paragraphs: [
-          "To the fullest extent permitted by law, CalcZen is not liable for indirect, incidental, special, consequential, or punitive damages from your use—including loss of profits, data, or goodwill—even if advised of the possibility.",
-          "Total liability for any claim shall not exceed the greater of (a) amounts you paid us in the twelve months before the claim (typically zero) or (b) one hundred U.S. dollars (USD $100), where permitted.",
-        ],
-      },
-      {
-        title: "Indemnification",
-        paragraphs: [
-          "You agree to indemnify CalcZen from claims arising from your misuse of the site or violation of these Terms, to the extent permitted by law.",
-        ],
-      },
-      {
-        title: "Privacy",
-        paragraphs: [
-          "Data practices are described in our Privacy Policy, incorporated into these Terms by reference.",
-        ],
-      },
-      {
-        title: "Changes, governing law, and contact",
-        paragraphs: [
-          "We may update these Terms; the date above reflects the latest version. Continued use means acceptance. Material changes may be noted on the site where practical.",
-          "These Terms are governed by applicable laws where CalcZen operates, without regard to conflict-of-law rules, subject to mandatory consumer protections in your country.",
-          "Questions? Visit our contact page.",
+          "CalcZen and its maintainers provide all tools and content on an 'as-is' and 'as-available' basis. While we strive for mathematical rigor, we do not warrant that calculations are free from human error, rounding variations, or regulatory changes. In no event shall CalcZen be liable for any direct, indirect, incidental, or consequential damages resulting from your use of or inability to use our tools.",
         ],
       },
     ],
   },
 
   disclaimer: {
-    title: "Disclaimer — Calculator Use & Limitations | CalcZen",
+    title: "Disclaimer — Estimates Only | CalcZen",
     description:
-      "Read the CalcZen disclaimer regarding our free online calculators. Understand the limitations, informational intent, and terms of calculator results.",
+      "Read the CalcZen Disclaimer regarding our calculation results, financial estimates, and health tools.",
     canonical: "https://www.calczen.in/disclaimer",
     h1: "Disclaimer",
-    lastUpdated: "May 2026",
+    lastUpdated: "November 2026",
     intro:
-      "CalcZen calculators help you estimate and learn—they are not a substitute for professional advice. Please read these limits before using finance, health, or math tools on this site.",
+      "All calculations and educational materials provided on CalcZen are intended strictly for informational, educational, and estimation purposes.",
     sections: [
       {
-        title: "Informational use only",
+        title: "Financial and Loan Calculations",
         paragraphs: [
-          "All calculators and content are for general information and education. They help you explore scenarios and understand formulas—not personalized professional guidance.",
-          "By using CalcZen, you agree to this Disclaimer, our Terms of Service, and Privacy Policy.",
+          "Results generated by our loan, mortgage, tax, salary, and investment calculators are estimates based on standard financial formulas and user-supplied parameters. Actual bank loan terms, interest rates, processing fees, tax liabilities, and investment returns will vary based on lender underwriting, personal credit scores, and statutory notifications. CalcZen is not a bank, lender, or certified financial advisor.",
         ],
       },
       {
-        title: "Not professional advice",
-        paragraphs: ["Calculator results do not constitute:"],
-        listItems: [
-          "Financial, investment, tax, or accounting advice",
-          "Medical, nutritional, or mental health advice",
-          "Legal advice or any regulated professional service",
-        ],
-        subsections: [
-          {
-            title: "Seek Expert Counsel",
-            paragraphs: [
-              "Consult a qualified professional—financial adviser, accountant, physician, dietitian, or attorney—before important decisions in those areas.",
-            ],
-          },
-        ],
-      },
-      {
-        title: "Accuracy and limitations",
-        paragraphs: ["We use recognized formulas and clear explanations, but:"],
-        listItems: [
-          "Results depend on the values you enter",
-          "Fees, taxes, regional rules, and personal circumstances may differ",
-          "Health estimates are population-level guides, not diagnoses",
-          "Occasional software or browser issues may affect output",
-        ],
-        subsections: [
-          {
-            title: "Independent Verification",
-            paragraphs: [
-              "We do not guarantee completeness or suitability for your situation. Verify important figures independently.",
-            ],
-          },
-        ],
-      },
-      {
-        title: "Finance calculators",
+        title: "Health and Wellness Calculations",
         paragraphs: [
-          "Mortgage, loan EMI, and compound interest tools produce planning estimates. They may omit insurance, closing costs, variable rates, penalties, or tax treatment. Do not rely solely on CalcZen for binding financial commitments.",
+          "Health calculators (including BMI, BMR, Body Fat, and Protein tools) are based on general population statistical models (such as Mifflin-St Jeor and U.S. Navy formulas). They are not medical diagnostic tools. Always consult a licensed physician, clinical dietitian, or healthcare professional before making diet, fitness, or medication decisions.",
         ],
       },
       {
-        title: "Health calculators",
+        title: "Updates and Inquiries",
         paragraphs: [
-          "BMI, BMR, calorie, and water tools are not medical devices. Individual needs vary. Speak with a healthcare provider for medical conditions, pregnancy, or major diet or fitness changes.",
-        ],
-      },
-      {
-        title: "Math and everyday tools",
-        paragraphs: [
-          "Math and general calculators are convenience aids. Double-check when precision matters—contracts, billing, payroll, or compliance.",
-        ],
-      },
-      {
-        title: "Limitation of liability",
-        paragraphs: [
-          "To the fullest extent permitted by law, CalcZen disclaims liability for loss or harm from use of the site or reliance on results—including financial, health, or business outcomes. Use is at your own risk.",
-        ],
-      },
-      {
-        title: "External links",
-        paragraphs: [
-          "Third-party links are for convenience. We do not endorse or control external content, products, or services.",
-        ],
-      },
-      {
-        title: "Updates and contact",
-        paragraphs: [
-          "We may revise this Disclaimer; the date above reflects the latest version. Continued use means you accept updates.",
-          "Questions? Contact us or read About CalcZen.",
-        ],
-      },
-    ],
-  },
-
-  tools: {
-    title: "Tools - Coming Soon | CalcZen",
-    description:
-      "We're building a set of free tools. Coming soon.",
-    canonical: "https://www.calczen.in/tools",
-    h1: "Tools",
-    intro:
-      "We're building a set of free tools. Coming soon.",
-    sections: [
-      {
-        title: "Coming Soon",
-        paragraphs: [
-          "We are actively developing a suite of free productivity and utility tools to accompany our calculators. Stay tuned for updates.",
+          "We regularly audit and update our tools to reflect current formulas. If you have questions regarding our calculations, please contact us at hello@calczen.in.",
         ],
       },
     ],
   },
 };
-

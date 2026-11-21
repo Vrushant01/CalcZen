@@ -85,3 +85,22 @@ export const landAreaConverterContent = {
     "rooftop-solar-calculator",
   ],
 };
+
+import type { CalculatorEducationalContent } from "../content-types";
+
+const educationalContent: CalculatorEducationalContent = {
+  whatItDoes: landAreaConverterContent.intro,
+  howItWorks: Array.isArray(landAreaConverterContent.howToUseSteps) ? landAreaConverterContent.howToUseSteps.join("\n\n") : "",
+  formula: landAreaConverterContent.formula,
+  example: typeof landAreaConverterContent.workedExample === 'object' && landAreaConverterContent.workedExample ? (landAreaConverterContent.workedExample.description + "\n\n" + (landAreaConverterContent.workedExample.table || []).map((t: any) => `${t.label}: ${t.value}`).join("\n")) : "",
+  mistakes: Array.isArray(landAreaConverterContent.mistakes) ? landAreaConverterContent.mistakes.join("\n\n") : String(landAreaConverterContent.mistakes || ""),
+  faqs: Array.isArray(landAreaConverterContent.faqs) ? landAreaConverterContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : [],
+  authorityLinks: [
+    { text: "Bureau of Indian Standards (BIS)", url: "https://www.bis.gov.in/" },
+    { text: "Reserve Bank of India (RBI)", url: "https://www.rbi.org.in/" },
+  ],
+  relatedCalculators: landAreaConverterContent.relatedSlugs || ["brick-calculator","rcc-price-calculator","tile-calculator"],
+  lastReviewed: "2026-11-21",
+};
+
+export default educationalContent;

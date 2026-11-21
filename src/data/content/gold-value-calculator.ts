@@ -78,3 +78,22 @@ export const goldValueCalculatorContent = {
     "old-gold-exchange-value-calculator",
   ],
 };
+
+import type { CalculatorEducationalContent } from "../content-types";
+
+const educationalContent: CalculatorEducationalContent = {
+  whatItDoes: goldValueCalculatorContent.intro,
+  howItWorks: Array.isArray(goldValueCalculatorContent.howToUseSteps) ? goldValueCalculatorContent.howToUseSteps.join("\n\n") : "",
+  formula: goldValueCalculatorContent.formula,
+  example: typeof goldValueCalculatorContent.workedExample === 'object' && goldValueCalculatorContent.workedExample ? (goldValueCalculatorContent.workedExample.description + "\n\n" + (goldValueCalculatorContent.workedExample.table || []).map((t: any) => `${t.label}: ${t.value}`).join("\n")) : "",
+  mistakes: Array.isArray(goldValueCalculatorContent.mistakes) ? goldValueCalculatorContent.mistakes.join("\n\n") : String(goldValueCalculatorContent.mistakes || ""),
+  faqs: Array.isArray(goldValueCalculatorContent.faqs) ? goldValueCalculatorContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : [],
+  authorityLinks: [
+    { text: "Bureau of Indian Standards (BIS)", url: "https://www.bis.gov.in/" },
+    { text: "Reserve Bank of India (RBI)", url: "https://www.rbi.org.in/" },
+  ],
+  relatedCalculators: goldValueCalculatorContent.relatedSlugs || ["gold-jewellery-bill-calculator","gold-purity-karat-converter","gold-making-charges-calculator"],
+  lastReviewed: "2026-11-21",
+};
+
+export default educationalContent;

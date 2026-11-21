@@ -2,57 +2,55 @@ import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
-    "The scientific calculator is a comprehensive and highly accurate tool designed to help users solve complex problems quickly and efficiently. By processing key variables and parameters, this calculator provides instant, reliable results that are crucial for making informed decisions. Whether you are a professional needing precise calculations for your daily work or an everyday user looking to estimate important metrics, this tool removes the guesswork and mathematical complexity. It is built to handle various edge cases and provides a robust, user-friendly interface that ensures anyone can understand and utilize the output effectively.",
+    "The scientific calculator provides an advanced mathematical computing environment engineered for high-school students, engineering undergraduates, scientists, and financial analysts. It handles algebraic, trigonometric, logarithmic, and exponential operations with complete support for operator precedence (BODMAS/PEMDAS). Whether evaluating transcendent functions like sine and cosine in degrees or radians, computing base-10 and natural logarithms, raising numbers to arbitrary powers, extracting square roots, or computing factorials, it delivers instant mathematical precision directly in your browser without requiring external software.",
 
   howItWorks:
-    "Using the scientific calculator is incredibly straightforward and requires no prior technical expertise. First, you begin by entering your primary data points into the clearly labeled input fields. The system instantly validates your inputs to ensure accuracy and prevent calculation errors. Once the necessary data is provided, the underlying algorithmic engine processes the numbers in real-time. It applies industry-standard formulas and best practices to derive the final output. The results are then displayed in an easy-to-read format, often accompanied by visual charts or step-by-step breakdowns, allowing you to fully understand the context and implications of the calculated values.",
+    "Using the scientific calculator involves entering mathematical expressions through the interactive keypad or physical keyboard:\n\n1. Arithmetic & Expression Building: Enter operands and operators (+, −, ×, ÷). Use parentheses '(' and ')' to enforce grouping and custom order of operations.\n2. Angle Mode (DEG / RAD): Toggle between Degrees and Radians before performing trigonometric calculations (e.g. sin, cos, tan, and inverse functions).\n3. Trigonometry Functions: Compute direct functions (sin, cos, tan) and inverse trigonometric functions (asin, acos, atan).\n4. Logarithms & Exponentials: Use 'log' for common logarithms (base 10) and 'ln' for natural logarithms (base e ≈ 2.71828). Use 'e^x' for natural exponents.\n5. Powers & Roots: Utilize 'x²' for squaring, 'x^y' for arbitrary powers, and '√' for square roots.\n6. Factorials & Constants: Press 'n!' for integer factorials and access mathematical constants π (pi ≈ 3.14159) and e.\n\nClick '=' to evaluate the full expression, or 'C' / 'AC' to clear and reset the display.",
 
   formula:
-    "The mathematical foundation of the scientific calculator relies on established, peer-reviewed formulas tailored to this specific domain. While the exact computational models can vary based on your specific inputs, the core logic follows this general structure:\n\nOutput = (Primary Input × Variable Factor) / Constant Divider + Adjustments\n\nWhere:\n- Primary Input represents the baseline value you provide.\n- Variable Factor accounts for individual user parameters.\n- Constant Divider standardizes the result into a recognizable metric.\n- Adjustments are secondary modifications based on optional inputs.\n\nBy combining these elements, the calculator ensures a mathematically sound and highly precise result every single time.",
+    "The calculator enforces standard algebraic operator precedence (PEMDAS / BODMAS):\n\n1. Parentheses and Brackets: Expressions inside brackets are evaluated first from the innermost outward.\n2. Exponents and Roots: Powers (x^y) and radicals (√x) are evaluated next from right to left.\n3. Multiplication and Division: Evaluated left to right with equal precedence.\n4. Addition and Subtraction: Evaluated left to right with equal precedence.\n\nCore Mathematical Formulations:\n- Trigonometry: sin(θ), cos(θ), tan(θ) where angle θ is converted to radians if in degree mode: θ_rad = θ_deg × (π / 180)\n- Common Logarithm: y = log10(x) implies 10^y = x (for x > 0)\n- Natural Logarithm: y = ln(x) implies e^y = x (where e ≈ 2.718281828)\n- Factorial: n! = n × (n − 1) × (n − 2) × ... × 2 × 1 (with 0! = 1, for non-negative integers n)\n- Power: x^y = exp(y × ln(x))",
 
   example:
-    "Let's look at a practical, real-world example of how the scientific calculator can be applied. Suppose a typical user needs to determine their baseline metric. They start by inputting a standard baseline value—for instance, 100 units. Next, they add a secondary variable, such as a 5% rate or a modifier of 1.2, depending on the context of the calculation.\n\nWhen these values are processed through the calculator's engine, the system first multiplies the baseline by the modifier (100 × 1.2 = 120). It then factors in any standard constants to produce the final result. In this scenario, the output clearly demonstrates how a small change in the initial inputs can significantly impact the final outcome. This step-by-step transparency helps users grasp the mechanics behind the numbers.",
+    "Practical Mathematical Verification Examples:\n\n1. Trigonometric Evaluation:\nCompute sin(30°) in Degree Mode:\n- Input: sin(30)\n- Degree to radian conversion: 30 × (π / 180) = π / 6 radians\n- Evaluated Output: 0.5\n\n2. Arbitrary Exponentiation:\nCompute 2 raised to the power of 10:\n- Input: 2 ^ 10\n- Evaluated Output: 1024\n\n3. Logarithmic Computation:\nCompute common logarithm of 1000:\n- Input: log10(1000)\n- Logic: 10^3 = 1000\n- Evaluated Output: 3\n\n4. Factorial Operation:\nCompute 5 factorial (5!):\n- Input: 5! = 5 × 4 × 3 × 2 × 1\n- Evaluated Output: 120\n\n5. Square Root:\nCompute √144:\n- Evaluated Output: 12",
 
   mistakes:
-    "When calculating these metrics manually or using inferior tools, users often fall victim to several common, yet critical, mistakes. The most frequent error is inconsistent units of measurement—for example, mixing months with years or pounds with kilograms. This inevitably leads to wildly inaccurate results. Another common pitfall is ignoring secondary variables. Many people only calculate the baseline while forgetting to account for fees, taxes, or physiological outliers, which drastically skews the real-world application of the data. Finally, a lack of regular recalculation is a major issue; as your underlying variables change over time, relying on old calculations can lead to poor long-term planning and decision-making.",
+    "1. Calculating trigonometric angles in the wrong angle mode: Evaluating sin(90) in Radian mode yields 0.89399 instead of the intended 1.0 (which requires Degree mode).\n2. Entering negative numbers into real logarithms: The logarithm of zero or negative numbers is undefined in real-number arithmetic (e.g. log(-5) causes an error).\n3. Omitting explicit parentheses in complex denominators: Writing '100 / 2 × 5' evaluates to 250 under standard left-to-right rules; if you intend to divide by 10, write '100 / (2 × 5)'.\n4. Applying factorials to fractional or negative inputs: Standard factorials (n!) are strictly defined for non-negative integers (0, 1, 2, ...).\n5. Confusing common log (base 10) with natural log (base e): 'log' uses base 10, while 'ln' uses Euler's constant e; using the wrong function introduces major scaling errors in physics and engineering problems.",
 
   faqs: [
     {
-      question: "How accurate is the scientific calculator?",
+      question: "What is the difference between Radian and Degree mode?",
       answer:
-        "The calculator uses industry-standard formulas and provides highly accurate estimates based on the exact data you input. However, for critical medical or financial decisions, it should be used as a baseline guide alongside professional advice.",
+        "Degrees divide a full circle into 360 equal units, commonly used in navigation, surveying, and basic geometry. Radians measure angles based on the radius of a circle, where a full circle is 2π radians (approx 6.28318 rad). Calculus, harmonic motion, and advanced physics require radians, whereas standard geometry problems typically use degrees.",
     },
     {
-      question: "Can I use this calculator on my mobile device?",
+      question: "How does the calculator handle order of operations (BODMAS)?",
       answer:
-        "Yes, the calculator is fully responsive and optimized for all devices, including smartphones, tablets, and desktop computers.",
+        "The calculator processes expressions according to universal BODMAS/PEMDAS conventions: Brackets, Orders/Exponents, Division and Multiplication (left-to-right), followed by Addition and Subtraction (left-to-right). For example, entering 4 + 5 × 2 automatically evaluates multiplication first, giving 14, not 18.",
     },
     {
-      question: "Do I need to create an account to use the tool?",
+      question: "Why is 0! (zero factorial) equal to 1?",
       answer:
-        "No, all of our calculators are completely free to use and do not require any registration or account creation.",
+        "In combinatorics, the factorial of n represents the number of ways to arrange n distinct objects. There is exactly one way to arrange zero objects (the empty set). Mathematically, defining 0! = 1 maintains consistency across binomial expansion, Taylor series, and permutation formulas like nPr = n! / (n − r)!.",
     },
     {
-      question: "How often should I recalculate my numbers?",
+      question: "What is Euler's number (e) and when is it used?",
       answer:
-        "It is recommended to recalculate whenever your primary variables—such as income, weight, interest rates, or age—change significantly.",
+        "Euler's number (e ≈ 2.71828) is an irrational mathematical constant that forms the natural base of exponential growth and decay. It appears universally in continuous compound interest calculations, radioactive decay modeling, probability distributions, and electrical calculus.",
     },
     {
-      question: "Is my inputted data saved or shared?",
+      question: "Can this scientific calculator work offline in the browser?",
       answer:
-        "Your privacy is our priority. All calculations are performed locally in your browser, and no personal input data is saved or transmitted to our servers.",
+        "Yes, our scientific calculator runs entirely via client-side JavaScript in your browser. Once loaded, calculations are processed locally on your device without sending mathematical data to any external server.",
     },
   ],
 
   authorityLinks: [
-    {
-      text: "Consumer Financial Protection Bureau (CFPB)",
-      url: "https://www.consumerfinance.gov/",
-    },
-    { text: "Internal Revenue Service (IRS)", url: "https://www.irs.gov/" },
+    { text: "Indian Statistical Institute (ISI)", url: "https://www.isical.ac.in/" },
+    { text: "National Programme on Technology Enhanced Learning (NPTEL) - Mathematics", url: "https://nptel.ac.in/" },
   ],
 
-  relatedCalculators: ["percentage-calculator", "loan-emi-calculator", "standard-calculator"],
+  relatedCalculators: ["standard-calculator", "percentage-calculator", "cgpa-calculator"],
+  lastReviewed: "2026-11-21",
 };
 
 export default content;

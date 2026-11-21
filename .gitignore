@@ -47,3 +47,5 @@ node_modules
 dist
 .vercel
 node_modules
+public/admin
+

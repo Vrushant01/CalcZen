@@ -64,8 +64,8 @@ export const homeIntro: HomeIntroContent = {
         text: ", and statutory GST slabs. To deepen your understanding of smart financial management, energy efficiency, and everyday arithmetic, explore our comprehensive ",
       },
       {
-        text: "CalcZen Tools",
-        href: "/tools",
+        text: "free online calculators",
+        href: "/calculators",
       },
       {
         text: ", designed to make complex numbers simple, actionable, and practical for everyone.",

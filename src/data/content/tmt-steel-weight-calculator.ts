@@ -79,3 +79,22 @@ export const tmtSteelWeightCalculatorContent = {
     "tile-calculator",
   ],
 };
+
+import type { CalculatorEducationalContent } from "../content-types";
+
+const educationalContent: CalculatorEducationalContent = {
+  whatItDoes: tmtSteelWeightCalculatorContent.intro,
+  howItWorks: Array.isArray(tmtSteelWeightCalculatorContent.howToUseSteps) ? tmtSteelWeightCalculatorContent.howToUseSteps.join("\n\n") : "",
+  formula: tmtSteelWeightCalculatorContent.formula,
+  example: typeof tmtSteelWeightCalculatorContent.workedExample === 'object' && tmtSteelWeightCalculatorContent.workedExample ? (tmtSteelWeightCalculatorContent.workedExample.description + "\n\n" + (tmtSteelWeightCalculatorContent.workedExample.table || []).map((t: any) => `${t.label}: ${t.value}`).join("\n")) : "",
+  mistakes: Array.isArray(tmtSteelWeightCalculatorContent.mistakes) ? tmtSteelWeightCalculatorContent.mistakes.join("\n\n") : String(tmtSteelWeightCalculatorContent.mistakes || ""),
+  faqs: Array.isArray(tmtSteelWeightCalculatorContent.faqs) ? tmtSteelWeightCalculatorContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : [],
+  authorityLinks: [
+    { text: "Bureau of Indian Standards (BIS)", url: "https://www.bis.gov.in/" },
+    { text: "Reserve Bank of India (RBI)", url: "https://www.rbi.org.in/" },
+  ],
+  relatedCalculators: tmtSteelWeightCalculatorContent.relatedSlugs || ["rcc-price-calculator","cement-bag-calculator","brick-calculator"],
+  lastReviewed: "2026-11-21",
+};
+
+export default educationalContent;

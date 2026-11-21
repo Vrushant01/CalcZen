@@ -86,3 +86,22 @@ export const rooftopSolarCalculatorContent = {
     "paint-calculator",
   ],
 };
+
+import type { CalculatorEducationalContent } from "../content-types";
+
+const educationalContent: CalculatorEducationalContent = {
+  whatItDoes: rooftopSolarCalculatorContent.intro,
+  howItWorks: Array.isArray(rooftopSolarCalculatorContent.howToUseSteps) ? rooftopSolarCalculatorContent.howToUseSteps.join("\n\n") : "",
+  formula: rooftopSolarCalculatorContent.formula,
+  example: typeof rooftopSolarCalculatorContent.workedExample === 'object' && rooftopSolarCalculatorContent.workedExample ? (rooftopSolarCalculatorContent.workedExample.description + "\n\n" + (rooftopSolarCalculatorContent.workedExample.table || []).map((t: any) => `${t.label}: ${t.value}`).join("\n")) : "",
+  mistakes: Array.isArray(rooftopSolarCalculatorContent.mistakes) ? rooftopSolarCalculatorContent.mistakes.join("\n\n") : String(rooftopSolarCalculatorContent.mistakes || ""),
+  faqs: Array.isArray(rooftopSolarCalculatorContent.faqs) ? rooftopSolarCalculatorContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : [],
+  authorityLinks: [
+    { text: "Bureau of Indian Standards (BIS)", url: "https://www.bis.gov.in/" },
+    { text: "Reserve Bank of India (RBI)", url: "https://www.rbi.org.in/" },
+  ],
+  relatedCalculators: rooftopSolarCalculatorContent.relatedSlugs || ["home-electricity-bill-calculator","ac-electricity-cost-calculator","appliance-electricity-cost-calculator"],
+  lastReviewed: "2026-11-21",
+};
+
+export default educationalContent;

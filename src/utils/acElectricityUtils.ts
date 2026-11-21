@@ -237,7 +237,7 @@ export const INDIAN_DISCOM_PROFILES: DiscomTariffProfile[] = [
     fuelSurchargePerUnitINR: 0.0,
     fixedMonthlyChargesINR: 0.0,
     slabs: [
-      { minUnits: 0, maxUnits: 100, ratePerUnitINR: 0.0 }, // First 100 units free in TN
+      { minUnits: 0, maxUnits: 100, ratePerUnitINR: 0.0 }, // First 100 kWh free in TN
       { minUnits: 100, maxUnits: 200, ratePerUnitINR: 2.25 },
       { minUnits: 200, maxUnits: 400, ratePerUnitINR: 4.5 },
       { minUnits: 400, maxUnits: 500, ratePerUnitINR: 6.0 },

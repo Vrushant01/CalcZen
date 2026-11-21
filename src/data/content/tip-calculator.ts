@@ -2,57 +2,55 @@ import type { CalculatorEducationalContent } from "../content-types";
 
 const content: CalculatorEducationalContent = {
   whatItDoes:
-    "The tip calculator is a comprehensive and highly accurate tool designed to help users solve complex problems quickly and efficiently. By processing key variables and parameters, this calculator provides instant, reliable results that are crucial for making informed decisions. Whether you are a professional needing precise calculations for your daily work or an everyday user looking to estimate important metrics, this tool removes the guesswork and mathematical complexity. It is built to handle various edge cases and provides a robust, user-friendly interface that ensures anyone can understand and utilize the output effectively.",
+    "The tip calculator calculates dining gratuities and divides restaurant, cafe, or travel bills evenly among multiple guests. Perfect for diners, international tourists traveling in India or abroad, and roommates dining out, it computes exact tip amounts based on custom percentages, presents the total payable bill, and breaks down the per-person financial obligation. In addition, it provides transparent legal guidance on restaurant service charges in India under Central Consumer Protection Authority (CCPA) regulations.",
 
   howItWorks:
-    "Using the tip calculator is incredibly straightforward and requires no prior technical expertise. First, you begin by entering your primary data points into the clearly labeled input fields. The system instantly validates your inputs to ensure accuracy and prevent calculation errors. Once the necessary data is provided, the underlying algorithmic engine processes the numbers in real-time. It applies industry-standard formulas and best practices to derive the final output. The results are then displayed in an easy-to-read format, often accompanied by visual charts or step-by-step breakdowns, allowing you to fully understand the context and implications of the calculated values.",
+    "Splitting your bill with the tip calculator takes just a few seconds:\n\n1. Bill Amount: Enter the total subtotal before gratuity (e.g. food and beverage total before or after tax depending on regional tipping conventions).\n2. Tip Percentage (%): Choose a standard tip preset (e.g. 5%, 10%, 15%, 20%) or type a custom percentage matching the quality of service provided.\n3. Number of People: Specify how many individuals are splitting the check (default is 1 for individual payment).\n4. Currency Symbol: Switch between Rupee (₹), Dollar ($), Euro (€), or Pound (£) to suit domestic dining or international travel.\n\nClick Calculate to view the total gratuity amount, final aggregate invoice total, per-person share, and tip contribution per diner.",
 
   formula:
-    "The mathematical foundation of the tip calculator relies on established, peer-reviewed formulas tailored to this specific domain. While the exact computational models can vary based on your specific inputs, the core logic follows this general structure:\n\nOutput = (Primary Input × Variable Factor) / Constant Divider + Adjustments\n\nWhere:\n- Primary Input represents the baseline value you provide.\n- Variable Factor accounts for individual user parameters.\n- Constant Divider standardizes the result into a recognizable metric.\n- Adjustments are secondary modifications based on optional inputs.\n\nBy combining these elements, the calculator ensures a mathematically sound and highly precise result every single time.",
+    "The calculator applies standard proportional gratuity and per-capita division equations:\n\n1. Tip Amount = Bill Amount × (Tip Percentage / 100)\n2. Total Bill with Tip = Bill Amount + Tip Amount\n3. Per Person Share = Total Bill with Tip / Number of People\n4. Tip Per Person = Tip Amount / Number of People\n\nImportant Consumer Law Context in India:\nUnder the Central Consumer Protection Authority (CCPA) guidelines issued by the Ministry of Consumer Affairs, hotels and restaurants are prohibited from levying service charges automatically or by default on food bills. Service charges are strictly voluntary, and consumers have the legal right to request the restaurant to remove any mandatory service charge line item before deciding whether to leave an optional tip.",
 
   example:
-    "Let's look at a practical, real-world example of how the tip calculator can be applied. Suppose a typical user needs to determine their baseline metric. They start by inputting a standard baseline value—for instance, 100 units. Next, they add a secondary variable, such as a 5% rate or a modifier of 1.2, depending on the context of the calculation.\n\nWhen these values are processed through the calculator's engine, the system first multiplies the baseline by the modifier (100 × 1.2 = 120). It then factors in any standard constants to produce the final result. In this scenario, the output clearly demonstrates how a small change in the initial inputs can significantly impact the final outcome. This step-by-step transparency helps users grasp the mechanics behind the numbers.",
+    "Consider a group of 4 friends dining out at a restaurant in Bangalore:\n- Pre-tip food bill: ₹2,400\n- Selected tip percentage: 10% (for attentive table service)\n- Number of guests: 4 people\n\nMathematical Breakdown:\n- Tip Amount = (₹2,400 × 10) / 100 = ₹240\n- Total Bill = ₹2,400 + ₹240 = ₹2,640\n- Total Per Person Share = ₹2,640 / 4 = ₹660 per diner\n- Tip Share Per Person = ₹240 / 4 = ₹60 per diner\n\nEach guest pays exactly ₹660 (₹600 for their food portion and ₹60 for their share of the server tip).",
 
   mistakes:
-    "When calculating these metrics manually or using inferior tools, users often fall victim to several common, yet critical, mistakes. The most frequent error is inconsistent units of measurement—for example, mixing months with years or pounds with kilograms. This inevitably leads to wildly inaccurate results. Another common pitfall is ignoring secondary variables. Many people only calculate the baseline while forgetting to account for fees, taxes, or physiological outliers, which drastically skews the real-world application of the data. Finally, a lack of regular recalculation is a major issue; as your underlying variables change over time, relying on old calculations can lead to poor long-term planning and decision-making.",
+    "1. Double tipping on bills with pre-included service charges: Some restaurants still print a 5% to 10% 'service charge' on the bill. Adding an additional 10% tip results in double-paying gratuity unless you consciously intend to reward the server extra.\n2. Tipping on government taxes (GST): In India, food is subject to 5% GST (or 18% in luxury hotel properties). Gratuity is traditionally calculated on the pre-tax food and beverage subtotal, not on the post-tax amount.\n3. Failing to round off cash payments cleanly: Splitting non-round totals (e.g. ₹663.33) when paying with physical currency causes change hassles; use UPI for exact digital splits.\n4. Forgetting international cultural norms when traveling: While tipping 15% to 20% is customary in North America, tipping is uncommon and sometimes considered offensive in countries like Japan and South Korea.\n5. Omitting shared appetizers or corkage fees: When splitting evenly among friends who ordered disproportionately, discuss split adjustments beforehand to prevent dining conflicts.",
 
   faqs: [
     {
-      question: "How accurate is the tip calculator?",
+      question: "Is paying a service charge mandatory in restaurants in India?",
       answer:
-        "The calculator uses industry-standard formulas and provides highly accurate estimates based on the exact data you input. However, for critical medical or financial decisions, it should be used as a baseline guide alongside professional advice.",
+        "No. The Central Consumer Protection Authority (CCPA) guidelines explicitly state that a service charge cannot be added automatically or by default to food and beverage bills. It is purely voluntary and optional. If a restaurant includes a service charge without your consent, you can legally ask them to remove it.",
     },
     {
-      question: "Can I use this calculator on my mobile device?",
+      question: "What is the customary tipping percentage in India?",
       answer:
-        "Yes, the calculator is fully responsive and optimized for all devices, including smartphones, tablets, and desktop computers.",
+        "In Indian casual dining restaurants and cafes, a tip of 5% to 10% of the food subtotal is customary for satisfactory service. At high-end fine dining establishments, 10% is standard. For small eateries, street stalls, and delivery riders, rounding up the bill or tipping ₹20 to ₹50 is appreciated.",
     },
     {
-      question: "Do I need to create an account to use the tool?",
+      question: "Should tips be calculated on the pre-tax or post-tax amount?",
       answer:
-        "No, all of our calculators are completely free to use and do not require any registration or account creation.",
+        "Etiquette guidelines recommend calculating tips on the pre-tax subtotal of food and beverage items. Taxes (such as CGST and SGST) are government levies, not services rendered by restaurant staff.",
     },
     {
-      question: "How often should I recalculate my numbers?",
+      question: "How do I split an uneven bill where some people ordered more?",
       answer:
-        "It is recommended to recalculate whenever your primary variables—such as income, weight, interest rates, or age—change significantly.",
+        "While this calculator provides equal per-capita splits for convenience, for heavily uneven orders (e.g., alcohol vs. non-drinkers), calculate each person's exact subtotal first and apply the agreed tip percentage proportionally to each individual's portion.",
     },
     {
-      question: "Is my inputted data saved or shared?",
+      question: "Can I tip digitally via UPI or credit card in India?",
       answer:
-        "Your privacy is our priority. All calculations are performed locally in your browser, and no personal input data is saved or transmitted to our servers.",
+        "Yes, many restaurants allow you to add a tip to card terminals or provide a separate server UPI QR code. However, tipping cash directly to your server often ensures the funds reach the service staff immediately without administrative delays.",
     },
   ],
 
   authorityLinks: [
-    {
-      text: "Consumer Financial Protection Bureau (CFPB)",
-      url: "https://www.consumerfinance.gov/",
-    },
-    { text: "Internal Revenue Service (IRS)", url: "https://www.irs.gov/" },
+    { text: "Central Consumer Protection Authority (CCPA)", url: "https://consumeraffairs.nic.in/" },
+    { text: "National Consumer Helpline (NCH)", url: "https://consumerhelpline.gov.in/" },
   ],
 
-  relatedCalculators: ["retirement-calculator", "scientific-calculator", "water-intake-calculator"],
+  relatedCalculators: ["gst-calculator", "percentage-calculator", "standard-calculator"],
+  lastReviewed: "2026-11-21",
 };
 
 export default content;
